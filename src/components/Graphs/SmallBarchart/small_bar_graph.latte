@@ -1,0 +1,8 @@
+<span style="font-size:0.3em">{$graphTitle}</span>
+<span id="{$graphId}"></span>
+<script>
+  $("#" + {$graphId}).sparkline({php echo json_encode(array_values($data)); }, {
+    type: 'bar',
+    barColor: '#b2b2b2'
+  });
+</script>

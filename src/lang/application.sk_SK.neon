@@ -1,0 +1,6 @@
+frontend:
+	layout:
+		warning: Pozor!
+		danger: Chyba!
+		success: Úspech!
+

@@ -1,0 +1,16 @@
+{
+  "name": "remp/application-module",
+  "description": "CRM Application Module",
+  "version": "0.0.1",
+  "type": "library",
+  "require": {
+    "php": "^7.1"
+  },
+  "minimum-stability": "dev",
+  "autoload": {
+    "psr-4": {
+      "Crm\\ApplicationModule\\": "src/"
+    },
+    "classmap": ["src/"]
+  }
+}

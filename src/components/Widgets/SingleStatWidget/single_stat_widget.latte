@@ -1,0 +1,10 @@
+<div class="panel panel-default">
+  <div n:ifset="$title" class="panel-heading">
+    <h3 class="panel-title">{$title}</h3>
+  </div>
+  <ul class="list-group">
+    <li n:foreach="$widgets as $widget" class="list-group-item">
+      {control $widget}
+    </li>
+  </ul>
+</div>

@@ -1,0 +1,6 @@
+frontend:
+	layout:
+		warning: Warning!
+		danger: Error!
+		success: Success!
+

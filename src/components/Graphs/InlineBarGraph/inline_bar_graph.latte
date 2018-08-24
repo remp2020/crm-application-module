@@ -1,0 +1,55 @@
+{if empty($series['data'])}
+    <div class="well-lg well" style="margin-bottom: 0px;">
+        No data available.
+    </div>
+{else}
+    <div id="graph_{$graphId}" class="contains-chart graph line-graph" data-gchart="drawChart{$graphId|noescape}"></div>
+
+    <script type="text/javascript">
+
+    function drawChart{$graphId|noescape}() {
+
+        var data = google.visualization.arrayToDataTable
+        ([
+                ['Day',{foreach $series as $k => $v}{$k}{sep},{/sep}{/foreach}, { 'type': 'string', 'role': 'tooltip', 'p': { 'html': true } } ],
+                {foreach $xAxis as $date}[{php echo $date;}, {foreach $series as $k => $v}{$v[$date]}, "<b style='padding:2px'>{$v[$date]}</b>"{sep},{/sep}{/foreach}]{sep},{/sep}{/foreach}
+        ]);
+
+        var chart = new google.visualization.ColumnChart(document.getElementById('graph_{$graphId|noescape}'));
+
+        var options = {
+            height: 50,
+            width: 100,
+            chartArea: {'width': '100%', 'height': '100%'},
+            series: data,
+            bar: {
+                groupWidth: "90%"
+            },
+            tooltip: { isHtml: true },
+            legend: {
+                position: "none"
+            },
+            hAxis: {
+                textPosition: 'none',
+                ticks: {
+                    count: 0
+                },
+                baselineColor: 'transparent'
+            },
+            vAxis: {
+                textPosition: 'none',
+                ticks: {
+                    count: 0
+                },
+                            baselineColor: 'transparent'
+            },
+            backgroundColor: { fill:'transparent' }
+        };
+
+        chart.draw(data, options);
+    }
+
+    google.load("visualization", "1", { packages:["corechart"]});
+    google.setOnLoadCallback(drawChart{$graphId|noescape});
+    </script>
+{/if}
