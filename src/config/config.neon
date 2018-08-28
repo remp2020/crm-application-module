@@ -16,6 +16,7 @@ services:
 		class: Crm\ApplicationModule\Helpers\FilterLoader
 		setup:
 			- register('activeLabel', [Crm\ApplicationModule\Helpers\ActiveLabelHelper(), process])
+			- register('diff', [Crm\ApplicationModule\Helpers\DiffHelper(), process])
 			- register('helpIcon', [Crm\ApplicationModule\Helpers\HelpIconHelper(), process])
 			- register('userDate', [Crm\ApplicationModule\Helpers\UserDateHelper(), process])
 			- register('yesNo', [Crm\ApplicationModule\Helpers\YesNoHelper(), process])
