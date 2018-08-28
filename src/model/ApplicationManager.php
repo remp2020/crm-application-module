@@ -216,6 +216,7 @@ class ApplicationManager
             $this->registerCommands();
             $this->registerCleanupCallbacks();
             $this->registerHermesHandlers();
+            $this->registerSeeders();
         }
 
         $this->registerEventHandlers();
@@ -225,7 +226,6 @@ class ApplicationManager
         $this->registerUserDataRegistrators();
         $this->registerCriteriaStorage();
         $this->registerLayouts();
-        $this->registerSeeders();
         $this->registerAccessProviders();
         $this->registerDataProviders();
     }
