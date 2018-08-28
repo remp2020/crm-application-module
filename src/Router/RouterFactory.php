@@ -21,18 +21,14 @@ class RouterFactory
 
     private $moduleManager;
 
-    private $cacheStorage;
-
     public function __construct(
         ConfigsCache $configsCache,
         ApplicationConfig $applicationConfig,
-        ModuleManager $moduleManager,
-        IStorage $cacheStorage
+        ModuleManager $moduleManager
     ) {
         $this->configsCache = $configsCache;
         $this->applicationConfig = $applicationConfig;
         $this->moduleManager = $moduleManager;
-        $this->cacheStorage = $cacheStorage;
     }
 
     /**
@@ -40,11 +36,6 @@ class RouterFactory
      */
     public function createRouter()
     {
-        $routerSerialized = $this->cacheStorage->read('router');
-        if ($routerSerialized) {
-            return unserialize($routerSerialized);
-        }
-
         $router = new RouteList();
 
         foreach ($this->moduleManager->getModules() as $module) {
@@ -64,8 +55,6 @@ class RouterFactory
         $router[] = new Route('snippets[/<key>]', 'Application:Snippets:default');
         $router[] = new Route('<module>/<presenter>/<action>[/<id>]', 'Dashboard:Dashboard:default');
         $router[] = new Route('/', $defaultRoute);
-
-        $this->cacheStorage->write('router', serialize($router), [Cache::EXPIRE => 60]);
 
         return $router;
     }
