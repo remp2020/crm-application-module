@@ -19,4 +19,6 @@ interface CriteriaInterface
     public function join(ParamsBag $params): string;
 
     public function title(ParamsBag $params): string;
+
+    public function fields(): array;
 }
