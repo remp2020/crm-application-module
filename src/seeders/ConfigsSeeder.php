@@ -36,6 +36,28 @@ class ConfigsSeeder implements ISeeder
             $output->writeln('  * config category <info>Všeobecne</info> exists');
         }
 
+        $name = 'currency';
+        $value = 'EUR';
+        $config = $this->configsRepository->loadByName($name);
+        if (!$config) {
+            $this->configBuilder->createNew()
+                ->setName($name)
+                ->setDisplayName('Globalna mena')
+                ->setDescription('Globalna mena pouzivana pri vsetkych platbach')
+                ->setValue($value)
+                ->setType(ApplicationConfig::TYPE_STRING)
+                ->setAutoload(true)
+                ->setConfigCategory($category)
+                ->setSorting(110)
+                ->save();
+            $output->writeln("  <comment>* config item <info>$name</info> created</comment>");
+        } elseif ($config->has_default_value && $config->value !== $value) {
+            $this->configsRepository->update($config, ['value' => $value, 'has_default_value' => true]);
+            $output->writeln("  <comment>* config item <info>$name</info> updated</comment>");
+        } else {
+            $output->writeln("  * config item <info>$name</info> exists");
+        }
+
         $name = 'site_title';
         $value = 'CRM';
         $config = $this->configsRepository->loadByName($name);

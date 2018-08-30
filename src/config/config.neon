@@ -20,6 +20,7 @@ services:
 			- register('helpIcon', [Crm\ApplicationModule\Helpers\HelpIconHelper(), process])
 			- register('userDate', [Crm\ApplicationModule\Helpers\UserDateHelper(), process])
 			- register('yesNo', [Crm\ApplicationModule\Helpers\YesNoHelper(), process])
+			- register('price', [Crm\ApplicationModule\Helpers\PriceHelper(), process])
 
 	- Crm\ApplicationModule\Router\RouterFactory
 	router: @Crm\ApplicationModule\Router\RouterFactory::createRouter
@@ -51,6 +52,7 @@ services:
 	- Crm\ApplicationModule\Commands\HermesWorkerCommand
 	- Crm\ApplicationModule\Commands\CleanupCommand
 	- Crm\ApplicationModule\Config\ConfigsCache(%redis.host%, %redis.port%)
+	- Crm\ApplicationModule\Helpers\PriceHelper
 
 	graph_data: Crm\ApplicationModule\Graphs\GraphData
 	- Crm\ApplicationModule\Graphs\ScaleFactory
