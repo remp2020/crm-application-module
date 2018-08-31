@@ -11,7 +11,7 @@ class ModuleManager
      * @param ApplicationModuleInterface $applicationModule
      * @param int $order Order in which should be modules stored.
      */
-    public function addModule(ApplicationModuleInterface $applicationModule, $order = 100)
+    public function addModule(ApplicationModuleInterface $applicationModule, $order = 1000)
     {
         if (isset($this->modules[$order])) {
             do {
