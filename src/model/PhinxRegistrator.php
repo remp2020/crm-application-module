@@ -20,12 +20,18 @@ class PhinxRegistrator
         '\Phinx\Console\Command\Test' => 'phinx:test'
     ];
 
+    private $moduleManager;
+
     /**
      * @param Application $application
      */
-    public function __construct(Application $application, EnvironmentConfig $envConfig)
-    {
+    public function __construct(
+        Application $application,
+        EnvironmentConfig $envConfig,
+        ModuleManager $moduleManager
+    ) {
         $this->envConfig = $envConfig;
+        $this->moduleManager = $moduleManager;
         $config = new Config($this->buildConfig(), __FILE__);
 
         // Register all commands
@@ -49,13 +55,20 @@ class PhinxRegistrator
 
         $configData = [
             'paths' => [
-                'migrations' => '%%PHINX_CONFIG_DIR%%/../../../../migrations',
+                'migrations' => [
+                    '%%PHINX_CONFIG_DIR%%/../../../../migrations'
+                ]
             ],
             'environments' => [
                 'default_migration_table' => 'phinxlog',
                 'default_database' => $env,
             ],
         ];
+
+        foreach ($this->moduleManager->getModules() as $module) {
+            $reflector = new \ReflectionClass($module);
+            $configData['paths']['migrations'][] = dirname($reflector->getFileName()) . '/migrations';
+        }
 
         $configData['environments'][$env] = [
             'adapter' => $this->envConfig->get('CRM_DB_ADAPTER'),
