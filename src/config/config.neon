@@ -4,7 +4,7 @@ services:
 	moduleManager:
 		class: Crm\ApplicationModule\ModuleManager
 		setup:
-			- addModule(Crm\ApplicationModule\ApplicationModule())
+			- addModule(Crm\ApplicationModule\ApplicationModule(), 1)
 
 	applicationManager:
 		class: Crm\ApplicationModule\ApplicationManager
