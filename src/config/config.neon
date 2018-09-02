@@ -67,6 +67,7 @@ services:
 	- Crm\ApplicationModule\Events\NewAccessTokenHandler
 	- Crm\ApplicationModule\Events\RemovedAccessTokenHandler
 
+	- Crm\ApplicationModule\Seeders\CalendarSeeder
 	- Crm\ApplicationModule\Seeders\ConfigsSeeder
 	- Crm\ApplicationModule\Seeders\CountriesSeeder
 	- Crm\ApplicationModule\Seeders\SnippetsSeeder
