@@ -6,6 +6,7 @@ use Crm\ApiModule\Router\ApiIdentifier;
 use Crm\ApiModule\Router\ApiRoute;
 use Crm\ApiModule\Api\ApiRoutersContainerInterface;
 use Crm\ApplicationModule\Commands\CommandsContainerInterface;
+use Crm\ApplicationModule\Seeders\CalendarSeeder;
 use Crm\ApplicationModule\Seeders\ConfigsSeeder;
 use Crm\ApplicationModule\Seeders\CountriesSeeder;
 use Crm\ApplicationModule\Seeders\SnippetsSeeder;
@@ -61,6 +62,7 @@ class ApplicationModule extends CrmModule
 
     public function registerSeeders(SeederManager $seederManager)
     {
+        $seederManager->addSeeder($this->getInstance(CalendarSeeder::class));
         $seederManager->addSeeder($this->getInstance(ConfigsSeeder::class));
         $seederManager->addSeeder($this->getInstance(CountriesSeeder::class));
         $seederManager->addSeeder($this->getInstance(SnippetsSeeder::class));
