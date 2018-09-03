@@ -41,7 +41,8 @@
     "tomaj/nette-bootstrap-form": "^1.1",
     "vlucas/phpdotenv": "^2.0",
     "tomaj/hermes": "^1.3",
-    "predis/predis": "^1.0"
+    "predis/predis": "^1.0",
+    "monolog/monolog": "^1.23"
   },
   "minimum-stability": "stable",
   "autoload": {
