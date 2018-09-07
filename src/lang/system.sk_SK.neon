@@ -33,6 +33,8 @@ filter: Filter
 all: Všetky
 filtered: vyfiltrovaných
 
+vat: DPH
+
 date:
 	days: Dni
 	weeks: Týždne

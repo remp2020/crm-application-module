@@ -33,6 +33,8 @@ filter: Filter
 all: All
 filtered: filtered
 
+vat: VAT
+
 date:
 	days: Days
 	weeks: Weeks
