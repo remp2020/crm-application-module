@@ -25,8 +25,8 @@ message:
 	error: Chyba!
 	warning: Pozor!
 
-yes: "Áno"
-no: "Nie"
+"yes": "Áno"
+"no": "Nie"
 
 cancel_filter: Zruš filter
 filter: Filter
@@ -43,9 +43,9 @@ date:
 
 last:
 	month: Posledný mesiac
-	months: %count%M
+	months: "%count%M"
 	year: Posledný rok
-	years: %count%R
+	years: "%count%R"
 
 fields:
 	updated: Upravené
