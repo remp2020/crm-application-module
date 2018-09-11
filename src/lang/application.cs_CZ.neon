@@ -1,0 +1,72 @@
+menu:
+	settings: Nastavení
+	background_jobs: Úlohy na pozadí
+	snippets: Snippety
+	audit_log: Audit záznam
+data:
+	snippets:
+		fields:
+			title: Název
+			identifier: Identifikátor
+			is_active: Aktivní
+			html: HTML snippetu
+			sorting: Pořadí
+			last_used: Naposledy použitý
+			total_used: Celkem použitý
+		required:
+			title: Název je povinný
+			identifier: Identifikátor je povinný
+		placeholder:
+			title: 'například User zone header '
+			identifier: například user_header
+			sorting: Například 300
+			html: nějaké html
+admin:
+	configs:
+		default:
+			header: Nastavení
+		messages:
+			settings_saved: Nastavení bylo uloženo
+	background:
+		default:
+			header: Úlohy na pozadí
+	snippets:
+		default:
+			title: Snippety
+			new: Nový snippet
+		new:
+			title: Nový snippet
+			back: zpět na snippety
+		show:
+			back: zpět na snippety
+			edit: Upravit snippet
+			basic_informations: Základní informace
+			usage_informations: Použití
+		edit:
+			back: zpět na snippety
+			title: Upravit snippet
+			header: Upravit snippet
+		messages:
+			snippet_deleted: Snippet byl úspěšně smazán
+			snippet_created: Snippet byl úspěšně vytvořen
+			snippet_updated: Snippet byl úspěšně upraven
+	audit_log:
+		default:
+			header: Audit záznam
+			operation: Operace
+			table: Tabulka
+			signature: Identifikátor
+			created_at_from: Čas od
+			created_at_to: Čas do
+			filter: Filtr
+			cancel_filter: Zruš filtr
+			change: Změna
+			changed_by: Změnu provedl
+			created_at: Čas
+frontend:
+	layout:
+		warning: Pozor!
+		danger: Chyba!
+		success: Úspěch!
+common:
+	eg: např.
