@@ -13,9 +13,9 @@ use Tomaj\Errbit\ErrbitLogger;
 class Core
 {
     /** @var Container */
-    private $container;
+    protected $container;
 
-    private $environment = null;
+    protected $environment = null;
 
     public function __construct($appRootDir = null)
     {
@@ -70,7 +70,7 @@ class Core
         return $application->run();
     }
 
-    private function init()
+    protected function init()
     {
         require_once APP_ROOT . 'vendor/autoload.php';
 
@@ -89,7 +89,7 @@ class Core
         }
     }
 
-    private function createContainer()
+    protected function createContainer()
     {
         $configurator = new Configurator;
 
@@ -124,7 +124,7 @@ class Core
         $this->container = $configurator->createContainer();
     }
 
-    private function setDatabase()
+    protected function setDatabase()
     {
         $database = $this->container->getByType('Nette\Database\Context');
         // TODO: [refactoring] test with proper settings 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION'
@@ -132,7 +132,7 @@ class Core
         $database->query("SET NAMES utf8mb4");
     }
 
-    private function setLogging()
+    protected function setLogging()
     {
         $errbitConfig = $this->container->parameters['errbit'];
         ErrbitLogger::register($errbitConfig);
