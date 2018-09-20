@@ -44,6 +44,12 @@ class Core
 
     public function command()
     {
+        // TODO: [refactoring] try to find way around this?
+        // Generated Nette cache directories will have incorrect permissions
+        // if command was run before proper web user accesses app over http.
+        // This ugly hack "fixes" it :\
+        umask(0);
+
         $this->bootstrap();
         $application = new Application();
         $application->setCatchExceptions(false);
