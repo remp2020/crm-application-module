@@ -1,4 +1,6 @@
 services:
+	emitter: League\Event\Emitter
+
 	environmentConfig: Crm\ApplicationModule\EnvironmentConfig
 
 	moduleManager:
