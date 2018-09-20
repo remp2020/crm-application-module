@@ -7,8 +7,6 @@ use Crm\ApplicationModule\Config\ConfigsCache;
 use Crm\ApplicationModule\ModuleManager;
 use Nette\Application\Routers\Route;
 use Nette\Application\Routers\RouteList;
-use Nette\Caching\Cache;
-use Nette\Caching\IStorage;
 
 /**
  * Router factory.

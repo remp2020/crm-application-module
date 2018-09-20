@@ -2,9 +2,9 @@
 
 namespace Crm\ApplicationModule;
 
+use Crm\ApiModule\Api\ApiRoutersContainerInterface;
 use Crm\ApiModule\Router\ApiIdentifier;
 use Crm\ApiModule\Router\ApiRoute;
-use Crm\ApiModule\Api\ApiRoutersContainerInterface;
 use Crm\ApplicationModule\Commands\CommandsContainerInterface;
 use Crm\ApplicationModule\Seeders\CalendarSeeder;
 use Crm\ApplicationModule\Seeders\ConfigsSeeder;
