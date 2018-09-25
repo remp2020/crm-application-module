@@ -59,6 +59,7 @@ services:
 	- Crm\ApplicationModule\Commands\CleanupCommand
 	- Crm\ApplicationModule\Config\ConfigsCache(%redis.host%, %redis.port%)
 	- Crm\ApplicationModule\Helpers\PriceHelper
+	- Crm\ApplicationModule\Helpers\UserDateHelper
 
 	graph_data: Crm\ApplicationModule\Graphs\GraphData
 	- Crm\ApplicationModule\Graphs\ScaleFactory
