@@ -67,7 +67,7 @@ abstract class BasePresenter extends Presenter
         return \Crm\ApplicationModule\Request::getIp();
     }
 
-    protected function onlyLoggedIn()
+    public function onlyLoggedIn()
     {
         if (!$this->getUser()->isLoggedIn()) {
             $this->redirect($this->applicationConfig->get('not_logged_in_route'), ['back' => $this->storeRequest()]);
