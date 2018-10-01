@@ -41,7 +41,9 @@ abstract class BaseWidget extends UI\Control implements WidgetInterface
     {
         $widget = $this->widgetManager->getWidgetByIdentifier($name);
         if ($widget) {
-            $this->addComponent($widget, $widget->identifier());
+            if (!isset($this->components[$widget->identifier()])) {
+                $this->addComponent($widget, $widget->identifier());
+            }
             return $widget;
         }
 
