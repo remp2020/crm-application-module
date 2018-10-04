@@ -25,7 +25,8 @@ class Core
                 // working with assumption callers will be in placed in default crm-skeleton directories:
                 // - <path-to-project>/bin/command.php
                 // - <path-to-project>/app/bootstrap.php
-                $appRootDir = realpath(dirname($_SERVER["SCRIPT_FILENAME"]) . '/../');
+                //$appRootDir = realpath(dirname($_SERVER["SCRIPT_FILENAME"]) . '/../');
+                $appRootDir = realpath(__DIR__ . '/../../../../');
             }
 
             define('APP_ROOT', $appRootDir . '/');
