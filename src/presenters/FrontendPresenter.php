@@ -140,7 +140,7 @@ class FrontendPresenter extends BasePresenter
      *
      * @return array
      */
-    protected function utmParams() : array
+    public function utmParams() : array
     {
         return array_filter([
             'utm_source' => $this->utmSession->utmSource,
