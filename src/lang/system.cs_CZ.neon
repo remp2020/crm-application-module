@@ -1,0 +1,41 @@
+from: Od
+to: Do
+actual: Aktuálně
+actions: Akce
+activated: aktivovaný
+deactivated: deaktivovaný
+show: Zobraz
+add: Přidej
+edit: Uprav
+save: Ulož
+delete: Smaž
+export: Export
+total: celkem
+logged: Přihlášený
+sign_in: Přihlásit
+buy_subscription: Koupit předplatné
+confirm_delete: "Jste si skutečně jistý/á, že chcete smazat tento záznam?"
+download: Stáhni
+message:
+	success: Úspěch!
+	error: Chyba!
+	warning: Pozor!
+"yes": "Ano"
+"no": "Ne"
+cancel_filter: Zruš filtr
+filter: Filtr
+all: Všechny
+filtered: vyfiltrované
+date:
+	days: Dny
+	weeks: Týdny
+	months: Měsíce
+	years: Roky
+last:
+	month: Poslední měsíc
+	months: '%count%M'
+	year: Poslední rok
+	years: '%count%R'
+fields:
+	updated: Upravené
+	created: Vytvořené

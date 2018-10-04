@@ -1,0 +1,53 @@
+from: From
+to: To
+actual: Actual
+actions: Actions
+
+activated: activated
+deactivated: deactivated
+
+show: Show
+add: Add
+edit: Edit
+save: Save
+delete: Delete
+export: Export
+total: total
+
+logged: Logged
+sign_in: Sign in
+buy_subscription: Buy subscription
+confirm_delete: Are you sure you want to delete this record?
+
+download: Download
+
+message:
+	success: Success!
+	error: Error!
+	warning: Warning!
+
+"yes": "Yes"
+"no": "No"
+
+cancel_filter: Cancel filter
+filter: Filter
+all: All
+filtered: filtered
+
+vat: VAT
+
+date:
+	days: Days
+	weeks: Weeks
+	months: Months
+	years: Years
+
+last:
+	month: Last month
+	months: Last %count%M
+	year: Last year
+	years: Last %count%Y
+
+fields:
+	updated: Updated
+	created: Created

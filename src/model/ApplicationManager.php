@@ -6,11 +6,11 @@ use Crm\ApiModule\Router\ApiRoutesContainer;
 use Crm\ApplicationModule\Access\AccessManager;
 use Crm\ApplicationModule\Authenticator\AuthenticatorManager;
 use Crm\ApplicationModule\Commands\CommandsContainer;
+use Crm\ApplicationModule\Criteria\CriteriaStorage;
 use Crm\ApplicationModule\DataProvider\DataProviderManager;
 use Crm\ApplicationModule\Menu\MenuContainer;
 use Crm\ApplicationModule\User\UserDataRegistrator;
 use Crm\ApplicationModule\Widget\WidgetManager;
-use Crm\ApplicationModule\Criteria\CriteriaStorage;
 use League\Event\Emitter;
 use Tomaj\Hermes\Dispatcher;
 
@@ -216,6 +216,7 @@ class ApplicationManager
             $this->registerCommands();
             $this->registerCleanupCallbacks();
             $this->registerHermesHandlers();
+            $this->registerSeeders();
         }
 
         $this->registerEventHandlers();
@@ -225,7 +226,6 @@ class ApplicationManager
         $this->registerUserDataRegistrators();
         $this->registerCriteriaStorage();
         $this->registerLayouts();
-        $this->registerSeeders();
         $this->registerAccessProviders();
         $this->registerDataProviders();
     }

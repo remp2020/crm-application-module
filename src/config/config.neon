@@ -1,10 +1,12 @@
 services:
+	emitter: League\Event\Emitter
+
 	environmentConfig: Crm\ApplicationModule\EnvironmentConfig
 
 	moduleManager:
 		class: Crm\ApplicationModule\ModuleManager
 		setup:
-			- addModule(Crm\ApplicationModule\ApplicationModule())
+			- addModule(Crm\ApplicationModule\ApplicationModule(), 1)
 
 	applicationManager:
 		class: Crm\ApplicationModule\ApplicationManager
@@ -12,6 +14,10 @@ services:
 			- initialize
 
 	# Latte filters
+	nette.latteFactory:
+		setup:
+			- addFilter(null, [@filterLoader, 'load'])
+
 	filterLoader:
 		class: Crm\ApplicationModule\Helpers\FilterLoader
 		setup:
@@ -20,6 +26,7 @@ services:
 			- register('helpIcon', [Crm\ApplicationModule\Helpers\HelpIconHelper(), process])
 			- register('userDate', [Crm\ApplicationModule\Helpers\UserDateHelper(), process])
 			- register('yesNo', [Crm\ApplicationModule\Helpers\YesNoHelper(), process])
+			- register('price', [Crm\ApplicationModule\Helpers\PriceHelper(), process])
 
 	- Crm\ApplicationModule\Router\RouterFactory
 	router: @Crm\ApplicationModule\Router\RouterFactory::createRouter
@@ -51,6 +58,8 @@ services:
 	- Crm\ApplicationModule\Commands\HermesWorkerCommand
 	- Crm\ApplicationModule\Commands\CleanupCommand
 	- Crm\ApplicationModule\Config\ConfigsCache(%redis.host%, %redis.port%)
+	- Crm\ApplicationModule\Helpers\PriceHelper
+	- Crm\ApplicationModule\Helpers\UserDateHelper
 
 	graph_data: Crm\ApplicationModule\Graphs\GraphData
 	- Crm\ApplicationModule\Graphs\ScaleFactory
@@ -65,6 +74,7 @@ services:
 	- Crm\ApplicationModule\Events\NewAccessTokenHandler
 	- Crm\ApplicationModule\Events\RemovedAccessTokenHandler
 
+	- Crm\ApplicationModule\Seeders\CalendarSeeder
 	- Crm\ApplicationModule\Seeders\ConfigsSeeder
 	- Crm\ApplicationModule\Seeders\CountriesSeeder
 	- Crm\ApplicationModule\Seeders\SnippetsSeeder

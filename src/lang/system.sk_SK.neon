@@ -1,0 +1,53 @@
+from: Od
+to: Do
+actual: Aktuálne
+actions: Akcie
+
+activated: aktivovaný
+deactivated: deaktivovaný
+
+show: Zobraz
+add: Pridaj
+edit: Uprav
+save: Ulož
+delete: Zmaž
+export: Export
+total: celkovo
+
+logged: Prihlásený
+sign_in: Prihlásiť
+buy_subscription: Kúpiť predplatné
+confirm_delete: Ste si naozaj istý že chcete zmazať tento záznam?
+
+download: Stiahni
+
+message:
+	success: Úspech!
+	error: Chyba!
+	warning: Pozor!
+
+"yes": "Áno"
+"no": "Nie"
+
+cancel_filter: Zruš filter
+filter: Filter
+all: Všetky
+filtered: vyfiltrovaných
+
+vat: DPH
+
+date:
+	days: Dni
+	weeks: Týždne
+	months: Mesiace
+	years: Roky
+
+last:
+	month: Posledný mesiac
+	months: "%count%M"
+	year: Posledný rok
+	years: "%count%R"
+
+fields:
+	updated: Upravené
+	created: Vytvorené
