@@ -74,7 +74,6 @@ class FrontendPresenter extends BasePresenter
         // a spravit nejaky mechanizmus aby jednotlive moduly vedeli pridavat tuto funkcioianlitu dynamicky
         if (!$this->getUser()->isLoggedIn() && $this->getParameter('autologin') !== 'done' &&
             (isset($this->params['login_t']) || $this->request->getCookie('n_token') || isset($this->params['token']))) {
-
             try {
                 $mailAutologinToken = isset($this->params['login_t']) ? $this->params['login_t'] : null;
                 if (!$mailAutologinToken && isset($this->params['token'])) {
