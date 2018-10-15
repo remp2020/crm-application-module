@@ -72,10 +72,8 @@ class FrontendPresenter extends BasePresenter
 
         // tento kod by bolo dobre nejak oddelit
         // a spravit nejaky mechanizmus aby jednotlive moduly vedeli pridavat tuto funkcioianlitu dynamicky
-        if (!$this->getUser()->isLoggedIn() &&
+        if (!$this->getUser()->isLoggedIn() && $this->getParameter('autologin') !== 'done' &&
             (isset($this->params['login_t']) || $this->request->getCookie('n_token') || isset($this->params['token']))) {
-            $redirect = true;
-
             try {
                 $mailAutologinToken = isset($this->params['login_t']) ? $this->params['login_t'] : null;
                 if (!$mailAutologinToken && isset($this->params['token'])) {
@@ -92,18 +90,13 @@ class FrontendPresenter extends BasePresenter
 
                 if ($this->request->getCookie('n_token')) {
                     $this->response->deleteCookie('n_token');
-                    $redirect = false;
                 }
+                $redirect = false;
             }
 
             if ($redirect) {
                 $params = $this->params;
-                if (isset($params['login_t'])) {
-                    unset($params['login_t']);
-                }
-                if (isset($params['token'])) {
-                    unset($params['token']);
-                }
+                $params['autologin'] = 'done';
                 $this->redirect($this->action, $params);
             }
         }
