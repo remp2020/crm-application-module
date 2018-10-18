@@ -23,8 +23,6 @@ class GraphData
 
     private $graphDataItems = [];
 
-    private $criteria;
-
     private $start;
     private $end = null;
 
@@ -125,27 +123,5 @@ class GraphData
         }
 
         return $series;
-    }
-
-    public function getRangeData()
-    {
-        $zeroKeys = $this->scale->getKeys($this->criteria->getStart(), $this->criteria->getEnd());
-
-        $dbData = $this->scale->getDatabaseRangeData($this->database, $this->criteria);
-
-        return $this->formatData($zeroKeys, $dbData);
-    }
-
-    private function formatData($zeroValues, $dbData)
-    {
-        $result = [];
-        foreach ($zeroValues as $key => $value) {
-            if (isset($dbData[$key])) {
-                $result[$key] = $dbData[$key];
-            } else {
-                $result[$key] = $zeroValues[$key];
-            }
-        }
-        return $result;
     }
 }
