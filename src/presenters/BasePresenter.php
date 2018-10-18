@@ -52,7 +52,7 @@ abstract class BasePresenter extends Presenter
         $this->template->siteDescription = $this->applicationConfig->get('site_description');
     }
 
-    protected function createTemplate($class = null)
+    protected function createTemplate()
     {
         $template = parent::createTemplate();
 
