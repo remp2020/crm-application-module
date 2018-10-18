@@ -79,6 +79,9 @@ class RedisUserDataStorage implements UserDataStorageInterface
                 'host'   => $this->host,
                 'port'   => $this->port,
             ]);
+            if ($this->db) {
+                $this->redis->select($this->db);
+            }
         }
         return $this->redis;
     }
