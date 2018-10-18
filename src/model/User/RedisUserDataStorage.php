@@ -12,6 +12,8 @@ class RedisUserDataStorage implements UserDataStorageInterface
 
     private $port;
 
+    private $db;
+
     private $userDataKey = 'user_data';
 
     public function __construct($host = '127.0.0.1', $port = 6379, $db = 0)
