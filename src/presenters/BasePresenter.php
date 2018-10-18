@@ -54,7 +54,7 @@ abstract class BasePresenter extends Presenter
 
     protected function createTemplate($class = null)
     {
-        $template = parent::createTemplate($class);
+        $template = parent::createTemplate();
 
         $this->translator->createTemplateHelpers()
             ->register($template->getLatte());

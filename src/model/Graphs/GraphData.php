@@ -23,6 +23,8 @@ class GraphData
 
     private $graphDataItems = [];
 
+    private $criteria;
+
     private $start;
     private $end = null;
 
