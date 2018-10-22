@@ -6,6 +6,8 @@ use Nette\Database\Context;
 
 class ScaleFactory
 {
+    private $database;
+
     public function __construct(Context $database)
     {
         $this->database = $database;
