@@ -33,8 +33,9 @@ class HermesTasksQueue
                 'host'   => $this->host,
                 'port'   => $this->port,
             ]);
-
-            $this->redis->select($this->db);
+            if ($this->db) {
+                $this->redis->select($this->db);
+            }
         }
 
         return $this->redis;
