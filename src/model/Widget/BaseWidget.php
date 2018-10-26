@@ -18,6 +18,7 @@ abstract class BaseWidget extends UI\Control implements WidgetInterface
 
     public function __construct(WidgetManager $widgetManager)
     {
+        parent::__construct();
         $this->widgetManager = $widgetManager;
     }
 
