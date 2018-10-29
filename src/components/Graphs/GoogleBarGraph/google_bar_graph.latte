@@ -23,7 +23,11 @@
 {var $dateCount = count($xAxis)}
 
 {for $i=0; $i < $dateCount; $i++}
-    {var $elements = [$xAxis[$i]] + $serieTable[$i]}
+    {if (strpos($xAxis[$i], 'new Date') !== false)}
+        {var $elements = [$xAxis[$i]] + $serieTable[$i]}
+    {else}
+        {var $elements = [json_encode($xAxis[$i])] + $serieTable[$i]}
+    {/if}
     {var $dataTable[$i] = implode(',', $elements)}
 {/for}
 
