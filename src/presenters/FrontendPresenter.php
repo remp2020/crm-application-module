@@ -55,6 +55,7 @@ class FrontendPresenter extends BasePresenter
         $this->template->user = $this->getUser();
         $this->template->headerCode = $this->applicationConfig->get('header_block');
         $this->template->jsDomain = $this->getJavascriptDomain();
+        $this->template->cmsUrl = $this->applicationConfig->get('cms_url');
     }
 
     protected function getJavascriptDomain()
