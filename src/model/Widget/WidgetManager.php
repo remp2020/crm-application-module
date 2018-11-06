@@ -18,6 +18,17 @@ class WidgetManager implements WidgetManagerInterface
         $this->widgets[$path][$priority] = $widget;
     }
 
+    public function deregisterWidget($path, WidgetInterface $widget)
+    {
+        if (isset($this->widgets[$path])) {
+            foreach ($this->widgets[$path] as $priority => $w) {
+                if (get_class($widget) === get_class($w)) {
+                    unset($this->widgets[$path][$priority]);
+                }
+            }
+        }
+    }
+
     public function registerWidgetFactory($path, WidgetFactoryInterface $widgetFactory, $priority = 100)
     {
         $this->widgetsFactories[$path][$priority] = $widgetFactory;
