@@ -3,12 +3,22 @@
 namespace Crm\ApplicationModule\Config\Repository;
 
 use Crm\ApplicationModule\Repository;
+use Crm\ApplicationModule\Repository\AuditLogRepository;
 use DateTime;
+use Nette\Database\Context;
 use Nette\Database\Table\IRow;
 
 class ConfigsRepository extends Repository
 {
     protected $tableName = 'configs';
+
+    public function __construct(
+        Context $database,
+        AuditLogRepository $auditLogRepository
+    ) {
+        parent::__construct($database);
+        $this->auditLogRepository = $auditLogRepository;
+    }
 
     public function loadAllAutoload()
     {
