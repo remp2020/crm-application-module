@@ -43,7 +43,7 @@ class ConfigsSeeder implements ISeeder
             $this->configBuilder->createNew()
                 ->setName($name)
                 ->setDisplayName('Globalna mena')
-                ->setDescription('Globalna mena pouzivana pri vsetkych platbach')
+                ->setDescription('Globalna mena pouzivana pri vsetkych platbach v ISO-4217 formate')
                 ->setValue($value)
                 ->setType(ApplicationConfig::TYPE_STRING)
                 ->setAutoload(true)
