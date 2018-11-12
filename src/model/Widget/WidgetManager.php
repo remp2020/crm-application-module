@@ -6,6 +6,8 @@ class WidgetManager implements WidgetManagerInterface
 {
     private $widgets = [];
 
+    private $overrideWidgets = [];
+
     private $widgetsFactories = [];
 
     public function registerWidget($path, WidgetInterface $widget, $priority = 100, $overwrite = false)
@@ -18,15 +20,31 @@ class WidgetManager implements WidgetManagerInterface
         $this->widgets[$path][$priority] = $widget;
     }
 
-    public function deregisterWidget($path, WidgetInterface $widget)
+    public function overrideWidget($path, WidgetInterface $oldWidget, WidgetInterface $newWidget)
     {
-        if (isset($this->widgets[$path])) {
-            foreach ($this->widgets[$path] as $priority => $w) {
-                if (get_class($widget) === get_class($w)) {
-                    unset($this->widgets[$path][$priority]);
+        if (!array_key_exists($path, $this->overrideWidgets)) {
+            $this->overrideWidgets[$path] = [];
+        }
+
+        $this->overrideWidgets[$path][get_class($oldWidget)] = $newWidget;
+    }
+
+    private function overrideWidgets()
+    {
+        if (!empty($this->overrideWidgets)) {
+            foreach ($this->widgets as $path => $registeredWidgets) {
+                if (isset($this->overrideWidgets[$path])) {
+                    foreach ($registeredWidgets as $priority => $registeredWidget) {
+                        if (array_key_exists(get_class($registeredWidget), $this->overrideWidgets[$path])) {
+                            $this->widgets[$path][$priority] = $this->overrideWidgets[$path][get_class($registeredWidget)];
+                            unset($this->overrideWidgets[$path][get_class($registeredWidget)]);
+                        }
+                    }
                 }
             }
         }
+
+        $this->overrideWidgets = [];
     }
 
     public function registerWidgetFactory($path, WidgetFactoryInterface $widgetFactory, $priority = 100)
@@ -36,6 +54,8 @@ class WidgetManager implements WidgetManagerInterface
 
     public function getWidgets($path)
     {
+        $this->overrideWidgets();
+
         if (isset($this->widgets[$path])) {
             $result = $this->widgets[$path];
             ksort($result);
@@ -56,6 +76,8 @@ class WidgetManager implements WidgetManagerInterface
 
     public function getWidgetByIdentifier($identifier)
     {
+        $this->overrideWidgets();
+
         foreach ($this->widgets as $path => $widgets) {
             foreach ($widgets as $widget) {
                 if ($widget->identifier() == $identifier) {
