@@ -211,6 +211,7 @@ class CountriesSeeder implements ISeeder
             "UA" => "Ukraine",
             "AE" => "United Arab Emirates",
             "GB" => "United Kingdom",
+            "US" => "United States of America",
             "UY" => "Uruguay",
             "UZ" => "Uzbekistan",
             "VU" => "Vanuatu",
