@@ -21,7 +21,7 @@ class DeleteUserData
     {
         list($canBeDeleted, $errors) = $this->canBeDeleted($userId);
         if (!$canBeDeleted) {
-            throw new \Exception(sprintf('cannot delete user: %s', implode(', ', $errors)));
+            throw new \Exception(sprintf("cannot delete user {$userId}: %s", implode(', ', $errors)));
         }
         $this->userDataRegistrator->protect($userId);
         return $this->userDataRegistrator->delete($userId);
