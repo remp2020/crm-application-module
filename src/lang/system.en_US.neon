@@ -7,6 +7,7 @@ activated: activated
 deactivated: deactivated
 
 show: Show
+add: Add
 edit: Edit
 save: Save
 delete: Delete
@@ -25,8 +26,8 @@ message:
 	error: Error!
 	warning: Warning!
 
-yes: "Yes"
-no: "No"
+"yes": "Yes"
+"no": "No"
 
 cancel_filter: Cancel filter
 filter: Filter

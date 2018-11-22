@@ -52,9 +52,9 @@ abstract class BasePresenter extends Presenter
         $this->template->siteDescription = $this->applicationConfig->get('site_description');
     }
 
-    protected function createTemplate($class = null)
+    protected function createTemplate()
     {
-        $template = parent::createTemplate($class);
+        $template = parent::createTemplate();
 
         $this->translator->createTemplateHelpers()
             ->register($template->getLatte());
@@ -67,7 +67,7 @@ abstract class BasePresenter extends Presenter
         return \Crm\ApplicationModule\Request::getIp();
     }
 
-    protected function onlyLoggedIn()
+    public function onlyLoggedIn()
     {
         if (!$this->getUser()->isLoggedIn()) {
             $this->redirect($this->applicationConfig->get('not_logged_in_route'), ['back' => $this->storeRequest()]);

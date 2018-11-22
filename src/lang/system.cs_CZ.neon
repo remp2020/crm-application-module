@@ -5,6 +5,7 @@ actions: Akce
 activated: aktivovaný
 deactivated: deaktivovaný
 show: Zobraz
+add: Přidej
 edit: Uprav
 save: Ulož
 delete: Smaž
@@ -19,8 +20,8 @@ message:
 	success: Úspěch!
 	error: Chyba!
 	warning: Pozor!
-'yes': Ano
-'no': Ne
+"yes": "Ano"
+"no": "Ne"
 cancel_filter: Zruš filtr
 filter: Filtr
 all: Všechny
