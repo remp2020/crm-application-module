@@ -8,6 +8,7 @@ use Crm\ApplicationModule\Authenticator\AuthenticatorManager;
 use Crm\ApplicationModule\Commands\CommandsContainer;
 use Crm\ApplicationModule\Criteria\CriteriaStorage;
 use Crm\ApplicationModule\DataProvider\DataProviderManager;
+use Crm\ApplicationModule\Event\EventsStorage;
 use Crm\ApplicationModule\Menu\MenuContainer;
 use Crm\ApplicationModule\User\UserDataRegistrator;
 use Crm\ApplicationModule\Widget\WidgetManager;
@@ -50,6 +51,8 @@ class ApplicationManager
 
     private $dataProviderManager;
 
+    private $eventsStorage;
+
     public function __construct(
         Emitter $emitter,
         ModuleManager $moduleManager,
@@ -63,7 +66,8 @@ class ApplicationManager
         LayoutManager $layoutManager,
         SeederManager $seederManager,
         AccessManager $accessManager,
-        DataProviderManager $dataProviderManager
+        DataProviderManager $dataProviderManager,
+        EventsStorage $eventsStorage
     ) {
         $this->widgetManager = $widgetManager;
         $this->emitter = $emitter;
@@ -79,6 +83,7 @@ class ApplicationManager
         $this->seederManager = $seederManager;
         $this->accessManager = $accessManager;
         $this->dataProviderManager = $dataProviderManager;
+        $this->eventsStorage = $eventsStorage;
     }
 
     public function registerEventHandlers()
@@ -210,6 +215,13 @@ class ApplicationManager
         }
     }
 
+    public function registerEvents()
+    {
+        foreach ($this->moduleManager->getModules() as $module) {
+            $module->registerEvents($this->eventsStorage);
+        }
+    }
+
     public function initialize()
     {
         if (isset($_SERVER['SHELL']) || isset($_SERVER['SHLVL'])) {
@@ -228,5 +240,6 @@ class ApplicationManager
         $this->registerLayouts();
         $this->registerAccessProviders();
         $this->registerDataProviders();
+        $this->registerEvents();
     }
 }
