@@ -33,7 +33,7 @@ class ErrorPresenter extends Presenter
 
         if ($this->isAjax()) { // AJAX request? Note this error in payload.
             $this->payload->error = true;
-            $this->terminate();
+            $this->sendPayload();
         }
     }
 
