@@ -60,4 +60,9 @@ class EventsStorage
     {
         return in_array($code, array_keys($this->getEvents()), true);
     }
+
+    public function isEventPublic(string $code): bool
+    {
+        return in_array($code, array_keys($this->getEventsPublic()), true);
+    }
 }
