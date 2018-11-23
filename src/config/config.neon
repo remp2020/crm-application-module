@@ -67,6 +67,7 @@ services:
 	- Crm\ApplicationModule\Event\RedisEventManager(%redis.host%, %redis.port%)
 	- Crm\ApplicationModule\User\UserDataRegistrator
 	- Crm\ApplicationModule\Api\UserDataHandler
+	- Crm\ApplicationModule\Api\EventsListApiHandler
 	- Crm\ApplicationModule\User\UserData
 	- Crm\ApplicationModule\User\DownloadUserData
 	- Crm\ApplicationModule\User\DeleteUserData

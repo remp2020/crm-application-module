@@ -37,9 +37,16 @@ class ApplicationModule extends CrmModule
 
     public function registerApiCalls(ApiRoutersContainerInterface $apiRoutersContainer)
     {
-        $apiRoutersContainer->attachRouter(
-            new ApiRoute(new ApiIdentifier('1', 'users', 'data'), \Crm\ApplicationModule\Api\UserDataHandler::class, \Crm\ApiModule\Authorization\NoAuthorization::class)
-        );
+        $apiRoutersContainer->attachRouter(new ApiRoute(
+            new ApiIdentifier('1', 'users', 'data'),
+            \Crm\ApplicationModule\Api\UserDataHandler::class,
+            \Crm\ApiModule\Authorization\NoAuthorization::class
+        ));
+        $apiRoutersContainer->attachRouter(new ApiRoute(
+            new ApiIdentifier('1', 'events', 'list'),
+            \Crm\ApplicationModule\Api\EventsListApiHandler::class,
+            \Crm\ApiModule\Authorization\BearerTokenAuthorization::class
+        ));
     }
 
     // TODO: [users_module] application module by nemal mat ziadny event handler, aby neexistovala zavislost na ostatnych moduloch
