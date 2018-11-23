@@ -28,7 +28,7 @@ class EventsListApiHandler extends ApiHandler
         $events = $this->eventsStorage->getEventsPublic();
         $result = [];
         foreach ($events as $event) {
-            $result[$event['code']] = [
+            $result[] = [
                 'code' => $event['code'],
                 'name' => $event['name'],
             ];
