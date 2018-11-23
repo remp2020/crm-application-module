@@ -23,7 +23,7 @@ class EventsStorage
 
         $this->events[$code] = [
             'code' => $code,
-            'title' => ucfirst(str_replace('_', ' ', $code)),
+            'name' => ucfirst(str_replace('_', ' ', $code)),
             'class' => $event,
             'is_public' => $isPublic,
         ];

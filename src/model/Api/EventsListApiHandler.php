@@ -30,7 +30,7 @@ class EventsListApiHandler extends ApiHandler
         foreach ($events as $event) {
             $result[$event['code']] = [
                 'code' => $event['code'],
-                'title' => $event['title'],
+                'name' => $event['name'],
             ];
         }
 
