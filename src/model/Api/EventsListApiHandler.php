@@ -25,12 +25,12 @@ class EventsListApiHandler extends ApiHandler
 
     public function handle(ApiAuthorizationInterface $authorization)
     {
-        $events = $this->eventsStorage->getEvents();
+        $events = $this->eventsStorage->getEventsPublic();
         $result = [];
-        foreach ($events as $code => $event) {
-            $result[$code] = [
-                'code' => $code,
-                'title' => ucfirst(str_replace('_', ' ', $code)),
+        foreach ($events as $event) {
+            $result[$event['code']] = [
+                'code' => $event['code'],
+                'title' => $event['title'],
             ];
         }
 
