@@ -47,23 +47,13 @@ class EventsStorage
      */
     private function getFiltered(bool $public = true): array
     {
-        if ($public) {
-            $result = [];
-            foreach ($this->events as $event) {
-                if ($event['is_public']) {
-                    $result[] = $event;
-                }
+        $result = [];
+        foreach ($this->events as $event) {
+            if ($event['is_public'] === $public) {
+                $result[] = $event;
             }
-            return $result;
-        } else {
-            $result = [];
-            foreach ($this->events as $event) {
-                if (!$event['is_public']) {
-                    $result[] = $event;
-                }
-            }
-            return $result;
         }
+        return $result;
     }
 
     public function isEvent(string $code): bool
