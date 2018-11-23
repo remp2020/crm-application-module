@@ -8,6 +8,7 @@ use Crm\ApplicationModule\Authenticator\AuthenticatorManagerInterface;
 use Crm\ApplicationModule\Commands\CommandsContainerInterface;
 use Crm\ApplicationModule\Criteria\CriteriaStorage;
 use Crm\ApplicationModule\DataProvider\DataProviderManager;
+use Crm\ApplicationModule\Event\EventsStorage;
 use Crm\ApplicationModule\Menu\MenuContainerInterface;
 use Crm\ApplicationModule\User\UserDataRegistrator;
 use Crm\ApplicationModule\Widget\WidgetManagerInterface;
@@ -51,4 +52,9 @@ interface ApplicationModuleInterface
     public function registerAccessProvider(AccessManager $accessManager);
 
     public function registerDataProviders(DataProviderManager $dataProvider);
+
+    /**
+     * @throws \Exception
+     */
+    public function registerEvents(EventsStorage $criteriaStorage);
 }
