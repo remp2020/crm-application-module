@@ -25,6 +25,9 @@ class GoogleLineGraphGroup extends BaseGraphControl
 
     private $seriesName = '';
 
+    /** @var callable */
+    private $serieTitleCallback;
+
     private $start = ['day' => '-60 days', 'week' => '-8 weeks', 'month' => '-4 months', 'year' => '-3 years'];
 
     /** @var GoogleLineGraphControlFactoryInterface */
@@ -65,6 +68,12 @@ class GoogleLineGraphGroup extends BaseGraphControl
     public function setGraphHelp($graphHelp)
     {
         $this->graphHelp = $graphHelp;
+        return $this;
+    }
+
+    public function setSerieTitleCallback($serieTitleCallback)
+    {
+        $this->serieTitleCallback = $serieTitleCallback;
         return $this;
     }
 
@@ -118,6 +127,9 @@ class GoogleLineGraphGroup extends BaseGraphControl
         foreach ($this->graphData->getSeriesData() as $k => $v) {
             if (empty($v)) {
                 continue;
+            }
+            if ($this->serieTitleCallback) {
+                $k = ($this->serieTitleCallback)($k);
             }
             $control->addSerie($k, $v);
         }
