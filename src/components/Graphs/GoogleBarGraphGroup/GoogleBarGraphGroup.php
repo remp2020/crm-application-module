@@ -26,6 +26,9 @@ class GoogleBarGraphGroup extends BaseGraphControl
 
     private $stacked = true;
 
+    /** @var callable */
+    private $serieTitleCallback;
+
     private $start = ['day' => '-60 days', 'week' => '-8 weeks', 'month' => '-4 months', 'year' => '-3 years'];
 
     /** @var GoogleBarGraphControlFactoryInterface */
@@ -69,6 +72,12 @@ class GoogleBarGraphGroup extends BaseGraphControl
     public function setGraphHelp($graphHelp)
     {
         $this->graphHelp = $graphHelp;
+        return $this;
+    }
+
+    public function setSerieTitleCallback($serieTitleCallback)
+    {
+        $this->serieTitleCallback = $serieTitleCallback;
         return $this;
     }
 
@@ -121,6 +130,9 @@ class GoogleBarGraphGroup extends BaseGraphControl
         }
 
         foreach ($this->graphData->getSeriesData() as $k => $v) {
+            if ($this->serieTitleCallback) {
+                $k = ($this->serieTitleCallback)($k);
+            }
             $control->addSerie($k, $v);
         }
 
@@ -137,6 +149,9 @@ class GoogleBarGraphGroup extends BaseGraphControl
             ->setStart($this->getParameter('range', $this->start['week']));
 
         foreach ($this->graphData->getSeriesData() as $k => $v) {
+            if ($this->serieTitleCallback) {
+                $k = ($this->serieTitleCallback)($k);
+            }
             $control->addSerie($k, $v);
         }
 
@@ -153,6 +168,9 @@ class GoogleBarGraphGroup extends BaseGraphControl
             ->setStart($this->getParameter('range', $this->start['month']));
 
         foreach ($this->graphData->getSeriesData() as $k => $v) {
+            if ($this->serieTitleCallback) {
+                $k = ($this->serieTitleCallback)($k);
+            }
             $control->addSerie($k, $v);
         }
 
@@ -169,6 +187,9 @@ class GoogleBarGraphGroup extends BaseGraphControl
             ->setStart($this->getParameter('range', $this->start['year']));
 
         foreach ($this->graphData->getSeriesData() as $k => $v) {
+            if ($this->serieTitleCallback) {
+                $k = ($this->serieTitleCallback)($k);
+            }
             $control->addSerie($k, $v);
         }
 
