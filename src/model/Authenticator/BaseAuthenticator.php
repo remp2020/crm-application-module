@@ -62,6 +62,13 @@ abstract class BaseAuthenticator implements AuthenticatorInterface
         return $this->source;
     }
 
+    /**
+     * @inheritdoc
+     */
+    public function getOptions(): array
+    {
+        return [];
+    }
 
     protected function addAttempt($email, $user, $source, $status, $message = null)
     {
