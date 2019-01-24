@@ -4,8 +4,6 @@ namespace Crm\ApplicationModule\Authenticator;
 
 interface AuthenticatorInterface
 {
-    const REGENERATE_TOKEN = 'regenerate_token';
-
     /**
      * Authenticates & returns user if successful.
      *
@@ -25,8 +23,5 @@ interface AuthenticatorInterface
      */
     public function getSource() : string;
 
-    /**
-     * Optional authenticator interfaces
-     */
-    public function getOptions() : array;
+    public function shouldRegenerateToken(): bool;
 }
