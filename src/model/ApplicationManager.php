@@ -229,10 +229,11 @@ class ApplicationManager
             $this->registerCleanupCallbacks();
             $this->registerHermesHandlers();
             $this->registerSeeders();
+        } else {
+            $this->registerWidgets();
         }
 
         $this->registerEventHandlers();
-        $this->registerWidgets();
         $this->registerApiCalls();
         $this->registerAuthenticators();
         $this->registerUserDataRegistrators();
