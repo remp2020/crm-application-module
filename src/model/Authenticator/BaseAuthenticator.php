@@ -62,12 +62,9 @@ abstract class BaseAuthenticator implements AuthenticatorInterface
         return $this->source;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getOptions(): array
+    public function shouldRegenerateToken(): bool
     {
-        return [];
+        return true;
     }
 
     protected function addAttempt($email, $user, $source, $status, $message = null)
