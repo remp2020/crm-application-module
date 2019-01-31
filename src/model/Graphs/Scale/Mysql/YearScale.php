@@ -78,7 +78,7 @@ GROUP BY time_series.time_key
         foreach ($res as $row) {
             $value = 0;
             if ($row->id != null) {
-                $value = intval($row['value']);
+                $value = $row['value'];
             }
             if (isset($row->name)) {
                 $dbData[$row->name]["{$row->year}"] = $value;
@@ -111,7 +111,7 @@ GROUP BY calendar.year
         foreach ($res as $row) {
             $value = 0;
             if ($row->id != null) {
-                $value = intval($row['value']);
+                $value = $row['value'];
             }
             $dbData["{$row->year}"] = $value;
         }
@@ -142,7 +142,7 @@ GROUP BY calendar.year" . $this->getGroupBy($criteria->getGroupBy()) . '
         foreach ($res as $row) {
             $value = 0;
             if ($row->id != null) {
-                $value = intval($row['value']);
+                $value = $row['value'];
             }
             if (isset($row->name)) {
                 $dbData[$row->name]["{$row->year}"] = $value;

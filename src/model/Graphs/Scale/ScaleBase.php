@@ -33,7 +33,7 @@ abstract class ScaleBase
         foreach ($res as $row) {
             $value = 0;
             if ($row->id != null) {
-                $value = intval($row['value']);
+                $value = $row['value'];
             }
             if (isset($row->name)) {
                 $dbData[$row->name]["{$row->year}-{$row->month}-{$row->day}"] = $value;
