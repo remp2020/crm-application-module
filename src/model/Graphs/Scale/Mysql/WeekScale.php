@@ -76,7 +76,7 @@ GROUP BY time_series.time_key
         foreach ($res as $row) {
             $value = 0;
             if ($row->id != null) {
-                $value = intval($row['value']);
+                $value = $row['value'];
             }
             $date = new \DateTime();
             $date->setISODate($row->year, $row->week);
@@ -114,7 +114,7 @@ GROUP BY calendar.year,calendar.month,calendar.week
         foreach ($res as $row) {
             $value = 0;
             if ($row->id != null) {
-                $value = intval($row['value']);
+                $value = $row['value'];
             }
             $dbData["{$row->year}-{$row->month}-{$row->week}"] = $value;
         }
@@ -148,7 +148,7 @@ GROUP BY calendar.year,calendar.month,calendar.week" . $this->getGroupBy($criter
         foreach ($res as $row) {
             $value = 0;
             if ($row->id != null) {
-                $value = intval($row['value']);
+                $value = $row['value'];
             }
             $date = new \DateTime();
             $date->setISODate($row->year, $row->week);
