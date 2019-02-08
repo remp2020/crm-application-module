@@ -19,4 +19,9 @@ class StatsRepository extends Repository
     {
         return $this->getTable()->where('key', $key)->fetch();
     }
+
+    public static function insertOrUpdateQuery($key, $valueQuery)
+    {
+        return "INSERT INTO stats (`key`, `value`) VALUES ('$key', ($valueQuery)) ON DUPLICATE KEY UPDATE value=VALUES(value);";
+    }
 }
