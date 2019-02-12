@@ -16,7 +16,6 @@ class StatsRepository extends Repository
         parent::__construct($database);
     }
 
-
     /**
      * Retrieve cached value either from Stats table or using $getValue callable (and subsequently cache it in DB)
      * @param               $key
@@ -55,7 +54,7 @@ class StatsRepository extends Repository
     public function updateKey($key, $value)
     {
         $this->getDatabase()->query(
-            'INSERT INTO stats (`key`, `value`) VALUES (?, ?) ON DUPLICATE KEY UPDATE value=VALUES(value)',
+            'INSERT INTO stats (`key`, `value`, `updated_at`) VALUES (?, ?, NOW()) ON DUPLICATE KEY UPDATE value=VALUES(value), updated_at=NOW()',
             $key,
             $value
         );

@@ -11,7 +11,6 @@ class AddTimeToStatsTable extends AbstractMigration
             ->addColumn('updated_at', 'datetime', [
                 'null' => false,
                 'default' => 'CURRENT_TIMESTAMP',
-                'update' => 'CURRENT_TIMESTAMP'
             ])
             ->save();
     }
