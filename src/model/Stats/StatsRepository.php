@@ -41,9 +41,9 @@ class StatsRepository extends Repository
 
     public function updateKey($key, $value)
     {
-        $this->getTable()
-            ->where(['key' => $key])
-            ->update(['value' => $value]);
+        $this->getDatabase()->query(
+            'INSERT INTO stats (`key`, `value`) VALUES (?, ?) ON DUPLICATE KEY UPDATE value=VALUES(value)', $key, $value
+        );
     }
 
     public static function insertOrUpdateQuery($key, $valueQuery)
