@@ -16,12 +16,25 @@ class StatsRepository extends Repository
         parent::__construct($database);
     }
 
-    public function loadByKeyAndUpdateCache($key, callable $getValue, DateTime $notOlderThan = null)
+
+    /**
+     * Retrieve cached value either from Stats table or using $getValue callable (and subsequently cache it in DB)
+     * @param               $key
+     * @param callable      $getValue
+     * @param DateTime|null $notOlderThan
+     * @param bool          $forceUpdate
+     *
+     * @return mixed|\Nette\Database\Table\ActiveRow
+     */
+    public function loadByKeyAndUpdateCache($key, callable $getValue, DateTime $notOlderThan = null, $forceUpdate = false)
     {
-        $stat = $this->loadByKey($key, $notOlderThan);
-        if ($stat) {
-            return $stat->value;
+        if (!$forceUpdate) {
+            $stat = $this->loadByKey($key, $notOlderThan);
+            if ($stat) {
+                return $stat->value;
+            }
         }
+
         $value = $getValue();
         $this->updateKey($key, $value);
         return $value;
