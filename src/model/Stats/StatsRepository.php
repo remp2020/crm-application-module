@@ -4,6 +4,7 @@ namespace Crm\ApplicationModule\Stats;
 
 use Crm\ApplicationModule\Repository;
 use Nette\Database\Context;
+use Nette\Utils\DateTime;
 
 class StatsRepository extends Repository
 {
@@ -15,9 +16,34 @@ class StatsRepository extends Repository
         parent::__construct($database);
     }
 
-    public function loadByKey($key)
+    public function loadByKeyAndUpdateCache($key, callable $getValue, DateTime $notOlderThan = null)
     {
-        return $this->getTable()->where('key', $key)->fetch();
+        $stat = $this->loadByKey($key, $notOlderThan);
+        if ($stat) {
+            return $stat->value;
+        }
+        $value = $getValue();
+        $this->updateKey($key, $value);
+        return $value;
+    }
+
+    public function loadByKey($key, DateTime $notOlderThan = null)
+    {
+        $q = $this->getTable()
+            ->where('key', $key);
+
+        if ($notOlderThan) {
+            $q->where('updated_at >= ?', $notOlderThan);
+        }
+
+        return $q->fetch();
+    }
+
+    public function updateKey($key, $value)
+    {
+        $this->getTable()
+            ->where(['key' => $key])
+            ->update(['value' => $value]);
     }
 
     public static function insertOrUpdateQuery($key, $valueQuery)
