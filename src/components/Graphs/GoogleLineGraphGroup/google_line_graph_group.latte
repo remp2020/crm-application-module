@@ -13,7 +13,7 @@
       </div>
       <div class="btn-group btn-group-xs pull-right" role="group" aria-label="...">
         <a href="#days_{$graphId|noescape}" aria-controls="days_{$graphId|noescape}" role="tab" data-toggle="tab" type="button" class="btn btn-default">{_system.date.days}</a>
-        {*<a href="#weeks_{$graphId|noescape}" aria-controls="weeks_{$graphId|noescape}" role="tab" data-toggle="tab" type="button" class="btn btn-info">{_system.date.weeks}</a>*}
+        <a href="#weeks_{$graphId|noescape}" aria-controls="weeks_{$graphId|noescape}" role="tab" data-toggle="tab" type="button" class="btn btn-default">{_system.date.weeks}</a>
         <a href="#months_{$graphId|noescape}" aria-controls="months_{$graphId|noescape}" role="tab" data-toggle="tab" type="button" class="btn btn-default">{_system.date.months}</a>
         {*<a href="#years_{$graphId|noescape}" aria-controls="years_{$graphId|noescape}" role="tab" data-toggle="tab" type="button" class="btn btn-info">{_system.date.years}</a>*}
       </div>
@@ -23,6 +23,10 @@
     <div class="tab-content">
           <div id="days_{$graphId|noescape}" class="tab-pane active">
             {control daysGraph isset($redraw) ? $redraw : false}
+          </div>
+
+          <div id="weeks_{$graphId|noescape}" class="tab-pane">
+            {control weeksGraph isset($redraw) ? $redraw : false}
           </div>
 
           <div id="months_{$graphId|noescape}" class="tab-pane">
