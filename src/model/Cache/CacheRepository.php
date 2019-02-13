@@ -1,14 +1,14 @@
 <?php
 
-namespace Crm\ApplicationModule\Stats;
+namespace Crm\ApplicationModule\Cache;
 
 use Crm\ApplicationModule\Repository;
 use Nette\Database\Context;
 use Nette\Utils\DateTime;
 
-class StatsRepository extends Repository
+class CacheRepository extends Repository
 {
-    protected $tableName = 'stats';
+    protected $tableName = 'cache';
 
     public function __construct(
         Context $database
@@ -17,7 +17,7 @@ class StatsRepository extends Repository
     }
 
     /**
-     * Retrieve cached value either from Stats table or using $getValue callable (and subsequently cache it in DB)
+     * Retrieve value either from cache or using $getValue callable (and subsequently cache it in DB)
      * @param               $key
      * @param callable      $getValue
      * @param DateTime|null $notOlderThan
@@ -25,7 +25,7 @@ class StatsRepository extends Repository
      *
      * @return mixed|\Nette\Database\Table\ActiveRow
      */
-    public function loadByKeyAndUpdateCache($key, callable $getValue, DateTime $notOlderThan = null, $forceUpdate = false)
+    public function loadByKeyAndUpdate($key, callable $getValue, DateTime $notOlderThan = null, $forceUpdate = false)
     {
         if (!$forceUpdate) {
             $stat = $this->loadByKey($key, $notOlderThan);
@@ -54,14 +54,9 @@ class StatsRepository extends Repository
     public function updateKey($key, $value)
     {
         $this->getDatabase()->query(
-            'INSERT INTO stats (`key`, `value`, `updated_at`) VALUES (?, ?, NOW()) ON DUPLICATE KEY UPDATE value=VALUES(value), updated_at=NOW()',
+            'INSERT INTO cache (`key`, `value`, `updated_at`) VALUES (?, ?, NOW()) ON DUPLICATE KEY UPDATE value=VALUES(value), updated_at=NOW()',
             $key,
             $value
         );
-    }
-
-    public static function insertOrUpdateQuery($key, $valueQuery)
-    {
-        return "INSERT INTO stats (`key`, `value`) VALUES ('$key', ($valueQuery)) ON DUPLICATE KEY UPDATE value=VALUES(value);";
     }
 }
