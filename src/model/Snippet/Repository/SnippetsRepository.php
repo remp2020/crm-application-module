@@ -57,7 +57,7 @@ class SnippetsRepository extends Repository
     {
         return parent::update($snippet, [
             'last_used' => new DateTime(),
-            'total_used' => $snippet->total_used + 1, // neni to dobre, ale taketo informacne ucely staci
+            'total_used+=' => 1,
         ]);
     }
 }
