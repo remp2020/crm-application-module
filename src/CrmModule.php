@@ -102,7 +102,7 @@ abstract class CrmModule implements ApplicationModuleInterface
         // nothing
     }
 
-    public function cache(OutputInterface $output)
+    public function cache(OutputInterface $output, array $tags = [])
     {
         // nothing
     }
