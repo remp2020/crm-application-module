@@ -43,7 +43,7 @@ GROUP BY calendar.date
         foreach ($res as $row) {
             $value = 0;
             if ($row->id != null) {
-                $value = intval($row['value']);
+                $value = $row['value'];
             }
 
             if (isset($row->name)) {
@@ -80,7 +80,7 @@ GROUP BY calendar.date
         foreach ($res as $row) {
             $value = 0;
             if ($row->id != null) {
-                $value = intval($row['value']);
+                $value = $row['value'];
             }
             $dbData["{$row->year}-{$row->month}-{$row->day}"] = $value;
         }
@@ -138,7 +138,7 @@ GROUP BY calendar.year, calendar.month, calendar.day " . $this->getGroupBy($crit
         foreach ($res as $row) {
             $value = 0;
             if ($row->id != null) {
-                $value = intval($row['value']);
+                $value = $row['value'];
             }
 
             if (isset($row->name)) {
