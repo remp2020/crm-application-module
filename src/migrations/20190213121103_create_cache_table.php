@@ -10,10 +10,7 @@ class CreateCacheTable extends AbstractMigration
         $this->table('cache')
             ->addColumn('key', 'string', array('null' => false))
             ->addColumn('value', 'string')
-            ->addColumn('updated_at', 'datetime', [
-                'null' => false,
-                'default' => 'CURRENT_TIMESTAMP',
-            ])
+            ->addColumn('updated_at', 'datetime', ['null' => false])
             ->addIndex('key', array('unique' => true))
             ->create();
     }
