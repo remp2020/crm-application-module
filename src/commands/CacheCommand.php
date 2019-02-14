@@ -25,8 +25,9 @@ class CacheCommand extends Command
             ->setDescription('Resets application cache (per-module)')
             ->addOption(
                 'tags',
-                'Tag specifies which group of cache values should be reset.',
-                InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY
+                null,
+                InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY,
+                'Tag specifies which group of cache values should be reset.'
             );
     }
 
