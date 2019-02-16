@@ -22,4 +22,6 @@ interface AuthenticatorInterface
      * Returns source of authentication request.
      */
     public function getSource() : string;
+
+    public function shouldRegenerateToken(): bool;
 }

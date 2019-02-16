@@ -33,6 +33,13 @@ class Request
         if (count($parts) > 2) {
             return '.' . $parts[count($parts) - 2] . '.' . $parts[count($parts) - 1];
         }
+
+        // remove port from HTTP_HOST if present
+        $parts = explode(':', $_SERVER['HTTP_HOST']);
+        if (count($parts) > 1) {
+            return $parts[0];
+        }
+
         return $_SERVER['HTTP_HOST'];
     }
 

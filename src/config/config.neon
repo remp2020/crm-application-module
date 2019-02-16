@@ -40,6 +40,7 @@ services:
 	- Crm\ApplicationModule\Config\Repository\ConfigsRepository
 	- Crm\ApplicationModule\Commands\DatabaseSeedCommand
 	- Crm\ApplicationModule\Commands\CacheCommand
+	- Crm\ApplicationModule\Cache\CacheRepository
 	applicationConfig:
 		class:  Crm\ApplicationModule\Config\ApplicationConfig
 	- Crm\ApplicationModule\Snippet\Repository\SnippetsRepository

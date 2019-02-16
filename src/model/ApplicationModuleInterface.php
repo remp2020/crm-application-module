@@ -43,7 +43,7 @@ interface ApplicationModuleInterface
 
     public function registerRoutes(RouteList $router);
 
-    public function cache(OutputInterface $output);
+    public function cache(OutputInterface $output, array $tags = []);
 
     public function registerLayouts(LayoutManager $layoutManager);
 

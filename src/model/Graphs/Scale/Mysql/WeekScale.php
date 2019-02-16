@@ -3,41 +3,16 @@
 namespace Crm\ApplicationModule\Graphs\Scale\Mysql;
 
 use Crm\ApplicationModule\Graphs\Criteria;
-use Crm\ApplicationModule\Graphs\Scale\ScaleBase;
 use Crm\ApplicationModule\Graphs\Scale\ScaleInterface;
-use DateTime;
 use Nette\Database\Context;
 
-class WeekScale extends ScaleBase implements ScaleInterface
+class WeekScale extends \Crm\ApplicationModule\Graphs\Scale\WeekScale implements ScaleInterface
 {
     private $database;
 
     public function __construct(Context $database)
     {
         $this->database = $database;
-    }
-
-    public function getKeys($start, $end)
-    {
-        $actual = new DateTime(date('Y-m-d', strtotime($start)));
-        $endDateTime = new DateTime(date('Y-m-d', strtotime($end)));
-
-        $diff = $actual->diff($endDateTime);
-        $days = intval($diff->format('%a'));
-        $weeks = ceil($days / 7);
-        $result = [];
-        $actual->setISODate($actual->format('Y'), $actual->format('W'));
-        $result[] = $actual->format('Y-m-d');
-        for ($i = 0; $i < $weeks; $i++) {
-            $actual = $actual->modify('+1 week');
-            $result[] = $actual->format('Y-m-d');
-        }
-        $finalResult = [];
-        foreach ($result as $week) {
-            $finalResult[$week] = 0;
-        }
-
-        return $finalResult;
     }
 
     public function getDatabaseRangeData(Criteria $criteria)
@@ -76,7 +51,7 @@ GROUP BY time_series.time_key
         foreach ($res as $row) {
             $value = 0;
             if ($row->id != null) {
-                $value = intval($row['value']);
+                $value = $row['value'];
             }
             $date = new \DateTime();
             $date->setISODate($row->year, $row->week);
@@ -114,7 +89,7 @@ GROUP BY calendar.year,calendar.month,calendar.week
         foreach ($res as $row) {
             $value = 0;
             if ($row->id != null) {
-                $value = intval($row['value']);
+                $value = $row['value'];
             }
             $dbData["{$row->year}-{$row->month}-{$row->week}"] = $value;
         }
@@ -148,7 +123,7 @@ GROUP BY calendar.year,calendar.month,calendar.week" . $this->getGroupBy($criter
         foreach ($res as $row) {
             $value = 0;
             if ($row->id != null) {
-                $value = intval($row['value']);
+                $value = $row['value'];
             }
             $date = new \DateTime();
             $date->setISODate($row->year, $row->week);
