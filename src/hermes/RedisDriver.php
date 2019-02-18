@@ -21,7 +21,7 @@ class RedisDriver implements DriverInterface
         $this->tasksQueue = $tasksQueue;
     }
 
-    public function send(MessageInterface $message)
+    public function send(MessageInterface $message): bool
     {
         $serializer = new HermesMessageSerializer();
 
@@ -29,7 +29,7 @@ class RedisDriver implements DriverInterface
         $task = $serializer->serialize($message);
         $message = $serializer->unserialize($task);
 
-        $result = $this->tasksQueue->addTask($task, $message->getProcess());
+        $result = $this->tasksQueue->addTask($task, $message->getExecuteAt());
         if ($result) {
             $this->tasksQueue->incrementType($message->getType());
         }
@@ -37,7 +37,7 @@ class RedisDriver implements DriverInterface
         return $result;
     }
 
-    public function wait(Closure $callback)
+    public function wait(Closure $callback): void
     {
         $serializer = new HermesMessageSerializer();
         while (true) {
@@ -46,7 +46,7 @@ class RedisDriver implements DriverInterface
                 $hermesMessage = $serializer->unserialize($message[0]);
                 $this->tasksQueue->decrementType($hermesMessage->getType());
 
-                if ($hermesMessage->getProcess() > time()) {
+                if ($hermesMessage->getExecuteAt() > time()) {
                     $this->send($hermesMessage);
                     continue;
                 }

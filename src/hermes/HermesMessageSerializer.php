@@ -12,7 +12,7 @@ class HermesMessageSerializer implements SerializerInterface
     /**
      * {@inheritdoc}
      */
-    public function serialize(MessageInterface $message)
+    public function serialize(MessageInterface $message): string
     {
         if (method_exists($message, 'getProcess')) {
             $process = $message->getProcess();
@@ -31,6 +31,7 @@ class HermesMessageSerializer implements SerializerInterface
                 'created' => $message->getCreated(),
                 'process' => $process,
                 'payload' => $message->getPayload(),
+                'execute_at' => $process,
             ]
         ];
 
@@ -40,10 +41,17 @@ class HermesMessageSerializer implements SerializerInterface
     /**
      * {@inheritdoc}
      */
-    public function unserialize($string)
+    public function unserialize(string $string): MessageInterface
     {
         $data = JSON::decode($string, Json::FORCE_ARRAY);
         $message = $data['message'];
-        return new HermesMessage($message['type'], $message['payload'], $message['id'], $message['created'], $message['process']);
+        if (!isset($message['execute_at'])) {
+            $message['execute_at'] = $message['process'];
+        }
+        if (strpos($message['created'], ' ') !== false) {
+            $parts = explode(' ', $message['created']);
+            $message['created'] = end($parts);
+        }
+        return new HermesMessage($message['type'], $message['payload'], $message['id'], $message['created'], $message['execute_at']);
     }
 }

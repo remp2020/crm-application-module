@@ -2,62 +2,16 @@
 
 namespace Crm\ApplicationModule\Hermes;
 
-use Ramsey\Uuid\Uuid;
+use Tomaj\Hermes\Message;
 use Tomaj\Hermes\MessageInterface;
 
 class HermesMessage implements MessageInterface
 {
+    private $internalMessage;
 
-    /**
-     * @var string
-     */
-    private $type;
-
-    /**
-     * @var array
-     */
-    private $payload;
-
-    /**
-     * @var string
-     */
-    private $messageId;
-
-    /**
-     * @var string
-     */
-    private $created;
-
-    /**
-     * @var string
-     */
-    private $process;
-
-    /**
-     * @param string $type
-     * @param array|null $payload
-     * @param string|null $messageId
-     * @param string|null $created
-     * @param integer|boolean $process
-     */
-    public function __construct($type, array $payload = null, $messageId = null, $created = null, $process = false)
+    public function __construct(string $type, array $payload = null, string $messageId = null, float $created = null, $process = false)
     {
-        $this->messageId = $messageId;
-        if (!$messageId) {
-            $this->messageId = Uuid::uuid4()->toString();
-        }
-        $this->created = $created;
-        if (!$created) {
-            $this->created = microtime();
-        }
-        $this->type = $type;
-        $this->payload = $payload;
-
-        $this->process = $process;
-        if (!$process) {
-            list($usec, $sec) = explode(' ', $this->created);
-            $this->process = $sec;
-        }
+        $this->internalMessage = new Message($type, $payload, $messageId, $created, $process);
     }
 
     /**
@@ -69,9 +23,9 @@ class HermesMessage implements MessageInterface
      *
      * @return string
      */
-    public function getId()
+    public function getId(): string
     {
-        return $this->messageId;
+        return $this->internalMessage->getId();
     }
 
     /**
@@ -79,9 +33,19 @@ class HermesMessage implements MessageInterface
      *
      * @return string
      */
-    public function getCreated()
+    public function getCreated(): float
     {
-        return $this->created;
+        return $this->internalMessage->getCreated();
+    }
+
+    /**
+     * Message executing date - microtime(true)
+     *
+     * @return float
+     */
+    public function getExecuteAt(): ?float
+    {
+        return $this->internalMessage->getExecuteAt();
     }
 
     /**
@@ -89,9 +53,9 @@ class HermesMessage implements MessageInterface
      *
      * @return string
      */
-    public function getProcess()
+    public function getProcess(): string
     {
-        return $this->process;
+        return $this->internalMessage->getExecuteAt();
     }
 
     /**
@@ -102,9 +66,9 @@ class HermesMessage implements MessageInterface
      *
      * @return string
      */
-    public function getType()
+    public function getType(): string
     {
-        return $this->type;
+        return $this->internalMessage->getType();
     }
 
     /**
@@ -116,8 +80,8 @@ class HermesMessage implements MessageInterface
      *
      * @return array
      */
-    public function getPayload()
+    public function getPayload(): ?array
     {
-        return $this->payload;
+        return $this->internalMessage->getPayload();
     }
 }
