@@ -5,33 +5,25 @@
       {$graphTitle}
       <button type="button" class="btn btn-xs btn-default" data-toggle="tooltip" data-placement="top" title="{$graphHelp}"><i class="fa fa-question-circle"></i></button>
       <div class="btn-group btn-group-xs pull-right" role="group" aria-label="...">
-        <a n:href="rangeSwitch! '-1 month'" type="button" n:class="$range == '-1 month' ? btn-primary : btn-default, btn, ajax">{_system.last.month}</a>
-        <a n:href="rangeSwitch! '-3 months'" type="button" n:class="$range == '-3 months' ? btn-primary : btn-default, btn, ajax">{_system.last.months, ['count' => 3]}</a>
-        <a n:href="rangeSwitch! '-6 months'" type="button" n:class="$range == '-6 months' ? btn-primary : btn-default, btn, ajax">{_system.last.months, ['count' => 6]}</a>
-        <a n:href="rangeSwitch! '-1 year'" type="button" n:class="$range == '-1 year' ? btn-primary : btn-default, btn, ajax">{_system.last.year}</a>
-        <a n:href="rangeSwitch! '-2 years'" type="button" n:class="$range == '-2 years' ? btn-primary : btn-default, btn, ajax">{_system.last.years, ['count' => 2]}</a>
+        <a n:href="change! '-1 month', $groupBy" type="button" n:class="$range == '-1 month' ? btn-primary : btn-default, btn, ajax">{_system.last.month}</a>
+        <a n:href="change! '-3 months', $groupBy" type="button" n:class="$range == '-3 months' ? btn-primary : btn-default, btn, ajax">{_system.last.months, ['count' => 3]}</a>
+        <a n:href="change! '-6 months', $groupBy" type="button" n:class="$range == '-6 months' ? btn-primary : btn-default, btn, ajax">{_system.last.months, ['count' => 6]}</a>
+        <a n:href="change! '-1 year', $groupBy" type="button" n:class="$range == '-1 year' ? btn-primary : btn-default, btn, ajax">{_system.last.year}</a>
+        <a n:href="change! '-2 years', $groupBy" type="button" n:class="$range == '-2 years' ? btn-primary : btn-default, btn, ajax">{_system.last.years, ['count' => 2]}</a>
       </div>
-      {*<div class="btn-group btn-group-xs pull-right" role="group" aria-label="...">*}
-        {*<a href="#days_{$graphId|noescape}" aria-controls="days_{$graphId|noescape}" role="tab" data-toggle="tab" type="button" class="btn btn-default">{_system.date.days}</a>*}
-        {*<a href="#weeks_{$graphId|noescape}" aria-controls="weeks_{$graphId|noescape}" role="tab" data-toggle="tab" type="button" class="btn btn-default">{_system.date.weeks}</a>*}
-        {*<a href="#months_{$graphId|noescape}" aria-controls="months_{$graphId|noescape}" role="tab" data-toggle="tab" type="button" class="btn btn-default">{_system.date.months}</a>*}
-        {*<a href="#years_{$graphId|noescape}" aria-controls="years_{$graphId|noescape}" role="tab" data-toggle="tab" type="button" class="btn btn-info">{_system.date.years}</a>*}
-      {*</div>*}
+      <div class="btn-group btn-group-xs pull-right" role="group" aria-label="...">
+        <a n:href="change! $range, 'day'" role="tab" type="button" n:class="$groupBy == 'day' ? btn-primary : btn-default, btn, ajax">{_system.date.days}</a>
+        <a n:href="change! $range, 'week'" role="tab" type="button" n:class="$groupBy == 'week' ? btn-primary : btn-default, btn, ajax">{_system.date.weeks}</a>
+        <a n:href="change! $range, 'month'" role="tab" type="button" n:class="$groupBy == 'month' ? btn-primary : btn-default, btn, ajax">{_system.date.months}</a>
+        <a n:href="change! $range, 'year'" role="tab" type="button" n:class="$groupBy == 'year' ? btn-primary : btn-default, btn, ajax">{_system.date.years}</a>
+      </div>
     </h3>
   </div>
   <div class="panel-body">
     <div class="tab-content">
-          <div id="days_{$graphId|noescape}" class="tab-pane active">
-            {control daysGraph isset($redraw) ? $redraw : false}
-          </div>
-
-          {*<div id="weeks_{$graphId|noescape}" class="tab-pane">*}
-            {*{control weeksGraph isset($redraw) ? $redraw : false}*}
-          {*</div>*}
-
-          {*<div id="months_{$graphId|noescape}" class="tab-pane">*}
-            {*{control monthsGraph isset($redraw) ? $redraw : false}*}
-          {*</div>*}
+        <div id="graph_{$graphId|noescape}" class="tab-pane active">
+            {control graph-{$groupBy} isset($redraw) ? $redraw : false}
+        </div>
     </div>
   </div>
   {/snippet}
