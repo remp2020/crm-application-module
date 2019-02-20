@@ -4,6 +4,7 @@ namespace Crm\ApplicationModule\Components\Graphs;
 
 use Crm\ApplicationModule\Graphs\GraphData;
 use Crm\ApplicationModule\Graphs\ScaleFactory;
+use Nette\Application\UI\Multiplier;
 
 class GoogleLineGraphGroup extends BaseGraphControl
 {
@@ -102,6 +103,7 @@ class GoogleLineGraphGroup extends BaseGraphControl
         $this->template->series = $this->series;
         $this->template->height = $this->height;
         $this->template->range = $this->getParameter('range', $this->start['day']);
+        $this->template->groupBy = $this->getParameter('groupBy', 'day');
 
         $this->template->setFile(__DIR__ . '/' . $this->view . '.latte');
         $this->template->render();
@@ -113,81 +115,36 @@ class GoogleLineGraphGroup extends BaseGraphControl
         return $this;
     }
 
-    protected function createComponentDaysGraph()
+    protected function createComponentGraph()
     {
-        $control = $this->googleLineGraphFactory->create();
-        $control->setYLabel($this->yLabel)
-            ->setGraphTitle($this->graphTitle);
+        return new Multiplier(function ($groupBy) {
+            $control = $this->googleLineGraphFactory->create();
+            $control->setYLabel($this->yLabel)
+                ->setGraphTitle($this->graphTitle);
 
-        $this->graphData->setScaleRange('day');
-        if ($range = $this->getParameter('range')) {
-            $this->graphData->setStart($range);
-        }
-
-        foreach ($this->graphData->getSeriesData() as $k => $v) {
-            if (empty($v)) {
-                continue;
+            $this->graphData->setScaleRange($groupBy);
+            if ($range = $this->getParameter('range')) {
+                $this->graphData->setStart($range);
             }
-            if ($this->serieTitleCallback) {
-                $k = ($this->serieTitleCallback)($k);
+
+            foreach ($this->graphData->getSeriesData() as $k => $v) {
+                if (empty($v)) {
+                    continue;
+                }
+                if ($this->serieTitleCallback) {
+                    $k = ($this->serieTitleCallback)($k);
+                }
+                $control->addSerie($k, $v);
             }
-            $control->addSerie($k, $v);
-        }
 
-        return $control;
+            return $control;
+        });
     }
 
-    protected function createComponentWeeksGraph()
-    {
-        $control = $this->googleLineGraphFactory->create();
-        $control->setYLabel($this->yLabel)
-            ->setGraphTitle($this->graphTitle);
-
-        $this->graphData->setScaleRange('week')
-            ->setStart($this->getParameter('range', $this->start['week']));
-
-        foreach ($this->graphData->getSeriesData() as $k => $v) {
-            $control->addSerie($k, $v);
-        }
-
-        return $control;
-    }
-
-    protected function createComponentMonthsGraph()
-    {
-        $control = $this->googleLineGraphFactory->create();
-        $control->setYLabel($this->yLabel)
-            ->setGraphTitle($this->graphTitle);
-
-        $this->graphData->setScaleRange('month')
-            ->setStart($this->getParameter('range', $this->start['month']));
-
-        foreach ($this->graphData->getSeriesData() as $k => $v) {
-            $control->addSerie($k, $v);
-        }
-
-        return $control;
-    }
-
-    protected function createComponentYearsGraph()
-    {
-        $control = $this->googleLineGraphFactory->create();
-        $control->setYLabel($this->yLabel)
-            ->setGraphTitle($this->graphTitle);
-
-        $this->graphData->setScaleRange('year')
-            ->setStart($this->getParameter('range', $this->start['year']));
-
-        foreach ($this->graphData->getSeriesData() as $k => $v) {
-            $control->addSerie($k, $v);
-        }
-
-        return $control;
-    }
-
-    public function handleRangeSwitch($range)
+    public function handleChange($range, $groupBy)
     {
         $this->template->range = $range;
+        $this->template->groupBy = $groupBy;
         $this->template->redraw = true;
         $this->redrawControl('ajaxChange');
     }
