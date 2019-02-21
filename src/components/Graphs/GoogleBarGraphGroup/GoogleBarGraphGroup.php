@@ -3,6 +3,7 @@
 namespace Crm\ApplicationModule\Components\Graphs;
 
 use Crm\ApplicationModule\Graphs\GraphData;
+use Nette\Application\UI\Multiplier;
 
 class GoogleBarGraphGroup extends BaseGraphControl
 {
@@ -32,7 +33,7 @@ class GoogleBarGraphGroup extends BaseGraphControl
     private $start = ['day' => '-60 days', 'week' => '-8 weeks', 'month' => '-4 months', 'year' => '-3 years'];
 
     /** @var GoogleBarGraphControlFactoryInterface */
-    private $googleLineGraphFactory;
+    private $googleBarGraphFactory;
 
     /** @var GraphData */
     private $graphData;
@@ -40,7 +41,7 @@ class GoogleBarGraphGroup extends BaseGraphControl
     public function __construct(GoogleBarGraphControlFactoryInterface $factory, GraphData $graphData)
     {
         parent::__construct();
-        $this->googleLineGraphFactory = $factory;
+        $this->googleBarGraphFactory = $factory;
         $graphData->clear();
         $this->graphData = $graphData;
     }
@@ -106,6 +107,7 @@ class GoogleBarGraphGroup extends BaseGraphControl
         $this->template->series = $this->series;
         $this->template->height = $this->height;
         $this->template->range = $this->getParameter('range', $this->start['day']);
+        $this->template->groupBy = $this->getParameter('groupBy', 'day');
 
         $this->template->setFile(__DIR__ . '/' . $this->view . '.latte');
         $this->template->render();
@@ -117,88 +119,34 @@ class GoogleBarGraphGroup extends BaseGraphControl
         return $this;
     }
 
-    protected function createComponentDaysGraph()
+    public function createComponentGraph()
     {
-        $control = $this->googleLineGraphFactory->create();
-        $control->setYLabel($this->yLabel)
-            ->setStacked($this->stacked)
-            ->setGraphTitle($this->graphTitle);
+        return new Multiplier(function ($groupBy) {
+            $control = $this->googleBarGraphFactory->create();
+            $control->setYLabel($this->yLabel)
+                ->setStacked($this->stacked)
+                ->setGraphTitle($this->graphTitle);
 
-        $this->graphData->setScaleRange('day');
-        if ($range = $this->getParameter('range')) {
-            $this->graphData->setStart($range);
-        }
-
-        foreach ($this->graphData->getSeriesData() as $k => $v) {
-            if ($this->serieTitleCallback) {
-                $k = ($this->serieTitleCallback)($k);
+            $this->graphData->setScaleRange($groupBy);
+            if ($range = $this->getParameter('range')) {
+                $this->graphData->setStart($range);
             }
-            $control->addSerie($k, $v);
-        }
 
-        return $control;
+            foreach ($this->graphData->getSeriesData() as $k => $v) {
+                if ($this->serieTitleCallback) {
+                    $k = ($this->serieTitleCallback)($k);
+                }
+                $control->addSerie($k, $v);
+            }
+
+            return $control;
+        });
     }
 
-    protected function createComponentWeeksGraph()
-    {
-        $control = $this->googleLineGraphFactory->create();
-        $control->setYLabel($this->yLabel)
-            ->setGraphTitle($this->graphTitle);
-
-        $this->graphData->setScaleRange('week')
-            ->setStart($this->getParameter('range', $this->start['week']));
-
-        foreach ($this->graphData->getSeriesData() as $k => $v) {
-            if ($this->serieTitleCallback) {
-                $k = ($this->serieTitleCallback)($k);
-            }
-            $control->addSerie($k, $v);
-        }
-
-        return $control;
-    }
-
-    protected function createComponentMonthsGraph()
-    {
-        $control = $this->googleLineGraphFactory->create();
-        $control->setYLabel($this->yLabel)
-            ->setGraphTitle($this->graphTitle);
-
-        $this->graphData->setScaleRange('month')
-            ->setStart($this->getParameter('range', $this->start['month']));
-
-        foreach ($this->graphData->getSeriesData() as $k => $v) {
-            if ($this->serieTitleCallback) {
-                $k = ($this->serieTitleCallback)($k);
-            }
-            $control->addSerie($k, $v);
-        }
-
-        return $control;
-    }
-
-    protected function createComponentYearsGraph()
-    {
-        $control = $this->googleLineGraphFactory->create();
-        $control->setYLabel($this->yLabel)
-            ->setGraphTitle($this->graphTitle);
-
-        $this->graphData->setScaleRange('year')
-            ->setStart($this->getParameter('range', $this->start['year']));
-
-        foreach ($this->graphData->getSeriesData() as $k => $v) {
-            if ($this->serieTitleCallback) {
-                $k = ($this->serieTitleCallback)($k);
-            }
-            $control->addSerie($k, $v);
-        }
-
-        return $control;
-    }
-
-    public function handleRangeSwitch($range)
+    public function handleChange($range, $groupBy)
     {
         $this->template->range = $range;
+        $this->template->groupBy = $groupBy;
         $this->template->redraw = true;
         $this->redrawControl('ajaxChange');
     }
