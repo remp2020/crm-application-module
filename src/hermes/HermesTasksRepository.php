@@ -16,10 +16,7 @@ class HermesTasksRepository extends Repository
 
     public function add(HermesMessage $message, $state)
     {
-        list($usec, $sec) = explode(' ', $message->getCreated());
-        $timestamp = number_format(((float)$usec + (float)$sec), 6, '.', '');
-        $createdAt = DateTime::createFromFormat('U.u', $timestamp)
-            ->setTimezone(new \DateTimeZone(date_default_timezone_get()));
+        $createdAt = DateTime::from($message->getCreated());
 
         return $this->insert([
             'id' => $message->getId(),
