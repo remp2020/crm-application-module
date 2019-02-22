@@ -16,7 +16,7 @@ class HermesTasksRepository extends Repository
 
     public function add(HermesMessage $message, $state)
     {
-        $createdAt = DateTime::from($message->getCreated());
+        $createdAt = DateTime::from(strtotime($message->getCreated()));
 
         return $this->insert([
             'id' => $message->getId(),
