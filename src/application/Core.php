@@ -81,7 +81,7 @@ class Core
         require_once APP_ROOT . 'vendor/autoload.php';
 
         $envFile = getenv('CRM_ENV_FILE') ?: '.env';
-        $dotenv = new Dotenv(APP_ROOT, $envFile);
+        $dotenv = Dotenv::create(APP_ROOT, $envFile);
         $dotenv->load();
         $this->environment = getenv('CRM_ENV');
         if (!$this->environment) {
