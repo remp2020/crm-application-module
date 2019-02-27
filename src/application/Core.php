@@ -89,7 +89,7 @@ class Core
         }
 
         if (getenv('CRM_FORCE_HTTPS') === 'true') {
-            $_SERVER['HTTPS'] = true;
+            $_SERVER['HTTPS'] = 'on';
             $_SERVER['HTTP_X_FORWARDED_PROTO'] = 'https';
             $_SERVER['SERVER_PORT'] = 443;
         }
