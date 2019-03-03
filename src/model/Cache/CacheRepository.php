@@ -8,6 +8,8 @@ use Nette\Utils\DateTime;
 
 class CacheRepository extends Repository
 {
+    const DEFAULT_REFRESH_TIME = '-5 minutes';
+    
     protected $tableName = 'cache';
 
     public function __construct(
