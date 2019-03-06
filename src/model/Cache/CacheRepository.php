@@ -8,6 +8,9 @@ use Nette\Utils\DateTime;
 
 class CacheRepository extends Repository
 {
+    const REFRESH_TIME_5_MINUTES = '-5 minutes';
+    const REFRESH_TIME_1_HOUR = '-1 hour';
+
     protected $tableName = 'cache';
 
     public function __construct(
@@ -25,10 +28,10 @@ class CacheRepository extends Repository
      *
      * @return mixed|\Nette\Database\Table\ActiveRow
      */
-    public function loadByKeyAndUpdate($key, callable $getValue, DateTime $notOlderThan = null, $forceUpdate = false)
+    public function loadAndUpdate($key, callable $getValue, DateTime $notOlderThan = null, $forceUpdate = false)
     {
         if (!$forceUpdate) {
-            $stat = $this->loadByKey($key, $notOlderThan);
+            $stat = $this->load($key, $notOlderThan);
             if ($stat) {
                 return $stat->value;
             }
@@ -42,7 +45,7 @@ class CacheRepository extends Repository
         return $value;
     }
 
-    public function loadByKey($key, DateTime $notOlderThan = null)
+    public function load($key, DateTime $notOlderThan = null)
     {
         $q = $this->getTable()
             ->where('key', $key);
@@ -56,10 +59,13 @@ class CacheRepository extends Repository
 
     public function updateKey($key, $value)
     {
+        $now = new DateTime();
         $this->getDatabase()->query(
-            'INSERT INTO cache (`key`, `value`, `updated_at`) VALUES (?, ?, NOW()) ON DUPLICATE KEY UPDATE value=VALUES(value), updated_at=NOW()',
+            'INSERT INTO cache (`key`, `value`, `updated_at`) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE value=VALUES(value), updated_at=?',
             $key,
-            $value
+            $value,
+            $now,
+            $now
         );
     }
 }
