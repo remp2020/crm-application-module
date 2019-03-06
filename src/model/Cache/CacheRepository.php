@@ -56,10 +56,13 @@ class CacheRepository extends Repository
 
     public function updateKey($key, $value)
     {
+        $now = new DateTime();
         $this->getDatabase()->query(
-            'INSERT INTO cache (`key`, `value`, `updated_at`) VALUES (?, ?, NOW()) ON DUPLICATE KEY UPDATE value=VALUES(value), updated_at=NOW()',
+            'INSERT INTO cache (`key`, `value`, `updated_at`) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE value=VALUES(value), updated_at=?',
             $key,
-            $value
+            $value,
+            $now,
+            $now
         );
     }
 }
