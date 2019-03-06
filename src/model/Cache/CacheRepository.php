@@ -8,8 +8,8 @@ use Nette\Utils\DateTime;
 
 class CacheRepository extends Repository
 {
-    const DEFAULT_REFRESH_TIME = '-5 minutes';
-    const LONGER_REFRESH_TIME = '-1 hour';
+    const REFRESH_TIME_5_MINUTES = '-5 minutes';
+    const REFRESH_TIME_1_HOUR = '-1 hour';
 
     protected $tableName = 'cache';
 
@@ -28,10 +28,10 @@ class CacheRepository extends Repository
      *
      * @return mixed|\Nette\Database\Table\ActiveRow
      */
-    public function loadByKeyAndUpdate($key, callable $getValue, DateTime $notOlderThan = null, $forceUpdate = false)
+    public function loadAndUpdate($key, callable $getValue, DateTime $notOlderThan = null, $forceUpdate = false)
     {
         if (!$forceUpdate) {
-            $stat = $this->loadByKey($key, $notOlderThan);
+            $stat = $this->load($key, $notOlderThan);
             if ($stat) {
                 return $stat->value;
             }
@@ -42,7 +42,7 @@ class CacheRepository extends Repository
         return $value;
     }
 
-    public function loadByKey($key, DateTime $notOlderThan = null)
+    public function load($key, DateTime $notOlderThan = null)
     {
         $q = $this->getTable()
             ->where('key', $key);
