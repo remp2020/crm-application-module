@@ -35,6 +35,9 @@ class CacheRepository extends Repository
         }
 
         $value = $getValue();
+        if ($value === null) {
+            $value = 0;
+        }
         $this->updateKey($key, $value);
         return $value;
     }
