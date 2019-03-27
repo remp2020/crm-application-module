@@ -27,7 +27,6 @@ services:
 			- register('userDate', [Crm\ApplicationModule\Helpers\UserDateHelper(), process])
 			- register('yesNo', [Crm\ApplicationModule\Helpers\YesNoHelper(), process])
 			- register('price', [Crm\ApplicationModule\Helpers\PriceHelper(), process])
-			- register('newlineFix', [Crm\ApplicationModule\Helpers\NewlineFixHelper(), process])
 
 	- Crm\ApplicationModule\Router\RouterFactory
 	router: @Crm\ApplicationModule\Router\RouterFactory::createRouter
@@ -61,7 +60,6 @@ services:
 	- Crm\ApplicationModule\Commands\HermesWorkerCommand
 	- Crm\ApplicationModule\Commands\CleanupCommand
 	- Crm\ApplicationModule\Config\ConfigsCache(%redis.host%, %redis.port%)
-	- Crm\ApplicationModule\Helpers\NewlineFixHelper
 	- Crm\ApplicationModule\Helpers\PriceHelper
 	- Crm\ApplicationModule\Helpers\UserDateHelper
 
