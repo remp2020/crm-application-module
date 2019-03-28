@@ -98,7 +98,7 @@ class ConfigsSeeder implements ISeeder
         }
 
         $name = 'site_url';
-        $value = 'http://crm.localhost.sk';
+        $value = 'http://crm.press';
         $config = $this->configsRepository->loadByName($name);
         if (!$config) {
             $this->configBuilder->createNew()
