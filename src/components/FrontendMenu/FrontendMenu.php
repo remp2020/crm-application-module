@@ -17,6 +17,11 @@ class FrontendMenu extends UI\Control
         $this->menuItems = $menuItems;
     }
 
+    public function setTemplate(string $templateFile): void
+    {
+        $this->templateName = $templateFile;
+    }
+
     public function render()
     {
         $this->template->menuItems = $this->menuItems->getMenuItems();
