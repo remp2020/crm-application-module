@@ -2,6 +2,7 @@
 
 namespace Crm\ApplicationModule\Presenters;
 
+use Crm\ApplicationModule\Components\FrontendMenu;
 use Crm\ApplicationModule\Components\FrontendMenuFactoryInterface;
 use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
 use Crm\UsersModule\Auth\AutoLogin\AutoLogin;
@@ -112,11 +113,9 @@ class FrontendPresenter extends BasePresenter
         return 'frontend';
     }
 
-    public function createComponentFrontendMenu(FrontendMenuFactoryInterface $factory)
+    public function createComponentFrontendMenu(FrontendMenu $menu)
     {
-        $menu = $factory->create();
         $menu->setMenuItems($this->applicationManager->getFrontendMenuItems());
-
         return $menu;
     }
 
