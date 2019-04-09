@@ -16,11 +16,13 @@ class DiffHelper
         }
 
         $content = '<div class="pull-right">';
-        $content .= '<span class="badge ' . $class . '" style="font-size:0.9em">';
-        $content .= '<b>' . intval($arg1) . '</b>&nbsp;';
+        $content .= '<span class="badge" style="font-size:0.9em">';
+        $content .= '<b>' . intval($arg1) . '</b>';
+        $content .= '</span>&nbsp;';
+        $content .= '<span class="badge ' . $class . '" style="font-size:0.8em">';
         $content .= '<i>';
 
-        if ($diff > 0) {
+        if ($diff >= 0) {
             $content .= '+';
         }
         $content .= round($diff, 2);
