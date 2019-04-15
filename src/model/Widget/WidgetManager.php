@@ -47,8 +47,13 @@ class WidgetManager implements WidgetManagerInterface
         $this->overrideWidgets = [];
     }
 
-    public function registerWidgetFactory($path, WidgetFactoryInterface $widgetFactory, $priority = 100)
+    public function registerWidgetFactory($path, WidgetFactoryInterface $widgetFactory, $priority = 100, $overwrite = false)
     {
+        if (isset($this->widgetsFactories[$path][$priority]) && !$overwrite) {
+            do {
+                $priority++;
+            } while (isset($this->widgetsFactories[$path][$priority]));
+        }
         $this->widgetsFactories[$path][$priority] = $widgetFactory;
     }
 
