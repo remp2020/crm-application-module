@@ -24,9 +24,9 @@ class PriceHelper
 
         if ($currency == 'EUR') {
             $html = number_format($value, 2, ',', ' ') . '&nbsp;&euro;';
-        } else if ($currency == 'CZK') {
+        } elseif ($currency == 'CZK') {
             $html = number_format($value, 2, ',', ' ') . '&nbsp;Kč';
-        } else if ($currency == 'USD') {
+        } elseif ($currency == 'USD') {
             $html = '$ ' . number_format($value, 2, '.', ',');
         } else {
             $html = $value;

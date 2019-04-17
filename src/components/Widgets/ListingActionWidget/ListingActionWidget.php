@@ -18,9 +18,8 @@ class ListingActionWidget extends BaseWidget
 
     public function render($path, $params)
     {
-        $factories = $this->widgetManager->getWidgetFactories($path);
         $widgets = [];
-        foreach ($factories as $sorting => $factory) {
+        foreach ($this->widgetManager->getWidgetFactories($path) as $sorting => $factory) {
             $widget = $factory->create();
             $widgets[] = $widget;
             $this->addComponent($widget, $this->getNextIdentifier());
