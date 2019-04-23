@@ -13,6 +13,9 @@ services:
 		setup:
 			- initialize
 
+	frontendMenu:
+		class: Crm\ApplicationModule\Components\FrontendMenu
+
 	# Latte filters
 	nette.latteFactory:
 		setup:
