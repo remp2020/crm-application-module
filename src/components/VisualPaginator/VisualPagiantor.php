@@ -8,6 +8,8 @@ use Nette\Utils\Paginator;
 /**
  * Visual paginator control.
  *
+ * Simple component used for rendering listing pagination.
+ *
  * @author     David Grudl
  * @copyright  Copyright (c) 2009 David Grudl
  * @package    Nette Extras

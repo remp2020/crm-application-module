@@ -5,6 +5,14 @@ namespace Crm\ApplicationModule\Components\Graphs;
 use Crm\ApplicationModule\Graphs\GraphData;
 use Nette\Application\UI\Multiplier;
 
+/**
+ * Google bar graph group component
+ *
+ * Component for rendering bar graph using google graph library
+ * capable of rendering multiple graphs depending on selected group by.
+ *
+ * @package Crm\ApplicationModule\Components\Graphs
+ */
 class GoogleBarGraphGroup extends BaseGraphControl
 {
     private $view = 'google_bar_graph_group';

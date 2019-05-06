@@ -2,6 +2,13 @@
 
 namespace Crm\ApplicationModule\Components\Graphs;
 
+/**
+ * Google line graph component
+ *
+ * Component for rendering line graph using google graph library.
+ *
+ * @package Crm\ApplicationModule\Components\Graphs
+ */
 class GoogleLineGraph extends BaseGraphControl
 {
     private $view = 'google_line_graph';

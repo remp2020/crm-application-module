@@ -2,6 +2,13 @@
 
 namespace Crm\ApplicationModule\Components\Graphs;
 
+/**
+ * Google bar graph component
+ *
+ * Component for rendering bar graph using google graph library.
+ *
+ * @package Crm\ApplicationModule\Components\Graphs
+ */
 class GoogleBarGraph extends BaseGraphControl
 {
     private $view = 'google_bar_graph';
