@@ -3,7 +3,6 @@
 namespace Crm\ApplicationModule\Presenters;
 
 use Crm\ApplicationModule\Components\FrontendMenu;
-use Crm\ApplicationModule\Components\FrontendMenuFactoryInterface;
 use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
 use Crm\UsersModule\Auth\AutoLogin\AutoLogin;
 use Crm\UsersModule\Repository\UsersRepository;

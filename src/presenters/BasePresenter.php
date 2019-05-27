@@ -9,9 +9,12 @@ use Crm\ApplicationModule\Components\SingleStatWidgetFactoryInterface;
 use Crm\ApplicationModule\Config\ApplicationConfig;
 use Crm\ApplicationModule\LayoutManager;
 use Crm\ApplicationModule\Snippet\Control\SnippetFactory;
+use Crm\ApplicationModule\Events\AuthenticationEvent;
 use Kdyby\Autowired\AutowireComponentFactories;
 use Kdyby\Translation\Translator;
+use League\Event\Emitter;
 use Nette\Application\UI\Presenter;
+use Nette\Security\AuthenticationException;
 
 abstract class BasePresenter extends Presenter
 {
@@ -29,6 +32,9 @@ abstract class BasePresenter extends Presenter
     /** @var Translator @inject */
     public $translator;
 
+    /** @var Emitter @inject */
+    public $emitter;
+
     public $locale;
 
     public $layoutPath;
@@ -40,6 +46,16 @@ abstract class BasePresenter extends Presenter
         parent::startup();
         if ($this->getRequest()->hasFlag(\Nette\Application\Request::RESTORED)) {
             $this->redirect('this');
+        }
+
+        if ($this->getUser()->isLoggedIn()) {
+            try {
+                $this->emitter->emit(new AuthenticationEvent($this->getHttpRequest(), $this->getUser()->id));
+            } catch (AuthenticationException $e) {
+                $this->getUser()->logout(true);
+                $this->flashMessage($e->getMessage(), 'warning');
+                $this->redirect('this');
+            }
         }
 
         $this->locale = $this->translator->getLocale();
