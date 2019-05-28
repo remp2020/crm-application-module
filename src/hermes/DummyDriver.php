@@ -45,7 +45,8 @@ class DummyDriver implements DriverInterface
 
     public function wait(Closure $callback): void
     {
-        foreach ($this->events as $event) {
+        while (count($this->events) > 0) {
+            $event = array_pop($this->events);
             $message = $this->serializer->unserialize($event);
             $this->waitResult = $callback($message);
         }
