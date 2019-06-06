@@ -53,11 +53,20 @@ function drawChart{$graphId|noescape}() {
         }
     }
 
+    var oneDay = (1000 * 60 * 60 * 24);
+    var dateRange = data.getColumnRange(0);
+
     var options = {
         chartArea: { width: '90%', height: '70%'},
         fontSize: ['11'],
         lineWidth: 3,
         series: series,
+        hAxis: {
+            viewWindow: {
+                min: new Date(dateRange.min.getTime() - oneDay),
+                max: new Date(dateRange.max.getTime() + oneDay)
+            }
+        },
         legend: { position:'top', maxLines: 2}{if $stacked},
         isStacked: true
         {/if}

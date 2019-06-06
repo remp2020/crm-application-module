@@ -102,18 +102,11 @@ class GraphData
             $dateKeys = array_keys($serie);
             break;
         }
-        foreach ($dateKeys as $i => $dateKey) {
+        foreach ($dateKeys as $dateKey) {
             $omit = true;
             foreach ($serieKeys as $serieKey) {
                 // if at least one serie has non-zero value set, stop trimming of series
                 if (isset($series[$serieKey][$dateKey]) && $series[$serieKey][$dateKey] > 0) {
-                    $omit = false;
-                    break;
-                }
-
-                // allow to display one day of empty data before first date of data to prevent single-value series
-                $nextDateKey = $dateKeys[$i+1] ?? null;
-                if ($nextDateKey && isset($series[$serieKey][$nextDateKey]) && $series[$serieKey][$nextDateKey] > 0) {
                     $omit = false;
                     break;
                 }
