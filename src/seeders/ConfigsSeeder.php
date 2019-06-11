@@ -141,6 +141,26 @@ class ConfigsSeeder implements ISeeder
             $output->writeln("  * config item <info>$name</info> exists");
         }
 
+        $name = 'contact_email';
+        $config = $this->configsRepository->loadByName($name);
+        if (!$config) {
+            $this->configBuilder->createNew()
+                ->setName($name)
+                ->setDisplayName('Contact email')
+                ->setDescription('Contact email')
+                ->setType(ApplicationConfig::TYPE_STRING)
+                ->setAutoload(true)
+                ->setConfigCategory($category)
+                ->setSorting(256)
+                ->save();
+            $output->writeln("  <comment>* config item <info>$name</info> created</comment>");
+        } elseif ($config->has_default_value && $config->value !== $value) {
+            $this->configsRepository->update($config, ['value' => $value, 'has_default_value' => true]);
+            $output->writeln("  <comment>* config item <info>$name</info> updated</comment>");
+        } else {
+            $output->writeln("  * config item <info>$name</info> exists");
+        }
+
         $name = 'default_route';
         $value = 'Subscriptions:Subscriptions:my';
         $config = $this->configsRepository->loadByName($name);
