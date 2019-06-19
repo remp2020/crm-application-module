@@ -142,6 +142,7 @@ class ConfigsSeeder implements ISeeder
         }
 
         $name = 'contact_email';
+        $value = 'info@crm.press';
         $config = $this->configsRepository->loadByName($name);
         if (!$config) {
             $this->configBuilder->createNew()
