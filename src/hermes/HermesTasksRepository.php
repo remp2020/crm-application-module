@@ -2,10 +2,10 @@
 
 namespace Crm\ApplicationModule\Repository;
 
-use Crm\ApplicationModule\Hermes\HermesMessage;
 use Crm\ApplicationModule\Repository;
 use Nette\Utils\DateTime;
 use Nette\Utils\Json;
+use Tomaj\Hermes\MessageInterface;
 
 class HermesTasksRepository extends Repository
 {
@@ -14,7 +14,7 @@ class HermesTasksRepository extends Repository
 
     protected $tableName = 'hermes_tasks';
 
-    public function add(HermesMessage $message, $state)
+    public function add(MessageInterface $message, $state)
     {
         $createdAt = DateTime::from(strtotime($message->getCreated()));
 
@@ -22,8 +22,10 @@ class HermesTasksRepository extends Repository
             'id' => $message->getId(),
             'type' => $message->getType(),
             'payload' => Json::encode($message->getPayload()),
+            'retry' => $message->getRetries(),
             'state' => $state,
             'created_at' => $createdAt,
+            'execute_at' => $message->getExecuteAt() ? $message->getExecuteAt() : null,
             'processed_at' => new DateTime(),
         ]);
     }

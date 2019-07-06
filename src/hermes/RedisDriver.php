@@ -6,6 +6,7 @@ use Closure;
 use Crm\ApplicationModule\Repository\HermesTasksRepository;
 use Tomaj\Hermes\Driver\DriverInterface;
 use Tomaj\Hermes\MessageInterface;
+use Tomaj\Hermes\MessageSerializer;
 
 class RedisDriver implements DriverInterface
 {
@@ -23,13 +24,15 @@ class RedisDriver implements DriverInterface
 
     public function send(MessageInterface $message): bool
     {
-        $serializer = new HermesMessageSerializer();
+        $serializer = new MessageSerializer();
 
-        // update message data for hermes scheduling feature
         $task = $serializer->serialize($message);
-        $message = $serializer->unserialize($task);
+        $executeAt = 0;
+        if ($message->getExecuteAt()) {
+            $executeAt = $message->getExecuteAt();
+        }
 
-        $result = $this->tasksQueue->addTask($task, $message->getExecuteAt());
+        $result = $this->tasksQueue->addTask($task, $executeAt);
         if ($result) {
             $this->tasksQueue->incrementType($message->getType());
         }
@@ -39,19 +42,19 @@ class RedisDriver implements DriverInterface
 
     public function wait(Closure $callback): void
     {
-        $serializer = new HermesMessageSerializer();
+        $serializer = new MessageSerializer();
         while (true) {
             $message = $this->tasksQueue->getTask();
             if ($message) {
                 $hermesMessage = $serializer->unserialize($message[0]);
                 $this->tasksQueue->decrementType($hermesMessage->getType());
-
                 if ($hermesMessage->getExecuteAt() > time()) {
                     $this->send($hermesMessage);
                     continue;
                 }
 
                 $result = $callback($hermesMessage);
+
                 $this->tasksRepository->add(
                     $hermesMessage,
                     $result ? HermesTasksRepository::STATE_DONE : HermesTasksRepository::STATE_ERROR
