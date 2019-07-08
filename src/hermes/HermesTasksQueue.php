@@ -42,9 +42,9 @@ class HermesTasksQueue
     }
 
     // Tasks
-    public function addTask(string $task, float $process)
+    public function addTask(string $task, float $executeAt)
     {
-        return $this->connect()->zadd(static::TASKS_KEY, [$task => $process]) > 0;
+        return $this->connect()->zadd(static::TASKS_KEY, [$task => $executeAt]) > 0;
     }
 
     public function getTask()
