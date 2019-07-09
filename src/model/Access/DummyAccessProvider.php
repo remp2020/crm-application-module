@@ -2,7 +2,7 @@
 
 namespace Crm\ApplicationModule\Access;
 
-class TestAccessProvider implements ProviderInterface
+class DummyAccessProvider implements ProviderInterface
 {
     public function hasAccess($userId, $access)
     {
