@@ -21,7 +21,7 @@ class HermesRetry extends AbstractMigration
             ->update();
 
         $sql = <<<SQL
-SET @ordering = 0;
+SET @ordering = 100000;
 UPDATE hermes_tasks SET id = (@ordering := @ordering + 1) ORDER BY created_at;
 SQL;
         $this->execute($sql);
@@ -34,8 +34,7 @@ SQL;
             ->changeColumn('id', 'integer', ['null' => false, 'identity' => true])
             ->update();
 
-        $result = $this->query("SELECT MAX(id) AS increment FROM hermes_tasks")->fetch();
-        dump($result);
-        $this->execute("ALTER TABLE hermes_tasks AUTO_INCREMENT=" . $result["increment"]);
+        $result = $this->query("SELECT COUNT(*) AS increment FROM hermes_tasks")->fetch();
+        $this->execute("ALTER TABLE hermes_tasks AUTO_INCREMENT=" . ($result["increment"] + 200000));
     }
 }
