@@ -12,29 +12,33 @@ class HermesRetry extends AbstractMigration
             ->addColumn('execute_at', 'datetime', ['null' => true])
             ->update();
 
-        $this->table('hermes_tasks')
-            ->renameColumn("id", "message_id")
-            ->update();
-
         $this->table("hermes_tasks")
-            ->addColumn('id', 'integer', ['null' => false])
+            ->addColumn('primary_id', 'integer', ['null' => false])
             ->update();
 
         $sql = <<<SQL
 SET @ordering = 100000;
-UPDATE hermes_tasks SET id = (@ordering := @ordering + 1) ORDER BY created_at;
+UPDATE hermes_tasks SET primary_id = (@ordering := @ordering + 1) ORDER BY created_at;
 SQL;
         $this->execute($sql);
 
         $this->table('hermes_tasks')
-            ->changePrimaryKey('id')
+            ->changePrimaryKey('primary_id')
             ->update();
 
         $this->table('hermes_tasks')
-            ->changeColumn('id', 'integer', ['null' => false, 'identity' => true])
+            ->changeColumn('primary_id', 'integer', ['null' => false, 'identity' => true])
             ->update();
 
         $result = $this->query("SELECT COUNT(*) AS increment FROM hermes_tasks")->fetch();
         $this->execute("ALTER TABLE hermes_tasks AUTO_INCREMENT=" . ($result["increment"] + 200000));
+
+        $this->table('hermes_tasks')
+            ->renameColumn("id", "message_id")
+            ->update();
+
+        $this->table('hermes_tasks')
+            ->renameColumn("primary_id", "id")
+            ->update();
     }
 }
