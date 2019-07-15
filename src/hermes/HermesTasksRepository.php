@@ -19,7 +19,7 @@ class HermesTasksRepository extends Repository
         $createdAt = DateTime::from(strtotime($message->getCreated()));
 
         return $this->insert([
-            'id' => $message->getId(),
+            'message_id' => $message->getId(),
             'type' => $message->getType(),
             'payload' => Json::encode($message->getPayload()),
             'retry' => $message->getRetries(),
