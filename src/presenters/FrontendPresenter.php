@@ -118,15 +118,6 @@ class FrontendPresenter extends BasePresenter
         return $menu;
     }
 
-    protected function getPaymentConfig($payment)
-    {
-        $serviceName = $payment->payment_gateway->code . 'Config';
-        if ($this->context->hasService($serviceName)) {
-            return $this->context->getService($serviceName);
-        }
-        return null;
-    }
-
     /**
      * Returns array with UTM parameters of campaign
      *
