@@ -6,6 +6,7 @@ use Nette\Security\User;
 
 class AccessManager
 {
+    /** @var ProviderInterface[] */
     private $providers = [];
 
     private $user;
