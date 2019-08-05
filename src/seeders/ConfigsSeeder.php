@@ -28,9 +28,10 @@ class ConfigsSeeder implements ISeeder
 
     public function seed(OutputInterface $output)
     {
-        $category = $this->configCategoriesRepository->loadByName('Všeobecne');
+        $categoryName = 'application.config.category';
+        $category = $this->configCategoriesRepository->loadByName($categoryName);
         if (!$category) {
-            $category = $this->configCategoriesRepository->add('Všeobecne', 'fa fa-globe', 100);
+            $category = $this->configCategoriesRepository->add($categoryName, 'fa fa-globe', 100);
             $output->writeln('  <comment>* config category <info>Všeobecne</info> created</comment>');
         } else {
             $output->writeln('  * config category <info>Všeobecne</info> exists');
@@ -42,8 +43,8 @@ class ConfigsSeeder implements ISeeder
         if (!$config) {
             $this->configBuilder->createNew()
                 ->setName($name)
-                ->setDisplayName('Globalna mena')
-                ->setDescription('Globalna mena pouzivana pri vsetkych platbach v ISO-4217 formate')
+                ->setDisplayName('application.config.currency.name')
+                ->setDescription('application.config.currency.description')
                 ->setValue($value)
                 ->setType(ApplicationConfig::TYPE_STRING)
                 ->setAutoload(true)
@@ -51,11 +52,20 @@ class ConfigsSeeder implements ISeeder
                 ->setSorting(110)
                 ->save();
             $output->writeln("  <comment>* config item <info>$name</info> created</comment>");
-        } elseif ($config->has_default_value && $config->value !== $value) {
-            $this->configsRepository->update($config, ['value' => $value, 'has_default_value' => true]);
-            $output->writeln("  <comment>* config item <info>$name</info> updated</comment>");
         } else {
             $output->writeln("  * config item <info>$name</info> exists");
+
+            if ($config->has_default_value && $config->value !== $value) {
+                $this->configsRepository->update($config, ['value' => $value, 'has_default_value' => true]);
+                $output->writeln("  <comment>* config item <info>$name</info> updated</comment>");
+            }
+
+            if ($config->category->name != $categoryName) {
+                $this->configsRepository->update($config, [
+                    'config_category_id' => $category->id
+                ]);
+                $output->writeln("  <comment>* config item <info>$name</info> updated</comment>");
+            }
         }
 
         $name = 'site_title';
@@ -64,8 +74,8 @@ class ConfigsSeeder implements ISeeder
         if (!$config) {
             $this->configBuilder->createNew()
                 ->setName($name)
-                ->setDisplayName('Meno stránky')
-                ->setDescription('Základný názov stránky - to čo sa zobrazí v title stranky')
+                ->setDisplayName('application.config.site_title.name')
+                ->setDescription('application.config.site_title.description')
                 ->setValue($value)
                 ->setType(ApplicationConfig::TYPE_STRING)
                 ->setAutoload(true)
@@ -73,11 +83,20 @@ class ConfigsSeeder implements ISeeder
                 ->setSorting(100)
                 ->save();
             $output->writeln("  <comment>* config item <info>$name</info> created</comment>");
-        } elseif ($config->has_default_value && $config->value !== $value) {
-            $this->configsRepository->update($config, ['value' => $value, 'has_default_value' => true]);
-            $output->writeln("  <comment>* config item <info>$name</info> updated</comment>");
         } else {
             $output->writeln("  * config item <info>$name</info> exists");
+
+            if ($config->has_default_value && $config->value !== $value) {
+                $this->configsRepository->update($config, ['value' => $value, 'has_default_value' => true]);
+                $output->writeln("  <comment>* config item <info>$name</info> updated</comment>");
+            }
+
+            if ($config->category->name != $categoryName) {
+                $this->configsRepository->update($config, [
+                    'config_category_id' => $category->id
+                ]);
+                $output->writeln("  <comment>* config item <info>$name</info> updated</comment>");
+            }
         }
 
         $name = 'site_description';
@@ -85,8 +104,8 @@ class ConfigsSeeder implements ISeeder
         if (!$config) {
             $this->configBuilder->createNew()
                 ->setName($name)
-                ->setDisplayName('Popis stránky')
-                ->setDescription('Používa sa v meta dátach stránky.')
+                ->setDisplayName('application.config.site_description.name')
+                ->setDescription('application.config.site_description.description')
                 ->setType(ApplicationConfig::TYPE_TEXT)
                 ->setAutoload(true)
                 ->setConfigCategory($category)
@@ -95,6 +114,13 @@ class ConfigsSeeder implements ISeeder
             $output->writeln("  * config item <info>$name</info> created");
         } else {
             $output->writeln("  * config item <info>$name</info> exists");
+
+            if ($config->category->name != $categoryName) {
+                $this->configsRepository->update($config, [
+                    'config_category_id' => $category->id
+                ]);
+                $output->writeln("  <comment>* config item <info>$name</info> updated</comment>");
+            }
         }
 
         $name = 'site_url';
@@ -103,8 +129,8 @@ class ConfigsSeeder implements ISeeder
         if (!$config) {
             $this->configBuilder->createNew()
                 ->setName($name)
-                ->setDisplayName('Base url stranky')
-                ->setDescription('Zakladna url kde bezi crm')
+                ->setDisplayName('application.config.site_url.name')
+                ->setDescription('application.config.site_url.description')
                 ->setValue($value)
                 ->setType(ApplicationConfig::TYPE_STRING)
                 ->setAutoload(false)
@@ -112,11 +138,20 @@ class ConfigsSeeder implements ISeeder
                 ->setSorting(250)
                 ->save();
             $output->writeln("  <comment>* config item <info>$name</info> created</comment>");
-        } elseif ($config->has_default_value && $config->value !== $value) {
-            $this->configsRepository->update($config, ['value' => $value, 'has_default_value' => true]);
-            $output->writeln("  <comment>* config item <info>$name</info> updated</comment>");
         } else {
             $output->writeln("  * config item <info>$name</info> exists");
+
+            if ($config->has_default_value && $config->value !== $value) {
+                $this->configsRepository->update($config, ['value' => $value, 'has_default_value' => true]);
+                $output->writeln("  <comment>* config item <info>$name</info> updated</comment>");
+            }
+
+            if ($config->category->name != $categoryName) {
+                $this->configsRepository->update($config, [
+                    'config_category_id' => $category->id
+                ]);
+                $output->writeln("  <comment>* config item <info>$name</info> updated</comment>");
+            }
         }
 
         $name = 'cms_url';
@@ -125,8 +160,8 @@ class ConfigsSeeder implements ISeeder
         if (!$config) {
             $this->configBuilder->createNew()
                 ->setName($name)
-                ->setDisplayName('CMS URL')
-                ->setDescription('URL smerujuca na titulku CMS')
+                ->setDisplayName('application.config.cms_url.name')
+                ->setDescription('application.config.cms_url.description')
                 ->setValue($value)
                 ->setType(ApplicationConfig::TYPE_STRING)
                 ->setAutoload(true)
@@ -134,11 +169,20 @@ class ConfigsSeeder implements ISeeder
                 ->setSorting(255)
                 ->save();
             $output->writeln("  <comment>* config item <info>$name</info> created</comment>");
-        } elseif ($config->has_default_value && $config->value !== $value) {
-            $this->configsRepository->update($config, ['value' => $value, 'has_default_value' => true]);
-            $output->writeln("  <comment>* config item <info>$name</info> updated</comment>");
         } else {
             $output->writeln("  * config item <info>$name</info> exists");
+
+            if ($config->has_default_value && $config->value !== $value) {
+                $this->configsRepository->update($config, ['value' => $value, 'has_default_value' => true]);
+                $output->writeln("  <comment>* config item <info>$name</info> updated</comment>");
+            }
+
+            if ($config->category->name != $categoryName) {
+                $this->configsRepository->update($config, [
+                    'config_category_id' => $category->id
+                ]);
+                $output->writeln("  <comment>* config item <info>$name</info> updated</comment>");
+            }
         }
 
         $name = 'contact_email';
@@ -147,19 +191,28 @@ class ConfigsSeeder implements ISeeder
         if (!$config) {
             $this->configBuilder->createNew()
                 ->setName($name)
-                ->setDisplayName('Contact email')
-                ->setDescription('Contact email')
+                ->setDisplayName('application.config.contact_email.name')
+                ->setDescription('application.config.contact_email.description')
                 ->setType(ApplicationConfig::TYPE_STRING)
                 ->setAutoload(true)
                 ->setConfigCategory($category)
                 ->setSorting(256)
                 ->save();
             $output->writeln("  <comment>* config item <info>$name</info> created</comment>");
-        } elseif ($config->has_default_value && $config->value !== $value) {
-            $this->configsRepository->update($config, ['value' => $value, 'has_default_value' => true]);
-            $output->writeln("  <comment>* config item <info>$name</info> updated</comment>");
         } else {
             $output->writeln("  * config item <info>$name</info> exists");
+
+            if ($config->has_default_value && $config->value !== $value) {
+                $this->configsRepository->update($config, ['value' => $value, 'has_default_value' => true]);
+                $output->writeln("  <comment>* config item <info>$name</info> updated</comment>");
+            }
+
+            if ($config->category->name != $categoryName) {
+                $this->configsRepository->update($config, [
+                    'config_category_id' => $category->id
+                ]);
+                $output->writeln("  <comment>* config item <info>$name</info> updated</comment>");
+            }
         }
 
         $name = 'default_route';
@@ -168,8 +221,8 @@ class ConfigsSeeder implements ISeeder
         if (!$config) {
             $this->configBuilder->createNew()
                 ->setName($name)
-                ->setDisplayName('Defaultná routa')
-                ->setDescription('Nette routa, ktorá sa má použiť pri requeste na /')
+                ->setDisplayName('application.config.default_route.name')
+                ->setDescription('application.config.default_route.description')
                 ->setValue($value)
                 ->setType(ApplicationConfig::TYPE_STRING)
                 ->setAutoload(false)
@@ -177,11 +230,20 @@ class ConfigsSeeder implements ISeeder
                 ->setSorting(260)
                 ->save();
             $output->writeln("  <comment>* config item <info>$name</info> created</comment>");
-        } elseif ($config->has_default_value && $config->value !== $value) {
-            $this->configsRepository->update($config, ['value' => $value, 'has_default_value' => true]);
-            $output->writeln("  <comment>* config item <info>$name</info> updated</comment>");
         } else {
             $output->writeln("  * config item <info>$name</info> exists");
+
+            if ($config->has_default_value && $config->value !== $value) {
+                $this->configsRepository->update($config, ['value' => $value, 'has_default_value' => true]);
+                $output->writeln("  <comment>* config item <info>$name</info> updated</comment>");
+            }
+
+            if ($config->category->name != $categoryName) {
+                $this->configsRepository->update($config, [
+                    'config_category_id' => $category->id
+                ]);
+                $output->writeln("  <comment>* config item <info>$name</info> updated</comment>");
+            }
         }
 
         $name = 'home_route';
@@ -190,8 +252,8 @@ class ConfigsSeeder implements ISeeder
         if (!$config) {
             $this->configBuilder->createNew()
                 ->setName($name)
-                ->setDisplayName('Predvolená stránka')
-                ->setDescription('Nette routa, ktorá sa má použiť pri presmerovaní užívateľa po prihlásení, zmene hesla, a pod. Formát: `Application:Default:default`.')
+                ->setDisplayName('application.config.home_route.name')
+                ->setDescription('application.config.home_route.description')
                 ->setValue($value)
                 ->setType(ApplicationConfig::TYPE_STRING)
                 ->setAutoload(true)
@@ -199,11 +261,20 @@ class ConfigsSeeder implements ISeeder
                 ->setSorting(261)
                 ->save();
             $output->writeln("  <comment>* Config item <info>$name</info> created</comment>");
-        } elseif ($config->has_default_value && $config->value !== $value) {
-            $this->configsRepository->update($config, ['value' => $value, 'has_default_value' => true]);
-            $output->writeln("  <comment>* config item <info>$name</info> updated</comment>");
         } else {
             $output->writeln(" * Config item <info>$name</info> exists");
+
+            if ($config->has_default_value && $config->value !== $value) {
+                $this->configsRepository->update($config, ['value' => $value, 'has_default_value' => true]);
+                $output->writeln("  <comment>* config item <info>$name</info> updated</comment>");
+            }
+
+            if ($config->category->name != $categoryName) {
+                $this->configsRepository->update($config, [
+                    'config_category_id' => $category->id
+                ]);
+                $output->writeln("  <comment>* config item <info>$name</info> updated</comment>");
+            }
         }
 
         $name = 'not_logged_in_route';
@@ -212,8 +283,8 @@ class ConfigsSeeder implements ISeeder
         if (!$config) {
             $this->configBuilder->createNew()
                 ->setName($name)
-                ->setDisplayName('Stránka pre neprihlásených')
-                ->setDescription('Nette routa, na ktorú má byť používateľ presmerovaný pri návšteve URL, ktorá je dostupná len pre prihlásených používateľov')
+                ->setDisplayName('application.config.not_logged_in_route.name')
+                ->setDescription('application.config.not_logged_in_route.description')
                 ->setValue($value)
                 ->setType(ApplicationConfig::TYPE_STRING)
                 ->setAutoload(false)
@@ -221,11 +292,20 @@ class ConfigsSeeder implements ISeeder
                 ->setSorting(262)
                 ->save();
             $output->writeln("  <comment>* config item <info>$name</info> created</comment>");
-        } elseif ($config->has_default_value && $config->value !== $value) {
-            $this->configsRepository->update($config, ['value' => $value, 'has_default_value' => true]);
-            $output->writeln("  <comment>* config item <info>$name</info> updated</comment>");
         } else {
             $output->writeln("  * config item <info>$name</info> exists");
+
+            if ($config->has_default_value && $config->value !== $value) {
+                $this->configsRepository->update($config, ['value' => $value, 'has_default_value' => true]);
+                $output->writeln("  <comment>* config item <info>$name</info> updated</comment>");
+            }
+
+            if ($config->category->name != $categoryName) {
+                $this->configsRepository->update($config, [
+                    'config_category_id' => $category->id
+                ]);
+                $output->writeln("  <comment>* config item <info>$name</info> updated</comment>");
+            }
         }
 
         $name = 'layout_name';
@@ -233,8 +313,8 @@ class ConfigsSeeder implements ISeeder
         if (!$config) {
             $this->configBuilder->createNew()
                 ->setName($name)
-                ->setDisplayName('Layout stránky')
-                ->setDescription('Pozor! Nesprávna hodnota môže znefunkčniť stránku')
+                ->setDisplayName('application.config.layout_name.name')
+                ->setDescription('application.config.layout_name.description')
                 ->setType(ApplicationConfig::TYPE_STRING)
                 ->setAutoload(true)
                 ->setConfigCategory($category)
@@ -243,6 +323,13 @@ class ConfigsSeeder implements ISeeder
             $output->writeln("  * config item <info>$name</info> created");
         } else {
             $output->writeln("  * config item <info>$name</info> exists");
+
+            if ($config->category->name != $categoryName) {
+                $this->configsRepository->update($config, [
+                    'config_category_id' => $category->id
+                ]);
+                $output->writeln("  <comment>* config item <info>$name</info> updated</comment>");
+            }
         }
 
         $name = 'og_image';
@@ -250,8 +337,8 @@ class ConfigsSeeder implements ISeeder
         if (!$config) {
             $this->configBuilder->createNew()
                 ->setName($name)
-                ->setDisplayName('Meta obrazok stránky v predplatnom')
-                ->setDescription('Treba zadať plnú cestu http://cesta-ku-obrazky.jpg')
+                ->setDisplayName('application.config.og_image.name')
+                ->setDescription('application.config.og_image.description')
                 ->setType(ApplicationConfig::TYPE_STRING)
                 ->setAutoload(true)
                 ->setConfigCategory($category)
@@ -260,6 +347,13 @@ class ConfigsSeeder implements ISeeder
             $output->writeln("  * config item <info>$name</info> created");
         } else {
             $output->writeln("  * config item <info>$name</info> exists");
+
+            if ($config->category->name != $categoryName) {
+                $this->configsRepository->update($config, [
+                    'config_category_id' => $category->id
+                ]);
+                $output->writeln("  <comment>* config item <info>$name</info> updated</comment>");
+            }
         }
 
         $name = 'header_block';
@@ -267,8 +361,8 @@ class ConfigsSeeder implements ISeeder
         if (!$config) {
             $this->configBuilder->createNew()
                 ->setName($name)
-                ->setDisplayName('Kód v hlavičke')
-                ->setDescription('Je možné vložiť ľubovoľný kód, ako napríklad Google analytics alebo ďalšie')
+                ->setDisplayName('application.config.header_block.name')
+                ->setDescription('application.config.header_block.description')
                 ->setType(ApplicationConfig::TYPE_HTML)
                 ->setAutoload(true)
                 ->setConfigCategory($category)
@@ -277,6 +371,37 @@ class ConfigsSeeder implements ISeeder
             $output->writeln("  * config item <info>$name</info> created");
         } else {
             $output->writeln("  * config item <info>$name</info> exists");
+
+            if ($config->category->name != $categoryName) {
+                $this->configsRepository->update($config, [
+                    'config_category_id' => $category->id
+                ]);
+                $output->writeln("  <comment>* config item <info>$name</info> updated</comment>");
+            }
+        }
+
+        $name = 'admin_logo';
+        $config = $this->configsRepository->loadByName($name);
+        if (!$config) {
+            $this->configBuilder->createNew()
+                ->setName($name)
+                ->setDisplayName('application.config.admin_logo.name')
+                ->setDescription('application.config.admin_logo.description')
+                ->setType(ApplicationConfig::TYPE_STRING)
+                ->setAutoload(true)
+                ->setConfigCategory($category)
+                ->setSorting(500)
+                ->save();
+            $output->writeln("  * config item <info>$name</info> created");
+        } else {
+            $output->writeln("  * config item <info>$name</info> exists");
+
+            if ($config->category->name != $categoryName) {
+                $this->configsRepository->update($config, [
+                    'config_category_id' => $category->id
+                ]);
+                $output->writeln("  <comment>* config item <info>$name</info> updated</comment>");
+            }
         }
     }
 }
