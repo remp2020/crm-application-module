@@ -145,7 +145,7 @@ class FrontendPresenter extends BasePresenter
         ]);
     }
 
-    protected function trackingParams()
+    public function trackingParams()
     {
         return array_merge(
             $this->utmParams(),
