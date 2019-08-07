@@ -21,6 +21,16 @@ class ModuleManager
         $this->modules[$order] = $applicationModule;
     }
 
+    public function removeModule(ApplicationModuleInterface $applicationModule)
+    {
+        $class = get_class($applicationModule);
+        foreach ($this->modules as $order => $module) {
+            if ($module instanceof $class) {
+                unset($this->modules[$order]);
+            }
+        }
+    }
+
     public function removeModules()
     {
         $this->modules = [];
