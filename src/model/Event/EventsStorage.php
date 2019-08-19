@@ -17,16 +17,23 @@ class EventsStorage
         if (!is_subclass_of($event, 'League\Event\AbstractEvent', true)) {
             throw new \Exception("Event [{$event}] must extend class League\Event\AbstractEvent.");
         }
-        if (isset($this->events[$code])) {
-            throw new \Exception("Code [{$code}] already in use by event {$this->events[$code]}.");
-        }
 
-        $this->events[$code] = [
+        $def = [
             'code' => $code,
             'name' => ucfirst(str_replace('_', ' ', $code)),
             'class' => $event,
             'is_public' => $isPublic,
         ];
+
+        if (isset($this->events[$code])) {
+            if (empty(array_diff($def, $this->events[$code]))) {
+                // we're trying to register same thing here (from the tests possibly), no need to panic
+                return;
+            }
+            throw new \Exception("Code [{$code}] already in use by event {$code} handled by {$this->events[$code]['class']}.");
+        }
+
+        $this->events[$code] = $def;
     }
 
     public function getEvents(): array
