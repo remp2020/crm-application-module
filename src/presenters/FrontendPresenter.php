@@ -184,7 +184,7 @@ class FrontendPresenter extends BasePresenter
         }
     }
 
-    protected function getReferer()
+    public function getReferer()
     {
         $referer = null;
         if (isset($_GET['referer'])) {
