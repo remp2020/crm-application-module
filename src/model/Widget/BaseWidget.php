@@ -4,6 +4,7 @@ namespace Crm\ApplicationModule\Widget;
 
 use Crm\ApplicationModule\Components\ListingActionWidgetFactoryInterface;
 use Crm\ApplicationModule\Components\SimpleWidgetFactoryInterface;
+use Crm\ApplicationModule\Snippet\Control\SnippetFactory;
 use Kdyby\Autowired\AutowireComponentFactories;
 use Nette\Application\UI;
 use Nette\ComponentModel\IComponent;
@@ -40,6 +41,12 @@ abstract class BaseWidget extends UI\Control implements WidgetInterface
     }
 
     protected function createComponentSimpleWidget(SimpleWidgetFactoryInterface $factory)
+    {
+        $control = $factory->create();
+        return $control;
+    }
+
+    protected function createComponentSnippet(SnippetFactory $factory)
     {
         $control = $factory->create();
         return $control;
