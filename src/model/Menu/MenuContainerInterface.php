@@ -6,6 +6,9 @@ interface MenuContainerInterface
 {
     public function attachMenuItem(MenuItemInterface $menuItem);
 
+    /**
+     * @return MenuItemInterface[]
+     */
     public function getMenuItems();
 
     public function getMenuItemByLink(string $link): ?MenuItemInterface;

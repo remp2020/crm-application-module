@@ -16,6 +16,9 @@ interface MenuItemInterface
 
     public function addChild(MenuItemInterface $item);
 
+    /**
+     * @return MenuItemInterface[]
+     */
     public function subItems();
 
     public function hasSubItems();
