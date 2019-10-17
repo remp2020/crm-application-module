@@ -90,7 +90,7 @@ services:
 		class: Monolog\Logger('hermes-logger')
 		setup:
 			- pushHandler(Monolog\Handler\StreamHandler("%appDir%/../log/hermes-log.txt"))
-			- pushHandler(Monolog\Handler\ErrorLogHandler())
+
 	hermesRestart: Tomaj\Hermes\Restart\SharedFileRestart('/tmp/hermes_restart')
 	hermesDriver: Crm\ApplicationModule\Hermes\RedisDriver
 	hermesDispatcher:
