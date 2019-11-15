@@ -15,6 +15,8 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 abstract class DatabaseTestCase extends TestCase
 {
+    use RefreshContainerTrait;
+
     protected $container;
 
     /** @var  Context */

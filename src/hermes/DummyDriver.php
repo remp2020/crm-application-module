@@ -16,6 +16,10 @@ class DummyDriver implements DriverInterface
 
     private $waitResult = null;
 
+    private $executeAtCheckEnabled = false;
+
+    private $oneLoopDurationSeconds = 60;
+
     public function __construct($events = null)
     {
         $this->serializer = new MessageSerializer();
@@ -26,6 +30,13 @@ class DummyDriver implements DriverInterface
         foreach ($events as $event) {
             $this->events[] = $this->serializer->serialize($event);
         }
+    }
+
+    // To simulate execute_at functionality, call this function after initialization
+    public function enableExecuteAtCheck($oneLoopDurationSeconds = 60)
+    {
+        $this->executeAtCheckEnabled = true;
+        $this->oneLoopDurationSeconds = $oneLoopDurationSeconds;
     }
 
     public function send(MessageInterface $message): bool
@@ -45,10 +56,32 @@ class DummyDriver implements DriverInterface
 
     public function wait(Closure $callback): void
     {
+        $futureMessages = [];
+
         while (count($this->events) > 0) {
             $event = array_pop($this->events);
-            $message = $this->serializer->unserialize($event);
-            $this->waitResult = $callback($message);
+            $m = $this->serializer->unserialize($event);
+
+            if ($this->executeAtCheckEnabled && $m->getExecuteAt() > time()) {
+                $futureMessages[] = new HermesMessage(
+                    $m->getType(),
+                    $m->getPayload(),
+                    $m->getId(),
+                    $m->getCreated(),
+                    $m->getExecuteAt() - $this->oneLoopDurationSeconds, // Decrease execute_at time to simulate time pass
+                    $m->getRetries()
+                );
+                continue;
+            }
+
+            $this->waitResult = $callback($m);
+        }
+
+        // To prevent endless loop in tests, add future messages here
+        if ($futureMessages) {
+            foreach ($futureMessages as $futureMessage) {
+                $this->send($futureMessage);
+            }
         }
     }
 
