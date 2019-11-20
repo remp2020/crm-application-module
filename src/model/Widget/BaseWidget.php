@@ -2,7 +2,6 @@
 
 namespace Crm\ApplicationModule\Widget;
 
-use Crm\ApplicationModule\Components\ListingActionWidgetFactoryInterface;
 use Crm\ApplicationModule\Components\SimpleWidgetFactoryInterface;
 use Crm\ApplicationModule\Snippet\Control\SnippetFactory;
 use Kdyby\Autowired\AutowireComponentFactories;
@@ -32,12 +31,6 @@ abstract class BaseWidget extends UI\Control implements WidgetInterface
     public function identifier()
     {
         return 'identifier';
-    }
-
-    protected function createComponentListingWidget(ListingActionWidgetFactoryInterface $factory)
-    {
-        $control = $factory->create();
-        return $control;
     }
 
     protected function createComponentSimpleWidget(SimpleWidgetFactoryInterface $factory)
