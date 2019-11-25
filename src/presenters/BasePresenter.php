@@ -3,13 +3,12 @@
 namespace Crm\ApplicationModule\Presenters;
 
 use Crm\ApplicationModule\ApplicationManager;
-use Crm\ApplicationModule\Components\ListingActionWidgetFactoryInterface;
 use Crm\ApplicationModule\Components\SimpleWidgetFactoryInterface;
 use Crm\ApplicationModule\Components\SingleStatWidgetFactoryInterface;
 use Crm\ApplicationModule\Config\ApplicationConfig;
+use Crm\ApplicationModule\Events\AuthenticationEvent;
 use Crm\ApplicationModule\LayoutManager;
 use Crm\ApplicationModule\Snippet\Control\SnippetFactory;
-use Crm\ApplicationModule\Events\AuthenticationEvent;
 use Kdyby\Autowired\AutowireComponentFactories;
 use Kdyby\Translation\Translator;
 use League\Event\Emitter;
@@ -88,12 +87,6 @@ abstract class BasePresenter extends Presenter
         if (!$this->getUser()->isLoggedIn()) {
             $this->redirect($this->applicationConfig->get('not_logged_in_route'), ['back' => $this->storeRequest()]);
         }
-    }
-
-    protected function createComponentListingWidget(ListingActionWidgetFactoryInterface $factory)
-    {
-        $control = $factory->create();
-        return $control;
     }
 
     protected function createComponentSimpleWidget(SimpleWidgetFactoryInterface $factory)

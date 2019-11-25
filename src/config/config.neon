@@ -49,7 +49,6 @@ services:
 	- Crm\ApplicationModule\Snippet\Control\SnippetFactory
 	- Crm\ApplicationModule\Snippet\SnippetRenderer
 	- Crm\ApplicationModule\Components\FrontendMenuFactoryInterface
-	- Crm\ApplicationModule\Components\ListingActionWidgetFactoryInterface
 	- Crm\ApplicationModule\Components\SimpleWidgetFactoryInterface
 	- Crm\ApplicationModule\Components\SingleStatWidgetFactoryInterface
 	- Crm\ApplicationModule\Criteria\CriteriaStorage

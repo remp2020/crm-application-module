@@ -4,5 +4,5 @@ namespace Crm\ApplicationModule\Widget;
 
 interface WidgetFactoryInterface
 {
-    public function create();
+    public function create(): WidgetInterface;
 }

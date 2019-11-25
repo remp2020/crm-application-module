@@ -8,16 +8,26 @@ class WidgetManager implements WidgetManagerInterface
 
     private $overrideWidgets = [];
 
-    private $widgetsFactories = [];
+    private $widgetFactories = [];
 
     public function registerWidget($path, WidgetInterface $widget, $priority = 100, $overwrite = false)
     {
-        if (isset($this->widgets[$path][$priority]) && !$overwrite) {
+        if ($this->isPriorityAlreadyUsed($path, $priority) && !$overwrite) {
             do {
                 $priority++;
-            } while (isset($this->widgets[$path][$priority]));
+            } while ($this->isPriorityAlreadyUsed($path, $priority));
         }
         $this->widgets[$path][$priority] = $widget;
+    }
+
+    public function registerWidgetFactory($path, WidgetFactoryInterface $widgetFactory, $priority = 100, $overwrite = false)
+    {
+        if ($this->isPriorityAlreadyUsed($path, $priority) && !$overwrite) {
+            do {
+                $priority++;
+            } while ($this->isPriorityAlreadyUsed($path, $priority));
+        }
+        $this->widgetFactories[$path][$priority] = $widgetFactory;
     }
 
     public function overrideWidget($path, WidgetInterface $oldWidget, WidgetInterface $newWidget)
@@ -47,16 +57,6 @@ class WidgetManager implements WidgetManagerInterface
         $this->overrideWidgets = [];
     }
 
-    public function registerWidgetFactory($path, WidgetFactoryInterface $widgetFactory, $priority = 100, $overwrite = false)
-    {
-        if (isset($this->widgetsFactories[$path][$priority]) && !$overwrite) {
-            do {
-                $priority++;
-            } while (isset($this->widgetsFactories[$path][$priority]));
-        }
-        $this->widgetsFactories[$path][$priority] = $widgetFactory;
-    }
-
     public function getWidgets($path)
     {
         $this->overrideWidgets();
@@ -71,8 +71,8 @@ class WidgetManager implements WidgetManagerInterface
 
     public function getWidgetFactories($path)
     {
-        if (isset($this->widgetsFactories[$path])) {
-            $result = $this->widgetsFactories[$path];
+        if (isset($this->widgetFactories[$path])) {
+            $result = $this->widgetFactories[$path];
             ksort($result);
             return $result;
         }
@@ -91,5 +91,11 @@ class WidgetManager implements WidgetManagerInterface
             }
         }
         return false;
+    }
+
+    private function isPriorityAlreadyUsed($path, $priority)
+    {
+        return isset($this->widgets[$path][$priority]) ||
+            isset($this->widgetFactories[$path][$priority]);
     }
 }
