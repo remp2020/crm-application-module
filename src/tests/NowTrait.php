@@ -7,6 +7,8 @@ namespace Crm\ApplicationModule\Tests;
  */
 trait NowTrait
 {
+    private $now;
+
     public function setNow(\DateTime $now)
     {
         $this->now = $now;
