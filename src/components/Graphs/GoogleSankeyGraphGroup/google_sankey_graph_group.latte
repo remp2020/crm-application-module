@@ -1,0 +1,42 @@
+<div class="panel panel-default">
+
+    <div class="panel-heading" style="background-color: transparent; border-color: transparent">
+        <h3 class="panel-title">
+            {$graphTitle}
+            <button type="button" class="btn btn-xs btn-default" data-toggle="tooltip" data-placement="top" title="{$graphHelp}"><i class="fa fa-question-circle"></i></button>
+        </h3>
+    </div>
+
+    <div class="panel-body">
+        <div class="tab-content">
+            {if $empty}
+                <div class="well-lg well" style="margin-bottom: 0;">
+                    No data available.
+                </div>
+            {else}
+                <div style="height: {$height}px; width: 100%" id="graph_{$graphId}" class="contains-chart graph line-graph" data-gchart="drawChart{$graphId|noescape}"></div>
+
+                <script type="text/javascript">
+                    function drawChart{$graphId|noescape}() {
+                        var data = new google.visualization.DataTable();
+                        data.addColumn('string', {json_encode($firstColumnName)|noescape});
+                        data.addColumn('string', {json_encode($secondColumnName)|noescape});
+                        data.addColumn('number', {json_encode($countColumnName)|noescape});
+
+                        data.addRows({$rows|noescape});
+
+                        var options = {
+                        };
+
+                        var chart = new google.visualization.Sankey(document.getElementById('graph_{$graphId|noescape}'));
+                        chart.draw(data, options);
+                    }
+
+                    google.charts.load("visualization", "1", { packages:["sankey"]});
+                    google.charts.setOnLoadCallback(drawChart{$graphId|noescape});
+                </script>
+            {/if}
+
+        </div>
+    </div>
+</div>

@@ -105,3 +105,4 @@ services:
 	- Crm\ApplicationModule\Components\Graphs\GoogleLineGraphGroupControlFactoryInterface
 	- Crm\ApplicationModule\Components\Graphs\SmallBarGraphControlFactoryInterface
 	- Crm\ApplicationModule\Components\Graphs\InlineBarGraphControlFactoryInterface
+	- Crm\ApplicationModule\Components\Graphs\GoogleSankeyGraphGroupControlFactoryInterface
