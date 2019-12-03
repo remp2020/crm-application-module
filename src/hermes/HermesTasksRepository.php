@@ -30,8 +30,18 @@ class HermesTasksRepository extends Repository
         ]);
     }
 
-    public function getStateCounts()
+    public function getStateCounts(\DateTime $processedFrom, array $states = [])
     {
-        return $this->getTable()->group('state, type')->select('state, type, count(*) AS count')->order('count DESC');
+        $query = $this->getTable()
+            ->select('state, type, count(*) AS count')
+            ->where('processed_at >= ?', $processedFrom)
+            ->group('state, type')
+            ->order('count DESC');
+
+        if (!empty($states)) {
+            $query->where(['state' => $states]);
+        }
+
+        return $query;
     }
 }
