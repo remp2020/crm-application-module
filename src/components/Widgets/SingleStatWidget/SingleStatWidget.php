@@ -6,6 +6,11 @@ use Crm\ApplicationModule\Widget\BaseWidget;
 use Crm\ApplicationModule\Widget\WidgetManager;
 use Nette\Localization\ITranslator;
 
+/**
+ * Widget used for rendering simple single stat widgets in groups.
+ *
+ * @package Crm\ApplicationModule\Components
+ */
 class SingleStatWidget extends BaseWidget
 {
     private $templateName = 'single_stat_widget.latte';

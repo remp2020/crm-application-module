@@ -2,6 +2,13 @@
 
 namespace Crm\ApplicationModule\Components\Graphs;
 
+/**
+ * Inline bar graph
+ *
+ * Component for rendering very simple inline bar graphs.
+ *
+ * @package Crm\ApplicationModule\Components\Graphs
+ */
 class InlineBarGraph extends BaseGraphControl
 {
     private $view = 'inline_bar_graph';

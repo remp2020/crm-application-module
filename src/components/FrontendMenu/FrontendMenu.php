@@ -5,6 +5,13 @@ namespace Crm\ApplicationModule\Components;
 use Crm\ApplicationModule\Menu\MenuContainerInterface;
 use Nette\Application\UI;
 
+/**
+ * Basic frontend menu component.
+ *
+ * This component renders frtonend menu items to simple latte template.
+ *
+ * @package Crm\ApplicationModule\Components
+ */
 class FrontendMenu extends UI\Control
 {
     private $templateName = 'frontend_menu.latte';

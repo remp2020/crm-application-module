@@ -6,6 +6,14 @@ use Crm\ApplicationModule\Graphs\GraphData;
 use Crm\ApplicationModule\Graphs\ScaleFactory;
 use Nette\Application\UI\Multiplier;
 
+/**
+ * Google line graph group component
+ *
+ * Component for rendering line graph using google graph library
+ * capable of rendering multiple graphs depending on selected group by.
+ *
+ * @package Crm\ApplicationModule\Components\Graphs
+ */
 class GoogleLineGraphGroup extends BaseGraphControl
 {
     private $view = 'google_line_graph_group';

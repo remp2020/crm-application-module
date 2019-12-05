@@ -2,6 +2,13 @@
 
 namespace Crm\ApplicationModule\Components\Graphs;
 
+/**
+ * Bar graph
+ *
+ * Component for rendering very simple bar graphs.
+ *
+ * @package Crm\ApplicationModule\Components\Graphs
+ */
 class SmallBarGraph extends BaseGraphControl
 {
     private $view = 'small_bar_graph';
