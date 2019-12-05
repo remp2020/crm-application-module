@@ -361,6 +361,59 @@ In your `templates/Demo/default.latte` template, use the component as needed:
 ![alt text](docs/_static/small_bar_graph.png "Small bar graph")
 </details>
 
+##### [GoogleSankeyGraphGroup](src/components/Graphs/GoogleSankeyGraphGroup/GoogleSankeyGraphGroup.php)
+
+A sankey graph is a component based on Google Sankey diagram. It's used to depict a flow from one set of values to another.
+
+<details>
+<summary>example</summary>
+
+```php
+namespace Crm\DemoModule\Presenters;
+
+class DemoPresenter extends \Crm\AdminModule\Presenters\AdminPresenter
+{
+    // ...
+    public function renderDefault()
+    {
+    }
+
+    public function createComponentGoogleSankeyGraph(GoogleSankeyGraphGroupControlFactoryInterface $factory)
+    {
+        $graph = $factory->create();
+        $graph->setGraphHelp($this->translator->translate('Graph help');
+        $graph->setGraphTitle($this->translator->translate('Graph title');
+        $graph->setRows([
+            ['A', 'X', 1],
+            ['A', 'Y', 3],
+            ['A', 'Z', 2],
+            ['B', 'X', 4],
+            ['B', 'Y', 2],
+            ['B', 'Z', 2],
+        ]);
+        $graph->setColumnNames('From', 'To', 'Count');
+        return $graph;
+    }
+    // ...
+}
+```
+
+In your `templates/Demo/default.latte` template, use the component as needed:
+```latte
+<div class="row">
+    <div class="col-md-12">
+        {control googleSankeyGraph}
+    </div>
+</div>
+``` 
+</details>
+
+<details>
+<summary>preview</summary>
+
+![alt text](docs/_static/sankey_graph.png "Line graph group")
+</details>
+
 #### [VisualPaginator](src/components/VisualPaginator/VisualPagiantor.php)
 
 Paginator is used to limit and offset your results displayed in lists all around the system. Paginator keeps the current page/limit and provides the information to your data-fetching blocks of code.
