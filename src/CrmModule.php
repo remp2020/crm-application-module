@@ -7,6 +7,7 @@ use Crm\ApplicationModule\Access\AccessManager;
 use Crm\ApplicationModule\Authenticator\AuthenticatorManagerInterface;
 use Crm\ApplicationModule\Commands\CommandsContainerInterface;
 use Crm\ApplicationModule\Criteria\CriteriaStorage;
+use Crm\ApplicationModule\Criteria\ScenariosCriteriaStorage;
 use Crm\ApplicationModule\DataProvider\DataProviderManager;
 use Crm\ApplicationModule\Event\EventsStorage;
 use Crm\ApplicationModule\Menu\MenuContainerInterface;
@@ -88,6 +89,11 @@ abstract class CrmModule implements ApplicationModuleInterface
     }
 
     public function registerUserData(UserDataRegistrator $dataRegistrator)
+    {
+        // nothing
+    }
+
+    public function registerScenariosCriteria(ScenariosCriteriaStorage $scenariosCriteriaStorage)
     {
         // nothing
     }

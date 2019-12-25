@@ -52,6 +52,7 @@ services:
 	- Crm\ApplicationModule\Components\SimpleWidgetFactoryInterface
 	- Crm\ApplicationModule\Components\SingleStatWidgetFactoryInterface
 	- Crm\ApplicationModule\Criteria\CriteriaStorage
+	- Crm\ApplicationModule\Criteria\ScenariosCriteriaStorage
 	- Crm\ApplicationModule\Event\EventsStorage
 	- Crm\ApplicationModule\ExcelFactory
 	- Crm\ApplicationModule\CleanUpManager
