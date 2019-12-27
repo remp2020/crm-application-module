@@ -40,5 +40,7 @@ class CacheCommand extends Command
             $output->writeln("Caching module <info>{$className}</info>");
             $module->cache($output, $tags);
         }
+
+        return 0;
     }
 }
