@@ -21,4 +21,9 @@ class ScenariosCriteriaStorage
     {
         return $this->criteria;
     }
+
+    public function getEventCriterion(string $event, $key): ScenariosCriteriaInterface
+    {
+        return $this->criteria[$event][$key];
+    }
 }
