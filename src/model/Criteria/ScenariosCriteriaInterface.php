@@ -11,13 +11,7 @@ interface ScenariosCriteriaInterface
      *
      * The generator and UI currently support following type of parameters:
      *
-     *   * StringParam
-     *   * StringArrayParam
-     *   * NumberParam
-     *   * NumberArrayParam
-     *   * DecimalParam
-     *   * BooleanParam
-     *   * DateTimeParam
+     *   * StringLabeledArrayParam
      *
      * @return CriteriaParam[]
      */
