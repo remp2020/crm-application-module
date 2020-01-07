@@ -85,11 +85,11 @@ services:
 	- Crm\ApplicationModule\Seeders\SnippetsSeeder
 	accessManager: Crm\ApplicationModule\Access\AccessManager
 
-	hermesLogFilter: Crm\ApplicationModule\Hermes\LogFilter
+	hermesLogRedact: Crm\ApplicationModule\Hermes\LogRedact
 	hermesLogger:
 		class: Monolog\Logger('hermes-logger')
 		setup:
-			- pushProcessor(@hermesLogFilter::add(['password', 'token']))
+			- pushProcessor(@hermesLogRedact::add(['password', 'token']))
 			- pushHandler(Monolog\Handler\StreamHandler("%appDir%/../log/hermes-log.txt"))
 
 	hermesRestart: Tomaj\Hermes\Restart\SharedFileRestart('/tmp/hermes_restart')

@@ -2,7 +2,7 @@
 
 namespace Crm\ApplicationModule;
 
-class LogFilter
+class LogRedact
 {
     public static function add($filters)
     {

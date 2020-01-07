@@ -2,7 +2,7 @@
 
 namespace Crm\ApplicationModule\Hermes;
 
-class LogFilter
+class LogRedact
 {
     public static function add($filters)
     {
