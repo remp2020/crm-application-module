@@ -14,7 +14,9 @@ class StringLabeledArrayParam implements CriteriaParam
 
     private $options;
 
-    public function __construct(string $key, string $label, array $options)
+    private $operator;
+
+    public function __construct(string $key, string $label, array $options, $operator = 'or')
     {
         $this->options = array_map(function ($value) use ($options) {
             return (object) [
@@ -24,6 +26,7 @@ class StringLabeledArrayParam implements CriteriaParam
         }, array_keys($options));
         $this->key = $key;
         $this->label = $label;
+        $this->operator = $operator;
     }
 
     public function key(): string
@@ -42,6 +45,7 @@ class StringLabeledArrayParam implements CriteriaParam
             'type' => $this->type(),
             'label' => $this->label(),
             'options' => $this->options,
+            'operator' => $this->operator,
         ];
         return $result;
     }

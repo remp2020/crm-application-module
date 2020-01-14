@@ -17,7 +17,7 @@ interface ScenariosCriteriaInterface
      */
     public function params(): array;
 
-    public function addCondition(Selection $selection, $values);
+    public function addCondition(Selection $selection, $key, $values);
 
     /**
      * label returns human-friendly and descriptive label of the whole Criteria
