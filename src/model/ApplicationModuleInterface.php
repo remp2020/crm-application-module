@@ -7,6 +7,7 @@ use Crm\ApplicationModule\Access\AccessManager;
 use Crm\ApplicationModule\Authenticator\AuthenticatorManagerInterface;
 use Crm\ApplicationModule\Commands\CommandsContainerInterface;
 use Crm\ApplicationModule\Criteria\CriteriaStorage;
+use Crm\ApplicationModule\Criteria\ScenariosCriteriaStorage;
 use Crm\ApplicationModule\DataProvider\DataProviderManager;
 use Crm\ApplicationModule\Event\EventsStorage;
 use Crm\ApplicationModule\Menu\MenuContainerInterface;
@@ -40,6 +41,8 @@ interface ApplicationModuleInterface
     public function registerUserData(UserDataRegistrator $dataRegistrator);
 
     public function registerSegmentCriteria(CriteriaStorage $criteriaStorage);
+
+    public function registerScenariosCriteria(ScenariosCriteriaStorage $scenariosCriteriaStorage);
 
     public function registerRoutes(RouteList $router);
 

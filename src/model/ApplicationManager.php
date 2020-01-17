@@ -7,6 +7,7 @@ use Crm\ApplicationModule\Access\AccessManager;
 use Crm\ApplicationModule\Authenticator\AuthenticatorManager;
 use Crm\ApplicationModule\Commands\CommandsContainer;
 use Crm\ApplicationModule\Criteria\CriteriaStorage;
+use Crm\ApplicationModule\Criteria\ScenariosCriteriaStorage;
 use Crm\ApplicationModule\DataProvider\DataProviderManager;
 use Crm\ApplicationModule\Event\EventsStorage;
 use Crm\ApplicationModule\Menu\MenuContainer;
@@ -53,6 +54,8 @@ class ApplicationManager
 
     private $eventsStorage;
 
+    private $scenariosCriteriaStorage;
+
     public function __construct(
         Emitter $emitter,
         ModuleManager $moduleManager,
@@ -63,6 +66,7 @@ class ApplicationManager
         UserDataRegistrator $userDataRegistrator,
         Dispatcher $dispatcher,
         CriteriaStorage $criteriaStorage,
+        ScenariosCriteriaStorage $scenariosCriteriaStorage,
         LayoutManager $layoutManager,
         SeederManager $seederManager,
         AccessManager $accessManager,
@@ -84,6 +88,7 @@ class ApplicationManager
         $this->accessManager = $accessManager;
         $this->dataProviderManager = $dataProviderManager;
         $this->eventsStorage = $eventsStorage;
+        $this->scenariosCriteriaStorage = $scenariosCriteriaStorage;
     }
 
     public function registerEventHandlers()
@@ -187,6 +192,13 @@ class ApplicationManager
         }
     }
 
+    public function registerScenariosCriteriaStorage()
+    {
+        foreach ($this->moduleManager->getModules() as $module) {
+            $module->registerScenariosCriteria($this->scenariosCriteriaStorage);
+        }
+    }
+
     public function registerLayouts()
     {
         foreach ($this->moduleManager->getModules() as $module) {
@@ -238,6 +250,7 @@ class ApplicationManager
         $this->registerAuthenticators();
         $this->registerUserDataRegistrators();
         $this->registerCriteriaStorage();
+        $this->registerScenariosCriteriaStorage();
         $this->registerLayouts();
         $this->registerAccessProviders();
         $this->registerDataProviders();

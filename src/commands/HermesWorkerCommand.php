@@ -26,5 +26,6 @@ class HermesWorkerCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->dispatcher->handle();
+        return 0;
     }
 }

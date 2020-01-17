@@ -32,5 +32,6 @@ class CleanupCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->cleanUpManager->execAll($this->container);
+        return 0;
     }
 }
