@@ -224,7 +224,7 @@ class ApplicationManager
 
     public function initialize()
     {
-        if (isset($_SERVER['SHELL']) || isset($_SERVER['SHLVL'])) {
+        if (isset($_SERVER['SHELL']) || isset($_SERVER['SHLVL']) || defined('STDIN')) {
             $this->registerCommands();
             $this->registerCleanupCallbacks();
             $this->registerHermesHandlers();
