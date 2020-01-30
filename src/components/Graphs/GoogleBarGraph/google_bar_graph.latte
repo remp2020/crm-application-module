@@ -56,6 +56,14 @@ function drawChart{$graphId|noescape}() {
     var oneDay = (1000 * 60 * 60 * 24);
     var dateRange = data.getColumnRange(0);
 
+    var minDateRange, maxDateRange = new Date;
+    if (dateRange.min !== null) {
+        minDateRange = new Date(dateRange.min);
+    }
+    if (dateRange.max !== null) {
+        maxDateRange = new Date(dateRange.max);
+    }
+
     var options = {
         chartArea: { width: '90%', height: '70%'},
         fontSize: ['11'],
@@ -63,8 +71,8 @@ function drawChart{$graphId|noescape}() {
         series: series,
         hAxis: {
             viewWindow: {
-                min: new Date(dateRange.min.getTime() - oneDay),
-                max: new Date(dateRange.max.getTime() + oneDay)
+                min: new Date(minDateRange.getTime() - oneDay),
+                max: new Date(maxDateRange.getTime() + oneDay)
             }
         },
         legend: { position:'top', maxLines: 2}{if $stacked},
