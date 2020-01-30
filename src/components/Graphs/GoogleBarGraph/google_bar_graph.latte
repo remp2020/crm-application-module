@@ -108,7 +108,7 @@ function drawChart{$graphId|noescape}() {
 }
 
 {if !empty($series)}
-    {if !$redraw}
+    {if (!$redraw || google.visualization != undefined) }
     google.load("visualization", "1", { packages:["corechart"]});
     google.setOnLoadCallback(drawChart{$graphId|noescape});
     {else}

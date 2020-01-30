@@ -61,7 +61,7 @@ class GoogleBarGraph extends BaseGraphControl
         return $this;
     }
 
-    public function render($redraw)
+    public function render($redraw = false)
     {
         $this->template->redraw = $redraw;
         $this->template->graphId = $this->generateGraphId();
