@@ -49,7 +49,7 @@
         chart.draw(data, options);
     }
 
-    google.load("visualization", "1", { packages:["corechart"]});
-    google.setOnLoadCallback(drawChart{$graphId|noescape});
+    google.charts.load('current', { packages: ['corechart'] });
+    google.charts.setOnLoadCallback(drawChart{$graphId|noescape});
     </script>
 {/if}

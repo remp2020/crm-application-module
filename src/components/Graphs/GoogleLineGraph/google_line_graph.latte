@@ -99,11 +99,11 @@ function drawChart{$graphId|noescape}() {
 }
 
 {if !empty($series)}
-    {if !$redraw}
-    google.load("visualization", "1", { packages:["corechart"]});
-    google.setOnLoadCallback(drawChart{$graphId|noescape});
+    {if (!$redraw || google.visualization != undefined) }
+        google.charts.load('current', { packages: ['corechart'] });
+        google.charts.setOnLoadCallback(drawChart{$graphId|noescape});
     {else}
-    drawChart{$graphId|noescape}();
+        drawChart{$graphId|noescape}();
     {/if}
 {/if}
 
