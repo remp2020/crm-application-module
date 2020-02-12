@@ -26,10 +26,10 @@ class SnippetRenderer
         foreach ($snippets as $snippet) {
             $this->snippetsRepository->markUsed($snippet);
 
-            $loader = new \Twig_Loader_Array([
+            $loader = new \Twig\Loader\ArrayLoader([
                 'snippet' => $snippet->html,
             ]);
-            $twig = new \Twig_Environment($loader);
+            $twig = new \Twig\Environment($loader);
             $template = $twig->render('snippet', $params);
             return $template;
         }
