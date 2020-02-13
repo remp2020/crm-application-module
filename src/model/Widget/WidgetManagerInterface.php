@@ -8,6 +8,8 @@ interface WidgetManagerInterface
 
     public function overrideWidget($path, WidgetInterface $oldWidget, WidgetInterface $newWidget);
 
+    public function removeWidget($path, WidgetInterface $widget);
+
     public function registerWidgetFactory($path, WidgetFactoryInterface $widgetFactory, $priority = 100);
 
     public function getWidgets($path);

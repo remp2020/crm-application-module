@@ -30,6 +30,7 @@ services:
 			- register('userDate', [Crm\ApplicationModule\Helpers\UserDateHelper(), process])
 			- register('yesNo', [Crm\ApplicationModule\Helpers\YesNoHelper(), process])
 			- register('price', [Crm\ApplicationModule\Helpers\PriceHelper(), process])
+			- register('diffPrice', [Crm\ApplicationModule\Helpers\DiffPriceHelper(), process])
 
 	- Crm\ApplicationModule\Router\RouterFactory
 	router: @Crm\ApplicationModule\Router\RouterFactory::createRouter
@@ -64,6 +65,7 @@ services:
 	- Crm\ApplicationModule\Commands\CleanupCommand
 	- Crm\ApplicationModule\Config\ConfigsCache(%redis.host%, %redis.port%)
 	- Crm\ApplicationModule\Helpers\PriceHelper
+	- Crm\ApplicationModule\Helpers\DiffPriceHelper
 	- Crm\ApplicationModule\Helpers\UserDateHelper
 
 	graph_data: Crm\ApplicationModule\Graphs\GraphData

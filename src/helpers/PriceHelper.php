@@ -14,7 +14,7 @@ class PriceHelper
         $this->applicationConfig = $applicationConfig;
     }
 
-    public function process($value, $currency = null)
+    public function getFormattedPrice($value, $currency = null): string
     {
         if (!$currency) {
             $currency = $this->applicationConfig->get('currency');
@@ -23,15 +23,20 @@ class PriceHelper
         // TODO - refactor with https://akrabat.com/using-phps-numberformatter-to-format-currencies/
 
         if ($currency == 'EUR') {
-            $html = number_format($value, 2, ',', ' ') . '&nbsp;&euro;';
+            $text = number_format($value, 2, ',', ' ') . '&nbsp;&euro;';
         } elseif ($currency == 'CZK') {
-            $html = number_format($value, 2, ',', ' ') . '&nbsp;Kč';
+            $text = number_format($value, 2, ',', ' ') . '&nbsp;Kč';
         } elseif ($currency == 'USD') {
-            $html = '$ ' . number_format($value, 2, '.', ',');
+            $text = '$ ' . number_format($value, 2, '.', ',');
         } else {
-            $html = $value;
+            $text = $value;
         }
 
-        return Html::el('span')->setHtml($html);
+        return $text;
+    }
+
+    public function process($value, $currency = null)
+    {
+        return Html::el('span')->setHtml($this->getFormattedPrice($value, $currency));
     }
 }
