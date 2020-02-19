@@ -16,7 +16,18 @@ class StringLabeledArrayParam implements CriteriaParam
 
     private $operator;
 
-    public function __construct(string $key, string $label, array $options, $operator = 'or')
+    private $freeSolo;
+
+    /**
+     * Constructor.
+     *
+     * @param string $key Identifier
+     * @param string $label Human description of parameter
+     * @param array  $options Options to select from
+     * @param string $operator Operator applied between selected values (and/or)
+     * @param bool   $freeSolo If enabled, allow values outside of provided options
+     */
+    public function __construct(string $key, string $label, array $options, $operator = 'or', $freeSolo = false)
     {
         $this->options = array_map(function ($value) use ($options) {
             return (object) [
@@ -27,6 +38,7 @@ class StringLabeledArrayParam implements CriteriaParam
         $this->key = $key;
         $this->label = $label;
         $this->operator = $operator;
+        $this->freeSolo = $freeSolo;
     }
 
     public function key(): string
@@ -46,6 +58,7 @@ class StringLabeledArrayParam implements CriteriaParam
             'label' => $this->label(),
             'options' => $this->options,
             'operator' => $this->operator,
+            'freeSolo' => $this->freeSolo,
         ];
         return $result;
     }
