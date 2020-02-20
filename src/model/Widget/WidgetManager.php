@@ -98,4 +98,14 @@ class WidgetManager implements WidgetManagerInterface
         return isset($this->widgets[$path][$priority]) ||
             isset($this->widgetFactories[$path][$priority]);
     }
+
+    public function removeWidget($path, WidgetInterface $widget)
+    {
+        foreach ($this->widgets[$path] as $priority => $savedWidget) {
+            if ($savedWidget->identifier() === $widget->identifier()) {
+                unset($this->widgets[$path][$priority]);
+                break;
+            }
+        }
+    }
 }
