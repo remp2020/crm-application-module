@@ -14,7 +14,7 @@ class PriceHelper
         $this->applicationConfig = $applicationConfig;
     }
 
-    public function getFormattedPrice($value, $currency = null): string
+    public function getFormattedPrice($value, $currency = null): ?string
     {
         if (!$currency) {
             $currency = $this->applicationConfig->get('currency');
