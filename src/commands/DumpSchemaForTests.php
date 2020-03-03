@@ -2,7 +2,6 @@
 
 namespace Crm\ApplicationModule\Commands;
 
-use http\Exception\RuntimeException;
 use Nette\Utils\FileSystem;
 use Nette\Utils\Finder;
 use Odan\Migration\Command\GenerateCommand;
@@ -20,7 +19,7 @@ class DumpSchemaForTests extends GenerateCommand
     {
         $migrationPaths = $this->getConfig()->getMigrationPaths();
         if (count($migrationPaths) === 0) {
-            throw new RuntimeException('Missing migration paths');
+            throw new \RuntimeException('Missing migration paths');
         }
 
         // GenerateCommand also uses only first migration path
