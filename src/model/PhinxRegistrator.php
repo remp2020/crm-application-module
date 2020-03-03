@@ -56,6 +56,7 @@ class PhinxRegistrator
         $dumpSchema->setName('phinx:dump-for-tests');
         $dumpSchema->setDescription('Dumps whole DB schema into single phinx migration file for tests');
         $dumpSchema->setConfig(new Config($this->buildTestConfig([
+            'foreign_keys' => true,
             'mark_generated_migration' => false,
             'schema_file' => '%%PHINX_CONFIG_DIR%%/../../../../tests/migrations/schema.php'
         ]), __FILE__));
