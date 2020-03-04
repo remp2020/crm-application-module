@@ -24,7 +24,7 @@ class AuditLogRepository extends Repository
         $this->userStorage = $userStorage;
     }
 
-    public function add($operation, $tableName, $signature, $data = [])
+    final public function add($operation, $tableName, $signature, $data = [])
     {
         $identity = $this->userStorage->getIdentity();
         $userId = $identity ? $identity->getId() : null;

@@ -28,7 +28,7 @@ class CacheRepository extends Repository
      *
      * @return mixed|\Nette\Database\Table\ActiveRow
      */
-    public function loadAndUpdate($key, callable $getValue, DateTime $notOlderThan = null, $forceUpdate = false)
+    final public function loadAndUpdate($key, callable $getValue, DateTime $notOlderThan = null, $forceUpdate = false)
     {
         if (!$forceUpdate) {
             $stat = $this->load($key, $notOlderThan);
@@ -45,7 +45,7 @@ class CacheRepository extends Repository
         return $value;
     }
 
-    public function load($key, DateTime $notOlderThan = null)
+    final public function load($key, DateTime $notOlderThan = null)
     {
         $q = $this->getTable()
             ->where('key', $key);
@@ -57,7 +57,7 @@ class CacheRepository extends Repository
         return $q->fetch();
     }
 
-    public function updateKey($key, $value)
+    final public function updateKey($key, $value)
     {
         $now = new DateTime();
         $this->getDatabase()->query(

@@ -10,12 +10,12 @@ class SnippetsRepository extends Repository
 {
     protected $tableName = 'snippets';
 
-    public function all()
+    final public function all()
     {
         return $this->getTable()->order('sorting');
     }
 
-    public function add($identifier, $title, $html, $sorting = 100, $isActive = true, $hasDefaultValue = false)
+    final public function add($identifier, $title, $html, $sorting = 100, $isActive = true, $hasDefaultValue = false)
     {
         return $this->insert([
             'title' => $title,
@@ -29,7 +29,7 @@ class SnippetsRepository extends Repository
         ]);
     }
 
-    public function update(IRow &$row, $data)
+    final public function update(IRow &$row, $data)
     {
         $data['updated_at'] = new DateTime();
         if (!isset($data['has_default_value'])) {
@@ -38,22 +38,22 @@ class SnippetsRepository extends Repository
         return parent::update($row, $data);
     }
 
-    public function exists($identifier)
+    final public function exists($identifier)
     {
         return $this->getTable()->where(['identifier' => $identifier])->count('*') > 0;
     }
 
-    public function loadAllByIdentifier($identifier)
+    final public function loadAllByIdentifier($identifier)
     {
         return $this->getTable()->where('identifier', $identifier)->fetchAll();
     }
 
-    public function loadAll()
+    final public function loadAll()
     {
         return $this->getTable()->order('title ASC');
     }
 
-    public function markUsed(IRow $snippet)
+    final public function markUsed(IRow $snippet)
     {
         return parent::update($snippet, [
             'last_used' => new DateTime(),
