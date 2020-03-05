@@ -9,12 +9,12 @@ class ConfigCategoriesRepository extends Repository
 {
     protected $tableName = 'config_categories';
 
-    public function all()
+    final public function all()
     {
         return $this->getTable()->order('sorting');
     }
 
-    public function add($name, $icon = 'fa fa-wrench', $sorting = 10)
+    final public function add($name, $icon = 'fa fa-wrench', $sorting = 10)
     {
         $result = $this->insert([
             'name' => $name,
@@ -29,7 +29,7 @@ class ConfigCategoriesRepository extends Repository
         return $result;
     }
 
-    public function loadByName($name)
+    final public function loadByName($name)
     {
         return $this->getTable()->where('name', $name)->fetch();
     }

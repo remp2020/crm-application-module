@@ -32,6 +32,14 @@ services:
 			- register('price', [Crm\ApplicationModule\Helpers\PriceHelper(), process])
 			- register('diffPrice', [Crm\ApplicationModule\Helpers\DiffPriceHelper(), process])
 
+
+	configCategoriesRepository: Crm\ApplicationModule\Config\Repository\ConfigCategoriesRepository
+	configsRepository: Crm\ApplicationModule\Config\Repository\ConfigsRepository
+	cacheRepository: Crm\ApplicationModule\Cache\CacheRepository
+	snippetsRepository: Crm\ApplicationModule\Snippet\Repository\SnippetsRepository
+	hermesTasksRepository: Crm\ApplicationModule\Repository\HermesTasksRepository
+	auditLogRepository: Crm\ApplicationModule\Repository\AuditLogRepository
+
 	- Crm\ApplicationModule\Router\RouterFactory
 	router: @Crm\ApplicationModule\Router\RouterFactory::createRouter
 
@@ -39,14 +47,13 @@ services:
 	- Crm\ApplicationModule\Widget\WidgetManager
 	- Crm\ApplicationModule\DataProvider\DataProviderManager
 	- Crm\ApplicationModule\Builder\ConfigBuilder
-	- Crm\ApplicationModule\Config\Repository\ConfigCategoriesRepository
-	- Crm\ApplicationModule\Config\Repository\ConfigsRepository
+
 	- Crm\ApplicationModule\Commands\DatabaseSeedCommand
 	- Crm\ApplicationModule\Commands\CacheCommand
-	- Crm\ApplicationModule\Cache\CacheRepository
+
 	applicationConfig:
 		class:  Crm\ApplicationModule\Config\ApplicationConfig
-	- Crm\ApplicationModule\Snippet\Repository\SnippetsRepository
+
 	- Crm\ApplicationModule\Snippet\Control\SnippetFactory
 	- Crm\ApplicationModule\Snippet\SnippetRenderer
 	- Crm\ApplicationModule\Components\FrontendMenuFactoryInterface
@@ -59,8 +66,6 @@ services:
 	- Crm\ApplicationModule\CleanUpManager
 	- Crm\ApplicationModule\LayoutManager
 	- Crm\ApplicationModule\SeederManager
-	- Crm\ApplicationModule\Repository\HermesTasksRepository
-	- Crm\ApplicationModule\Repository\AuditLogRepository
 	- Crm\ApplicationModule\Commands\HermesWorkerCommand
 	- Crm\ApplicationModule\Commands\CleanupCommand
 	- Crm\ApplicationModule\Config\ConfigsCache(%redis.host%, %redis.port%)

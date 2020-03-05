@@ -20,27 +20,27 @@ class ConfigsRepository extends Repository
         $this->auditLogRepository = $auditLogRepository;
     }
 
-    public function loadAllAutoload()
+    final public function loadAllAutoload()
     {
         return $this->getTable()->where('autoload', true)->order('sorting');
     }
 
-    public function loadByName($name)
+    final public function loadByName($name)
     {
         return $this->getTable()->where('name', $name)->fetch();
     }
 
-    public function loadByCategory(IRow $configCategory)
+    final public function loadByCategory(IRow $configCategory)
     {
         return $this->loadByCategoryId($configCategory->id);
     }
 
-    public function loadByCategoryId($configCategoryId)
+    final public function loadByCategoryId($configCategoryId)
     {
         return $this->getTable()->where('config_category_id', $configCategoryId)->order('sorting');
     }
 
-    public function update(IRow &$row, $data)
+    final public function update(IRow &$row, $data)
     {
         $data['updated_at'] = new DateTime();
         if (!isset($data['has_default_value'])) {

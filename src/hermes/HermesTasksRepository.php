@@ -14,7 +14,7 @@ class HermesTasksRepository extends Repository
 
     protected $tableName = 'hermes_tasks';
 
-    public function add(MessageInterface $message, $state)
+    final public function add(MessageInterface $message, $state)
     {
         $createdAt = DateTime::from(strtotime($message->getCreated()));
 
@@ -30,7 +30,7 @@ class HermesTasksRepository extends Repository
         ]);
     }
 
-    public function getStateCounts(\DateTime $processedFrom, array $states = [])
+    final public function getStateCounts(\DateTime $processedFrom, array $states = [])
     {
         $query = $this->getTable()
             ->select('state, type, count(*) AS count')
