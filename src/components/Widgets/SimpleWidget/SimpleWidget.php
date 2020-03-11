@@ -38,6 +38,8 @@ class SimpleWidget extends BaseWidget
             $this->addComponent($widget, $this->getNextIdentifier($widget->identifier()));
         }
 
+        ksort($widgets);
+
         $this->template->widgets = $widgets;
         $this->template->params = $params;
 
