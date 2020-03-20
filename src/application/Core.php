@@ -3,12 +3,11 @@
 namespace Crm\ApplicationModule;
 
 use Dotenv\Dotenv;
-use Symfony\Component\Console\Application;
 use Nette\Configurator;
 use Nette\Database\DriverException;
 use Nette\DI\Container;
 use Nette\InvalidArgumentException;
-use Tomaj\Errbit\ErrbitLogger;
+use Symfony\Component\Console\Application;
 
 class Core
 {
@@ -43,7 +42,6 @@ class Core
         $this->init();
         $this->createContainer();
         $this->setDatabase();
-        $this->setLogging();
 
         return $this->container;
     }
@@ -136,11 +134,5 @@ class Core
         // TODO: [refactoring] test with proper settings 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION'
         $database->query("SET SESSION sql_mode = 'NO_ENGINE_SUBSTITUTION'");
         $database->query("SET NAMES utf8mb4");
-    }
-
-    protected function setLogging()
-    {
-        $errbitConfig = $this->container->parameters['errbit'];
-        ErrbitLogger::register($errbitConfig);
     }
 }
