@@ -11,7 +11,7 @@ class DiffPriceHelper
         $this->priceHelper = $priceHelper;
     }
 
-    public function process($arg1, $arg2)
+    public function process($arg1, $arg2, $precision = 2)
     {
         $diff = $arg1 - $arg2;
 
@@ -23,7 +23,7 @@ class DiffPriceHelper
         }
 
         $content = '<span class="badge" style="font-size:0.9em">';
-        $content .= '<b>' . $this->priceHelper->getFormattedPrice($arg1) . '</b>';
+        $content .= '<b>' . $this->priceHelper->getFormattedPrice($arg1, null, $precision) . '</b>';
         $content .= '</span>&nbsp;';
         $content .= '<span class="badge ' . $class . '" style="font-size:0.8em">';
         $content .= '<i>';
@@ -31,7 +31,7 @@ class DiffPriceHelper
         if ($diff >= 0) {
             $content .= '+';
         }
-        $content .= $this->priceHelper->getFormattedPrice($diff);
+        $content .= $this->priceHelper->getFormattedPrice($diff, null, $precision);
         if ($arg1 == 0 && $arg2 == 0) {
             $per = 0;
         } else {

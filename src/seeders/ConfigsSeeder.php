@@ -182,5 +182,13 @@ class ConfigsSeeder implements ISeeder
             null,
             500
         );
+
+        // empty categories cleanup
+        $emptyCategories = $this->configCategoriesRepository->getTable()
+            ->where(':configs.id IS NULL');
+
+        foreach ($emptyCategories as $category) {
+            $this->configCategoriesRepository->delete($category);
+        }
     }
 }

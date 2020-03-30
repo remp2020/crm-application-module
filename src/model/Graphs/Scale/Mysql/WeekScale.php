@@ -82,7 +82,7 @@ WHERE
     {$criteria->getTableName()}.{$criteria->getTimeField()} >= '{$criteria->getStartDate()}' 
 AND {$criteria->getTableName()}.{$criteria->getTimeField()} <= '{$criteria->getEndDate()}'	
 	{$criteria->getWhere()}
-GROUP BY calendar.year,calendar.month,calendar.week
+GROUP BY calendar.year,calendar.week
 
 		");
 
@@ -117,7 +117,7 @@ WHERE
     {$criteria->getTableName()}.{$criteria->getTimeField()} >= '{$criteria->getStartDate()}' 
 AND {$criteria->getTableName()}.{$criteria->getTimeField()} <= '{$criteria->getEndDate()}'
 	{$criteria->getWhere()}
-GROUP BY calendar.year,calendar.month,calendar.week" . $this->getGroupBy($criteria->getGroupBy()) . '
+GROUP BY calendar.year,calendar.week" . $this->getGroupBy($criteria->getGroupBy()) . '
 		');
 
         foreach ($res as $row) {
