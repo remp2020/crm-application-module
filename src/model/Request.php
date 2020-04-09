@@ -5,18 +5,45 @@ namespace Crm\ApplicationModule;
 // hnusna skareda staticka vec! fuj!
 class Request
 {
-    public static function getIp()
+    public static function getIp(): string
     {
-        if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
-            $ip = $_SERVER['HTTP_CLIENT_IP'];
-        } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR']) && $_SERVER['HTTP_X_FORWARDED_FOR'] != '127.0.0.1') {
-            $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
-        } elseif (!empty($_SERVER['REMOTE_ADDR'])) {
-            $ip = $_SERVER['REMOTE_ADDR'];
-        } else {
-            $ip = 'cli';
+        $serverKeysToCheck = [
+            'HTTP_R_FORWARDED_FOR', // special header for custom IP if needed
+            'HTTP_X_FORWARDED_FOR',
+            'HTTP_X_FORWARDED',
+            'HTTP_FORWARDED',
+            'REMOTE_ADDR',
+            'HTTP_CLIENT_IP',
+        ];
+
+        foreach ($serverKeysToCheck as $serverKey) {
+            if (!self::validateAddress($serverKey)) {
+                continue;
+            }
+            return self::extractFirstAddress($serverKey);
         }
-        return $ip;
+
+        return 'cli';
+    }
+
+    private static function validateAddress(string $serverKey): bool
+    {
+        $address = self::extractFirstAddress($serverKey);
+        if ($address == '127.0.0.1') {
+            return false;
+        }
+        return (bool) filter_var($address, FILTER_VALIDATE_IP);
+    }
+
+    private static function extractFirstAddress(string $serverKey): ?string
+    {
+        $filterValue = filter_input(INPUT_SERVER, $serverKey);
+        if (strpos($filterValue, ',') === false) {
+            return $filterValue;
+        }
+
+        $ips = array_map('trim', explode(',', $filterValue));
+        return current($ips);
     }
 
     public static function getUserAgent()
