@@ -83,7 +83,7 @@
 
 			<div id="header" style="margin-bottom:20px;">
 				{if $user->isLoggedIn()}
-					{_system.logged} <b>{$user->getIdentity()->getData()['email']}</b>
+					{_system.logged} <b>{$user->getIdentity()->public_name}</b>
 					<br><hr>
 
 					{control frontendMenu}
