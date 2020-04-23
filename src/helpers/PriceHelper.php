@@ -35,8 +35,12 @@ class PriceHelper
         return $text;
     }
 
-    public function process($value, $currency = null, $precision = 2)
+    public function process($value, $currency = null, $precision = 2, $withSpan = true)
     {
-        return Html::el('span')->setHtml($this->getFormattedPrice($value, $currency, $precision));
+        if ($withSpan) {
+            return Html::el('span')->setHtml($this->getFormattedPrice($value, $currency, $precision));
+        }
+
+        return $this->getFormattedPrice($value, $currency, $precision);
     }
 }
