@@ -2,25 +2,18 @@
 
 namespace Crm\ApplicationModule\User;
 
-use Predis\Client;
+use Crm\ApplicationModule\RedisClientFactory;
+use Crm\ApplicationModule\RedisClientTrait;
 
 class RedisUserDataStorage implements UserDataStorageInterface
 {
-    private $redis;
-
-    private $host;
-
-    private $port;
-
-    private $db;
+    use RedisClientTrait;
 
     private $userDataKey = 'user_data';
 
-    public function __construct($host = '127.0.0.1', $port = 6379, $db = 0)
+    public function __construct(RedisClientFactory $redisClientFactory)
     {
-        $this->host = $host ?? '127.0.0.1';
-        $this->port = $port ?? 6379;
-        $this->db = $db;
+        $this->redisClientFactory = $redisClientFactory;
     }
 
     public function load($token)
@@ -69,20 +62,5 @@ class RedisUserDataStorage implements UserDataStorageInterface
     public function multiRemove(array $tokens)
     {
         return $this->redis()->hdel($this->userDataKey, $tokens);
-    }
-
-    private function redis()
-    {
-        if (!$this->redis) {
-            $this->redis = new Client([
-                'scheme' => 'tcp',
-                'host'   => $this->host,
-                'port'   => $this->port,
-            ]);
-            if ($this->db) {
-                $this->redis->select($this->db);
-            }
-        }
-        return $this->redis;
     }
 }

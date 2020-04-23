@@ -2,54 +2,30 @@
 
 namespace Crm\ApplicationModule\Hermes;
 
-use Predis\Client;
+use Crm\ApplicationModule\RedisClientFactory;
+use Crm\ApplicationModule\RedisClientTrait;
 
 class HermesTasksQueue
 {
+    use RedisClientTrait;
+
     const TASKS_KEY = 'hermes_tasks';
     const STATS_KEY = 'hermes_stats';
 
-    /** @var Client */
-    private $redis;
-
-    private $host;
-
-    private $port;
-
-    private $db;
-
-    public function __construct($host = '127.0.0.1', $port = 6379, $db = 0)
+    public function __construct(RedisClientFactory $redisClientFactory)
     {
-        $this->host = $host ?? '127.0.0.1';
-        $this->port = $port ?? 6379;
-        $this->db = $db;
-    }
-
-    private function connect()
-    {
-        if (!$this->redis) {
-            $this->redis = new Client([
-                'scheme' => 'tcp',
-                'host'   => $this->host,
-                'port'   => $this->port,
-            ]);
-            if ($this->db) {
-                $this->redis->select($this->db);
-            }
-        }
-
-        return $this->redis;
+        $this->redisClientFactory = $redisClientFactory;
     }
 
     // Tasks
     public function addTask(string $task, float $executeAt)
     {
-        return $this->connect()->zadd(static::TASKS_KEY, [$task => $executeAt]) > 0;
+        return $this->redis()->zadd(static::TASKS_KEY, [$task => $executeAt]) > 0;
     }
 
     public function getTask()
     {
-        $task = $this->connect()->zrangebyscore(static::TASKS_KEY, 0, time(), [
+        $task = $this->redis()->zrangebyscore(static::TASKS_KEY, 0, time(), [
             'LIMIT' => [
                 'OFFSET' => 0,
                 'COUNT' => 1,
@@ -57,7 +33,7 @@ class HermesTasksQueue
         ]);
 
         if (!empty($task)) {
-            $result = $this->connect()->zrem(static::TASKS_KEY, $task);
+            $result = $this->redis()->zrem(static::TASKS_KEY, $task);
             if ($result == 1) {
                 return $task;
             }
@@ -68,22 +44,22 @@ class HermesTasksQueue
 
     public function getAllTask()
     {
-        return $this->connect()->zrange(static::TASKS_KEY, 0, -1, ['withscores' => true]);
+        return $this->redis()->zrange(static::TASKS_KEY, 0, -1, ['withscores' => true]);
     }
 
     // Stats
     public function incrementType($type)
     {
-        return $this->connect()->zincrby(static::STATS_KEY, 1, $type);
+        return $this->redis()->zincrby(static::STATS_KEY, 1, $type);
     }
 
     public function decrementType($type)
     {
-        return $this->connect()->zincrby(static::STATS_KEY, -1, $type);
+        return $this->redis()->zincrby(static::STATS_KEY, -1, $type);
     }
 
     public function getTypeCounts()
     {
-        return $this->connect()->zrange(static::STATS_KEY, 0, -1, ['withscores' => true]);
+        return $this->redis()->zrange(static::STATS_KEY, 0, -1, ['withscores' => true]);
     }
 }

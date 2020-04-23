@@ -32,6 +32,7 @@ services:
 			- register('price', [Crm\ApplicationModule\Helpers\PriceHelper(), process])
 			- register('diffPrice', [Crm\ApplicationModule\Helpers\DiffPriceHelper(), process])
 
+	redisClientFactory: Crm\ApplicationModule\RedisClientFactory(%redis.host%, %redis.port%, %redis.password%, %redis.database%)
 
 	configCategoriesRepository: Crm\ApplicationModule\Config\Repository\ConfigCategoriesRepository
 	configsRepository: Crm\ApplicationModule\Config\Repository\ConfigsRepository
@@ -68,21 +69,21 @@ services:
 	- Crm\ApplicationModule\SeederManager
 	- Crm\ApplicationModule\Commands\HermesWorkerCommand
 	- Crm\ApplicationModule\Commands\CleanupCommand
-	- Crm\ApplicationModule\Config\ConfigsCache(%redis.host%, %redis.port%)
+	configsCache: Crm\ApplicationModule\Config\ConfigsCache
 	- Crm\ApplicationModule\Helpers\PriceHelper
 	- Crm\ApplicationModule\Helpers\DiffPriceHelper
 	- Crm\ApplicationModule\Helpers\UserDateHelper
 
 	graph_data: Crm\ApplicationModule\Graphs\GraphData
 	- Crm\ApplicationModule\Graphs\ScaleFactory
-	- Crm\ApplicationModule\Event\RedisEventManager(%redis.host%, %redis.port%)
+	redisEventManager: Crm\ApplicationModule\Event\RedisEventManager
 	- Crm\ApplicationModule\User\UserDataRegistrator
 	- Crm\ApplicationModule\Api\UserDataHandler
 	- Crm\ApplicationModule\Api\EventsListApiHandler
 	- Crm\ApplicationModule\User\UserData
 	- Crm\ApplicationModule\User\DownloadUserData
 	- Crm\ApplicationModule\User\DeleteUserData
-	- Crm\ApplicationModule\User\RedisUserDataStorage(%redis.host%, %redis.port%)
+	redisUserDataStorage: Crm\ApplicationModule\User\RedisUserDataStorage
 	- Crm\ApplicationModule\Events\RefreshUserDataTokenHandler
 	- Crm\ApplicationModule\Events\NewAccessTokenHandler
 	- Crm\ApplicationModule\Events\RemovedAccessTokenHandler
@@ -106,7 +107,7 @@ services:
 		class: Tomaj\Hermes\Dispatcher(@hermesDriver, @hermesLogger, @hermesRestart)
 	hermesEmitter:
 		class: Tomaj\Hermes\Emitter(@hermesDriver, @hermesLogger)
-	- Crm\ApplicationModule\Hermes\HermesTasksQueue(%redis.host%, %redis.port%)
+	redisTasksQueue: Crm\ApplicationModule\Hermes\HermesTasksQueue
 
 	# components factories
 	- Crm\ApplicationModule\Components\Graphs\GoogleBarGraphControlFactoryInterface

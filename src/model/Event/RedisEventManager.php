@@ -2,53 +2,30 @@
 
 namespace Crm\ApplicationModule\Event;
 
+use Crm\ApplicationModule\RedisClientFactory;
+use Crm\ApplicationModule\RedisClientTrait;
 use Nette\Utils\Json;
-use Predis\Client;
 
 class RedisEventManager implements EventManagerInterface
 {
+    use RedisClientTrait;
+
     const EVENTS = 'events';
 
-    private $redis;
-
-    private $host;
-
-    private $port;
-
-    private $db;
-
-    public function __construct($host = '127.0.0.1', $port = 6379, $db = 0)
+    public function __construct(RedisClientFactory $redisClientFactory)
     {
-        $this->host = $host ?? '127.0.0.1';
-        $this->port = $port ?? 6379;
-        $this->db = $db;
-    }
-
-    private function connect()
-    {
-        if (!$this->redis) {
-            $this->redis = new Client([
-                'scheme' => 'tcp',
-                'host'   => $this->host,
-                'port'   => $this->port,
-            ]);
-            if ($this->db) {
-                $this->redis->select($this->db);
-            }
-        }
-
-        return $this->redis;
+        $this->redisClientFactory = $redisClientFactory;
     }
 
     public function push(Event $event)
     {
         $jsonValue = Json::encode($event->value);
-        return $this->connect()->zadd(static::EVENTS, ["{$event->type}|{$jsonValue}" => $event->score]);
+        return $this->redis()->zadd(static::EVENTS, ["{$event->type}|{$jsonValue}" => $event->score]);
     }
 
     public function shift()
     {
-        $events = $this->connect()->zrangebyscore(static::EVENTS, PHP_INT_MIN, PHP_INT_MAX, [
+        $events = $this->redis()->zrangebyscore(static::EVENTS, PHP_INT_MIN, PHP_INT_MAX, [
             'LIMIT' => [
                 'OFFSET' => 0,
                 'COUNT' => 1,
@@ -61,7 +38,7 @@ class RedisEventManager implements EventManagerInterface
         }
 
         foreach ($events as $rawEvent => $score) {
-            $result = $this->connect()->zrem(static::EVENTS, $rawEvent);
+            $result = $this->redis()->zrem(static::EVENTS, $rawEvent);
             if (!$result) {
                 return false;
             }
