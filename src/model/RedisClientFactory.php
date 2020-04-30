@@ -13,8 +13,8 @@ class RedisClientFactory
 
     public function __construct($host, $port, $password, $database)
     {
-        $this->host = $host;
-        $this->port = $port;
+        $this->host = $host ?? '127.0.0.1';
+        $this->port = $port ?? 6379;
         $this->password = $password;
         $this->database = $database ?? 0;
     }
