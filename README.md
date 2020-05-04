@@ -30,7 +30,7 @@ services:
 <details>
 <summary>Preview</summary>
 
-![alt text](docs/_static/frontend_menu.png "Frontend menu")
+![alt text](docs/frontend_menu.png "Frontend menu")
 </details>
 
 #### Graphs
@@ -95,7 +95,7 @@ In your `templates/Demo/default.latte` template, use the component as needed:
 <details>
 <summary>preview</summary>
 
-![alt text](docs/_static/bar_graph.png "Google bar graph")
+![alt text](docs/bar_graph.png "Google bar graph")
 </details>
     
 ##### [GoogleBarGraphGroup](src/components/Graphs/GoogleBarGraphGroup/GoogleBarGraphGroup.php)
@@ -153,7 +153,7 @@ In your `templates/Demo/default.latte` template, use the component as needed:
 <details>
 <summary>preview</summary>
 
-![alt text](docs/_static/bar_graph_group.png "Google bar graph group")
+![alt text](docs/bar_graph_group.png "Google bar graph group")
 </details>
 
 ##### [GoogleLineGraph](src/components/Graphs/GoogleLineGraph/GoogleLineGraph.php)
@@ -163,7 +163,7 @@ Simple line graph based on Google charts. This component is only being used by `
 <details>
 <summary>preview</summary>
 
-![alt text](docs/_static/line_graph.png "Line graph")
+![alt text](docs/line_graph.png "Line graph")
 </details>
 
 ##### [GoogleLineGraphGroup](src/components/Graphs/GoogleLineGraphGroup/GoogleLineGraphGroup.php)
@@ -234,7 +234,7 @@ In your `templates/Demo/default.latte` template, use the component as needed:
 <details>
 <summary>preview</summary>
 
-![alt text](docs/_static/line_graph_group.png "Line graph group")
+![alt text](docs/line_graph_group.png "Line graph group")
 </details>
 
 ##### [InlineBarGraph](src/components/Graphs/InlineBarGraph/InlineBarGraph.php)
@@ -306,7 +306,7 @@ In your `templates/Demo/default.latte` template, use the component as needed:
 <details>
 <summary>preview</summary>
 
-![alt text](docs/_static/inline_bar_graph.png "Inline bar graph")
+![alt text](docs/inline_bar_graph.png "Inline bar graph")
 </details>
 
 ##### [SmallBarchart](src/components/Graphs/SmallBarchart/SmallBarGraph.php)
@@ -358,7 +358,7 @@ In your `templates/Demo/default.latte` template, use the component as needed:
 <details>
 <summary>preview</summary>
 
-![alt text](docs/_static/small_bar_graph.png "Small bar graph")
+![alt text](docs/small_bar_graph.png "Small bar graph")
 </details>
 
 ##### [GoogleSankeyGraphGroup](src/components/Graphs/GoogleSankeyGraphGroup/GoogleSankeyGraphGroup.php)
@@ -411,7 +411,7 @@ In your `templates/Demo/default.latte` template, use the component as needed:
 <details>
 <summary>preview</summary>
 
-![alt text](docs/_static/sankey_graph.png "Line graph group")
+![alt text](docs/sankey_graph.png "Line graph group")
 </details>
 
 #### [VisualPaginator](src/components/VisualPaginator/VisualPagiantor.php)
@@ -458,7 +458,7 @@ In your `templates/Demo/default.latte` template, use the component as needed (us
 <details>
 <summary>preview</summary>
 
-![alt text](docs/_static/visual_paginator.png "Visual paginator")
+![alt text](docs/visual_paginator.png "Visual paginator")
 </details>
 
 #### Widgets
@@ -478,5 +478,5 @@ Widget provides wrapper for simple table with single statistic - each provided b
 <details>
 <summary>preview</summary>
 
-![alt text](docs/_static/simple_widget.png "Simple widget")
+![alt text](docs/simple_widget.png "Simple widget")
 </details>
