@@ -13,6 +13,7 @@ save: Ulož
 delete: Zmaž
 export: Export
 total: celkovo
+pcs: ks
 
 logged: Prihlásený
 sign_in: Prihlásiť

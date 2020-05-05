@@ -13,6 +13,7 @@ save: Save
 delete: Delete
 export: Export
 total: total
+pcs: pcs
 
 logged: Logged
 sign_in: Sign in
