@@ -222,13 +222,21 @@ class CountriesSeeder implements ISeeder
             "ZW" => "Zimbabwe",
         ];
 
+        $alreadySeededCountries = array_flip($this->countriesRepository->getAllIsoPairs());
+        $countries = array_diff_key($countries, $alreadySeededCountries);
+
+        $insertData = [];
+        foreach ($countries as $isoCode => $name) {
+            $insertData[] = [
+                'iso_code' => $isoCode,
+                'name' => $name,
+                'sorting' => null,
+            ];
+        }
+
+        $this->countriesRepository->getTable()->insert($insertData);
         foreach ($countries as $code => $name) {
-            if (!$this->countriesRepository->exists($code)) {
-                $this->countriesRepository->add($code, $name, null);
-                $output->writeln("  <comment>* country <info>{$name} ({$code})</info> created</comment>");
-            } else {
-                $output->writeln("  * country <info>{$name} ({$code})</info> exists");
-            }
+            $output->writeln("  <comment>* country <info>{$name} ({$code})</info> created</comment>");
         }
     }
 }
