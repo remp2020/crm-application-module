@@ -41,7 +41,8 @@
     "vlucas/phpdotenv": "^3.3",
     "tomaj/hermes": "^2.1",
     "predis/predis": "^1.0",
-    "monolog/monolog": "^1.23"
+    "monolog/monolog": "^1.23",
+    "contributte/forms-multiplier": "^3.0"
   },
   "minimum-stability": "stable",
   "autoload": {
