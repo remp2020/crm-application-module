@@ -6,6 +6,7 @@ use Crm\ApplicationModule\ApplicationManager;
 use Crm\ApplicationModule\Components\SimpleWidgetFactoryInterface;
 use Crm\ApplicationModule\Components\SingleStatWidgetFactoryInterface;
 use Crm\ApplicationModule\Config\ApplicationConfig;
+use Crm\ApplicationModule\Events\AuthenticatedAccessRequiredEvent;
 use Crm\ApplicationModule\Events\AuthenticationEvent;
 use Crm\ApplicationModule\LayoutManager;
 use Crm\ApplicationModule\Snippet\Control\SnippetFactory;
@@ -84,6 +85,7 @@ abstract class BasePresenter extends Presenter
 
     public function onlyLoggedIn()
     {
+        $this->emitter->emit(new AuthenticatedAccessRequiredEvent());
         if (!$this->getUser()->isLoggedIn()) {
             $this->redirect($this->applicationConfig->get('not_logged_in_route'), ['back' => $this->storeRequest()]);
         }
