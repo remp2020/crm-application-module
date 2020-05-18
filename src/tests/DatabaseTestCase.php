@@ -4,6 +4,7 @@ namespace Crm\ApplicationModule\Tests;
 
 use Crm\ApplicationModule\Seeders\ISeeder;
 use Nette\Database\Context;
+use Nette\DI\Container;
 use PDOException;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -17,6 +18,7 @@ abstract class DatabaseTestCase extends TestCase
 {
     use RefreshContainerTrait;
 
+    /** @var Container */
     protected $container;
 
     /** @var  Context */
