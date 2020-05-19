@@ -234,6 +234,10 @@ class CountriesSeeder implements ISeeder
             ];
         }
 
+        if (!count($insertData)) {
+            return;
+        }
+
         $this->countriesRepository->getTable()->insert($insertData);
         foreach ($countries as $code => $name) {
             $output->writeln("  <comment>* country <info>{$name} ({$code})</info> created</comment>");
