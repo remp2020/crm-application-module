@@ -1,6 +1,3 @@
-extensions:
-    - WebChemistry\Forms\Controls\DI\MultiplierExtension
-
 services:
 	emitter: League\Event\Emitter
 
