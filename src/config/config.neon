@@ -80,15 +80,10 @@ services:
 	- Crm\ApplicationModule\Graphs\ScaleFactory
 	redisEventManager: Crm\ApplicationModule\Event\RedisEventManager
 	- Crm\ApplicationModule\User\UserDataRegistrator
-	- Crm\ApplicationModule\Api\UserDataHandler
 	- Crm\ApplicationModule\Api\EventsListApiHandler
-	- Crm\ApplicationModule\User\UserData
 	- Crm\ApplicationModule\User\DownloadUserData
 	- Crm\ApplicationModule\User\DeleteUserData
 	redisUserDataStorage: Crm\ApplicationModule\User\RedisUserDataStorage
-	- Crm\ApplicationModule\Events\RefreshUserDataTokenHandler
-	- Crm\ApplicationModule\Events\NewAccessTokenHandler
-	- Crm\ApplicationModule\Events\RemovedAccessTokenHandler
 
 	- Crm\ApplicationModule\Seeders\CalendarSeeder
 	- Crm\ApplicationModule\Seeders\ConfigsSeeder
