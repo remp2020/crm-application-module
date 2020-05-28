@@ -12,9 +12,13 @@ use Crm\ApplicationModule\Seeders\CountriesSeeder;
 use Crm\ApplicationModule\Seeders\SnippetsSeeder;
 use League\Event\Emitter;
 use Nette\DI\Container;
+use Tracy\Debugger;
+use Tracy\ILogger;
 
 class ApplicationModule extends CrmModule
 {
+    const COPY_ASSETS_CHECK_FILE = 'copy_assets_check';
+
     public function registerCommands(CommandsContainerInterface $commandsContainer)
     {
         $commandsContainer->registerCommand($this->getInstance(\Crm\ApplicationModule\Commands\DatabaseSeedCommand::class));
@@ -25,6 +29,7 @@ class ApplicationModule extends CrmModule
         $commandsContainer->registerCommand($this->getInstance(\Crm\ApplicationModule\Commands\HermesWorkerCommand::class));
         $commandsContainer->registerCommand($this->getInstance(\Crm\ApplicationModule\Commands\CleanupCommand::class));
         $commandsContainer->registerCommand($this->getInstance(\Crm\ApplicationModule\Commands\CacheCommand::class));
+        $commandsContainer->registerCommand($this->getInstance(\Crm\ApplicationModule\Commands\InstallAssetsCommand::class));
     }
 
     public function registerCleanupFunction(CallbackManagerInterface $cleanUpManager)
@@ -73,5 +78,14 @@ class ApplicationModule extends CrmModule
         $seederManager->addSeeder($this->getInstance(ConfigsSeeder::class));
         $seederManager->addSeeder($this->getInstance(CountriesSeeder::class));
         $seederManager->addSeeder($this->getInstance(SnippetsSeeder::class));
+    }
+
+    public function registerAssets(AssetsManager $assetsManager)
+    {
+        $assetsManager->copyAssets(__DIR__ . '/../assets/' . self::COPY_ASSETS_CHECK_FILE, self::COPY_ASSETS_CHECK_FILE);
+
+        if (!$assetsManager->checkAssetsFileExist(self::COPY_ASSETS_CHECK_FILE)) {
+            Debugger::log("Module assets are not installed yet, please run 'application:install_assets' CRM command", ILogger::WARNING);
+        }
     }
 }

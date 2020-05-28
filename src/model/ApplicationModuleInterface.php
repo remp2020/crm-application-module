@@ -52,6 +52,8 @@ interface ApplicationModuleInterface
 
     public function registerSeeders(SeederManager $seederManager);
 
+    public function registerAssets(AssetsManager $assetsManager);
+
     public function registerAccessProvider(AccessManager $accessManager);
 
     public function registerDataProviders(DataProviderManager $dataProvider);

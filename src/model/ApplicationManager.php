@@ -56,6 +56,8 @@ class ApplicationManager
 
     private $scenariosCriteriaStorage;
 
+    private $assetsManager;
+
     public function __construct(
         Emitter $emitter,
         ModuleManager $moduleManager,
@@ -70,6 +72,7 @@ class ApplicationManager
         LayoutManager $layoutManager,
         SeederManager $seederManager,
         AccessManager $accessManager,
+        AssetsManager $assetsManager,
         DataProviderManager $dataProviderManager,
         EventsStorage $eventsStorage
     ) {
@@ -89,6 +92,7 @@ class ApplicationManager
         $this->dataProviderManager = $dataProviderManager;
         $this->eventsStorage = $eventsStorage;
         $this->scenariosCriteriaStorage = $scenariosCriteriaStorage;
+        $this->assetsManager = $assetsManager;
     }
 
     public function registerEventHandlers()
@@ -213,6 +217,13 @@ class ApplicationManager
         }
     }
 
+    public function registerAssets()
+    {
+        foreach ($this->moduleManager->getModules() as $module) {
+            $module->registerAssets($this->assetsManager);
+        }
+    }
+
     public function registerAccessProviders()
     {
         foreach ($this->moduleManager->getModules() as $module) {
@@ -255,5 +266,6 @@ class ApplicationManager
         $this->registerAccessProviders();
         $this->registerDataProviders();
         $this->registerEvents();
+        $this->registerAssets();
     }
 }

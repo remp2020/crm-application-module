@@ -137,4 +137,9 @@ abstract class CrmModule implements ApplicationModuleInterface
     {
         // nothing
     }
+
+    public function registerAssets(AssetsManager $assetsManager)
+    {
+        // nothing
+    }
 }

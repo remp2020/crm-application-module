@@ -42,7 +42,8 @@
     "tomaj/hermes": "^2.1",
     "predis/predis": "^1.0",
     "monolog/monolog": "^1.23",
-    "contributte/forms-multiplier": "^3.0"
+    "contributte/forms-multiplier": "^3.0",
+    "composer/composer": "^1.10"
   },
   "minimum-stability": "stable",
   "autoload": {

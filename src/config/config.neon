@@ -51,6 +51,7 @@ services:
 
 	- Crm\ApplicationModule\Commands\DatabaseSeedCommand
 	- Crm\ApplicationModule\Commands\CacheCommand
+	- Crm\ApplicationModule\Commands\InstallAssetsCommand
 
 	applicationConfig:
 		class:  Crm\ApplicationModule\Config\ApplicationConfig
@@ -73,6 +74,7 @@ services:
 	- Crm\ApplicationModule\Helpers\PriceHelper
 	- Crm\ApplicationModule\Helpers\DiffPriceHelper
 	- Crm\ApplicationModule\Helpers\UserDateHelper
+	assetsManager: Crm\ApplicationModule\AssetsManager('%wwwDir%')
 
 	graph_data: Crm\ApplicationModule\Graphs\GraphData
 	- Crm\ApplicationModule\Graphs\ScaleFactory
