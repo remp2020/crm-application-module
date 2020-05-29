@@ -10,7 +10,6 @@ use Crm\ApplicationModule\Seeders\CalendarSeeder;
 use Crm\ApplicationModule\Seeders\ConfigsSeeder;
 use Crm\ApplicationModule\Seeders\CountriesSeeder;
 use Crm\ApplicationModule\Seeders\SnippetsSeeder;
-use League\Event\Emitter;
 use Nette\DI\Container;
 use Tracy\Debugger;
 use Tracy\ILogger;
@@ -43,28 +42,10 @@ class ApplicationModule extends CrmModule
     public function registerApiCalls(ApiRoutersContainerInterface $apiRoutersContainer)
     {
         $apiRoutersContainer->attachRouter(new ApiRoute(
-            new ApiIdentifier('1', 'users', 'data'),
-            \Crm\ApplicationModule\Api\UserDataHandler::class,
-            \Crm\ApiModule\Authorization\NoAuthorization::class
-        ));
-        $apiRoutersContainer->attachRouter(new ApiRoute(
             new ApiIdentifier('1', 'events', 'list'),
             \Crm\ApplicationModule\Api\EventsListApiHandler::class,
             \Crm\ApiModule\Authorization\BearerTokenAuthorization::class
         ));
-    }
-
-    // TODO: [users_module] application module by nemal mat ziadny event handler, aby neexistovala zavislost na ostatnych moduloch
-    public function registerEventHandlers(Emitter $emitter)
-    {
-        $emitter->addListener(
-            \Crm\UsersModule\Events\NewAccessTokenEvent::class,
-            $this->getInstance(\Crm\ApplicationModule\Events\NewAccessTokenHandler::class)
-        );
-        $emitter->addListener(
-            \Crm\UsersModule\Events\RemovedAccessTokenEvent::class,
-            $this->getInstance(\Crm\ApplicationModule\Events\RemovedAccessTokenHandler::class)
-        );
     }
 
     public function registerLayouts(LayoutManager $layoutManager)
