@@ -27,7 +27,7 @@ class Core
                 $appRootDir = realpath(dirname($_SERVER["SCRIPT_FILENAME"]) . '/../');
             }
 
-            define('APP_ROOT', $appRootDir . '/');
+            define('APP_ROOT', $appRootDir . DIRECTORY_SEPARATOR);
         }
     }
 
