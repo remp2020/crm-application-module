@@ -43,7 +43,8 @@
     "predis/predis": "^1.0",
     "monolog/monolog": "^1.23",
     "contributte/forms-multiplier": "^3.0",
-    "composer/composer": "^1.10"
+    "composer/composer": "^1.10",
+    "malkusch/lock": "^2.1"
   },
   "minimum-stability": "stable",
   "autoload": {
