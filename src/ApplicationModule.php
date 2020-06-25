@@ -67,6 +67,9 @@ class ApplicationModule extends CrmModule
 
         if (!$assetsManager->checkAssetsFileExist(self::COPY_ASSETS_CHECK_FILE)) {
             Debugger::log("Module assets are not installed yet, please run 'application:install_assets' CRM command", ILogger::WARNING);
+            return;
         }
+
+        $assetsManager->copyAssets(__DIR__ . '/../assets/js', 'layouts/application/js');
     }
 }
