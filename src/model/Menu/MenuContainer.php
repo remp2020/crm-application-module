@@ -7,6 +7,8 @@ class MenuContainer implements MenuContainerInterface
     /** @var MenuItemInterface[]  */
     private $menuItems = [];
 
+    private $foreignMenuItems = [];
+
     public function attachMenuItem(MenuItemInterface $menuItem)
     {
         $this->menuItems[] = $menuItem;
@@ -14,6 +16,7 @@ class MenuContainer implements MenuContainerInterface
 
     public function getMenuItems()
     {
+        $this->attachForeignMenuItems();
         $items = [];
         foreach ($this->menuItems as $item) {
             $position = $item->position();
@@ -49,12 +52,23 @@ class MenuContainer implements MenuContainerInterface
         MenuItem $internalMenuItem,
         MenuItem $menuItem
     ) {
-        $foreignMenuItem = $this->getMenuItemByLink($foreignMenuLink);
-        if (!is_null($foreignMenuItem)) {
-            $foreignMenuItem->addChild($menuItem);
-        } else {
-            $internalMenuItem->addChild($menuItem);
-            $this->attachMenuItem($internalMenuItem);
+        $this->foreignMenuItems[] = [
+            'foreignMenuLink' => $foreignMenuLink,
+            'internalMenuItem' => $internalMenuItem,
+            'menuItem' => $menuItem
+        ];
+    }
+
+    private function attachForeignMenuItems()
+    {
+        foreach ($this->foreignMenuItems as $item) {
+            $foreignMenuItem = $this->getMenuItemByLink($item['foreignMenuLink']);
+            if (!is_null($foreignMenuItem)) {
+                $foreignMenuItem->addChild($item['menuItem']);
+            } else {
+                $item['internalMenuItem']->addChild($item['menuItem']);
+                $this->attachMenuItem($item['internalMenuItem']);
+            }
         }
     }
 }
