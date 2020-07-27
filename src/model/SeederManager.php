@@ -8,9 +8,16 @@ class SeederManager
 {
     private $seeders = [];
 
-    public function addSeeder(ISeeder $seeder)
+    /**
+     * Higher priority means that seeder is going to be executed after seeders
+     * with lower priority so that in case of conflict the seeder with higher priority wins.
+     *
+     * @param ISeeder $seeder
+     * @param int $priority
+     */
+    public function addSeeder(ISeeder $seeder, int $priority = 100)
     {
-        $this->seeders[] = $seeder;
+        $this->seeders[$priority][] = $seeder;
     }
 
     public function removeSeeders()
@@ -21,8 +28,15 @@ class SeederManager
     /**
      * @return ISeeder[]
      */
-    public function getSeeders()
+    public function getSeeders(): array
     {
-        return $this->seeders;
+        $sortedSeeders = [];
+
+        ksort($this->seeders);
+        foreach ($this->seeders as $prioritySeeders) {
+            array_push($sortedSeeders, ...$prioritySeeders);
+        }
+
+        return $sortedSeeders;
     }
 }
