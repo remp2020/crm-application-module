@@ -14,9 +14,16 @@ trait RedisClientTrait
 
     protected $database;
 
+    protected $prefixRedisKeys = false;
+
     public function setDatabase($database)
     {
         $this->database = $database;
+    }
+
+    public function usePrefix(bool $usePrefix = true): void
+    {
+        $this->prefixRedisKeys = $usePrefix;
     }
 
     protected function redis()
@@ -26,7 +33,7 @@ trait RedisClientTrait
         }
 
         if ($this->redis === null) {
-            $this->redis = $this->redisClientFactory->getClient($this->database);
+            $this->redis = $this->redisClientFactory->getClient($this->database, $this->prefixRedisKeys);
         }
 
         return $this->redis;

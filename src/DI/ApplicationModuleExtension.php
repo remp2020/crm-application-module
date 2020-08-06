@@ -8,8 +8,22 @@ use Nette\DI\CompilerExtension;
 
 final class ApplicationModuleExtension extends CompilerExtension implements ITranslationProvider
 {
+    private $defaults = [
+        'redis_client_factory' => [
+            'prefix' => null,
+        ],
+    ];
+
     public function loadConfiguration()
     {
+        $builder = $this->getContainerBuilder();
+
+        // load config and preset defaults if value is missing
+        $this->config = $this->validateConfig($this->defaults);
+
+        // set extension parameters for use in config
+        $builder->parameters['redis_client_factory'] = $this->config['redis_client_factory'];
+
         // load services from config and register them to Nette\DI Container
         Compiler::loadDefinitions(
             $this->getContainerBuilder(),

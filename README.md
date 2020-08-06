@@ -1,5 +1,23 @@
 # CRM Application Module
 
+## Configuration
+
+You can configure default Redis keys prefix, which is used if implementation using RedisClientTrait enables prefixing via `usePrefix()` method.
+
+```
+crm_application:
+    redis_client_factory:
+        prefix: foo_
+```
+
+You can turn on prefixing for specific service using `RedisClientTrait` by calling `usePrefix()` method in configuration.
+
+```
+configsCache:
+		setup:
+			- usePrefix()
+```
+
 ## Components
 
 #### [FrontendMenu](https://github.com/remp2020/crm-application-module/blob/d35256140dba71e7839955da7a5205b3241f1923/src/components/FrontendMenu/FrontendMenu.php)

@@ -32,7 +32,7 @@ services:
 			- register('price', [Crm\ApplicationModule\Helpers\PriceHelper(), process])
 			- register('diffPrice', [Crm\ApplicationModule\Helpers\DiffPriceHelper(), process])
 
-	redisClientFactory: Crm\ApplicationModule\RedisClientFactory(%redis.host%, %redis.port%, %redis.password%, %redis.database%)
+	redisClientFactory: Crm\ApplicationModule\RedisClientFactory(%redis.host%, %redis.port%, %redis.password%, %redis.database%, %redis_client_factory.prefix%)
 
 	configCategoriesRepository: Crm\ApplicationModule\Config\Repository\ConfigCategoriesRepository
 	configsRepository: Crm\ApplicationModule\Config\Repository\ConfigsRepository
