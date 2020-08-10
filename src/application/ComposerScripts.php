@@ -18,11 +18,20 @@ class ComposerScripts
      */
     public static function postAutoloadDump(Event $event)
     {
-        require_once $event->getComposer()->getConfig()->get('vendor-dir') . '/autoload.php';
+        $vendorDir = $event->getComposer()->getConfig()->get('vendor-dir');
 
-        if (file_exists($event->getComposer()->getConfig()->get('vendor-dir') . '/../.env')) {
+        require_once $vendorDir . '/autoload.php';
+
+        if (file_exists($vendorDir . '/../.env')) {
             static::runCommand($event, 'application:install_assets');
         }
+
+        // Running ComposerScripts via Composer (e.g. via post-dump-autoload hook) may pass
+        // different parameters to Nette container builder than when it runs in a regular PHP script.
+        // Nette container builder may not discover all presenters correctly and container may not be initialized properly (see 'scanComposer' and 'scanDirs' in ApplicationExtension for details).
+        // This can cause problems in commands working with presenters - for example, when registering user sources, some presenters could be skipped.
+        // Solution: touch a random file (here we've chosen config.neon), so container is forced to reload in a subsequent command/script.
+        touch($vendorDir . '/../app/config/config.neon');
     }
 
     private static function runCommand($event, $commandName)
@@ -32,6 +41,7 @@ class ComposerScripts
         );
         $container = $core->bootstrap();
         $application = new Application();
+        $application->setAutoExit(false);
         $application->setCatchExceptions(false);
 
         try {
