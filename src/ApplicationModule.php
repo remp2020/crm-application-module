@@ -10,7 +10,6 @@ use Crm\ApplicationModule\Seeders\CalendarSeeder;
 use Crm\ApplicationModule\Seeders\ConfigsSeeder;
 use Crm\ApplicationModule\Seeders\CountriesSeeder;
 use Crm\ApplicationModule\Seeders\SnippetsSeeder;
-use Nette\DI\Container;
 use Tracy\Debugger;
 use Tracy\ILogger;
 
@@ -29,14 +28,6 @@ class ApplicationModule extends CrmModule
         $commandsContainer->registerCommand($this->getInstance(\Crm\ApplicationModule\Commands\CleanupCommand::class));
         $commandsContainer->registerCommand($this->getInstance(\Crm\ApplicationModule\Commands\CacheCommand::class));
         $commandsContainer->registerCommand($this->getInstance(\Crm\ApplicationModule\Commands\InstallAssetsCommand::class));
-    }
-
-    public function registerCleanupFunction(CallbackManagerInterface $cleanUpManager)
-    {
-        $cleanUpManager->add(function (Container $container) {
-            //            $hermesTaskRepository = $container->getByType(\Crm\ApplicationModule\Repository\HermesTasksRepository::class);
-//            $hermesTaskRepository->removeOldData();
-        });
     }
 
     public function registerApiCalls(ApiRoutersContainerInterface $apiRoutersContainer)
