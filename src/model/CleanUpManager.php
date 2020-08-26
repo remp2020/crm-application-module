@@ -9,9 +9,17 @@ class CleanUpManager implements CallbackManagerInterface
 {
     private $callbacks = [];
 
-    public function add(Closure $callback)
+    public function add(string $key, Closure $callback)
     {
-        $this->callbacks[] = $callback;
+        $this->callbacks[$key] = $callback;
+        return $this;
+    }
+
+    public function remove(string $key)
+    {
+        if (!empty($this->callbacks[$key])) {
+            unset($this->callbacks[$key]);
+        }
         return $this;
     }
 
