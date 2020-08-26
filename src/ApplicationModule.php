@@ -31,14 +31,6 @@ class ApplicationModule extends CrmModule
         $commandsContainer->registerCommand($this->getInstance(\Crm\ApplicationModule\Commands\InstallAssetsCommand::class));
     }
 
-    public function registerCleanupFunction(CallbackManagerInterface $cleanUpManager)
-    {
-        $cleanUpManager->add(function (Container $container) {
-            //            $hermesTaskRepository = $container->getByType(\Crm\ApplicationModule\Repository\HermesTasksRepository::class);
-//            $hermesTaskRepository->removeOldData();
-        });
-    }
-
     public function registerApiCalls(ApiRoutersContainerInterface $apiRoutersContainer)
     {
         $apiRoutersContainer->attachRouter(new ApiRoute(
