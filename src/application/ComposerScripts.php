@@ -3,9 +3,8 @@
 namespace Crm\ApplicationModule;
 
 use Composer\Script\Event;
-use Nette\Database\DriverException;
-use Nette\InvalidArgumentException;
 use Symfony\Component\Console\Application;
+use Symfony\Component\Console\Exception\CommandNotFoundException;
 use Symfony\Component\Console\Input\ArrayInput;
 
 class ComposerScripts
@@ -23,7 +22,11 @@ class ComposerScripts
         require_once $vendorDir . '/autoload.php';
 
         if (file_exists($vendorDir . '/../.env')) {
-            static::runCommand($event, 'application:install_assets');
+            try {
+                static::runCommand($event, 'application:install_assets');
+            } catch (CommandNotFoundException $commandNotFoundException) {
+                $event->getIO()->write("<warning> CRM </warning> Unable to run <comment>application:install_assets</comment> command, please run <comment>php bin/command.php phinx:migrate</comment> command first.");
+            }
         }
 
         // Running ComposerScripts via Composer (e.g. via post-dump-autoload hook) may pass
@@ -44,17 +47,11 @@ class ComposerScripts
         $application->setAutoExit(false);
         $application->setCatchExceptions(false);
 
-        try {
-            /** @var ApplicationManager $applicationManager */
-            $applicationManager = $container->getByType(\Crm\ApplicationModule\ApplicationManager::class);
-            $commands = $applicationManager->getCommands();
-            foreach ($commands as $command) {
-                $application->add($command);
-            }
-        } catch (DriverException $driverException) {
-            echo "INFO: Looks like the new fresh install.\n";
-        } catch (InvalidArgumentException $invalidArgument) {
-            echo "INFO: Looks like the new fresh install - or wrong configuration - '{$invalidArgument->getMessage()}'.\n";
+        /** @var ApplicationManager $applicationManager */
+        $applicationManager = $container->getByType(\Crm\ApplicationModule\ApplicationManager::class);
+        $commands = $applicationManager->getCommands();
+        foreach ($commands as $command) {
+            $application->add($command);
         }
 
         $application->run(new ArrayInput(['command' => $commandName]));
