@@ -3,8 +3,9 @@
 namespace Crm\ApplicationModule;
 
 use Composer\Script\Event;
+use Nette\Database\DriverException;
+use Nette\InvalidArgumentException;
 use Symfony\Component\Console\Application;
-use Symfony\Component\Console\Exception\CommandNotFoundException;
 use Symfony\Component\Console\Input\ArrayInput;
 
 class ComposerScripts
@@ -24,7 +25,7 @@ class ComposerScripts
         if (file_exists($vendorDir . '/../.env')) {
             try {
                 static::runCommand($event, 'application:install_assets');
-            } catch (CommandNotFoundException $commandNotFoundException) {
+            } catch (DriverException | InvalidArgumentException $exception) {
                 $event->getIO()->write("<warning> CRM </warning> Unable to run <comment>application:install_assets</comment> command, please run <comment>php bin/command.php phinx:migrate</comment> command first.");
             }
         }
@@ -53,7 +54,6 @@ class ComposerScripts
         foreach ($commands as $command) {
             $application->add($command);
         }
-
         $application->run(new ArrayInput(['command' => $commandName]));
     }
 }
