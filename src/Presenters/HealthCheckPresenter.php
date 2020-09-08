@@ -10,9 +10,6 @@ use Nette\Application\Responses\TextResponse;
 // TODO: add UserDataProviders to check if modules are ready?
 class HealthCheckPresenter extends FrontendPresenter
 {
-    // TODO: keeping this off so we can keep internal/health-check URL online
-    public $autoCanonicalize = false;
-
     private $configsRepository;
 
     private $urlSetStorage;
