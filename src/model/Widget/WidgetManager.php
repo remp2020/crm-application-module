@@ -101,6 +101,9 @@ class WidgetManager implements WidgetManagerInterface
 
     public function removeWidget($path, WidgetInterface $widget)
     {
+        if (!isset($this->widgets[$path])) {
+            return;
+        }
         foreach ($this->widgets[$path] as $priority => $savedWidget) {
             if ($savedWidget->identifier() === $widget->identifier()) {
                 unset($this->widgets[$path][$priority]);
