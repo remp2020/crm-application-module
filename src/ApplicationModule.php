@@ -10,7 +10,6 @@ use Crm\ApplicationModule\Seeders\CalendarSeeder;
 use Crm\ApplicationModule\Seeders\ConfigsSeeder;
 use Crm\ApplicationModule\Seeders\CountriesSeeder;
 use Crm\ApplicationModule\Seeders\SnippetsSeeder;
-use Nette\DI\Container;
 use Tracy\Debugger;
 use Tracy\ILogger;
 
