@@ -1,9 +1,9 @@
 <?php
 
-namespace Crm\ApplicationModule\Tests;
+namespace Crm\ApplicationModule;
 
 /**
- * Trait serving as getter and setter of $now value, useful for testing
+ * Trait serving as getter and setter of $now value, useful for testing and controlling time in components.
  */
 trait NowTrait
 {
