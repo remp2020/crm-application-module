@@ -40,6 +40,8 @@ abstract class DatabaseTestCase extends TestCase
 
     protected function setUp(): void
     {
+        $_POST = [];
+
         $this->container = $GLOBALS['container'];
         $this->database = $this->inject(Context::class);
 
