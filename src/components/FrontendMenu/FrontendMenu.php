@@ -2,6 +2,7 @@
 
 namespace Crm\ApplicationModule\Components;
 
+use Crm\ApplicationModule\Config\ApplicationConfig;
 use Crm\ApplicationModule\Menu\MenuContainerInterface;
 use Nette\Application\UI;
 
@@ -19,6 +20,15 @@ class FrontendMenu extends UI\Control
     /** @var MenuContainerInterface */
     private $menuItems;
 
+    public $applicationConfig;
+
+    public function __construct(
+        ApplicationConfig $applicationConfig
+    ) {
+        parent::__construct();
+        $this->applicationConfig  = $applicationConfig;
+    }
+
     public function setMenuItems(MenuContainerInterface $menuItems)
     {
         $this->menuItems = $menuItems;
@@ -31,6 +41,7 @@ class FrontendMenu extends UI\Control
 
     public function render()
     {
+        $this->template->siteUrl = $this->applicationConfig->get('site_url');
         $this->template->menuItems = $this->menuItems->getMenuItems();
         $this->template->setFile(__DIR__ . '/' . $this->templateName);
         $this->template->render();
