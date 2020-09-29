@@ -23,13 +23,24 @@ class StringLabeledArrayParam implements CriteriaParam
      *
      * @param string $key Identifier
      * @param string $label Human description of parameter
-     * @param array  $options Options to select from
+     * @param array  $options Options to select from, may contain:
+     *                         - simple key-value pairs (['svk' => 'Slovakia'])
+     *                         - key-value pairs with additional attributes (mandatory: label; optional: group)
+     *                           e.g. ['svk' => ['label' => 'Slovakia','group' => 'Europe']]
      * @param string $operator Operator applied between selected values (and/or)
      * @param bool   $freeSolo If enabled, allow values outside of provided options
      */
     public function __construct(string $key, string $label, array $options, $operator = 'or', $freeSolo = false)
     {
         $this->options = array_map(function ($value) use ($options) {
+            if (is_array($options[$value])) {
+                return array_filter([
+                    'value' => $value,
+                    'label' => $options[$value]['label'], // Label is required
+                    'group' => $options[$value]['group'] ?? null, // Group is optional
+                ]);
+            }
+
             return (object) [
                 'value' => $value,
                 'label' => $options[$value],
