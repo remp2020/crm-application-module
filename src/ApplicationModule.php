@@ -37,6 +37,12 @@ class ApplicationModule extends CrmModule
             \Crm\ApplicationModule\Api\EventsListApiHandler::class,
             \Crm\ApiModule\Authorization\BearerTokenAuthorization::class
         ));
+
+        $apiRoutersContainer->attachRouter(new ApiRoute(
+            new ApiIdentifier('1', 'event-generators', 'list'),
+            \Crm\ApplicationModule\Api\EventGeneratorsListApiHandler::class,
+            \Crm\ApiModule\Authorization\BearerTokenAuthorization::class
+        ));
     }
 
     public function registerLayouts(LayoutManager $layoutManager)
