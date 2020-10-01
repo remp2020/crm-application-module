@@ -10,6 +10,7 @@ use Crm\ApplicationModule\Seeders\CalendarSeeder;
 use Crm\ApplicationModule\Seeders\ConfigsSeeder;
 use Crm\ApplicationModule\Seeders\CountriesSeeder;
 use Crm\ApplicationModule\Seeders\SnippetsSeeder;
+use Tomaj\Hermes\Dispatcher;
 use Tracy\Debugger;
 use Tracy\ILogger;
 
@@ -24,10 +25,16 @@ class ApplicationModule extends CrmModule
             $commandsContainer->registerCommand($this->getInstance(\Crm\ApplicationModule\Commands\PopulatorCommand::class));
         }
 
+        $commandsContainer->registerCommand($this->getInstance(\Crm\ApplicationModule\Commands\HeartbeatCommand::class));
         $commandsContainer->registerCommand($this->getInstance(\Crm\ApplicationModule\Commands\HermesWorkerCommand::class));
         $commandsContainer->registerCommand($this->getInstance(\Crm\ApplicationModule\Commands\CleanupCommand::class));
         $commandsContainer->registerCommand($this->getInstance(\Crm\ApplicationModule\Commands\CacheCommand::class));
         $commandsContainer->registerCommand($this->getInstance(\Crm\ApplicationModule\Commands\InstallAssetsCommand::class));
+    }
+
+    public function registerHermesHandlers(Dispatcher $dispatcher)
+    {
+        $dispatcher->registerHandler('heartbeat', $this->getInstance(\Crm\ApplicationModule\Hermes\HeartbeatMysql::class));
     }
 
     public function registerApiCalls(ApiRoutersContainerInterface $apiRoutersContainer)
