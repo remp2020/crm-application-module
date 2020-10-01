@@ -44,7 +44,8 @@
     "monolog/monolog": "^1.23",
     "contributte/forms-multiplier": "^3.0",
     "composer/composer": "^1.10",
-    "malkusch/lock": "^2.1"
+    "malkusch/lock": "^2.1",
+    "symfony/translation": "<=v4.4.13"
   },
   "minimum-stability": "stable",
   "autoload": {
