@@ -51,6 +51,7 @@ services:
 
 	- Crm\ApplicationModule\Commands\DatabaseSeedCommand
 	- Crm\ApplicationModule\Commands\CacheCommand
+	- Crm\ApplicationModule\Commands\HeartbeatCommand
 	- Crm\ApplicationModule\Commands\InstallAssetsCommand
 
 	applicationConfig:
@@ -106,6 +107,8 @@ services:
 	hermesEmitter:
 		class: Tomaj\Hermes\Emitter(@hermesDriver, @hermesLogger)
 	redisTasksQueue: Crm\ApplicationModule\Hermes\HermesTasksQueue
+
+	- Crm\ApplicationModule\Hermes\HeartbeatMysql
 
 	# components factories
 	- Crm\ApplicationModule\Components\Graphs\GoogleBarGraphControlFactoryInterface

@@ -18,6 +18,23 @@ configsCache:
 			- usePrefix()
 ```
 
+
+## Commands
+
+### `application:heartbeat`
+
+If your hermes worker (`application:hermes_worker`) is losing connection to mysql after a long period of inactivity, add `application:heartbeat` into your scheduler _(e.g. crontab)_ with small interval _(e.g. 1 minute)_.
+
+**WARNING: Change paths to PHP and command.php according to your installation.**
+
+```shell
+# emit heartbeat event
+*/1 * * * * /usr/bin/php /var/www/html/bin/command.php application:heartbeat
+```
+
+Event is handled by `HeartbeatMysql` handler which pings mysql. This simple process keeps hermes worker alive.
+
+
 ## Components
 
 #### [FrontendMenu](https://github.com/remp2020/crm-application-module/blob/d35256140dba71e7839955da7a5205b3241f1923/src/components/FrontendMenu/FrontendMenu.php)
