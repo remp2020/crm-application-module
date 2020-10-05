@@ -3,7 +3,7 @@
 namespace Crm\ApplicationModule\Presenters;
 
 use Crm\ApplicationModule\Config\Repository\ConfigsRepository;
-use Crm\ContentModule\Access\UrlSetInterface;
+use Crm\ApplicationModule\User\UserDataStorageInterface;
 use Nette\Application\BadRequestException;
 use Nette\Application\Responses\TextResponse;
 
@@ -12,15 +12,15 @@ class HealthCheckPresenter extends FrontendPresenter
 {
     private $configsRepository;
 
-    private $urlSetStorage;
+    private $userDataStorage;
 
     public function __construct(
         ConfigsRepository $configsRepository,
-        UrlSetInterface $urlSetStorage
+        UserDataStorageInterface $userDataStorage
     ) {
         parent::__construct();
         $this->configsRepository = $configsRepository;
-        $this->urlSetStorage = $urlSetStorage;
+        $this->userDataStorage = $userDataStorage;
     }
 
     public function renderDefault()
@@ -32,12 +32,12 @@ class HealthCheckPresenter extends FrontendPresenter
         }
 
         // check redis
-        $this->urlSetStorage->addUrl('healthcheck', 'https://example.com/');
-        $status = $this->urlSetStorage->urlExists('healthcheck', 'https://example.com/');
+        $this->userDataStorage->store('healthcheck', 1);
+        $status = $this->userDataStorage->load('healthcheck');
         if (!$status) {
             throw new BadRequestException();
         }
-        $this->urlSetStorage->removeUrl('healthcheck', 'https://example.com/');
+        $this->userDataStorage->remove('healthcheck');
 
         $this->sendResponse(new TextResponse('ok'));
     }
