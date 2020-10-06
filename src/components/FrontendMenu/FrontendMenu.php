@@ -41,7 +41,6 @@ class FrontendMenu extends UI\Control
 
     public function render()
     {
-        $this->template->siteUrl = $this->applicationConfig->get('site_url');
         $this->template->menuItems = $this->menuItems->getMenuItems();
         $this->template->setFile(__DIR__ . '/' . $this->templateName);
         $this->template->render();
