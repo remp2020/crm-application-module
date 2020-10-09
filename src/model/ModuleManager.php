@@ -17,9 +17,16 @@ class ModuleManager
      */
     public function addModule(ApplicationModuleInterface $applicationModule, $order = 1000)
     {
-        $moduleName = explode('\\', get_class($applicationModule))[1];
-        if (!Strings::endsWith($moduleName, 'Module')) {
-            throw new ApplicationException("Application module name has to follow naming pattern: '*Module', used name '{$moduleName}'");
+        $className = get_class($applicationModule);
+        $moduleNamespace = substr(
+            $className,
+            0,
+            strrpos(get_class($applicationModule), '\\')
+        );
+        if (!Strings::endsWith($moduleNamespace, 'Module')) {
+            throw new ApplicationException(
+                "CRM module name has to belong to namespace with naming pattern '*Module', used namespace '{$moduleNamespace}'"
+            );
         }
         if (isset($this->modules[$order])) {
             do {
