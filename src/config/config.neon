@@ -100,7 +100,11 @@ services:
 			- pushProcessor(@hermesLogRedact::add(['password', 'token']))
 			- pushHandler(Monolog\Handler\StreamHandler("%appDir%/../log/hermes-log.txt"))
 
-	hermesRestart: Tomaj\Hermes\Restart\SharedFileRestart('/tmp/hermes_restart')
+	# restart hermes and mail worker through hermes_restart key in redis
+	# - override in local config with second string argument if you want to change key
+	# - override restart `hermesRestart: Tomaj\Hermes\Restart\SharedFileRestart('/tmp/hermes_restart')` if you want to keep file based restarts
+	hermesRestart: Tomaj\Hermes\Restart\RedisRestart(@redisClientFactory::getClient())
+
 	hermesDriver: Crm\ApplicationModule\Hermes\RedisDriver
 	hermesDispatcher:
 		class: Tomaj\Hermes\Dispatcher(@hermesDriver, @hermesLogger, @hermesRestart)
