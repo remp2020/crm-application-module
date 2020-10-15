@@ -69,6 +69,7 @@ services:
 	- Crm\ApplicationModule\CleanUpManager
 	- Crm\ApplicationModule\LayoutManager
 	- Crm\ApplicationModule\SeederManager
+	- Crm\ApplicationModule\Commands\HermesShutdownCommand
 	- Crm\ApplicationModule\Commands\HermesWorkerCommand
 	- Crm\ApplicationModule\Commands\CleanupCommand
 	configsCache: Crm\ApplicationModule\Config\ConfigsCache

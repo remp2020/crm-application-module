@@ -23,17 +23,35 @@ configsCache:
 
 ### `application:heartbeat`
 
-If your hermes worker (`application:hermes_worker`) is losing connection to mysql after a long period of inactivity, add `application:heartbeat` into your scheduler _(e.g. crontab)_ with small interval _(e.g. 1 minute)_.
+If your Hermes worker (`application:hermes_worker`) is losing connection to MySQL after a long period of inactivity, add `application:heartbeat` into your scheduler _(e.g. crontab)_ with small interval _(e.g. 1 minute)_.
 
-**WARNING: Change paths to PHP and command.php according to your installation.**
+> **WARNING: Change paths to PHP and command.php according to your installation.**
 
 ```shell
 # emit heartbeat event
 */1 * * * * /usr/bin/php /var/www/html/bin/command.php application:heartbeat
 ```
 
-Event is handled by `HeartbeatMysql` handler which pings mysql. This simple process keeps hermes worker alive.
+Event is handled by `HeartbeatMysql` handler which pings MySQL. This simple process keeps Hermes worker alive.
 
+
+### `application:hermes_shutdown`
+
+Command `application:hermes_shutdown` can be used to gracefully shutdown Hermes worker and all other workers which integrate Hermes' `RestartInterface` _(eg. Scenarios worker present in [ScenariosModule](https://github.com/remp2020/crm-scenarios-module))_. This can be used after CRM update when it's needed to reload all workers to new version.
+
+> **WARNING: Change paths to PHP and command.php according to your installation.**
+
+```shell
+/usr/bin/php /var/www/html/bin/command.php application:hermes_shutdown
+```
+
+User confirmation is required to proceed with shutdown of all worker.
+
+In case you need to run this command without user interaction _(eg. CI, tests)_, use `--assume-yes` flag:
+
+```shell
+/usr/bin/php /var/www/html/bin/command.php application:hermes_shutdown --assume-yes
+```
 
 ## Components
 

@@ -26,6 +26,7 @@ class ApplicationModule extends CrmModule
         }
 
         $commandsContainer->registerCommand($this->getInstance(\Crm\ApplicationModule\Commands\HeartbeatCommand::class));
+        $commandsContainer->registerCommand($this->getInstance(\Crm\ApplicationModule\Commands\HermesShutdownCommand::class));
         $commandsContainer->registerCommand($this->getInstance(\Crm\ApplicationModule\Commands\HermesWorkerCommand::class));
         $commandsContainer->registerCommand($this->getInstance(\Crm\ApplicationModule\Commands\CleanupCommand::class));
         $commandsContainer->registerCommand($this->getInstance(\Crm\ApplicationModule\Commands\CacheCommand::class));
