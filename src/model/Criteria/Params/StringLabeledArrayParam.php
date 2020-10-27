@@ -25,8 +25,8 @@ class StringLabeledArrayParam implements CriteriaParam
      * @param string $label Human description of parameter
      * @param array  $options Options to select from, may contain:
      *                         - simple key-value pairs (['svk' => 'Slovakia'])
-     *                         - key-value pairs with additional attributes (mandatory: label; optional: group)
-     *                           e.g. ['svk' => ['label' => 'Slovakia','group' => 'Europe']]
+     *                         - key-value pairs with additional attributes (mandatory: label; optional: group, subtitle)
+     *                           e.g. ['svk' => ['label' => 'Slovakia','group' => 'Europe', 'subtitle'=>'(Good Idea Slovakia)']]
      * @param string $operator Operator applied between selected values (and/or)
      * @param bool   $freeSolo If enabled, allow values outside of provided options
      */
@@ -37,6 +37,7 @@ class StringLabeledArrayParam implements CriteriaParam
                 return array_filter([
                     'value' => $value,
                     'label' => $options[$value]['label'], // Label is required
+                    'subtitle' => $options[$value]['subtitle'] ?? null, // Subtitle (text shown after label) is optional
                     'group' => $options[$value]['group'] ?? null, // Group is optional
                 ]);
             }
