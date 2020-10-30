@@ -2,7 +2,10 @@
 
 namespace Crm\ApplicationModule;
 
+use Composer\Composer;
+use Composer\Factory;
 use Composer\Script\Event;
+use Composer\SelfUpdate\Versions;
 use Nette\Database\DriverException;
 use Nette\InvalidArgumentException;
 use Symfony\Component\Console\Application;
@@ -55,5 +58,38 @@ class ComposerScripts
             $application->add($command);
         }
         $application->run(new ArrayInput(['command' => $commandName]));
+    }
+
+    public static function checkVersion(Event $event)
+    {
+        $currentVersion = Composer::getVersion();
+
+        if (version_compare($currentVersion, '2.0.0', '>=')) {
+            // internally we're not fully PSR-4 compliant yet, we'll update later
+            $event->getIO()->write(sprintf(
+                'Your Composer version (%s) is too new :), please rollback to 1.x (it\'s just temporary, I promise!) with <info>composer self-update --rollback</info> command.',
+                $currentVersion
+            ));
+            exit(1);
+        }
+
+        // determine latest version for Composer 1.X
+        if (version_compare($currentVersion, '2.0.0', '<')) {
+            $config = Factory::createConfig();
+            $versionsUtil = new Versions(
+                $config,
+                Factory::createRemoteFilesystem($event->getIO(), $config)
+            );
+            $latestVersion = $versionsUtil->getLatest('1')['version'];
+
+            if (version_compare($currentVersion, $latestVersion, '<')) {
+                $event->getIO()->write(sprintf(
+                    'Your Composer version (%s) is too old, %s is required. Please run <comment>composer self-update --1</comment> first.',
+                    $currentVersion,
+                    $latestVersion
+                ));
+                exit(1);
+            }
+        }
     }
 }
