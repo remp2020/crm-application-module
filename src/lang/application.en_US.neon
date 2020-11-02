@@ -38,7 +38,7 @@ config:
 		description: 'Name of the layout registered by one of the modules. Warning, bad value can make page dysfunctional! (e.g. dennikn)'
 	og_image:
 		name: 'Meta image for page with subscription'
-		description: 'Full URL to the image (e.g. https://dennikn.sk/wp-content/uploads/2014/11/def.jpg)'
+		description: 'Full URL to the image (e.g. <code>/layouts/admin/images/logo_with_text.svg</code>)'
 	header_block:
 		name: 'Code in header'
 		description: 'Any optional code (e.g. Google Analytics) that should be injected to the head of layout'

@@ -105,7 +105,7 @@ config:
 		description: 'Název layoutu zaregistrovaného jedním z modulů. Pozor, nesprávná nota může vyřadit stránku! (např. dennikn)'
 	og_image:
 		name: 'Meta obrázek stránky v předplatném'
-		description: 'URL k obrázku (např. https://dennikn.sk/wp-content/uploads/2014/11/def.jpg)'
+		description: 'URL k obrázku (např. <code>/layouts/admin/images/logo_with_text.svg</code>)'
 	header_block:
 		name: 'Kód v hlavičce'
 		description: 'Libovolný kód (např. Google analytics nebo další), který se má vložit do hlavičky šablony'

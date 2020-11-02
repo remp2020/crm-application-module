@@ -38,7 +38,7 @@ config:
 		description: 'Názov layoutu zaregistrovaného jedným z modulov. Pozor, nesprávna nota môže znefunkčniť stránku! (napr. dennikn)'
 	og_image:
 		name: 'Meta obrázok stránky v predplatnom'
-		description: 'URL k obrázku (napr. https://dennikn.sk/wp-content/uploads/2014/11/def.jpg)'
+		description: 'URL k obrázku (napr. <code>/layouts/admin/images/logo_with_text.svg</code>)'
 	header_block:
 		name: 'Kód v hlavičke'
 		description: 'Ľubovoľný kód (napr. Google analytics alebo ďalšie), ktorý sa má vložiť do hlavičky šablóny'
