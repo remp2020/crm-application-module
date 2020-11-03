@@ -123,11 +123,11 @@ class Repository
      */
     public function delete(IRow &$row)
     {
-        $res = $this->getTable()->wherePrimary($row->getPrimary())->delete();
         $oldValues = [];
         if ($row instanceof ActiveRow) {
             $oldValues = $row->toArray();
         }
+        $res = $this->getTable()->wherePrimary($row->getPrimary())->delete();
 
         if (!$res) {
             return false;
