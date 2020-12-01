@@ -115,8 +115,10 @@ class Core
         }
 
         $configurator->enableDebugger(APP_ROOT . 'log');
-
         $configurator->setTempDirectory(APP_ROOT . 'temp/nette');
+        $configurator->addParameters([
+            'tempRoot' => APP_ROOT . 'temp',
+        ]);
 
         $configurator->createRobotLoader()
             ->addDirectory(APP_ROOT . 'app')
