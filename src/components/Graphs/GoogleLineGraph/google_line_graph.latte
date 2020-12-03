@@ -1,4 +1,8 @@
-{if empty($series)}
+{if !$loaded}
+    <div class="well-lg well" style="height:300px;">
+        <img src="/layouts/admin/dist/images/module/spinner.svg" alt="Loading..." class="spinner">
+    </div>
+{elseif empty($graphDataJs)}
     <div class="well-lg well">
         No data available.
     </div>
@@ -6,36 +10,13 @@
 
 <div id="graph_{$graphId}" class="contains-chart graph line-graph" data-gchart="drawChart{$graphId|noescape}" style="height:{$height}px;"></div>
 
-{var $serieTable = []}
-{var $serieCount = count($series)}
-{var $j = 1}
-
-{foreach $series as $key => $serie}
-    {var $i = 0}
-    {foreach $serie as $row}
-        {var $serieTable[$i][$j] = $row}
-        {var $i += 1}
-    {/foreach}
-    {var $j += 1}
-{/foreach}
-
-{var $dataTable = []}
-{var $dateCount = count($xAxis)}
-
-{for $i=0; $i < $dateCount; $i++}
-    {var $elements = [$xAxis[$i]] + $serieTable[$i]}
-    {var $dataTable[$i] = implode(',', $elements)}
-{/for}
-
-{var $dataTableJS = '[' . implode('],[', $dataTable) . ']'}
-
 <script type="text/javascript">
 
 function drawChart{$graphId|noescape}() {
 
     var data = google.visualization.arrayToDataTable
     ([
-        ['Day',{foreach $series as $k => $v}{$k}{sep},{/sep}{/foreach}], {$dataTableJS|noescape}
+        ['Day',{foreach $series as $label => $v}{$label}{sep},{/sep}{/foreach}], {$graphDataJs|noescape}
     ]);
 
     var chart = new google.visualization.LineChart(document.getElementById('graph_{$graphId|noescape}'));

@@ -23,8 +23,6 @@ class GoogleBarGraph extends BaseGraphControl
 
     private $height = 300;
 
-    private $series = [];
-
     private $stacked = true;
 
     public function setStacked($stacked)
@@ -61,7 +59,7 @@ class GoogleBarGraph extends BaseGraphControl
         return $this;
     }
 
-    public function render($redraw = false)
+    public function render($redraw = false, $asyncLoad = true)
     {
         $this->template->redraw = $redraw;
         $this->template->graphId = $this->generateGraphId();
@@ -72,6 +70,9 @@ class GoogleBarGraph extends BaseGraphControl
         $this->template->series = $this->series;
         $this->template->height = empty($this->series) ? 0 : $this->height;
         $this->template->stacked = $this->stacked;
+        $this->template->graphDataJs = $this->getDataForJs();
+        $this->template->asyncLoad = $asyncLoad;
+        $this->template->loaded = !$asyncLoad || $this->getPresenter()->isAjax() ? true : false;
 
         $this->template->setFile(__DIR__ . '/' . $this->view . '.latte');
         $this->template->render();

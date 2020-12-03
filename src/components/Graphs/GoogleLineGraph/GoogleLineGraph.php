@@ -23,8 +23,6 @@ class GoogleLineGraph extends BaseGraphControl
 
     private $height = 300;
 
-    private $series = [];
-
     public function setYLabel($ylabel)
     {
         $this->yLabel = $ylabel;
@@ -52,7 +50,7 @@ class GoogleLineGraph extends BaseGraphControl
         return $this;
     }
 
-    public function render($redraw)
+    public function render($redraw, $asyncLoad = true)
     {
         $this->template->redraw = $redraw;
         $this->template->graphId = $this->generateGraphId();
@@ -62,6 +60,9 @@ class GoogleLineGraph extends BaseGraphControl
         $this->template->yLabel = $this->yLabel;
         $this->template->series = $this->series;
         $this->template->height = empty($this->series) ? 0 : $this->height;
+        $this->template->graphDataJs = $this->getDataForJs();
+        $this->template->asyncLoad = $asyncLoad;
+        $this->template->loaded = !$asyncLoad || $this->getPresenter()->isAjax() ? true : false;
 
         $this->template->setFile(__DIR__ . '/' . $this->view . '.latte');
         $this->template->render();

@@ -23,8 +23,6 @@ class InlineBarGraph extends BaseGraphControl
 
     private $height = 300;
 
-    private $series = [];
-
     public function setYLabel($ylabel)
     {
         $this->yLabel = $ylabel;

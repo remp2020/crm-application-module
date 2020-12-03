@@ -22,9 +22,21 @@
   <div class="panel-body">
     <div class="tab-content">
         <div id="graph_{$graphId|noescape}" class="tab-pane active">
-            {control graph-{$groupBy} isset($redraw) ? $redraw : false}
+            {control graph-{$groupBy} isset($redraw) ? $redraw : false, $asyncLoad}
         </div>
     </div>
   </div>
   {/snippet}
 </div>
+{block script}
+  {if $asyncLoad}
+  <script>
+    $(document).ready(function() {
+      $.nette.ajax({
+        url: {link change!, null, $groupBy},
+        off: ['unique']
+      });
+    });
+  </script>
+  {/if}
+{/block}

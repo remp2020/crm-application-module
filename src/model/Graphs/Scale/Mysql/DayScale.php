@@ -90,32 +90,6 @@ GROUP BY calendar.date
     public function getDatabaseSeriesData(Criteria $criteria)
     {
         $dbData = [];
-//
-//        $data = $this->database->query("
-//            SELECT value,
-//              calendar.day AS day,
-//              calendar.month AS month,
-//              calendar.year AS year
-//            FROM calendar
-//            LEFT JOIN dashboard_cache ON date(dashboard_cache.date) <= calendar.date AND date(dashboard_cache.date) >= calendar.date
-//            WHERE tag = '{$tag}' AND
-//            scale = 'day' AND
-//            calendar.date <= '{$criteria->getEndDate()}' AND
-//            calendar.date >= '{$criteria->getStartDate()}'
-//        ");
-//
-//        $keys = $this->getKeys($criteria->getStart(), $criteria->getEnd());
-//
-//        $persist = [];
-//        $dataCached = [];
-//        foreach($data as $k =>$v) {
-//            $dataCached[$k] = $v;
-//        }
-//        foreach($keys as $k => $v) {
-//            if ( !isset($dataCached[$k])) {
-//                $persist[$k] = $v;
-//            }
-//        }
 
         $res = $this->database->query("SELECT {$criteria->getValueField()} AS value,
     calendar.day AS day,

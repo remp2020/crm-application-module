@@ -15,8 +15,6 @@ class SmallBarGraph extends BaseGraphControl
 
     private $graphTitle = '[Názov grafu]';
 
-    private $series = [];
-
     public function setGraphTitle($graphTitle)
     {
         $this->graphTitle = $graphTitle;

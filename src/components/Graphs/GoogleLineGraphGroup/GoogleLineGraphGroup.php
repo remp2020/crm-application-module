@@ -30,8 +30,6 @@ class GoogleLineGraphGroup extends BaseGraphControl
 
     private $height = 300;
 
-    private $series = [];
-
     private $seriesName = '';
 
     /** @var callable */
@@ -101,8 +99,11 @@ class GoogleLineGraphGroup extends BaseGraphControl
         return $this;
     }
 
-    public function render()
+    public function render($asyncLoad = true)
     {
+        if ($asyncLoad && !$this->getPresenter()->isAjax()) {
+            $this->graphData->clear();
+        }
         $this->template->graphId = $this->generateGraphId();
         $this->template->graphTitle = $this->graphTitle;
         $this->template->graphHelp = $this->graphHelp;
@@ -112,6 +113,7 @@ class GoogleLineGraphGroup extends BaseGraphControl
         $this->template->height = $this->height;
         $this->template->range = $this->getParameter('range', $this->start['day']);
         $this->template->groupBy = $this->getParameter('groupBy', 'day');
+        $this->template->asyncLoad = $asyncLoad;
 
         $this->template->setFile(__DIR__ . '/' . $this->view . '.latte');
         $this->template->render();
