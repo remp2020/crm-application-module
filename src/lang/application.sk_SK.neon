@@ -25,7 +25,7 @@ config:
 		name: 'Kontaktný email'
 		description: 'Kontaktný email (napr. info@example.com)'
 	default_route:
-		name: 'Defaultná routa'
+		name: 'Predvolená routa'
 		description: 'Nette routa, ktorá sa má použiť pri requeste na / (napr. Subscriptions:Subscriptions:new)'
 	home_route:
 		name: 'Predvolená stránka'

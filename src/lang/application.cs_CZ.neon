@@ -92,7 +92,7 @@ config:
 		name: 'Kontaktní email'
 		description: 'Kontaktní email (např. info@example.com)'
 	default_route:
-		name: 'Defaultná routa'
+		name: 'Výchozí routa'
 		description: 'Nette Routa, která se má použít při requestu na / (např. Subscriptions:Subscriptions:new)'
 	home_route:
 		name: 'Výchozí stránka'
