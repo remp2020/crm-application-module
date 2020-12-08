@@ -48,6 +48,7 @@ last:
 	months: "%count%M"
 	year: Posledný rok
 	years: "%count%R"
+	all: Všetko
 
 fields:
 	updated: Upravené

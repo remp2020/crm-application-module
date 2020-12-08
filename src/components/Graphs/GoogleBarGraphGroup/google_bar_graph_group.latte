@@ -4,18 +4,23 @@
     <h3 class="panel-title">
       {$graphTitle}
       <button type="button" class="btn btn-xs btn-default" data-toggle="tooltip" data-placement="top" title="{$graphHelp}"><i class="fa fa-question-circle"></i></button>
-      <div class="btn-group btn-group-xs pull-right" role="group" aria-label="...">
-        <a n:href="change! '-1 month', $groupBy" type="button" n:class="$range == '-1 month' ? btn-primary : btn-default, btn, ajax">{_system.last.month}</a>
-        <a n:href="change! '-3 months', $groupBy" type="button" n:class="$range == '-3 months' ? btn-primary : btn-default, btn, ajax">{_system.last.months, ['count' => 3]}</a>
-        <a n:href="change! '-6 months', $groupBy" type="button" n:class="$range == '-6 months' ? btn-primary : btn-default, btn, ajax">{_system.last.months, ['count' => 6]}</a>
-        <a n:href="change! '-1 year', $groupBy" type="button" n:class="$range == '-1 year' ? btn-primary : btn-default, btn, ajax">{_system.last.year}</a>
-        <a n:href="change! '-2 years', $groupBy" type="button" n:class="$range == '-2 years' ? btn-primary : btn-default, btn, ajax">{_system.last.years, ['count' => 2]}</a>
-      </div>
-      <div class="btn-group btn-group-xs pull-right" role="group" aria-label="...">
-        <a n:href="change! $range, 'day'" role="tab" type="button" n:class="$groupBy == 'day' ? btn-primary : btn-default, btn, ajax">{_system.date.days}</a>
-        <a n:href="change! $range, 'week'" role="tab" type="button" n:class="$groupBy == 'week' ? btn-primary : btn-default, btn, ajax">{_system.date.weeks}</a>
-        <a n:href="change! $range, 'month'" role="tab" type="button" n:class="$groupBy == 'month' ? btn-primary : btn-default, btn, ajax">{_system.date.months}</a>
-        <a n:href="change! $range, 'year'" role="tab" type="button" n:class="$groupBy == 'year' ? btn-primary : btn-default, btn, ajax">{_system.date.years}</a>
+      <div class="btn-toolbar pull-right" role="toolbar">
+        <div class="btn-group btn-group-xs" role="group" aria-label="...">
+          <a n:href="change! $range, 'day'" role="tab" type="button" n:class="$groupBy == 'day' ? btn-primary : btn-default, btn, ajax">{_system.date.days}</a>
+          <a n:href="change! $range, 'week'" role="tab" type="button" n:class="$groupBy == 'week' ? btn-primary : btn-default, btn, ajax">{_system.date.weeks}</a>
+          <a n:href="change! $range, 'month'" role="tab" type="button" n:class="$groupBy == 'month' ? btn-primary : btn-default, btn, ajax">{_system.date.months}</a>
+          <a n:href="change! $range, 'year'" role="tab" type="button" n:class="$groupBy == 'year' ? btn-primary : btn-default, btn, ajax">{_system.date.years}</a>
+        </div>
+
+        <div class="btn-group btn-group-xs" role="group" aria-label="...">
+          <a n:href="change! '-1 month', $groupBy" type="button" n:class="$range == '-1 month' ? btn-primary : btn-default, btn, ajax">{_system.last.month}</a>
+          <a n:href="change! '-3 months', $groupBy" type="button" n:class="$range == '-3 months' ? btn-primary : btn-default, btn, ajax">{_system.last.months, ['count' => 3]}</a>
+          <a n:href="change! '-6 months', $groupBy" type="button" n:class="$range == '-6 months' ? btn-primary : btn-default, btn, ajax">{_system.last.months, ['count' => 6]}</a>
+          <a n:href="change! '-1 year', $groupBy" type="button" n:class="$range == '-1 year' ? btn-primary : btn-default, btn, ajax">{_system.last.year}</a>
+          <a n:href="change! '-2 years', $groupBy" type="button" n:class="$range == '-2 years' ? btn-primary : btn-default, btn, ajax">{_system.last.years, ['count' => 2]}</a>
+          <a n:href="change! '-5 years', $groupBy" type="button" n:class="$range == '-5 years' ? btn-primary : btn-default, btn, ajax">{_system.last.years, ['count' => 5]}</a>
+          <a n:href="change! '-20 years', $groupBy" type="button" n:class="$range == '-20 years' ? btn-primary : btn-default, btn, ajax">{_system.last.all}</a>
+        </div>
       </div>
     </h3>
   </div>

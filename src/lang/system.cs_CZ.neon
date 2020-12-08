@@ -37,6 +37,8 @@ last:
 	months: '%count%M'
 	year: Poslední rok
 	years: '%count%R'
+	all: Všechno
+
 fields:
 	updated: Upravené
 	created: Vytvořené

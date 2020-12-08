@@ -48,6 +48,7 @@ last:
 	months: Last %count%M
 	year: Last year
 	years: Last %count%Y
+	all: All
 
 fields:
 	updated: Updated
