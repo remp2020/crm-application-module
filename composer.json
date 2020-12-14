@@ -46,7 +46,8 @@
     "composer/composer": "^1.10",
     "malkusch/lock": "^2.1",
     "symfony/translation": "<=v4.4.13",
-    "league/flysystem": "^1.0"
+    "league/flysystem": "^1.0",
+    "league/csv": "^9.6"
   },
   "minimum-stability": "stable",
   "autoload": {

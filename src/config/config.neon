@@ -78,7 +78,7 @@ services:
 	- Crm\ApplicationModule\Helpers\UserDateHelper
 	assetsManager: Crm\ApplicationModule\AssetsManager('%wwwDir%')
 
-	flysystemMountManager: League\Flysystem\MountManager
+	applicationMountManager: Crm\ApplicationModule\Models\ApplicationMountManager
 
 	graph_data: Crm\ApplicationModule\Graphs\GraphData
 	- Crm\ApplicationModule\Graphs\ScaleFactory
