@@ -37,7 +37,7 @@ class FrontendPresenter extends BasePresenter
     public $from;
 
     /** @var SessionSection */
-    protected $utmSession;
+    protected $rtmSession;
 
     /** @var SessionSection */
     protected $additionalTrackingSession;
@@ -120,17 +120,34 @@ class FrontendPresenter extends BasePresenter
     }
 
     /**
-     * Returns array with UTM parameters of campaign
+     * Returns array with RTM parameters of campaign
      *
      * @return array
      */
-    public function utmParams() : array
+    public function rtmParams() : array
     {
         return array_filter([
-            'utm_source' => $this->utmSession->utmSource,
-            'utm_medium' => $this->utmSession->utmMedium,
-            'utm_campaign' => $this->utmSession->utmCampaign,
-            'utm_content' => $this->utmSession->utmContent,
+            'rtm_source' => $this->rtmSession->rtmSource,
+            'rtm_medium' => $this->rtmSession->rtmMedium,
+            'rtm_campaign' => $this->rtmSession->rtmCampaign,
+            'rtm_content' => $this->rtmSession->rtmContent,
+        ]);
+    }
+
+
+    /**
+     * Backward compatible function (if a widget requires UTM parameters)
+     *
+     * @deprecated will be removed in the future
+     * @return array
+     */
+    public function utmParams(): array
+    {
+        return array_filter([
+            'utm_source' => $this->rtmSession->rtmSource,
+            'utm_medium' => $this->rtmSession->rtmMedium,
+            'utm_campaign' => $this->rtmSession->rtmCampaign,
+            'utm_content' => $this->rtmSession->rtmContent,
         ]);
     }
 
@@ -142,14 +159,14 @@ class FrontendPresenter extends BasePresenter
     protected function additionalTrackingParams()
     {
         return array_filter([
-            'banner_variant' => $this->additionalTrackingSession->bannerVariant,
+            'rtm_variant' => $this->additionalTrackingSession->rtmVariant,
         ]);
     }
 
     public function trackingParams()
     {
         return array_merge(
-            $this->utmParams(),
+            $this->rtmParams(),
             $this->additionalTrackingParams()
         );
     }
@@ -160,29 +177,58 @@ class FrontendPresenter extends BasePresenter
      */
     protected function buildTrackingParamsSession()
     {
-        $this->utmSession = $this->getSession('utm_session');
-        $this->utmSession->setExpiration('30 minutes');
+        $this->rtmSession = $this->getSession('rtm_session');
+        $this->rtmSession->setExpiration('30 minutes');
 
-        if ($this->getParameter('utm_source')) {
-            $this->utmSession->utmSource = $this->getParameter('utm_source');
+        // Transition from UTM to RTM
+        $utmSession = $this->getSession('utm_session');
+
+        $rtmSource = $this->getParameter('rtm_source') ?? $this->getParameter('utm_source');
+        $rtmMedium = $this->getParameter('rtm_medium') ?? $this->getParameter('utm_medium');
+        $rtmCampaign = $this->getParameter('rtm_campaign') ?? $this->getParameter('utm_campaign');
+        $rtmContent = $this->getParameter('rtm_content') ?? $this->getParameter('utm_content');
+
+        if ($rtmSource) {
+            $this->rtmSession->rtmSource = $rtmSource;
+        } elseif (isset($utmSession->utmSource)) { // Deprecated, will be removed after transition
+            $this->rtmSession->rtmSource = $utmSession->utmSource;
         }
-        if ($this->getParameter('utm_medium')) {
-            $this->utmSession->utmMedium = $this->getParameter('utm_medium');
+        unset($utmSession->utmSource);
+
+        if ($rtmMedium) {
+            $this->rtmSession->rtmMedium = $rtmMedium;
+        } elseif (isset($utmSession->utmMedium)) { // Deprecated, will be removed after transition
+            $this->rtmSession->rtmMedium = $utmSession->utmMedium;
         }
-        if ($this->getParameter('utm_campaign')) {
-            $this->utmSession->utmCampaign = $this->getParameter('utm_campaign');
+        unset($utmSession->utmMedium);
+
+        if ($rtmCampaign) {
+            $this->rtmSession->rtmCampaign = $rtmCampaign;
+        } elseif (isset($utmSession->utmCampaign)) { // Deprecated, will be removed after transition
+            $this->rtmSession->rtmCampaign = $utmSession->utmCampaign;
         }
-        if ($this->getParameter('utm_content')) {
-            $this->utmSession->utmContent = $this->getParameter('utm_content');
+        unset($utmSession->utmCampaign);
+
+        if ($rtmContent) {
+            $this->rtmSession->rtmContent = $rtmContent;
+        } elseif (isset($utmSession->utmContent)) { // Deprecated, will be removed after transition
+            $this->rtmSession->rtmContent = $utmSession->utmContent;
         }
+        unset($utmSession->utmContent);
+
 
         // store additional parameters
         $this->additionalTrackingSession = $this->getSession('additional_tracking_params');
         $this->additionalTrackingSession->setExpiration('30 minutes');
 
-        if ($this->getParameter('banner_variant')) {
-            $this->additionalTrackingSession->bannerVariant = $this->getParameter('banner_variant');
+        $rtmVariant = $this->getParameter('rtm_variant') ?? $this->getParameter('banner_variant');
+
+        if ($rtmVariant) {
+            $this->additionalTrackingSession->rtmVariant = $rtmVariant;
+        } elseif (isset($this->additionalTrackingSession->bannerVariant)) { // Migration from bannerVariant -> rtmVariant
+            $this->additionalTrackingSession->rtmVariant = $this->additionalTrackingSession->bannerVariant;
         }
+        unset($this->additionalTrackingSession->bannerVariant);
     }
 
     public function getReferer()
