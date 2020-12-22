@@ -19,7 +19,7 @@ class DeleteUserData
 
     public function deleteData($userId)
     {
-        list($canBeDeleted, $errors) = $this->canBeDeleted($userId);
+        [$canBeDeleted, $errors] = $this->canBeDeleted($userId);
         if (!$canBeDeleted) {
             throw new \Exception(sprintf("cannot delete user {$userId}: %s", implode(', ', $errors)));
         }
