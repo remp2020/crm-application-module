@@ -1,6 +1,6 @@
 <?php
 
-namespace Crm\Presenters;
+namespace Crm\ApplicationModule\Presenters;
 
 use Crm\ApplicationModule\Snippet\Control\SnippetFactory;
 use Kdyby\Autowired\AutowireComponentFactories;
