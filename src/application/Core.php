@@ -101,6 +101,7 @@ class Core
         $configurator->addParameters(array(
             'appDir' => APP_ROOT . 'app',
             'wwwDir' => APP_ROOT . 'www',
+            'tempRoot' => APP_ROOT . 'temp',
         ));
 
         if ($this->environment == 'local') {
@@ -116,9 +117,6 @@ class Core
 
         $configurator->enableDebugger(APP_ROOT . 'log');
         $configurator->setTempDirectory(APP_ROOT . 'temp/nette');
-        $configurator->addParameters([
-            'tempRoot' => APP_ROOT . 'temp',
-        ]);
 
         $configurator->createRobotLoader()
             ->addDirectory(APP_ROOT . 'app')
