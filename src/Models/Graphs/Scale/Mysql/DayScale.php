@@ -40,6 +40,7 @@ GROUP BY calendar.date
 
 		");
 
+        /** @var \Nette\Database\Table\IRow $row */
         foreach ($res as $row) {
             $value = 0;
             if ($row->id != null) {
@@ -77,6 +78,7 @@ AND {$criteria->getTableName()}.{$criteria->getTimeField()} <= '{$criteria->getE
 GROUP BY calendar.date
 		");
 
+        /** @var \Nette\Database\Table\IRow $row */
         foreach ($res as $row) {
             $value = 0;
             if ($row->id != null) {
@@ -109,6 +111,7 @@ AND {$criteria->getTableName()}.{$criteria->getTimeField()} <= '{$criteria->getE
 GROUP BY calendar.year, calendar.month, calendar.day " . $this->getGroupBy($criteria->getGroupBy()) . '
 		');
 
+        /** @var \Nette\Database\Table\IRow $row */
         foreach ($res as $row) {
             $value = 0;
             if ($row->id != null) {

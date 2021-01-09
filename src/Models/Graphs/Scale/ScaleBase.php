@@ -2,6 +2,8 @@
 
 namespace Crm\ApplicationModule\Graphs\Scale;
 
+use Nette\Database\ResultSet;
+
 abstract class ScaleBase
 {
     protected function getGroupBy($groupBy)
@@ -27,9 +29,10 @@ abstract class ScaleBase
         return $series != '';
     }
 
-    protected function formatData($res)
+    protected function formatData(ResultSet $res)
     {
         $dbData = [];
+        /** @var \Nette\Database\Table\IRow $row */
         foreach ($res as $row) {
             $value = 0;
             if ($row->id != null) {

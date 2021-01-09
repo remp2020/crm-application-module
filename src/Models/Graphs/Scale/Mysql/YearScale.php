@@ -71,6 +71,7 @@ LEFT JOIN {$criteria->getTableName()} ON
 GROUP BY time_series.time_key
 ");
 
+        /** @var \Nette\Database\Table\IRow $row */
         foreach ($res as $row) {
             $value = 0;
             if ($row->id != null) {
@@ -133,14 +134,14 @@ WHERE
 AND {$criteria->getTableName()}.{$criteria->getTimeField()} <= '{$criteria->getEndDate()}'	
 	{$criteria->getWhere()}
 GROUP BY calendar.year" . $this->getGroupBy($criteria->getGroupBy()) . '
-		');
+		')->fetchAll();
 
         foreach ($res as $row) {
             $value = 0;
             if ($row->id != null) {
                 $value = $row['value'];
             }
-            if (isset($row->name)) {
+            if (isset($row->name) && isset($row->year)) {
                 $dbData[$row->name]["{$row->year}"] = $value;
             } else {
                 $dbData[' ']["{$row->year}"] = $value;
