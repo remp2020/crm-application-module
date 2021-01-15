@@ -9,6 +9,8 @@ use Nette\Database\Table\IRow;
 
 class Repository
 {
+    use DateFieldsProcessorTrait;
+
     /** @var Context */
     protected $database;
 
@@ -78,6 +80,7 @@ class Repository
      */
     public function update(IRow &$row, $data)
     {
+        $data = $this->processDateFields($data);
         $oldValues = [];
         if ($row instanceof ActiveRow) {
             $oldValues = $row->toArray();
@@ -155,6 +158,7 @@ class Repository
      */
     public function insert($data)
     {
+        $data = $this->processDateFields($data);
         $row = $this->getTable()->insert($data);
         if (!$row instanceof IRow) {
             return $row;
@@ -198,7 +202,7 @@ class Repository
     {
         foreach ($values as $i => $field) {
             if (is_bool($field)) {
-                $values[$i] = (int) $field;
+                $values[$i] = (int)$field;
             } elseif ($field instanceof \DateTime) {
                 $values[$i] = $field->format('Y-m-d H:i:s');
             } elseif (!is_scalar($field)) {
