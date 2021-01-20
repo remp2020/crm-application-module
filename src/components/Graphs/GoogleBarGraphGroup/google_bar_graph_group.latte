@@ -41,7 +41,9 @@
         $.nette.ajax({
           url: {link change!, null, $groupBy},
           off: ['unique']
-        });
+        }).done(function() {
+            $('[data-toggle="tooltip"]').tooltip();
+          });
       });
     </script>
   {/if}
