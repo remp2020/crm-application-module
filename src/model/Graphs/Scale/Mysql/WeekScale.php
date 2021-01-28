@@ -79,8 +79,8 @@ INNER JOIN calendar ON date({$criteria->getTableName()}.{$criteria->getTimeField
 	AND calendar.date <= '{$criteria->getEndDate()}'
     {$criteria->getJoin()}
 WHERE
-    {$criteria->getTableName()}.{$criteria->getTimeField()} >= '{$criteria->getStartDate()}' 
-AND {$criteria->getTableName()}.{$criteria->getTimeField()} <= '{$criteria->getEndDate()}'	
+    {$criteria->getTableName()}.{$criteria->getTimeField()} >= '{$criteria->getStartDate('Y-m-d 00:00:00')}' 
+AND {$criteria->getTableName()}.{$criteria->getTimeField()} <= '{$criteria->getEndDate('Y-m-d 23:59:59')}'	
 	{$criteria->getWhere()}
 GROUP BY calendar.year,calendar.week
 
@@ -114,8 +114,8 @@ INNER JOIN calendar ON date({$criteria->getTableName()}.{$criteria->getTimeField
 	AND calendar.date <= '{$criteria->getEndDate()}'
     {$criteria->getJoin()}
 WHERE
-    {$criteria->getTableName()}.{$criteria->getTimeField()} >= '{$criteria->getStartDate()}' 
-AND {$criteria->getTableName()}.{$criteria->getTimeField()} <= '{$criteria->getEndDate()}'
+    {$criteria->getTableName()}.{$criteria->getTimeField()} >= '{$criteria->getStartDate('Y-m-d 00:00:00')}' 
+AND {$criteria->getTableName()}.{$criteria->getTimeField()} <= '{$criteria->getEndDate('Y-m-d 23:59:59')}'
 	{$criteria->getWhere()}
 GROUP BY calendar.year,calendar.week" . $this->getGroupBy($criteria->getGroupBy()) . '
 		');
