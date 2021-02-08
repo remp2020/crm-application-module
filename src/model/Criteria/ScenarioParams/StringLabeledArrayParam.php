@@ -1,10 +1,10 @@
 <?php
 
-namespace Crm\ApplicationModule\Criteria\Params;
+namespace Crm\ApplicationModule\Criteria\ScenarioParams;
 
-use Crm\ApplicationModule\Criteria\CriteriaParam;
+use Crm\ApplicationModule\Scenarios\ScenarioCriteriaParamInterface;
 
-class StringLabeledArrayParam implements CriteriaParam
+class StringLabeledArrayParam implements ScenarioCriteriaParamInterface
 {
     protected $type = 'string_labeled_array';
 

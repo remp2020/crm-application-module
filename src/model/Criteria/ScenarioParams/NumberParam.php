@@ -1,10 +1,10 @@
 <?php
 
-namespace Crm\ApplicationModule\Criteria\Params;
+namespace Crm\ApplicationModule\Criteria\ScenarioParams;
 
-use Crm\ApplicationModule\Criteria\CriteriaParam;
+use Crm\ApplicationModule\Scenarios\ScenarioCriteriaParamInterface;
 
-class NumberParam implements CriteriaParam
+class NumberParam implements ScenarioCriteriaParamInterface
 {
     protected $type = 'number';
 
