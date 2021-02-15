@@ -10,6 +10,7 @@ use Crm\ApplicationModule\Seeders\CalendarSeeder;
 use Crm\ApplicationModule\Seeders\ConfigsSeeder;
 use Crm\ApplicationModule\Seeders\CountriesSeeder;
 use Crm\ApplicationModule\Seeders\SnippetsSeeder;
+use Symfony\Component\Console\Command\Command;
 use Tomaj\Hermes\Dispatcher;
 use Tracy\Debugger;
 use Tracy\ILogger;
@@ -70,8 +71,16 @@ class ApplicationModule extends CrmModule
     {
         $assetsManager->copyAssets(__DIR__ . '/../assets/' . self::COPY_ASSETS_CHECK_FILE, self::COPY_ASSETS_CHECK_FILE);
 
-        if (!$assetsManager->checkAssetsFileExist(self::COPY_ASSETS_CHECK_FILE)) {
-            Debugger::log("Module assets are not installed yet, please run 'application:install_assets' CRM command", ILogger::WARNING);
+        /** @var Command $installAssetsCommand */
+        $installAssetsCommand = $this->getInstance(\Crm\ApplicationModule\Commands\InstallAssetsCommand::class);
+        $cmd = $_SERVER['argv'][0] ?? null;
+        $arg = $_SERVER['argv'][1] ?? null;
+
+        if (!$assetsManager->checkAssetsFileExist(self::COPY_ASSETS_CHECK_FILE)
+            && $arg !== $installAssetsCommand->getName() // command actually installing the assets
+            && strpos($cmd, 'composer') === false // composer hooks
+        ) {
+            Debugger::log("Module assets are not installed yet, please run '{$installAssetsCommand->getName()}' CRM command", ILogger::WARNING);
             return;
         }
 
