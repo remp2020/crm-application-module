@@ -66,6 +66,7 @@ class StringLabeledArrayParam implements ScenarioCriteriaParamInterface
     public function blueprint(): array
     {
         $result = [
+            'key' => $this->key(),
             'type' => $this->type(),
             'label' => $this->label(),
             'options' => $this->options,

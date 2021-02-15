@@ -58,6 +58,7 @@ class NumberParam implements ScenarioCriteriaParamInterface
     public function blueprint(): array
     {
         $result = array_filter([
+            'key' => $this->key(),
             'type' => $this->type(),
             'label' => $this->label(),
             'operators' => $this->operators,

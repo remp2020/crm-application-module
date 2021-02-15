@@ -31,6 +31,7 @@ class BooleanParam implements ScenarioCriteriaParamInterface
     public function blueprint(): array
     {
         $result = [
+            'key' => $this->key(),
             'type' => $this->type(),
             'label' => $this->label(),
         ];
