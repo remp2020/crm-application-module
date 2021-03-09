@@ -17,7 +17,7 @@ class YearScale extends ScaleBase implements ScaleInterface
         $this->database = $database;
     }
 
-    public function getKeys($start, $end)
+    public function getKeys(string $start, string $end)
     {
         $actual = new DateTime(date('Y-m-d', strtotime($start)));
         $endDateTime = new DateTime(date('Y-m-d', strtotime($end)));
@@ -85,7 +85,7 @@ GROUP BY time_series.time_key
         return $dbData;
     }
 
-    public function getDatabaseData(Criteria $criteria, $tag)
+    public function getDatabaseData(Criteria $criteria, string $tag)
     {
         $dbData = [];
 

@@ -6,7 +6,7 @@ use DateTime;
 
 abstract class WeekScale extends ScaleBase implements ScaleInterface
 {
-    public function getKeys($start, $end)
+    public function getKeys(string $start, string $end)
     {
         $actual = new DateTime(date('Y-m-d', strtotime($start)));
         $endDateTime = new DateTime(date('Y-m-d', strtotime($end)));

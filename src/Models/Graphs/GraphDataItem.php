@@ -10,58 +10,54 @@ class GraphDataItem
     const SCALE_WEEKS = 'weeks';
     const SCALE_MONTHS = 'months';
 
-    /** @var ScaleInterface */
-    private $scale;
+    public string $name = '';
+    public string $tag = '';
 
-    private $scaleProvider = 'mysql';
+    private ScaleInterface $scale;
+    private Criteria $criteria;
+    private string $scaleProvider = 'mysql';
 
-    /** @var Criteria */
-    private $criteria;
-
-    public $name = '';
-
-    public $tag = '';
-
-    public function setTag($tag)
+    public function setTag(string $tag): self
     {
         $this->tag = $tag;
         return $this;
     }
 
-    public function setName($name)
+    public function setName(string $name): self
     {
         $this->name = $name;
         return $this;
     }
 
-    public function getCriteria()
+    public function getCriteria(): ?Criteria
     {
         return $this->criteria;
     }
 
-    public function setCriteria(Criteria $criteria)
+    public function setCriteria(Criteria $criteria): self
     {
         $this->criteria = $criteria;
         return $this;
     }
 
-    public function setScaleProvider($provider)
+    public function setScaleProvider(string $provider): self
     {
         $this->scaleProvider = $provider;
+        return $this;
     }
 
-    public function getScaleProvider()
+    public function getScaleProvider(): string
     {
         return $this->scaleProvider;
     }
 
-    public function setScale(ScaleInterface $scale)
+    public function setScale(ScaleInterface $scale): self
     {
         $this->scale = $scale;
         return $this;
     }
 
-    public function getData()
+    public function getData(): array
     {
         $zeroKeys = $this->scale->getKeys($this->criteria->getStart(), $this->criteria->getEnd());
 
@@ -70,7 +66,7 @@ class GraphDataItem
         return $this->formatData($zeroKeys, $dbData);
     }
 
-    public function getSeriesData()
+    public function getSeriesData(): array
     {
         $zeroKeys = $this->scale->getKeys($this->criteria->getStart(), $this->criteria->getEnd());
 
@@ -90,16 +86,7 @@ class GraphDataItem
         return $db;
     }
 
-    public function getRangeData()
-    {
-        $zeroKeys = $this->scale->getKeys($this->criteria->getStart(), $this->criteria->getEnd());
-
-        $dbData = $this->scale->getDatabaseRangeData($this->criteria);
-
-        return $dbData;
-    }
-
-    private function formatData($zeroValues, $dbData)
+    private function formatData(array $zeroValues, array $dbData): array
     {
         $result = [];
         foreach ($zeroValues as $key => $date) {

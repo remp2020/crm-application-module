@@ -2,22 +2,36 @@
 
 namespace Crm\ApplicationModule\Graphs;
 
-use Nette\Database\Explorer;
+use Crm\ApplicationModule\Graphs\Scale\Mysql\RangeScaleFactory as MysqlScaleFactory;
+use Crm\ApplicationModule\Graphs\Scale\ScaleInterface;
+use Crm\ApplicationModule\Models\Graphs\Scale\Measurements\RangeScaleFactory as MeasurementsScaleFactory;
 
 class ScaleFactory
 {
-    private $database;
+    public const RANGE_DAY = 'day';
+    public const RANGE_WEEK = 'week';
+    public const RANGE_MONTH = 'month';
+    public const RANGE_YEAR = 'year';
 
-    public function __construct(Explorer $database)
-    {
-        $this->database = $database;
+    private MysqlScaleFactory $mysqlScaleFactory;
+    private MeasurementsScaleFactory $measurementsScaleFactory;
+
+    public function __construct(
+        MysqlScaleFactory $mysqlScaleFactory,
+        MeasurementsScaleFactory $measurementsScaleFactory
+    ) {
+        $this->mysqlScaleFactory = $mysqlScaleFactory;
+        $this->measurementsScaleFactory = $measurementsScaleFactory;
     }
 
-    public function create($provider, $range)
+    public function create($provider, $range): ScaleInterface
     {
         switch ($provider) {
-            case 'mysql':
-                $factory = new \Crm\ApplicationModule\Graphs\Scale\Mysql\RangeScaleFactory($this->database);
+            case MysqlScaleFactory::PROVIDER_MYSQL:
+                $factory = $this->mysqlScaleFactory;
+                break;
+            case MeasurementsScaleFactory::PROVIDER_MEASUREMENT:
+                $factory = $this->measurementsScaleFactory;
                 break;
             default:
                 throw new \Exception("unhandled scale provider [{$provider}]");

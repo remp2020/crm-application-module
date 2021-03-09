@@ -11,17 +11,16 @@ class GraphData
     const SCALE_WEEKS = 'weeks';
     const SCALE_MONTHS = 'months';
 
-    /** @var Explorer */
-    protected $database;
+    protected Explorer $database;
 
-    /** @var ScaleInterface */
-    private $scale;
+    private ScaleInterface $scale;
 
     private $scaleRange;
 
-    private $scaleFactory;
+    private ScaleFactory $scaleFactory;
 
-    private $graphDataItems = [];
+    /** @var GraphDataItem[]  */
+    private array $graphDataItems = [];
 
     private $start;
     private $end = null;
@@ -84,6 +83,12 @@ class GraphData
     {
         $series = [];
 
+        // Some series might not have complete data. Measurement-based calculations might not be ready for "today" yet,
+        // and we need to align all of the series to use the exact same set of dates/keys.
+        // If there are series with extra dates (due to the combination of MySQL and Measurement providers), we need
+        // to throw away these extra dates.
+        $seriesLength = PHP_INT_MAX;
+
         /** @var GraphDataItem $graphDataItem */
         foreach ($this->graphDataItems as $graphDataItem) {
             $scale = $this->scaleFactory->create($graphDataItem->getScaleProvider(), $this->scaleRange);
@@ -91,19 +96,20 @@ class GraphData
 
             $data = $graphDataItem->getSeriesData();
 
-            foreach ($data as $k => $v) {
-                $series[$k] = $v;
+            foreach ($data as $serie => $values) {
+                $series[$serie] = $values;
+                $seriesLength = min($seriesLength, count($values));
             }
         }
 
         $dateKeys = [];
         $serieKeys = array_keys($series);
 
-        // get keys of the series (all series have the same key, we just need the first)
+        // get keys of the series (all series have the same keys, we just need the first)
         // we want to trim initial zeros here
-        foreach ($series as $k => $serie) {
-            $dateKeys = array_keys($serie);
-            break;
+        foreach ($series as $k => $_) {
+            $series[$k] = array_slice($series[$k], 0, $seriesLength, true);
+            $dateKeys = array_keys($series[$k]);
         }
         foreach ($dateKeys as $dateKey) {
             $omit = true;

@@ -6,9 +6,9 @@ use Crm\ApplicationModule\Graphs\Criteria;
 
 interface ScaleInterface
 {
-    public function getKeys($start, $end);
+    public function getKeys(string $start, string $end);
 
-    public function getDatabaseData(Criteria $criteria, $tag);
+    public function getDatabaseData(Criteria $criteria, string $tag);
 
     public function getDatabaseRangeData(Criteria $criteria);
 

@@ -6,10 +6,10 @@
       <button type="button" class="btn btn-xs btn-default" data-toggle="tooltip" data-placement="top" title="{$graphHelp}"><i class="fa fa-question-circle"></i></button>
       <div class="btn-toolbar pull-right" role="toolbar">
         <div class="btn-group btn-group-xs" role="group" aria-label="...">
-          <a n:href="change! $range, 'day', $from, $to" role="tab" type="button" n:class="$groupBy == 'day' ? btn-primary : btn-default, btn, ajax">{_system.date.days}</a>
-          <a n:href="change! $range, 'week', $from, $to" role="tab" type="button" n:class="$groupBy == 'week' ? btn-primary : btn-default, btn, ajax">{_system.date.weeks}</a>
-          <a n:href="change! $range, 'month', $from, $to" role="tab" type="button" n:class="$groupBy == 'month' ? btn-primary : btn-default, btn, ajax">{_system.date.months}</a>
-          <a n:href="change! $range, 'year', $from, $to" role="tab" type="button" n:class="$groupBy == 'year' ? btn-primary : btn-default, btn, ajax">{_system.date.years}</a>
+          <a n:href="change! $range, \Crm\ApplicationModule\Graphs\ScaleFactory::RANGE_DAY, $from, $to" role="tab" type="button" n:class="$groupBy == \Crm\ApplicationModule\Graphs\ScaleFactory::RANGE_DAY ? btn-primary : btn-default, btn, ajax">{_system.date.days}</a>
+          <a n:href="change! $range, \Crm\ApplicationModule\Graphs\ScaleFactory::RANGE_WEEK, $from, $to" role="tab" type="button" n:class="$groupBy == \Crm\ApplicationModule\Graphs\ScaleFactory::RANGE_WEEK ? btn-primary : btn-default, btn, ajax">{_system.date.weeks}</a>
+          <a n:href="change! $range, \Crm\ApplicationModule\Graphs\ScaleFactory::RANGE_MONTH, $from, $to" role="tab" type="button" n:class="$groupBy == \Crm\ApplicationModule\Graphs\ScaleFactory::RANGE_MONTH ? btn-primary : btn-default, btn, ajax">{_system.date.months}</a>
+          <a n:href="change! $range, \Crm\ApplicationModule\Graphs\ScaleFactory::RANGE_YEAR, $from, $to" role="tab" type="button" n:class="$groupBy == \Crm\ApplicationModule\Graphs\ScaleFactory::RANGE_YEAR ? btn-primary : btn-default, btn, ajax">{_system.date.years}</a>
         </div>
 
         <div class="btn-group btn-group-xs" role="group" aria-label="...">
