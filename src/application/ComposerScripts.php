@@ -64,32 +64,27 @@ class ComposerScripts
     {
         $currentVersion = Composer::getVersion();
 
-        if (version_compare($currentVersion, '2.0.0', '>=')) {
-            // internally we're not fully PSR-4 compliant yet, we'll update later
+        if (version_compare($currentVersion, '2.0.0', '<')) {
             $event->getIO()->write(sprintf(
-                'Your Composer version (%s) is too new :), please rollback to 1.x (it\'s just temporary, I promise!) with <info>composer self-update --rollback</info> command.',
-                $currentVersion
+                'You are using old Composer version (%s), 2.x is required. Please run <comment>composer self-update --2</comment> first.',
+                $currentVersion,
             ));
             exit(1);
         }
 
-        // determine latest version for Composer 1.X
-        if (version_compare($currentVersion, '2.0.0', '<')) {
-            $config = Factory::createConfig();
-            $versionsUtil = new Versions(
-                $config,
-                Factory::createRemoteFilesystem($event->getIO(), $config)
-            );
-            $latestVersion = $versionsUtil->getLatest('1')['version'];
+        $versionsUtil = new Versions(
+            $event->getComposer()->getConfig(),
+            Factory::createHttpDownloader($event->getIO(), $event->getComposer()->getConfig())
+        );
+        $latestVersion = $versionsUtil->getLatest()['version'];
 
-            if (version_compare($currentVersion, $latestVersion, '<')) {
-                $event->getIO()->write(sprintf(
-                    'Your Composer version (%s) is too old, %s is required. Please run <comment>composer self-update --1</comment> first.',
-                    $currentVersion,
-                    $latestVersion
-                ));
-                exit(1);
-            }
+        if (version_compare($currentVersion, $latestVersion, '<')) {
+            $event->getIO()->write(sprintf(
+                'Your Composer version (%s) is too old, %s is required. Please run <comment>composer self-update</comment> first.',
+                $currentVersion,
+                $latestVersion
+            ));
+            exit(1);
         }
     }
 }
