@@ -20,7 +20,7 @@ class PopulatorCommand extends Command
     private $faker;
 
     /** @var AbstractPopulator[] */
-    private $seeders = [];
+    private $populators = [];
 
     /**
      *
@@ -30,7 +30,6 @@ class PopulatorCommand extends Command
     {
         parent::__construct();
         $this->database = $database;
-//      $this->faker = FakerFactory::create('sk_SK');
         $this->faker = FakerFactory::create('en_EN');
     }
 
@@ -45,14 +44,14 @@ class PopulatorCommand extends Command
 
     /**
      * Add new seeder
-     * @param AbstractPopulator $seeder
+     * @param AbstractPopulator $populator
      */
-    public function addSeeder(AbstractPopulator $seeder)
+    public function addSeeder(AbstractPopulator $populator)
     {
-        $seeder->setPopulator($this);
-        $seeder->setDatabase($this->database);
-        $seeder->setFaker($this->faker);
-        $this->seeders[] = $seeder;
+        $populator->setPopulator($this);
+        $populator->setDatabase($this->database);
+        $populator->setFaker($this->faker);
+        $this->populators[] = $populator;
     }
 
     /**
@@ -66,25 +65,20 @@ class PopulatorCommand extends Command
 
         ProgressBar::setFormatDefinition(
             'custom',
-            "<info>%populating%</info>\n<yellow>%message%</yellow>\n%current%/%max% [%bar%] %percent:3s%% %elapsed:6s%/%estimated:-6s% %memory:6s%"
+            "  * %populating%: %current%/%max% [%bar%] %percent:3s%% %elapsed:6s%/%estimated:-6s% %memory:6s%"
         );
 
         $output->writeln('');
         $output->writeln('<info>***** POPULATOR *****</info>');
         $output->writeln('');
 
-        foreach ($this->seeders as $seeder) {
-            $output->writeln('');
-            $output->writeln('');
+        foreach ($this->populators as $seeder) {
             $progressBar = new ProgressBar($output, $seeder->getCount());
             $progressBar->setFormat('custom');
+            $progressBar->setMessage('Populating <comment>' . $seeder->getName() . '</comment>', 'populating');
             $progressBar->start();
-            $progressBar->setMessage('Populating *' . $seeder->getName() . '*', 'populating');
-            $progressBar->setMessage('in progress ...');
 
             $seeder->seed($progressBar);
-
-            $progressBar->setMessage('done');
             $progressBar->finish();
             $output->writeln('');
         }
