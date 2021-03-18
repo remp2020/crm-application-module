@@ -39,9 +39,6 @@ class FrontendPresenter extends BasePresenter
     /** @var SessionSection */
     protected $rtmSession;
 
-    /** @var SessionSection */
-    protected $additionalTrackingSession;
-
     public function startup()
     {
         parent::startup();
@@ -151,24 +148,9 @@ class FrontendPresenter extends BasePresenter
         ]);
     }
 
-    /**
-     * Returns array with parameters for Tracker.
-     *
-     * @return array
-     */
-    protected function additionalTrackingParams()
-    {
-        return array_filter([
-            'rtm_variant' => $this->additionalTrackingSession->rtmVariant,
-        ]);
-    }
-
     public function trackingParams()
     {
-        return array_merge(
-            $this->rtmParams(),
-            $this->additionalTrackingParams()
-        );
+        return $this->rtmParams();
     }
 
     /**
@@ -187,6 +169,7 @@ class FrontendPresenter extends BasePresenter
         $rtmMedium = $this->getParameter('rtm_medium') ?? $this->getParameter('utm_medium');
         $rtmCampaign = $this->getParameter('rtm_campaign') ?? $this->getParameter('utm_campaign');
         $rtmContent = $this->getParameter('rtm_content') ?? $this->getParameter('utm_content');
+        $rtmVariant = $this->getParameter('rtm_variant') ?? $this->getParameter('banner_variant');
 
         if ($rtmSource) {
             $this->rtmSession->rtmSource = $rtmSource;
@@ -216,19 +199,12 @@ class FrontendPresenter extends BasePresenter
         }
         unset($utmSession->utmContent);
 
-
-        // store additional parameters
-        $this->additionalTrackingSession = $this->getSession('additional_tracking_params');
-        $this->additionalTrackingSession->setExpiration('30 minutes');
-
-        $rtmVariant = $this->getParameter('rtm_variant') ?? $this->getParameter('banner_variant');
-
         if ($rtmVariant) {
-            $this->additionalTrackingSession->rtmVariant = $rtmVariant;
-        } elseif (isset($this->additionalTrackingSession->bannerVariant)) { // Migration from bannerVariant -> rtmVariant
-            $this->additionalTrackingSession->rtmVariant = $this->additionalTrackingSession->bannerVariant;
+            $this->rtmSession->rtmVariant = $rtmVariant;
+        } elseif (isset($this->rtmSession->bannerVariant)) { // Migration from bannerVariant -> rtmVariant
+            $this->rtmSession->rtmVariant = $this->rtmSession->bannerVariant;
         }
-        unset($this->additionalTrackingSession->bannerVariant);
+        unset($this->rtmSession->bannerVariant);
     }
 
     public function getReferer()
