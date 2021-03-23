@@ -54,7 +54,6 @@ class Core
 
         new PhinxRegistrator(
             $application,
-            $this->container->getByType(\Crm\ApplicationModule\EnvironmentConfig::class),
             $this->container->getByType(\Crm\ApplicationModule\ModuleManager::class)
         );
 
@@ -78,19 +77,27 @@ class Core
     {
         require_once APP_ROOT . 'vendor/autoload.php';
 
-        $envFile = getenv('CRM_ENV_FILE') ?: '.env';
-        $dotenv = Dotenv::create(APP_ROOT, $envFile);
-        $dotenv->load();
-        $this->environment = getenv('CRM_ENV');
-        if (!$this->environment) {
-            die('You have to specify environment CRM_ENV');
-        }
+        $this->loadEnv();
 
-        if (getenv('CRM_FORCE_HTTPS') === 'true') {
+        $this->environment = self::env('CRM_ENV');
+
+        if (self::env('CRM_FORCE_HTTPS') === 'true') {
             $_SERVER['HTTPS'] = 'on';
             $_SERVER['HTTP_X_FORWARDED_PROTO'] = 'https';
             $_SERVER['SERVER_PORT'] = 443;
         }
+    }
+
+    private function loadEnv(): void
+    {
+        $envFile = self::env('CRM_ENV_FILE') ?: '.env';
+
+        $dotenv = Dotenv::createImmutable(APP_ROOT, $envFile);
+        $dotenv->load();
+        $dotenv->required('CRM_ENV');
+        $dotenv->required('CRM_LANG');
+        $dotenv->ifPresent('CRM_FORCE_HTTPS')->isBoolean();
+        $dotenv->required(['CRM_DB_ADAPTER', 'CRM_DB_HOST', 'CRM_DB_NAME', 'CRM_DB_USER', 'CRM_DB_PASS']);
     }
 
     protected function createContainer()
@@ -134,5 +141,10 @@ class Core
         // TODO: [refactoring] test with proper settings 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION'
         $database->query("SET SESSION sql_mode = 'NO_ENGINE_SUBSTITUTION'");
         $database->query("SET NAMES utf8mb4");
+    }
+
+    public static function env(string $key, string $default = null): ?string
+    {
+        return $_ENV[$key] ?? $default;
     }
 }

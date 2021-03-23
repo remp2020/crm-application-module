@@ -14,9 +14,6 @@ use Phinx\Console\Command\Test;
 
 class PhinxRegistrator
 {
-    /** @var EnvironmentConfig  */
-    private $envConfig;
-
     /** @var array                  Define phinx commands with aliases */
     private $command = [
         Init::class => 'phinx:init',
@@ -34,10 +31,8 @@ class PhinxRegistrator
      */
     public function __construct(
         Application $application,
-        EnvironmentConfig $envConfig,
         ModuleManager $moduleManager
     ) {
-        $this->envConfig = $envConfig;
         $this->moduleManager = $moduleManager;
         $config = new Config($this->buildConfig(), __FILE__);
 
@@ -72,7 +67,7 @@ class PhinxRegistrator
 
     private function buildTestConfig($configsToMerge = []): array
     {
-        $env = getenv('CRM_ENV');
+        $env = Core::env('CRM_ENV');
 
         $configData = [
             'paths' => [
@@ -92,7 +87,7 @@ class PhinxRegistrator
 
     private function buildConfig()
     {
-        $env = getenv('CRM_ENV');
+        $env = Core::env('CRM_ENV');
 
         $configData = [
             'paths' => [
@@ -119,12 +114,12 @@ class PhinxRegistrator
     private function buildDbConfig()
     {
         return [
-            'adapter' => $this->envConfig->get('CRM_DB_ADAPTER'),
-            'host' => $this->envConfig->get('CRM_DB_HOST'),
-            'name' => $this->envConfig->get('CRM_DB_NAME'),
-            'user' => $this->envConfig->get('CRM_DB_USER'),
-            'pass' => $this->envConfig->get('CRM_DB_PASS'),
-            'port' => $this->envConfig->get('CRM_DB_PORT'),
+            'adapter' => Core::env('CRM_DB_ADAPTER'),
+            'host' => Core::env('CRM_DB_HOST'),
+            'name' => Core::env('CRM_DB_NAME'),
+            'user' => Core::env('CRM_DB_USER'),
+            'pass' => Core::env('CRM_DB_PASS'),
+            'port' => Core::env('CRM_DB_PORT'),
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
         ];

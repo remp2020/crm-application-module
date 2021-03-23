@@ -6,6 +6,7 @@ use Crm\ApplicationModule\ApplicationManager;
 use Crm\ApplicationModule\Components\SimpleWidgetFactoryInterface;
 use Crm\ApplicationModule\Components\SingleStatWidgetFactoryInterface;
 use Crm\ApplicationModule\Config\ApplicationConfig;
+use Crm\ApplicationModule\Core;
 use Crm\ApplicationModule\Events\AuthenticatedAccessRequiredEvent;
 use Crm\ApplicationModule\Events\AuthenticationEvent;
 use Crm\ApplicationModule\LayoutManager;
@@ -62,7 +63,7 @@ abstract class BasePresenter extends Presenter
         $this->homeRoute = ':' . $this->applicationConfig->get('home_route');
         $this->template->homeRoute = $this->homeRoute;
 
-        $this->template->ENV = getenv('CRM_ENV');
+        $this->template->ENV = Core::env('CRM_ENV');
         $this->template->locale = $this->locale;
         $this->template->siteTitle = $this->applicationConfig->get('site_title');
         $this->template->siteDescription = $this->applicationConfig->get('site_description');

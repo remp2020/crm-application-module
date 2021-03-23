@@ -6,8 +6,8 @@ class EnvironmentConfig
 {
     public function get($key)
     {
-        $val = getenv($key);
-        if ($val === false || $val === '') {
+        $val = Core::env($key);
+        if ($val === null || $val === '') {
             return null;
         }
         return $val;
@@ -15,13 +15,13 @@ class EnvironmentConfig
 
     public function getDsn()
     {
-        $port = $this->get('CRM_DB_PORT');
+        $port = Core::env('CRM_DB_PORT');
         if (!$port) {
             $port = 3306;
         }
-        return $this->get('CRM_DB_ADAPTER') .
-            ':host=' . $this->get('CRM_DB_HOST') .
-            ';dbname=' . $this->get('CRM_DB_NAME') .
+        return Core::env('CRM_DB_ADAPTER') .
+            ':host=' . Core::env('CRM_DB_HOST') .
+            ';dbname=' . Core::env('CRM_DB_NAME') .
             ';port=' . $port;
     }
 }
