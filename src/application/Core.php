@@ -95,7 +95,6 @@ class Core
         $dotenv = Dotenv::createImmutable(APP_ROOT, $envFile);
         $dotenv->load();
         $dotenv->required('CRM_ENV');
-        $dotenv->required('CRM_LANG');
         $dotenv->ifPresent('CRM_FORCE_HTTPS')->isBoolean();
         $dotenv->required(['CRM_DB_ADAPTER', 'CRM_DB_HOST', 'CRM_DB_NAME', 'CRM_DB_USER', 'CRM_DB_PASS']);
     }
