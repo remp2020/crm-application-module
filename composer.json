@@ -16,6 +16,7 @@
     "ext-dom": "*",
     "ext-posix": "*",
     "ext-curl": "*",
+    "fakerphp/faker": "^1.13",
     "nette/application": "^2.4 >=2.4.16",
     "nette/bootstrap": "^2.4.2",
     "nette/caching": "^2.5",
@@ -47,9 +48,6 @@
     "symfony/translation": "<=v4.4.13",
     "league/flysystem": "^1.0",
     "league/csv": "^9.6"
-  },
-  "require-dev": {
-    "fakerphp/faker": "^1.13"
   },
   "minimum-stability": "stable",
   "autoload": {
