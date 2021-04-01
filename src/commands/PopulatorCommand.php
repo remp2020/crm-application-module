@@ -3,7 +3,7 @@
 namespace Crm\ApplicationModule\Commands;
 
 use Crm\ApplicationModule\Populator\AbstractPopulator;
-use Faker\Factory as FakerFactory;
+use Faker\Factory;
 use Nette;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
@@ -30,7 +30,7 @@ class PopulatorCommand extends Command
     {
         parent::__construct();
         $this->database = $database;
-        $this->faker = FakerFactory::create('en_EN');
+        $this->faker = Factory::create('en_EN');
     }
 
     /**
