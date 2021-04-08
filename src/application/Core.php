@@ -33,6 +33,10 @@ class Core
 
     public function bootstrap(): Container
     {
+        if ($this->container) {
+            return $this->container;
+        }
+
         // TODO: [refactoring] try to find way around this?
         // Generated Nette cache directories will have incorrect permissions
         // if command was run before proper web user accesses app over http.
