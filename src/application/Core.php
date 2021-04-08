@@ -6,6 +6,8 @@ use Dotenv\Dotenv;
 use Nette\Configurator;
 use Nette\Database\DriverException;
 use Nette\DI\Container;
+use Nette\Http\Request;
+use Nette\Http\UrlScript;
 use Nette\InvalidArgumentException;
 use Symfony\Component\Console\Application;
 
@@ -110,15 +112,27 @@ class Core
             'tempRoot' => APP_ROOT . 'temp',
         ));
 
-        if ($this->environment == 'local') {
+        if ($this->environment === 'local') {
             $configurator->setDebugMode(true);
         } else {
             $configurator->setDebugMode(false);
         }
 
         # terminal
-        if (!isset($_SERVER['HTTP_HOST']) && isset($_SERVER['SHELL'])) {
+        if (!isset($_SERVER['HTTP_HOST']) && (isset($_SERVER['SHELL']) || isset($_SERVER['TERM']))) {
             $configurator->setDebugMode(true);
+
+            // CLI has no clue about host, but sometimes needs to generate absolute URLs via LinkGenerator.
+            // Router usually infers the host from current URL or referer, but there's no such thing here.
+            // We need to hint the router the correct host (if available).
+            //
+            // TODO: In the future releases of Nette it's possible to set this directly as LinkGenerator option:
+            //   - https://github.com/nette/application/commit/ef333e63950ceea40def63c2e0f253fc90f19e19
+            if ($host = self::env('CRM_HOST')) {
+                $configurator->addServices([
+                    'http.request' => new Request(new UrlScript($host)),
+                ]);
+            }
         }
 
         $configurator->enableDebugger(APP_ROOT . 'log');
