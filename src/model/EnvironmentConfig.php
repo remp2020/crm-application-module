@@ -2,6 +2,10 @@
 
 namespace Crm\ApplicationModule;
 
+use Nette\Utils\Strings;
+use Tracy\Debugger;
+use Tracy\ILogger;
+
 class EnvironmentConfig
 {
     public function get($key)
@@ -23,5 +27,17 @@ class EnvironmentConfig
             ':host=' . Core::env('CRM_DB_HOST') .
             ';dbname=' . Core::env('CRM_DB_NAME') .
             ';port=' . $port;
+    }
+
+    public static function getCrmKey(): string
+    {
+        $key = Core::env('CRM_KEY', '');
+        if (!$key) {
+            Debugger::log("Empty CRM_KEY, please run 'application:generate_key' command to properly initialize application key.", ILogger::WARNING);
+        }
+        if (Strings::startsWith($key, 'base64:')) {
+            $key = base64_decode(substr($key, 7));
+        }
+        return $key;
     }
 }

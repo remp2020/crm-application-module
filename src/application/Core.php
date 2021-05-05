@@ -9,6 +9,7 @@ use Nette\DI\Container;
 use Nette\Http\Request;
 use Nette\Http\UrlScript;
 use Nette\InvalidArgumentException;
+use Nette\Utils\FileSystem;
 use Symfony\Component\Console\Application;
 
 class Core
@@ -90,10 +91,14 @@ class Core
         }
     }
 
+    private static function getEnvFilePath(): string
+    {
+        return self::env('CRM_ENV_FILE') ?: '.env';
+    }
+
     private function loadEnv(): void
     {
-        $envFile = self::env('CRM_ENV_FILE') ?: '.env';
-
+        $envFile = self::getEnvFilePath();
         $dotenv = Dotenv::createImmutable(APP_ROOT, $envFile);
         $dotenv->load();
         $dotenv->required('CRM_ENV');
@@ -101,16 +106,42 @@ class Core
         $dotenv->required(['CRM_DB_ADAPTER', 'CRM_DB_HOST', 'CRM_DB_NAME', 'CRM_DB_USER', 'CRM_DB_PASS']);
     }
 
+    public static function writeEnv(string $key, string $value): void
+    {
+        if ($key !== 'CRM_KEY') {
+            throw new \Exception("Unable to write key '$key' to .env file, only CRM_KEY is allowed.");
+        }
+
+        $escaped = preg_quote('=' . Core::env($key, ''), '/');
+        $replacementPattern = "/^{$key}{$escaped}/m";
+
+        $count = 0;
+        $envContent = preg_replace(
+            $replacementPattern,
+            $key . '=' . $value,
+            FileSystem::read(self::getEnvFilePath()),
+            -1,
+            $count
+        );
+
+        if ($count === 0) {
+            // key was not present, therefore append it as a new line
+            $envContent .= PHP_EOL . $key . '=' . $value . PHP_EOL;
+        }
+
+        FileSystem::write(self::getEnvFilePath(), $envContent);
+    }
+
     protected function createContainer()
     {
         $configurator = new Configurator;
 
         // set Nette DIR variables to proper directories (otherwise it leads to application-module path)
-        $configurator->addParameters(array(
+        $configurator->addParameters([
             'appDir' => APP_ROOT . 'app',
             'wwwDir' => APP_ROOT . 'www',
             'tempRoot' => APP_ROOT . 'temp',
-        ));
+        ]);
 
         if ($this->environment === 'local') {
             $configurator->setDebugMode(true);

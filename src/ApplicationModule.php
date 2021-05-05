@@ -32,6 +32,7 @@ class ApplicationModule extends CrmModule
         $commandsContainer->registerCommand($this->getInstance(\Crm\ApplicationModule\Commands\CleanupCommand::class));
         $commandsContainer->registerCommand($this->getInstance(\Crm\ApplicationModule\Commands\CacheCommand::class));
         $commandsContainer->registerCommand($this->getInstance(\Crm\ApplicationModule\Commands\InstallAssetsCommand::class));
+        $commandsContainer->registerCommand($this->getInstance(\Crm\ApplicationModule\Commands\GenerateKeyCommand::class));
     }
 
     public function registerHermesHandlers(Dispatcher $dispatcher)

@@ -53,6 +53,7 @@ services:
 	- Crm\ApplicationModule\Commands\CacheCommand
 	- Crm\ApplicationModule\Commands\HeartbeatCommand
 	- Crm\ApplicationModule\Commands\InstallAssetsCommand
+	- Crm\ApplicationModule\Commands\GenerateKeyCommand
 
 	applicationConfig:
 		class:  Crm\ApplicationModule\Config\ApplicationConfig
