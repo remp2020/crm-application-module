@@ -128,23 +128,7 @@ class FrontendPresenter extends BasePresenter
             'rtm_medium' => $this->rtmSession->rtmMedium,
             'rtm_campaign' => $this->rtmSession->rtmCampaign,
             'rtm_content' => $this->rtmSession->rtmContent,
-        ]);
-    }
-
-
-    /**
-     * Backward compatible function (if a widget requires UTM parameters)
-     *
-     * @deprecated will be removed in the future
-     * @return array
-     */
-    public function utmParams(): array
-    {
-        return array_filter([
-            'utm_source' => $this->rtmSession->rtmSource,
-            'utm_medium' => $this->rtmSession->rtmMedium,
-            'utm_campaign' => $this->rtmSession->rtmCampaign,
-            'utm_content' => $this->rtmSession->rtmContent,
+            'rtm_variant' => $this->rtmSession->rtmVariant,
         ]);
     }
 
