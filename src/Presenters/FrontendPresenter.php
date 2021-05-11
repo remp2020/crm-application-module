@@ -132,11 +132,6 @@ class FrontendPresenter extends BasePresenter
         ]);
     }
 
-    public function trackingParams()
-    {
-        return $this->rtmParams();
-    }
-
     /**
      * Store sales funnel UTM parameters
      * and additional tracking parameters to session
