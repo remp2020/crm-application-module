@@ -57,6 +57,15 @@ class CacheRepository extends Repository
         return $q->fetch();
     }
 
+    final public function remove(string $key): bool
+    {
+        $row = $this->getTable()->where('key', $key)->fetch();
+        if (!$row) {
+            return false;
+        }
+        return $this->delete($row);
+    }
+
     final public function updateKey($key, $value)
     {
         $now = new DateTime();
