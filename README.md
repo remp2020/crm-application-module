@@ -2,7 +2,7 @@
 
 ## Configuration
 
-You can configure default Redis keys prefix, which is used if implementation using RedisClientTrait enables prefixing via `usePrefix()` method.
+You can configure default Redis keys prefix, which is used if implementation using RedisClientTrait enables prefixing via `useRedisKeysPrefix()` method.
 
 ```
 crm_application:
@@ -10,12 +10,12 @@ crm_application:
         prefix: foo_
 ```
 
-You can turn on prefixing for specific service using `RedisClientTrait` by calling `usePrefix()` method in configuration.
+You can turn on prefixing for specific service using `RedisClientTrait` by calling `useRedisKeysPrefix()` method in configuration.
 
 ```
 configsCache:
 		setup:
-			- usePrefix()
+			- useRedisKeysPrefix()
 ```
 
 
@@ -63,11 +63,11 @@ User-facing frontend menu expected to be used in your application layout.
 <summary>Example use</summary>
 
 Use within your layout by using:
-    
+
 ```neon
 {control fronendMenu}
 ```
-  
+
 You can override the default layout of menu in your `config.local.neon`:
 
 ```neon
@@ -142,7 +142,7 @@ In your `templates/Demo/default.latte` template, use the component as needed:
         {control googleUserSubscribersRegistrationSourceStatsGraph}
     </div>
 </div>
-``` 
+```
 </details>
 
 <details>
@@ -150,10 +150,10 @@ In your `templates/Demo/default.latte` template, use the component as needed:
 
 ![alt text](docs/bar_graph.png "Google bar graph")
 </details>
-    
+
 ##### [GoogleBarGraphGroup](src/components/Graphs/GoogleBarGraphGroup/GoogleBarGraphGroup.php)
 
-Simple bar graph based on Google charts. Component is able to create multiple groups based on `->setGroupBy` method and results of your query. Internally uses `GoogleBarGraph` to render the chart. 
+Simple bar graph based on Google charts. Component is able to create multiple groups based on `->setGroupBy` method and results of your query. Internally uses `GoogleBarGraph` to render the chart.
 
 <details>
 <summary>example</summary>
@@ -200,7 +200,7 @@ In your `templates/Demo/default.latte` template, use the component as needed:
         {control googleUserActiveSubscribersRegistrationsSourceStatsGraph}
     </div>
 </div>
-``` 
+```
 </details>
 
 <details>
@@ -281,7 +281,7 @@ In your `templates/Demo/default.latte` template, use the component as needed:
         {control googleSubscriptionsEndGraph}
     </div>
 </div>
-``` 
+```
 </details>
 
 <details>
@@ -353,7 +353,7 @@ In your `templates/Demo/default.latte` template, use the component as needed:
     </div>
     {/foreach}
 </div>
-``` 
+```
 </details>
 
 <details>
@@ -458,7 +458,7 @@ In your `templates/Demo/default.latte` template, use the component as needed:
         {control googleSankeyGraph}
     </div>
 </div>
-``` 
+```
 </details>
 
 <details>
@@ -520,7 +520,7 @@ Following is a set of widget wrappers provided by `ApplicationModule` to be used
 
 ##### [SimpleWidget](src/components/Widgets/SimpleWidget/SimpleWidget.php)
 
-Simple widget is the component allowing simple extension of modules's view by other modules. Module can provide placeholder for widgets in the action's template (in `.latte` file) and other module can register their implementations of widget in their Module class. 
+Simple widget is the component allowing simple extension of modules's view by other modules. Module can provide placeholder for widgets in the action's template (in `.latte` file) and other module can register their implementations of widget in their Module class.
 
 You can read more about creating and registering widgets in CRM skeleton documentation available at [github.com/remp2020/crm-skeleton](https://github.com/remp2020/crm-skeleton#registerWidgets).
 

@@ -10,30 +10,30 @@ trait RedisClientTrait
     protected $redisClientFactory;
 
     /** @var Client */
-    protected $redis;
+    private $redis;
 
-    protected $database;
+    private $redisDatabase;
 
-    protected $prefixRedisKeys = false;
+    private $redisUseKeysPrefix = false;
 
-    public function setDatabase($database)
+    public function setRedisDatabase($redisDatabase): void
     {
-        $this->database = $database;
+        $this->redisDatabase = $redisDatabase;
     }
 
-    public function usePrefix(bool $usePrefix = true): void
+    public function useRedisKeysPrefix(bool $usePrefix = true): void
     {
-        $this->prefixRedisKeys = $usePrefix;
+        $this->redisUseKeysPrefix = $usePrefix;
     }
 
-    protected function redis()
+    protected function redis(): Client
     {
         if (!$this->redisClientFactory || !($this->redisClientFactory instanceof RedisClientFactory)) {
             throw new RedisClientTraitException('In order to use `RedisClientTrait`, you need to initialize `RedisClientFactory $redisClientFactory` in your service');
         }
 
         if ($this->redis === null) {
-            $this->redis = $this->redisClientFactory->getClient($this->database, $this->prefixRedisKeys);
+            $this->redis = $this->redisClientFactory->getClient($this->redisDatabase, $this->redisUseKeysPrefix);
         }
 
         return $this->redis;
