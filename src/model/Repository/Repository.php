@@ -2,6 +2,7 @@
 
 namespace Crm\ApplicationModule;
 
+use Crm\ApplicationModule\Models\Repository\SlugColumnTrait;
 use Crm\ApplicationModule\Repository\AuditLogRepository;
 use Nette\Caching\IStorage;
 use Nette\Database\Context;
@@ -10,6 +11,7 @@ use Nette\Database\Table\IRow;
 class Repository
 {
     use DateFieldsProcessorTrait;
+    use SlugColumnTrait;
 
     /** @var Context */
     protected $database;
@@ -80,7 +82,9 @@ class Repository
      */
     public function update(IRow &$row, $data)
     {
+        $this->assertSlugs((array) $data);
         $data = $this->processDateFields($data);
+
         $oldValues = [];
         if ($row instanceof ActiveRow) {
             $oldValues = $row->toArray();
@@ -158,7 +162,9 @@ class Repository
      */
     public function insert($data)
     {
+        $this->assertSlugs((array) $data);
         $data = $this->processDateFields($data);
+
         $row = $this->getTable()->insert($data);
         if (!$row instanceof IRow) {
             return $row;
