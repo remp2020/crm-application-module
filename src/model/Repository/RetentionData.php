@@ -6,13 +6,44 @@ use Nette\Utils\DateTime;
 
 trait RetentionData
 {
-    protected function removingField()
+    private $retentionThreshold = '-2 months';
+
+    private $retentionRemovingField = 'created_at';
+
+    private $retentionForever = false;
+
+    public function getRetentionRemovingField(): string
     {
-        return 'created_at';
+        return $this->retentionRemovingField;
     }
 
-    public function removeOldData($from = '-2 months')
+    public function setRetentionThreshold(string $threshold, string $removingField = null): void
     {
-        return $this->getTable()->where([$this->removingField() . ' < ?' => DateTime::from($from)])->delete();
+        $this->retentionThreshold = $threshold;
+
+        if ($removingField !== null) {
+            $this->retentionRemovingField = $removingField;
+        }
+    }
+
+    public function setRetentionForever(): void
+    {
+        $this->retentionForever = true;
+    }
+
+    public function getRetentionThreshold(): string
+    {
+        return $this->retentionThreshold;
+    }
+
+    public function removeOldData()
+    {
+        if (!$this->retentionForever) {
+            return $this->getTable()->where([
+                $this->getRetentionRemovingField() . ' < ?' => DateTime::from($this->retentionThreshold)
+            ])->delete();
+        }
+
+        return null;
     }
 }
