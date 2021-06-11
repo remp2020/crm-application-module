@@ -48,6 +48,10 @@ class RepositoryTest extends TestCase
                 'slugs' => ['code'],
                 'data' => [],
             ],
+            'SingleSlugColumn_UnderscoreSlug_ShouldValidate' => [
+                'slugs' => ['code'],
+                'data' => ['code' => 'lorem_ipsum'],
+            ],
             'MultiSlugColumns_ShouldNotValidate' => [
                 'slugs' => ['code', 'description'],
                 'data' => $data,

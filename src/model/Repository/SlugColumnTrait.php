@@ -26,7 +26,7 @@ trait SlugColumnTrait
             if (!isset($data[$slug])) {
                 continue;
             }
-            $webalized = Strings::webalize($data[$slug]);
+            $webalized = Strings::webalize($data[$slug], '_');
             if ($webalized !== $data[$slug]) {
                 throw new SlugColumnException(
                     "Provided string '{$data[$slug]}' is not URL friendly. Try to use '{$webalized}'."
