@@ -21,7 +21,7 @@ class ExcelFactory
      */
     public function createExcel($documentTitle)
     {
-        $name = $this->applicationConfig->get('site_name');
+        $name = $this->applicationConfig->get('site_title');
         $excel = new Spreadsheet();
         $excel->getProperties()
             ->setCreator($name)
