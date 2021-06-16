@@ -2,6 +2,8 @@
 
 namespace Crm\ApplicationModule\Menu;
 
+use Tracy\Debugger;
+
 class MenuContainer implements MenuContainerInterface
 {
     /** @var MenuItemInterface[]  */
@@ -20,6 +22,19 @@ class MenuContainer implements MenuContainerInterface
         $items = [];
         foreach ($this->menuItems as $item) {
             $position = $item->position();
+
+            // move menu item if position is taken; we don't want to override existing menu items
+            while (isset($items[$position])) {
+                $position++;
+            }
+
+            if ($position !== $item->position()) {
+                $menuItemName = $item->name() . '(' . $item->link() . ')';
+                Debugger::log(
+                    'Menu position is taken. Menu item ' . $menuItemName . ' moved from position [' . $item->position() . '] to [' . $position . '].',
+                    Debugger::INFO
+                );
+            }
 
             $items[$position] = $item;
         }
