@@ -7,34 +7,34 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
-use Tomaj\Hermes\Restart\RestartInterface;
+use Tomaj\Hermes\Shutdown\ShutdownInterface;
 
 class HermesShutdownCommand extends Command
 {
-    private $hermesRestart;
+    private $hermesShutdown;
 
-    public function __construct(RestartInterface $hermesRestart)
+    public function __construct(ShutdownInterface $hermesShutdown)
     {
         parent::__construct();
-        $this->hermesRestart = $hermesRestart;
+        $this->hermesShutdown = $hermesShutdown;
     }
 
     protected function configure()
     {
         $this->setName('application:hermes_shutdown')
-            ->setDescription('Gracefully shutdowns all workers which integrate `RestartInterface`.')
+            ->setDescription('Gracefully shutdowns all workers which integrate `ShutdownInterface`.')
             ->addOption(
                 'assume-yes',
                 'y',
                 InputOption::VALUE_NONE,
-                'Assume YES for all questions (restarts without user confirmation).'
+                'Assume YES for all questions (shutdown without user confirmation).'
             );
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $output->writeln('<comment>Preparing to shutdown all workers which integrate Hermes restart procedure.</comment>');
+        $output->writeln('<comment>Preparing to shutdown all workers which integrate Hermes shutdown procedure.</comment>');
 
         // get user confirmation if assume yes wasn't used
         if (!$input->getOption('assume-yes')) {
@@ -48,7 +48,7 @@ class HermesShutdownCommand extends Command
         }
 
         $output->writeln('Initiating Hermes shutdown.');
-        $this->hermesRestart->restart();
+        $this->hermesShutdown->shutdown();
         $output->writeln('<comment>Graceful shutdown of workers initiated.</comment>');
         exit(0);
     }

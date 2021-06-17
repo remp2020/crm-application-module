@@ -44,4 +44,9 @@ class HermesTasksRepository extends Repository
 
         return $query;
     }
+
+    public function getErrorTasks()
+    {
+        return $this->getTable()->where(['state' => self::STATE_ERROR])->order('created_at DESC');
+    }
 }

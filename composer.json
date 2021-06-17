@@ -39,7 +39,7 @@
     "kdyby/translation": "^2.5.0",
     "tomaj/nette-bootstrap-form": "^1.1",
     "vlucas/phpdotenv": "^5.3",
-    "tomaj/hermes": "^3.1",
+    "tomaj/hermes": "^4.0",
     "predis/predis": "^1.0",
     "monolog/monolog": "^1.23",
     "contributte/forms-multiplier": "^3.0",

@@ -90,6 +90,6 @@ abstract class BaseAuthenticator implements AuthenticatorInterface
                 'browser_id' => $this->request->getCookie('browser_id'),
                 'user_id' => $user ? $user->id : null,
             ]
-        ));
+        ), HermesMessage::PRIORITY_DEFAULT);
     }
 }

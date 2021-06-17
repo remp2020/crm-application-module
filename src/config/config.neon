@@ -31,6 +31,7 @@ services:
 			- register('yesNo', [Crm\ApplicationModule\Helpers\YesNoHelper(), process])
 			- register('price', [Crm\ApplicationModule\Helpers\PriceHelper(), process])
 			- register('diffPrice', [Crm\ApplicationModule\Helpers\DiffPriceHelper(), process])
+			- register('json', [Crm\ApplicationModule\Helpers\JsonHelper(), process])
 
 	redisClientFactory: Crm\ApplicationModule\RedisClientFactory(%redis.host%, %redis.port%, %redis.password%, %redis.database%, %redis_client_factory.prefix%)
 
@@ -104,17 +105,22 @@ services:
 			- pushProcessor(@hermesLogRedact::add(['password', 'token']))
 			- pushHandler(Monolog\Handler\StreamHandler("%appDir%/../log/hermes-log.txt"))
 
-	# restart hermes and mail worker through hermes_restart key in redis
+	# shutdowm hermes and mail worker through hermes_shutdown key in redis
 	# - override in local config with second string argument if you want to change key
-	# - override restart `hermesRestart: Tomaj\Hermes\Restart\SharedFileRestart('/tmp/hermes_restart')` if you want to keep file based restarts
-	hermesRestart: Tomaj\Hermes\Restart\RedisRestart(@redisClientFactory::getClient())
+	# - override restart `hermesShutdown: Tomaj\Hermes\Shutdown\SharedFileShutdown('/tmp/hermes_restart')` if you want to keep file based restarts
+	hermesShutdown: Tomaj\Hermes\Shutdown\PredisShutdown(@redisClientFactory::getClient())
 
-	hermesDriver: Crm\ApplicationModule\Hermes\RedisDriver
+	hermesDriver:
+	    class: Crm\ApplicationModule\Hermes\RedisDriver
+	    setup:
+	        - setupPriorityQueue('hermes_tasks_high', 200)
+	        - setupPriorityQueue('hermes_tasks', 100)
+	        - setupPriorityQueue('hermes_tasks_low', 50)
 	hermesDispatcher:
-		class: Tomaj\Hermes\Dispatcher(@hermesDriver, @hermesLogger, @hermesRestart)
+		class: Tomaj\Hermes\Dispatcher(@hermesDriver, @hermesLogger, @hermesShutdown)
 	hermesEmitter:
 		class: Tomaj\Hermes\Emitter(@hermesDriver, @hermesLogger)
-	redisTasksQueue: Crm\ApplicationModule\Hermes\HermesTasksQueue
+	redisTasksQueue: Crm\ApplicationModule\Hermes\RedisTasksQueue
 
 	- Crm\ApplicationModule\Hermes\HeartbeatMysql
 

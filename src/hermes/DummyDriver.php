@@ -3,7 +3,9 @@
 namespace Crm\ApplicationModule\Hermes;
 
 use Closure;
+use Tomaj\Hermes\Dispatcher;
 use Tomaj\Hermes\Driver\DriverInterface;
+use Tomaj\Hermes\Driver\NotSupportedException;
 use Tomaj\Hermes\Driver\SerializerAwareTrait;
 use Tomaj\Hermes\MessageInterface;
 use Tomaj\Hermes\MessageSerializer;
@@ -39,10 +41,15 @@ class DummyDriver implements DriverInterface
         $this->oneLoopDurationSeconds = $oneLoopDurationSeconds;
     }
 
-    public function send(MessageInterface $message): bool
+    public function send(MessageInterface $message, int $priority = Dispatcher::DEFAULT_PRIORITY): bool
     {
         $this->events[] = $this->serializer->serialize($message);
         return true;
+    }
+
+    public function setupPriorityQueue(string $name, int $priority): void
+    {
+        throw new NotSupportedException();
     }
 
     public function getMessage()
@@ -54,7 +61,7 @@ class DummyDriver implements DriverInterface
         return $this->serializer->unserialize($message);
     }
 
-    public function wait(Closure $callback): void
+    public function wait(Closure $callback, array $priorities): void
     {
         $futureMessages = [];
 

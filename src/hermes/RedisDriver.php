@@ -4,31 +4,32 @@ namespace Crm\ApplicationModule\Hermes;
 
 use Closure;
 use Crm\ApplicationModule\Repository\HermesTasksRepository;
+use Tomaj\Hermes\Dispatcher;
 use Tomaj\Hermes\Driver\DriverInterface;
-use Tomaj\Hermes\Driver\RestartTrait;
+use Tomaj\Hermes\Driver\ShutdownTrait;
 use Tomaj\Hermes\MessageInterface;
 use Tomaj\Hermes\MessageSerializer;
 
 class RedisDriver implements DriverInterface
 {
-    use RestartTrait;
+    use ShutdownTrait;
 
     private $tasksRepository;
 
-    private $tasksQueue;
+    private $redisTasksQueue;
 
     private $serializer;
 
     private $sleepTime = 5;
 
-    public function __construct(HermesTasksRepository $tasksRepository, HermesTasksQueue $tasksQueue)
+    public function __construct(HermesTasksRepository $tasksRepository, RedisTasksQueue $redisTasksQueue)
     {
         $this->tasksRepository = $tasksRepository;
-        $this->tasksQueue = $tasksQueue;
+        $this->redisTasksQueue = $redisTasksQueue;
         $this->serializer = new MessageSerializer();
     }
 
-    public function send(MessageInterface $message): bool
+    public function send(MessageInterface $message, int $priority = Dispatcher::DEFAULT_PRIORITY): bool
     {
         $task = $this->serializer->serialize($message);
         $executeAt = 0;
@@ -36,23 +37,28 @@ class RedisDriver implements DriverInterface
             $executeAt = $message->getExecuteAt();
         }
 
-        $result = $this->tasksQueue->addTask($task, $executeAt);
+        $result = $this->redisTasksQueue->addTask($priority, $task, $executeAt);
         if ($result) {
-            $this->tasksQueue->incrementType($message->getType());
+            $this->redisTasksQueue->incrementType($message->getType());
         }
 
         return $result;
     }
 
-    public function wait(Closure $callback): void
+    public function setupPriorityQueue(string $name, int $priority): void
+    {
+        $this->redisTasksQueue->setupPriorityQueue($name, $priority);
+    }
+
+    public function wait(Closure $callback, array $priorities): void
     {
         while (true) {
-            $this->checkRestart();
+            $this->checkShutdown();
 
-            $message = $this->tasksQueue->getTask();
+            $message = $this->redisTasksQueue->getTask();
             if ($message) {
                 $hermesMessage = $this->serializer->unserialize($message[0]);
-                $this->tasksQueue->decrementType($hermesMessage->getType());
+                $this->redisTasksQueue->decrementType($hermesMessage->getType());
                 if ($hermesMessage->getExecuteAt() > time()) {
                     $this->send($hermesMessage);
                     continue;
