@@ -53,6 +53,24 @@ In case you need to run this command without user interaction _(eg. CI, tests)_,
 /usr/bin/php /var/www/html/bin/command.php application:hermes_shutdown --assume-yes
 ```
 
+### `application:cleanup`
+
+Command can be used to clean up data from repositories, which you don't need to keep forever (i.e. logs).
+
+By default, the command deletes data older than 2 months (based on the `created_at` column). You can change the default threshold time before which the command deletes old repository data, and also column which it uses by using (in your project configuration file):
+
+```neon
+autoLoginTokensRepository:
+	setup:
+		- setRetentionThreshold('now', 'valid_at')
+changePasswordsLogsRepository:
+	setup:
+		- setRetentionThreshold('-12 months')
+userActionsLogRepository:
+	setup:
+		- setRetentionThreshold('-12 months')
+```
+
 ## Components
 
 #### [FrontendMenu](https://github.com/remp2020/crm-application-module/blob/d35256140dba71e7839955da7a5205b3241f1923/src/components/FrontendMenu/FrontendMenu.php)
