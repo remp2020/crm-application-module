@@ -2,6 +2,8 @@
 
 ## Configuration
 
+### Redis
+
 You can configure default Redis keys prefix, which is used if implementation using RedisClientTrait enables prefixing via `useRedisKeysPrefix()` method.
 
 ```
@@ -18,6 +20,52 @@ configsCache:
 			- useRedisKeysPrefix()
 ```
 
+### Database replicas
+
+CRM allows you to configure secondary database connections used for read-only queries to lower the load of the primary database server. Add these blocks to your CRM configuration:
+
+```neon
+# replica connection parameters
+parameters:
+	database:
+		replica:
+			adapter: @environmentConfig::get('CRM_DB_REPLICA_ADAPTER') # ENV variables are arbitrary, feel free to change them
+			host: @environmentConfig::get('CRM_DB_REPLICA_HOST')
+			name: @environmentConfig::get('CRM_DB_REPLICA_NAME')
+			user: @environmentConfig::get('CRM_DB_REPLICA_USER')
+			password: @environmentConfig::get('CRM_DB_REPLICA_PASS')
+			port: @environmentConfig::get('CRM_DB_REPLICA_PORT')
+
+# configure replicas so the CRM is aware of them; add as many instances as you need, each under its own key
+database:
+	replica:
+		dsn: ::sprintf("%s:host=%s;dbname=%s;port=%s", %database.replica.adapter%, %database.replica.host%, %database.replica.name%, %database.replica.port%)
+		user: %database.replica.user%
+		password: %database.replica.password%
+		options:
+			lazy: yes
+
+# configure repositories to use replicaConfig (otherwise all queries would go to the primary database)
+decorator:
+	Crm\ApplicationModule\Repository:
+		setup:
+			- setReplicaConfig(@replicaConfig) # this enables the support for reading from replicas
+
+services:
+	replicaConfig:
+		setup:
+			# configure application which of the known replica DBs can be used for reads
+			- addReplica(@database.replica.context)
+			
+			# configure application which DB tables can be used for replica reads
+			# by default, every query still goes to the primary DB server; you need to explicitly allow tables, which are safe to be queried from replica 
+			- addTable(configs)
+			- addTable(config_categories)
+			- addTable(countries)
+			- addTable(api_tokens)
+			- addTable(admin_access)
+			- addTable(admin_groups_access)
+```
 
 ## Commands
 

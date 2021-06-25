@@ -1,7 +1,13 @@
+decorator:
+	Crm\ApplicationModule\Repository:
+		setup:
+			- setReplicaConfig(@replicaConfig)
+
 services:
 	emitter: League\Event\Emitter
 
 	environmentConfig: Crm\ApplicationModule\EnvironmentConfig
+	replicaConfig: Crm\ApplicationModule\Repository\ReplicaConfig
 
 	moduleManager:
 		class: Crm\ApplicationModule\ModuleManager

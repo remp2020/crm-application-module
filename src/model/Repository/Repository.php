@@ -4,6 +4,7 @@ namespace Crm\ApplicationModule;
 
 use Crm\ApplicationModule\Models\Repository\SlugColumnTrait;
 use Crm\ApplicationModule\Repository\AuditLogRepository;
+use Crm\ApplicationModule\Repository\ReplicaTrait;
 use Nette\Caching\IStorage;
 use Nette\Database\Context;
 use Nette\Database\Table\IRow;
@@ -12,6 +13,7 @@ class Repository
 {
     use DateFieldsProcessorTrait;
     use SlugColumnTrait;
+    use ReplicaTrait;
 
     /** @var Context */
     protected $database;
@@ -41,7 +43,15 @@ class Repository
      */
     public function getTable()
     {
-        return new Selection($this->database, $this->database->getConventions(), $this->tableName, $this->cacheStorage);
+        $database = $this->getDatabase(true);
+        $selection = new Selection(
+            $database,
+            $database->getConventions(),
+            $this->tableName,
+            $this->cacheStorage
+        );
+        $selection->setReplicaManager($this->getReplicaManager());
+        return $selection;
     }
 
     /**
@@ -65,11 +75,6 @@ class Repository
         return $this->getTable()->count('*');
     }
 
-    public function getDatabase()
-    {
-        return $this->database;
-    }
-
     /**
      * Update updates provided record with given $data array and mutates the provided instance. Operation is logged
      * to audit log.
@@ -82,6 +87,9 @@ class Repository
      */
     public function update(IRow &$row, $data)
     {
+        // require non-replicated database connection for updates and subsequent queries
+        $this->getReplicaManager()->setWriteFlag();
+
         $this->assertSlugs((array) $data);
         $data = $this->processDateFields($data);
 
@@ -130,6 +138,9 @@ class Repository
      */
     public function delete(IRow &$row)
     {
+        // require non-replicated database connection for deletes and subsequent queries
+        $this->getReplicaManager()->setWriteFlag();
+
         $oldValues = [];
         if ($row instanceof ActiveRow) {
             $oldValues = $row->toArray();
@@ -162,6 +173,9 @@ class Repository
      */
     public function insert($data)
     {
+        // require non-replicated database connection for inserts and subsequent queries
+        $this->getReplicaManager()->setWriteFlag();
+
         $this->assertSlugs((array) $data);
         $data = $this->processDateFields($data);
 
