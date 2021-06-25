@@ -104,6 +104,45 @@ services:
 ![alt text](docs/frontend_menu.png "Frontend menu")
 </details>
 
+##### FrontendMenuDataProviderInterface
+
+Interface which dataproviders have to implement to be able to edit `FrontendMenu` items. Dataproviders have to be attached to `frontend_menu` dataproviders placeholder.
+
+<details>
+<summary>Example use</summary>
+
+In this example `DemoFrontendMenuDataProvider` removes menu item from frontend menu by link.
+
+```php
+class DemoModule
+{
+    public function registerDataProviders(DataProviderManager $dataProviderManager)
+    {
+        $dataProviderManager->registerDataProvider(
+            'frontend_menu',
+            $this->getInstance(DemoFrontendMenuDataProvider::class)
+        );
+    }
+}
+```
+
+```php
+class DemoFrontendMenuDataProvider implements FrontendMenuDataProviderInterface
+{
+
+    public function provide(array $params): void
+    {
+        if (!isset($params['menuContainer'])) {
+            throw new DataProviderException('missing [menuContainer] within data provider params');
+        }
+
+        $menuContainer = $params['menuContainer'];
+        $menuContainer->removeMenuItemByLink(':Invoices:Invoices:invoiceDetails');
+    }
+}
+```
+</details>
+
 #### Graphs
 
 Following is a set of various charts provided by the `ApplicationModule` out of the box.

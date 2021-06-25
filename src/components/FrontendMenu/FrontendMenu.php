@@ -3,13 +3,15 @@
 namespace Crm\ApplicationModule\Components;
 
 use Crm\ApplicationModule\Config\ApplicationConfig;
+use Crm\ApplicationModule\DataProvider\DataProviderManager;
+use Crm\ApplicationModule\DataProvider\FrontendMenuDataProviderInterface;
 use Crm\ApplicationModule\Menu\MenuContainerInterface;
 use Nette\Application\UI;
 
 /**
  * Basic frontend menu component.
  *
- * This component renders frtonend menu items to simple latte template.
+ * This component renders frontend menu items to simple latte template.
  *
  * @package Crm\ApplicationModule\Components
  */
@@ -18,20 +20,24 @@ class FrontendMenu extends UI\Control
     private $templateName = 'frontend_menu.latte';
 
     /** @var MenuContainerInterface */
-    private $menuItems;
+    private $menuContainer;
 
     public $applicationConfig;
 
+    private $dataProviderManager;
+
     public function __construct(
-        ApplicationConfig $applicationConfig
+        ApplicationConfig $applicationConfig,
+        DataProviderManager $dataProviderManager
     ) {
         parent::__construct();
         $this->applicationConfig  = $applicationConfig;
+        $this->dataProviderManager = $dataProviderManager;
     }
 
-    public function setMenuItems(MenuContainerInterface $menuItems)
+    public function setMenuContainer(MenuContainerInterface $menuContainer)
     {
-        $this->menuItems = $menuItems;
+        $this->menuContainer = $menuContainer;
     }
 
     public function setTemplate(string $templateFile): void
@@ -41,7 +47,13 @@ class FrontendMenu extends UI\Control
 
     public function render()
     {
-        $this->template->menuItems = $this->menuItems->getMenuItems();
+        /** @var FrontendMenuDataProviderInterface[] $providers */
+        $providers = $this->dataProviderManager->getProviders('frontend_menu', FrontendMenuDataProviderInterface::class);
+        foreach ($providers as $provider) {
+            $provider->provide(['menuContainer' => $this->menuContainer]);
+        }
+
+        $this->template->menuItems = $this->menuContainer->getMenuItems();
         $this->template->setFile(__DIR__ . '/' . $this->templateName);
         $this->template->render();
     }

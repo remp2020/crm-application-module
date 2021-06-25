@@ -112,7 +112,7 @@ class FrontendPresenter extends BasePresenter
 
     public function createComponentFrontendMenu(FrontendMenu $menu)
     {
-        $menu->setMenuItems($this->applicationManager->getFrontendMenuItems());
+        $menu->setMenuContainer($this->applicationManager->getFrontendMenuContainer());
         return $menu;
     }
 

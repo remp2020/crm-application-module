@@ -91,4 +91,11 @@ class MenuContainer implements MenuContainerInterface
             }
         }
     }
+
+    public function removeMenuItemByLink($menuItemLink)
+    {
+        $this->menuItems = array_filter($this->getMenuItems(), static function ($item) use ($menuItemLink) {
+            return $item->link() !== $menuItemLink;
+        });
+    }
 }

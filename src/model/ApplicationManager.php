@@ -118,7 +118,7 @@ class ApplicationManager
         }
     }
 
-    public function getFrontendMenuItems()
+    public function getFrontendMenuContainer()
     {
         if (!$this->frontendMenu) {
             $this->loadFrontendMenu();

@@ -20,4 +20,6 @@ interface MenuContainerInterface
         MenuItem $internalMenuItem,
         MenuItem $menuItem
     );
+
+    public function removeMenuItemByLink(string $menuItemLink);
 }
