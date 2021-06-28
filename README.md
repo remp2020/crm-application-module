@@ -114,6 +114,8 @@ Interface which dataproviders have to implement to be able to edit `FrontendMenu
 In this example `DemoFrontendMenuDataProvider` removes menu item from frontend menu by link.
 
 ```php
+use Crm\ApplicationModule\DataProvider\DataProviderManager;
+
 class DemoModule
 {
     public function registerDataProviders(DataProviderManager $dataProviderManager)
@@ -127,6 +129,10 @@ class DemoModule
 ```
 
 ```php
+use Crm\ApplicationModule\DataProvider\DataProviderException;
+use Crm\ApplicationModule\DataProvider\FrontendMenuDataProviderInterface;
+use Crm\ApplicationModule\Menu\MenuContainerInterface;
+
 class DemoFrontendMenuDataProvider implements FrontendMenuDataProviderInterface
 {
 
@@ -136,6 +142,7 @@ class DemoFrontendMenuDataProvider implements FrontendMenuDataProviderInterface
             throw new DataProviderException('missing [menuContainer] within data provider params');
         }
 
+        /** @var MenuContainerInterface $menuContainer */
         $menuContainer = $params['menuContainer'];
         $menuContainer->removeMenuItemByLink(':Invoices:Invoices:invoiceDetails');
     }
