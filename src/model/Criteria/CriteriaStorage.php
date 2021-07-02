@@ -10,6 +10,8 @@ class CriteriaStorage
 
     private $defaultFields = [];
 
+    private $primiaryFields = [];
+
     public function register(string $table, string $key, CriteriaInterface $criteria): void
     {
         if (!isset($this->criteria[$table])) {
@@ -55,5 +57,23 @@ class CriteriaStorage
             return [];
         }
         return $this->defaultFields[$table];
+    }
+
+    public function setPrimaryField(string $table, string $field): void
+    {
+        $this->primiaryFields[$table] = $field;
+    }
+
+    public function getPrimaryField(string $table): string
+    {
+        if (!empty($this->primiaryFields[$table])) {
+            return $this->primiaryFields[$table];
+        }
+
+        if (!empty($this->defaultFields[$table])) {
+            return current($this->defaultFields[$table]);
+        }
+
+        return 'id';
     }
 }
