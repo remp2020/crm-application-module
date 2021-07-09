@@ -16,7 +16,8 @@ class HermesTasksRepository extends Repository
 
     final public function add(MessageInterface $message, $state)
     {
-        $createdAt = DateTime::from(strtotime($message->getCreated()));
+        $createdAt = DateTime::from($message->getCreated());
+        $executeAt = $message->getExecuteAt() ? DateTime::from($message->getExecuteAt()) : null;
 
         return $this->insert([
             'message_id' => $message->getId(),
@@ -25,7 +26,7 @@ class HermesTasksRepository extends Repository
             'retry' => $message->getRetries(),
             'state' => $state,
             'created_at' => $createdAt,
-            'execute_at' => $message->getExecuteAt() ? $message->getExecuteAt() : null,
+            'execute_at' => $executeAt,
             'processed_at' => new DateTime(),
         ]);
     }
