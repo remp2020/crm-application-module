@@ -72,7 +72,7 @@ class PhinxRegistrator
         $configData = [
             'paths' => [
                 'migrations' => [
-                    '%%PHINX_CONFIG_DIR%%/../../../../tests/migrations'
+                    APP_ROOT . 'tests/migrations',
                 ]
             ],
             'environments' => [
@@ -92,7 +92,7 @@ class PhinxRegistrator
         $configData = [
             'paths' => [
                 'migrations' => [
-                    '%%PHINX_CONFIG_DIR%%/../../../../migrations'
+                    APP_ROOT . 'migrations',
                 ]
             ],
             'environments' => [
