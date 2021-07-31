@@ -60,4 +60,12 @@ class ReplicaManager
         ];
         return $this->selectedDatabase;
     }
+
+    /**
+     * @return Context[]
+     */
+    public function getReplicas(): array
+    {
+        return $this->replicaConfig->getReplicas();
+    }
 }
