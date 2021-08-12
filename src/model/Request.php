@@ -45,6 +45,6 @@ class Request
 
     public static function isApi()
     {
-        return substr($_SERVER['REQUEST_URI'], 0, 5) != '/api/';
+        return substr($_SERVER['REQUEST_URI'], 0, 5) === '/api/';
     }
 }

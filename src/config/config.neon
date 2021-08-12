@@ -124,6 +124,7 @@ services:
 	redisTasksQueue: Crm\ApplicationModule\Hermes\RedisTasksQueue
 
 	- Crm\ApplicationModule\Hermes\HeartbeatMysql
+	- Crm\ApplicationModule\Request
 
 	# components factories
 	- Crm\ApplicationModule\Components\Graphs\GoogleBarGraphControlFactoryInterface
