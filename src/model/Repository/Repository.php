@@ -94,7 +94,7 @@ class Repository
         $data = $this->processDateFields($data);
 
         $oldValues = [];
-        if ($row instanceof ActiveRow) {
+        if ($row instanceof \Nette\Database\Table\ActiveRow) {
             $oldValues = $row->toArray();
         }
 
