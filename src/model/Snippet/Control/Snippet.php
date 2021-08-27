@@ -11,7 +11,6 @@ class Snippet extends Control
 
     public function __construct(SnippetRenderer $snippetRenderer)
     {
-        parent::__construct();
         $this->snippetRenderer = $snippetRenderer;
     }
 

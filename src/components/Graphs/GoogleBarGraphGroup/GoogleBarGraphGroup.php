@@ -46,7 +46,6 @@ class GoogleBarGraphGroup extends BaseGraphControl
 
     public function __construct(GoogleBarGraphControlFactoryInterface $factory, GraphData $graphData)
     {
-        parent::__construct();
         $this->googleBarGraphFactory = $factory;
         $graphData->clear();
         $this->graphData = $graphData;

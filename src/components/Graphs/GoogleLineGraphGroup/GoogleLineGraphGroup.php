@@ -47,7 +47,6 @@ class GoogleLineGraphGroup extends BaseGraphControl
 
     public function __construct(GoogleLineGraphControlFactoryInterface $factory, GraphData $graphData, ScaleFactory $scaleFactory)
     {
-        parent::__construct();
         $this->googleLineGraphFactory = $factory;
         $graphData->clear();
         $this->graphData = $graphData;
