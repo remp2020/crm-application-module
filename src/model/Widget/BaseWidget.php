@@ -7,7 +7,7 @@ use Crm\ApplicationModule\Snippet\Control\SnippetFactory;
 use Kdyby\Autowired\AutowireComponentFactories;
 use Nette\Application\UI;
 use Nette\ComponentModel\IComponent;
-use Nette\DI\Helpers;
+use Nette\DI\Resolver;
 use Nette\UnexpectedValueException;
 
 abstract class BaseWidget extends UI\Control implements WidgetInterface
@@ -54,8 +54,6 @@ abstract class BaseWidget extends UI\Control implements WidgetInterface
             return $widget;
         }
 
-        $sl = $this->getComponentFactoriesLocator();
-
         $ucName = ucfirst($name);
         $method = 'createComponent' . $ucName;
         if ($ucName !== $name && method_exists($this, $method)) {
@@ -71,7 +69,10 @@ abstract class BaseWidget extends UI\Control implements WidgetInterface
                 $args[] = $name;
             }
 
-            $args = Helpers::autowireArguments($reflection, $args, $sl);
+            $getter = function (string $type) {
+                return $this->getComponentFactoriesLocator()->getByType($type);
+            };
+            $args = Resolver::autowireArguments($reflection, $args, $getter);
             $component = call_user_func_array([$this, $method], $args);
             if (!$component instanceof IComponent && !isset($this->components[$name])) {
                 throw new UnexpectedValueException("Method $reflection did not return or create the desired component");
