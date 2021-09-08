@@ -45,7 +45,7 @@
     "contributte/forms-multiplier": "^3.0",
     "composer/composer": "^2.0",
     "malkusch/lock": "^2.1",
-    "symfony/translation": "^v4.4",
+    "symfony/translation": "<=4.4.26",
     "league/flysystem": "^1.0",
     "league/csv": "^9.6"
   },
