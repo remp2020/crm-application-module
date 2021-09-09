@@ -66,6 +66,9 @@ class ReplicaManager
      */
     public function getReplicas(): array
     {
+        if (!isset($this->replicaConfig)) {
+            return [];
+        }
         return $this->replicaConfig->getReplicas();
     }
 }
