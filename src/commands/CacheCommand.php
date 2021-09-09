@@ -41,6 +41,6 @@ class CacheCommand extends Command
             $module->cache($output, $tags);
         }
 
-        return 0;
+        return Command::SUCCESS;
     }
 }

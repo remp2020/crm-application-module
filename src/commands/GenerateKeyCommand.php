@@ -31,6 +31,7 @@ class GenerateKeyCommand extends Command
         // automatically setup for this developer. This key gets generated using a
         // secure random byte generator and is later base64 encoded for storage.
         if (!$this->setKeyInEnvironmentFile($key)) {
+            $this->error('Application key was not set.');
             return Command::FAILURE;
         }
 
