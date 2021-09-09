@@ -29,17 +29,14 @@ class RouterFactory
         $this->moduleManager = $moduleManager;
     }
 
-    /**
-     * @return \Nette\Application\IRouter
-     */
-    public function createRouter()
+    public function createRouter(): RouteList
     {
         $router = new RouteList();
 
         foreach ($this->moduleManager->getModules() as $module) {
             $module->registerRoutes($router);
         }
-        
+
         $defaultRoute = $this->configsCache->get('default_route');
         if (!$defaultRoute) {
             $defaultRoute = $this->applicationConfig->get('default_route');

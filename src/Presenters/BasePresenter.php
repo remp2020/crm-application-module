@@ -14,6 +14,7 @@ use Crm\ApplicationModule\Snippet\Control\SnippetFactory;
 use Kdyby\Autowired\AutowireComponentFactories;
 use Kdyby\Translation\Translator;
 use League\Event\Emitter;
+use Nette\Application\UI\ITemplate;
 use Nette\Application\UI\Presenter;
 use Nette\Security\AuthenticationException;
 
@@ -72,7 +73,7 @@ abstract class BasePresenter extends Presenter
         $this->template->siteDescription = $this->applicationConfig->get('site_description');
     }
 
-    protected function createTemplate()
+    protected function createTemplate(): ITemplate
     {
         $template = parent::createTemplate();
 
@@ -113,7 +114,7 @@ abstract class BasePresenter extends Presenter
         return $control;
     }
 
-    public function formatLayoutTemplateFiles()
+    public function formatLayoutTemplateFiles(): array
     {
         if ($this->layout) {
             return [$this->layoutManager->getLayout($this->layout)];

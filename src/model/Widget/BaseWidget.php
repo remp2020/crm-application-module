@@ -45,7 +45,7 @@ abstract class BaseWidget extends UI\Control implements WidgetInterface
         return $control;
     }
 
-    protected function createComponent($name)
+    protected function createComponent(string $name): ?IComponent
     {
         $widget = $this->widgetManager->getWidgetByIdentifier($name);
         if ($widget) {
@@ -62,7 +62,7 @@ abstract class BaseWidget extends UI\Control implements WidgetInterface
         if ($ucName !== $name && method_exists($this, $method)) {
             $reflection = $this->getReflection()->getMethod($method);
             if ($reflection->getName() !== $method) {
-                return;
+                return null;
             }
             $parameters = $reflection->getParameters();
 
@@ -80,5 +80,7 @@ abstract class BaseWidget extends UI\Control implements WidgetInterface
 
             return $component;
         }
+
+        return null;
     }
 }
