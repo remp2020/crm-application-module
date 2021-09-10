@@ -225,7 +225,7 @@ class Repository
                 $values[$i] = (int)$field;
             } elseif ($field instanceof \DateTime) {
                 $values[$i] = $field->format('Y-m-d H:i:s');
-            } elseif (!is_scalar($field)) {
+            } elseif (!is_null($field) && !is_scalar($field)) {
                 unset($values[$i]);
             }
         }
