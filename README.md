@@ -579,7 +579,7 @@ In your `templates/Demo/default.latte` template, use the component as needed:
 ![alt text](docs/sankey_graph.png "Line graph group")
 </details>
 
-#### [VisualPaginator](src/components/VisualPaginator/VisualPagiantor.php)
+#### [VisualPaginator](src/components/VisualPaginator/VisualPaginator.php)
 
 Paginator is used to limit and offset your results displayed in lists all around the system. Paginator keeps the current page/limit and provides the information to your data-fetching blocks of code.
 
