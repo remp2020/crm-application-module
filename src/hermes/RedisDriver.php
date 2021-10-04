@@ -20,7 +20,7 @@ class RedisDriver implements DriverInterface
 
     private $serializer;
 
-    private $sleepTime = 5;
+    private $sleepTime = 1;
 
     public function __construct(HermesTasksRepository $tasksRepository, RedisTasksQueue $redisTasksQueue)
     {
