@@ -5,21 +5,42 @@ namespace Crm\ApplicationModule\User;
 class UserDataRegistrator
 {
     /** @var UserDataProviderInterface[] */
-    private $registrator = [];
+    private $providers = [];
 
     /** @var array */
     private $protectedData = [];
 
-    public function addUserDataProvider(UserDataProviderInterface $userDataProvider)
+    private $sorted = false;
+
+    public function addUserDataProvider(UserDataProviderInterface $userDataProvider, $priority = 100)
     {
-        $this->registrator[$userDataProvider::identifier()] = $userDataProvider;
+        if (isset($this->providers[$priority])) {
+            do {
+                $priority++;
+            } while (isset($this->providers[$priority]));
+        }
+        $this->providers[$priority] = $userDataProvider;
+        $this->sorted = false;
+    }
+
+    /**
+     * @return UserDataProviderInterface[]
+     */
+    public function getProviders(): array
+    {
+        if ($this->sorted === false) {
+            krsort($this->providers);
+            $this->sorted = true;
+        }
+
+        return $this->providers;
     }
 
     public function generate($userId)
     {
         $result = [];
-        foreach ($this->registrator as $key => $provider) {
-            $result[$key] = $provider->data($userId);
+        foreach ($this->getProviders() as $provider) {
+            $result[$provider::identifier()] = $provider->data($userId);
         }
         return $result;
     }
@@ -27,10 +48,10 @@ class UserDataRegistrator
     public function download($userId)
     {
         $result = [];
-        foreach ($this->registrator as $key => $provider) {
+        foreach ($this->getProviders() as $provider) {
             $data = $provider->download($userId);
             if (!empty($data)) {
-                $result[$key] = $data;
+                $result[$provider::identifier()] = $data;
             }
         }
         return $result;
@@ -39,7 +60,7 @@ class UserDataRegistrator
     public function downloadAttachments($userId)
     {
         $result = [];
-        foreach ($this->registrator as $key => $provider) {
+        foreach ($this->getProviders() as $provider) {
             $data = $provider->downloadAttachments($userId);
             if (!empty($data)) {
                 $result = array_merge($result, $data);
@@ -51,7 +72,7 @@ class UserDataRegistrator
     public function protect($userId)
     {
         $protectedData = [];
-        foreach ($this->registrator as $key => $provider) {
+        foreach ($this->getProviders() as $provider) {
             foreach ($provider->protect($userId) as $k => $v) {
                 $data = (isset($protectedData[$k]) ? array_merge($protectedData[$k], $v) : $v);
                 $protectedData[$k] = array_unique(array_filter($data));
@@ -64,7 +85,7 @@ class UserDataRegistrator
     public function canBeDeleted($userId): array
     {
         $errors = [];
-        foreach ($this->registrator as $key => $provider) {
+        foreach ($this->getProviders() as $provider) {
             list($ok, $err) = $provider->canBeDeleted($userId);
             if (!$ok) {
                 if (!is_array($err)) {
@@ -81,8 +102,8 @@ class UserDataRegistrator
 
     public function delete($userId)
     {
-        foreach ($this->registrator as $key => $provider) {
-            $provider->delete($userId, ($this->protectedData[$key] ?? []));
+        foreach ($this->getProviders() as $provider) {
+            $provider->delete($userId, ($this->protectedData[$provider::identifier()] ?? []));
         }
         return true;
     }
