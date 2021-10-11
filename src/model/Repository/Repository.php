@@ -5,7 +5,7 @@ namespace Crm\ApplicationModule;
 use Crm\ApplicationModule\Models\Repository\SlugColumnTrait;
 use Crm\ApplicationModule\Repository\AuditLogRepository;
 use Crm\ApplicationModule\Repository\ReplicaTrait;
-use Nette\Caching\IStorage;
+use Nette\Caching\Storage;
 use Nette\Database\Context;
 use Nette\Database\Table\IRow;
 
@@ -24,7 +24,7 @@ class Repository
     /** @var string */
     protected $tableName = 'undefined';
 
-    /** @var IStorage */
+    /** @var Storage */
     protected $cacheStorage;
 
     /** @var array */
@@ -32,7 +32,7 @@ class Repository
 
     public function __construct(
         Context $database,
-        IStorage $cacheStorage = null
+        Storage $cacheStorage = null
     ) {
         $this->database = $database;
         $this->cacheStorage = $cacheStorage;
