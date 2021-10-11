@@ -70,7 +70,7 @@ class ApplicationModule extends CrmModule
 
     public function registerAssets(AssetsManager $assetsManager)
     {
-        $assetsManager->copyAssets(__DIR__ . '/../assets/' . self::COPY_ASSETS_CHECK_FILE, self::COPY_ASSETS_CHECK_FILE);
+        $assetsManager->copyAssets(__DIR__ . '/assets/' . self::COPY_ASSETS_CHECK_FILE, self::COPY_ASSETS_CHECK_FILE);
 
         /** @var Command $installAssetsCommand */
         $installAssetsCommand = $this->getInstance(\Crm\ApplicationModule\Commands\InstallAssetsCommand::class);
@@ -85,6 +85,6 @@ class ApplicationModule extends CrmModule
             return;
         }
 
-        $assetsManager->copyAssets(__DIR__ . '/../assets/js', 'layouts/application/js');
+        $assetsManager->copyAssets(__DIR__ . '/assets/js', 'layouts/application/js');
     }
 }
