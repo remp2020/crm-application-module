@@ -7,9 +7,7 @@ use Crm\ApplicationModule\Menu\MenuContainerInterface;
 interface FrontendMenuDataProviderInterface extends DataProviderInterface
 {
     /**
-     * @param array $params {
-     *   @type MenuContainerInterface menuContainer
-     * }
+     * @param array{menuContainer: MenuContainerInterface} $params
      */
     public function provide(array $params): void;
 }
