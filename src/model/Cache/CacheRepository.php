@@ -3,7 +3,7 @@
 namespace Crm\ApplicationModule\Cache;
 
 use Crm\ApplicationModule\Repository;
-use Nette\Database\Context;
+use Nette\Database\Explorer;
 use Nette\Utils\DateTime;
 
 class CacheRepository extends Repository
@@ -14,7 +14,7 @@ class CacheRepository extends Repository
     protected $tableName = 'cache';
 
     public function __construct(
-        Context $database
+        Explorer $database
     ) {
         parent::__construct($database);
     }

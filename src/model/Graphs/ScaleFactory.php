@@ -2,13 +2,13 @@
 
 namespace Crm\ApplicationModule\Graphs;
 
-use Nette\Database\Context;
+use Nette\Database\Explorer;
 
 class ScaleFactory
 {
     private $database;
 
-    public function __construct(Context $database)
+    public function __construct(Explorer $database)
     {
         $this->database = $database;
     }

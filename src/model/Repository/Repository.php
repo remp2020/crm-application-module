@@ -6,7 +6,7 @@ use Crm\ApplicationModule\Models\Repository\SlugColumnTrait;
 use Crm\ApplicationModule\Repository\AuditLogRepository;
 use Crm\ApplicationModule\Repository\ReplicaTrait;
 use Nette\Caching\Storage;
-use Nette\Database\Context;
+use Nette\Database\Explorer;
 use Nette\Database\Table\IRow;
 
 class Repository
@@ -15,7 +15,7 @@ class Repository
     use SlugColumnTrait;
     use ReplicaTrait;
 
-    /** @var Context */
+    /** @var Explorer */
     protected $database;
 
     /** @var AuditLogRepository */
@@ -31,7 +31,7 @@ class Repository
     protected $auditLogExcluded = [];
 
     public function __construct(
-        Context $database,
+        Explorer $database,
         Storage $cacheStorage = null
     ) {
         $this->database = $database;

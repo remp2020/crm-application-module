@@ -2,12 +2,12 @@
 
 namespace Crm\ApplicationModule\Builder;
 
-use Nette\Database\Context;
+use Nette\Database\Explorer;
 use Nette\Database\Table\IRow;
 
 abstract class Builder
 {
-    /** @var  Context; */
+    /** @var Explorer ; */
     protected $database;
 
     /** @var  array */
@@ -36,9 +36,9 @@ abstract class Builder
     }
 
     /**
-     * @param Context $database
+     * @param Explorer $database
      */
-    public function __construct(Context $database)
+    public function __construct(Explorer $database)
     {
         $this->database = $database;
         $this->data = [];

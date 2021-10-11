@@ -5,7 +5,7 @@ namespace Crm\ApplicationModule\Tests;
 use Crm\ApplicationModule\Repository\ReplicaConfig;
 use Crm\ApplicationModule\Repository\ReplicaManager;
 use Nette\Database\Connection;
-use Nette\Database\Context;
+use Nette\Database\Explorer;
 use PHPUnit\Framework\TestCase;
 
 class ReplicaManagerTest extends TestCase
@@ -87,7 +87,7 @@ class ReplicaManagerTest extends TestCase
         $connection = \Mockery::mock(Connection::class);
         $connection->shouldReceive('getDsn')
             ->andReturn($dsn);
-        $database = \Mockery::mock(Context::class);
+        $database = \Mockery::mock(Explorer::class);
         $database->shouldReceive('getConnection')
             ->andReturn($connection);
         return $database;

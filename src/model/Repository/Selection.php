@@ -17,7 +17,7 @@ class Selection extends \Nette\Database\Table\Selection
     public function createSelectionInstance(string $table = null): self
     {
         return new self(
-            $this->context,
+            $this->explorer,
             $this->conventions,
             $table ?: $this->name,
             $this->cache ? $this->cache->getStorage() : null
@@ -50,7 +50,7 @@ class Selection extends \Nette\Database\Table\Selection
     public function update(iterable $data): int
     {
         if ($this->replicaManager) {
-            $this->context = $this->replicaManager->getDatabase(false);
+            $this->explorer = $this->replicaManager->getDatabase(false);
         }
         return parent::update($data);
     }
@@ -58,7 +58,7 @@ class Selection extends \Nette\Database\Table\Selection
     public function delete(): int
     {
         if ($this->replicaManager) {
-            $this->context = $this->replicaManager->getDatabase(false);
+            $this->explorer = $this->replicaManager->getDatabase(false);
         }
         return parent::delete();
     }
@@ -66,7 +66,7 @@ class Selection extends \Nette\Database\Table\Selection
     public function insert($data)
     {
         if ($this->replicaManager) {
-            $this->context = $this->replicaManager->getDatabase(false);
+            $this->explorer = $this->replicaManager->getDatabase(false);
         }
         return parent::insert($data);
     }

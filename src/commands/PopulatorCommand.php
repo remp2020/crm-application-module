@@ -4,7 +4,7 @@ namespace Crm\ApplicationModule\Commands;
 
 use Crm\ApplicationModule\Populator\AbstractPopulator;
 use Faker\Factory;
-use Nette;
+use Nette\Database\Explorer;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\Console\Helper\ProgressBar;
@@ -13,7 +13,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class PopulatorCommand extends Command
 {
-    /** @var Nette\Database\Context */
+    /** @var Explorer */
     private $database;
 
     /** @var \Faker\Generator */
@@ -24,9 +24,9 @@ class PopulatorCommand extends Command
 
     /**
      *
-     * @param Nette\Database\Context $database
+     * @param Explorer $database
      */
-    public function __construct(Nette\Database\Context $database)
+    public function __construct(Explorer $database)
     {
         parent::__construct();
         $this->database = $database;

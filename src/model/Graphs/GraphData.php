@@ -3,7 +3,7 @@
 namespace Crm\ApplicationModule\Graphs;
 
 use Crm\ApplicationModule\Graphs\Scale\ScaleInterface;
-use Nette\Database\Context;
+use Nette\Database\Explorer;
 
 class GraphData
 {
@@ -11,7 +11,7 @@ class GraphData
     const SCALE_WEEKS = 'weeks';
     const SCALE_MONTHS = 'months';
 
-    /** @var Context */
+    /** @var Explorer */
     protected $database;
 
     /** @var ScaleInterface */
@@ -26,7 +26,7 @@ class GraphData
     private $start;
     private $end = null;
 
-    public function __construct(Context $database, ScaleFactory $scaleFactory)
+    public function __construct(Explorer $database, ScaleFactory $scaleFactory)
     {
         $this->database = $database;
         $this->scaleFactory = $scaleFactory;

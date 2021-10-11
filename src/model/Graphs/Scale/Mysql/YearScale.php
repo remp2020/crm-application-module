@@ -6,13 +6,13 @@ use Crm\ApplicationModule\Graphs\Criteria;
 use Crm\ApplicationModule\Graphs\Scale\ScaleBase;
 use Crm\ApplicationModule\Graphs\Scale\ScaleInterface;
 use DateTime;
-use Nette\Database\Context;
+use Nette\Database\Explorer;
 
 class YearScale extends ScaleBase implements ScaleInterface
 {
     private $database;
 
-    public function __construct(Context $database)
+    public function __construct(Explorer $database)
     {
         $this->database = $database;
     }

@@ -2,14 +2,14 @@
 
 namespace Crm\ApplicationModule\Seeders;
 
-use Nette\Database\Context;
+use Nette\Database\Explorer;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class CalendarSeeder implements ISeeder
 {
     private $database;
 
-    public function __construct(Context $database)
+    public function __construct(Explorer $database)
     {
         $this->database = $database;
     }

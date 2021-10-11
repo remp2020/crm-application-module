@@ -4,13 +4,13 @@ namespace Crm\ApplicationModule\Graphs\Scale\Mysql;
 
 use Crm\ApplicationModule\Graphs\Criteria;
 use Crm\ApplicationModule\Graphs\Scale\ScaleInterface;
-use Nette\Database\Context;
+use Nette\Database\Explorer;
 
 class WeekScale extends \Crm\ApplicationModule\Graphs\Scale\WeekScale implements ScaleInterface
 {
     private $database;
 
-    public function __construct(Context $database)
+    public function __construct(Explorer $database)
     {
         $this->database = $database;
     }

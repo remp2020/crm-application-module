@@ -2,10 +2,10 @@
 
 namespace Crm\ApplicationModule\Repository;
 
-use Nette\Database\Context;
+use Nette\Database\Explorer;
 
 /**
- * @property \Nette\Database\Context $database
+ * @property Explorer $database
  * @property string $tableName
  */
 trait ReplicaTrait
@@ -40,7 +40,7 @@ trait ReplicaTrait
      * Only repository requests that we control (or explicit requests which know that they won't write anything)
      * should be able to receive replica.
      */
-    public function getDatabase($allowReplica = false): Context
+    public function getDatabase($allowReplica = false): Explorer
     {
         return $this->getReplicaManager()->getDatabase($allowReplica);
     }

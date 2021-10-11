@@ -193,7 +193,7 @@ class Core
 
     protected function setDatabase()
     {
-        $database = $this->container->getByType('Nette\Database\Context');
+        $database = $this->container->getByType('Nette\Database\Explorer');
         // TODO: [refactoring] test with proper settings 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION'
         $database->query("SET SESSION sql_mode = 'NO_ENGINE_SUBSTITUTION'");
         $database->query("SET NAMES utf8mb4");

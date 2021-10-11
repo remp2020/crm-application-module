@@ -3,7 +3,7 @@
 namespace Crm\ApplicationModule\Tests;
 
 use Crm\ApplicationModule\Seeders\ISeeder;
-use Nette\Database\Context;
+use Nette\Database\Explorer;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
@@ -15,7 +15,7 @@ abstract class DatabaseTestCase extends CrmTestCase
 {
     use RefreshContainerTrait;
 
-    /** @var  Context */
+    /** @var Explorer */
     protected $database;
 
     protected $repositories = [];
@@ -36,7 +36,7 @@ abstract class DatabaseTestCase extends CrmTestCase
     {
         parent::setUp();
 
-        $this->database = $this->inject(Context::class);
+        $this->database = $this->inject(Explorer::class);
 
         foreach ($this->requiredRepositories() as $repositoryClass) {
             $this->repositories[$repositoryClass] = $this->inject($repositoryClass);

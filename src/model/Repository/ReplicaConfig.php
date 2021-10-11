@@ -2,17 +2,17 @@
 
 namespace Crm\ApplicationModule\Repository;
 
-use Nette\Database\Context;
+use Nette\Database\Explorer;
 
 class ReplicaConfig
 {
-    /** @var Context[] */
+    /** @var Explorer[] */
     private $replicas = [];
 
     /** @var string[] */
     private $tables = [];
 
-    public function addReplica(Context $replica)
+    public function addReplica(Explorer $replica)
     {
         $this->replicas[] = $replica;
     }

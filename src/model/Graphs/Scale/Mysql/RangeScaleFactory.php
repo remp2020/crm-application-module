@@ -2,13 +2,13 @@
 
 namespace Crm\ApplicationModule\Graphs\Scale\Mysql;
 
-use Nette\Database\Context;
+use Nette\Database\Explorer;
 
 class RangeScaleFactory
 {
     private $database;
 
-    public function __construct(Context $database)
+    public function __construct(Explorer $database)
     {
         $this->database = $database;
     }

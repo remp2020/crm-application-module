@@ -4,7 +4,7 @@ namespace Crm\ApplicationModule\Populator;
 
 use Crm\ApplicationModule\Commands\PopulatorCommand;
 use Faker\Generator;
-use Nette\Database\Context;
+use Nette\Database\Explorer;
 use Nette\Database\IRow;
 
 abstract class AbstractPopulator
@@ -15,7 +15,7 @@ abstract class AbstractPopulator
     /** @var Generator */
     protected $faker;
 
-    /** @var Context */
+    /** @var Explorer */
     protected $database;
 
     /** @var int */
@@ -64,7 +64,7 @@ abstract class AbstractPopulator
 
     /**
      *
-     * @param Context $database
+     * @param Explorer $database
      */
     public function setDatabase($database)
     {
