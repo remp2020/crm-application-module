@@ -3,7 +3,7 @@
 namespace Crm\ApplicationModule;
 
 use Dotenv\Dotenv;
-use Nette\Configurator;
+use Nette\Bootstrap\Configurator;
 use Nette\DI\Container;
 use Nette\Database\DriverException;
 use Nette\Http\Request;
