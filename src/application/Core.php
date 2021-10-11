@@ -4,8 +4,8 @@ namespace Crm\ApplicationModule;
 
 use Dotenv\Dotenv;
 use Nette\Configurator;
-use Nette\Database\DriverException;
 use Nette\DI\Container;
+use Nette\Database\DriverException;
 use Nette\Http\Request;
 use Nette\Http\UrlScript;
 use Nette\InvalidArgumentException;

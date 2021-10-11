@@ -3,8 +3,8 @@
 namespace Crm\ApplicationModule\Tests;
 
 use Crm\ApplicationModule\Seeders\ISeeder;
-use Nette\Database\Context;
 use Nette\DI\Container;
+use Nette\Database\Context;
 use PDOException;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Output\OutputInterface;

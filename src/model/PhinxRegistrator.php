@@ -4,13 +4,13 @@ namespace Crm\ApplicationModule;
 
 use Crm\ApplicationModule\Commands\DumpSchemaForTests;
 use Phinx\Config\Config;
-use Symfony\Component\Console\Application;
-use Phinx\Console\Command\Init;
 use Phinx\Console\Command\Create;
+use Phinx\Console\Command\Init;
 use Phinx\Console\Command\Migrate;
 use Phinx\Console\Command\Rollback;
 use Phinx\Console\Command\Status;
 use Phinx\Console\Command\Test;
+use Symfony\Component\Console\Application;
 
 class PhinxRegistrator
 {
