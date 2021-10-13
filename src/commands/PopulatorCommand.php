@@ -90,7 +90,7 @@ class PopulatorCommand extends Command
         $output->writeln('<yellow>All done. Took ' . round($duration, 2) . ' sec.</yellow>');
         $output->writeln('');
 
-        return 0;
+        return Command::SUCCESS;
     }
 
     /**

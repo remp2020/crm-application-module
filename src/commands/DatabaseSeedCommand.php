@@ -42,6 +42,6 @@ class DatabaseSeedCommand extends Command
             $seeder->seed($output);
         }
 
-        return 0;
+        return Command::SUCCESS;
     }
 }

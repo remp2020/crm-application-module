@@ -23,10 +23,6 @@ class MenuContainer implements MenuContainerInterface
         foreach ($this->menuItems as $item) {
             $position = $item->position();
 
-            /*
-            TEMPORARY DISABLED till we remove frontend menu items we don't want to display
-            See https://gitlab.com/remp/crm/-/merge_requests/1539
-
             // move menu item if position is taken; we don't want to override existing menu items
             while (isset($items[$position])) {
                 $position++;
@@ -39,7 +35,6 @@ class MenuContainer implements MenuContainerInterface
                     Debugger::INFO
                 );
             }
-            */
 
             $items[$position] = $item;
         }
