@@ -46,6 +46,9 @@ class Core
         $this->createContainer();
         $this->setDatabase();
 
+        // make sure application is initialized by manager
+        $this->container->getByType(\Crm\ApplicationModule\ApplicationManager::class);
+
         return $this->container;
     }
 

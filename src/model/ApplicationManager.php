@@ -252,8 +252,11 @@ class ApplicationManager
             $this->registerCleanupCallbacks();
             $this->registerHermesHandlers();
             $this->registerSeeders();
-        } else {
+            $this->registerAssets();
+        }
+        if (!Request::isApi()) {
             $this->registerWidgets();
+            $this->registerLayouts();
         }
 
         $this->registerEventHandlers();
@@ -262,10 +265,8 @@ class ApplicationManager
         $this->registerUserDataRegistrators();
         $this->registerCriteriaStorage();
         $this->registerScenariosCriteriaStorage();
-        $this->registerLayouts();
         $this->registerAccessProviders();
         $this->registerDataProviders();
         $this->registerEvents();
-        $this->registerAssets();
     }
 }
