@@ -11,6 +11,10 @@ final class ApplicationModuleExtension extends CompilerExtension implements ITra
     private $defaults = [
         'redis_client_factory' => [
             'prefix' => null,
+            'replication' => [
+                'service' => null,
+                'sentinels' => [],
+            ],
         ],
     ];
 
@@ -25,10 +29,19 @@ final class ApplicationModuleExtension extends CompilerExtension implements ITra
         $builder->parameters['redis_client_factory'] = $this->config['redis_client_factory'];
 
         // load services from config and register them to Nette\DI Container
+        $builder = $this->getContainerBuilder();
         Compiler::loadDefinitions(
-            $this->getContainerBuilder(),
+            $builder,
             $this->loadFromFile(__DIR__.'/../config/config.neon')['services']
         );
+
+        if (count($this->config['redis_client_factory']['replication']['sentinels'])) {
+            $builder->getDefinition('redisClientFactory')
+                ->addSetup('configureSentinel', [
+                    $this->config['redis_client_factory']['replication']['service'],
+                    $this->config['redis_client_factory']['replication']['sentinels'],
+                ]);
+        }
     }
 
     public function beforeCompile()

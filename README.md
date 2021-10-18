@@ -6,7 +6,7 @@
 
 You can configure default Redis keys prefix, which is used if implementation using RedisClientTrait enables prefixing via `useRedisKeysPrefix()` method.
 
-```
+```neon
 crm_application:
     redis_client_factory:
         prefix: foo_
@@ -14,13 +14,30 @@ crm_application:
 
 You can turn on prefixing for specific service using `RedisClientTrait` by calling `useRedisKeysPrefix()` method in configuration.
 
-```
+```neon
 configsCache:
 		setup:
 			- useRedisKeysPrefix()
 ```
 
-### Database replicas
+#### Replication
+
+CRM supports Redis replication with use of [Redis Sentinel](https://redis.io/topics/sentinel). To enable the use of sentinel, add following to your `config.neon`:
+
+```neon
+crm_application:
+	redis_client_factory:
+		replication:
+			service: my-sentinel-service
+			sentinels:
+				- [scheme: tcp, host: sentinel-host-a, port: 26379]
+				- [scheme: tcp, host: sentinel-host-b, port: 26379]
+				- [scheme: tcp, host: sentinel-host-c, port: 26379]
+```
+
+### Database
+
+#### Replication
 
 CRM allows you to configure secondary database connections used for read-only queries to lower the load of the primary database server. Add these blocks to your CRM configuration:
 
