@@ -58,12 +58,13 @@ abstract class BasePresenter extends Presenter
                 $this->redirect('this');
             }
         }
+
+        $this->homeRoute = ':' . $this->applicationConfig->get('home_route');
     }
 
     protected function beforeRender()
     {
         $this->locale = $this->translator->getLocale();
-        $this->homeRoute = ':' . $this->applicationConfig->get('home_route');
         $this->template->homeRoute = $this->homeRoute;
         $this->template->ENV = Core::env('CRM_ENV');
         $this->template->locale = $this->locale;
