@@ -3,7 +3,7 @@
 namespace Crm\ApplicationModule\Builder;
 
 use Nette\Database\Explorer;
-use Nette\Database\Table\IRow;
+use Nette\Database\Table\ActiveRow;
 
 abstract class Builder
 {
@@ -25,7 +25,7 @@ abstract class Builder
     /** @return bool */
     abstract public function isValid();
 
-    /** @return IRow|bool */
+    /** @return ActiveRow|bool */
     public function save()
     {
         if ($this->isValid()) {
@@ -134,7 +134,7 @@ abstract class Builder
 
     /**
      * @param string $tableName
-     * @return bool|int|\Nette\Database\Table\IRow
+     * @return bool|int|ActiveRow
      */
     protected function store($tableName)
     {

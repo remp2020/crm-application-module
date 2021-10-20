@@ -6,7 +6,7 @@ use Crm\ApplicationModule\Repository;
 use Crm\ApplicationModule\Repository\AuditLogRepository;
 use DateTime;
 use Nette\Database\Explorer;
-use Nette\Database\Table\IRow;
+use Nette\Database\Table\ActiveRow;
 
 class ConfigsRepository extends Repository
 {
@@ -30,7 +30,7 @@ class ConfigsRepository extends Repository
         return $this->getTable()->where('name', $name)->fetch();
     }
 
-    final public function loadByCategory(IRow $configCategory)
+    final public function loadByCategory(ActiveRow $configCategory)
     {
         return $this->loadByCategoryId($configCategory->id);
     }
@@ -40,7 +40,7 @@ class ConfigsRepository extends Repository
         return $this->getTable()->where('config_category_id', $configCategoryId)->order('sorting');
     }
 
-    final public function update(IRow &$row, $data)
+    final public function update(ActiveRow &$row, $data)
     {
         $data['updated_at'] = new DateTime();
         if (!isset($data['has_default_value'])) {

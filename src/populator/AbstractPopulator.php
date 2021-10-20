@@ -5,7 +5,7 @@ namespace Crm\ApplicationModule\Populator;
 use Crm\ApplicationModule\Commands\PopulatorCommand;
 use Faker\Generator;
 use Nette\Database\Explorer;
-use Nette\Database\IRow;
+use Nette\Database\Table\ActiveRow;
 
 abstract class AbstractPopulator
 {
@@ -87,7 +87,7 @@ abstract class AbstractPopulator
     /**
      * Returns random record from given table.
      * @param string $tableName
-     * @return IRow|false
+     * @return ActiveRow|false
      */
     protected function getRecord($tableName, $where = null)
     {

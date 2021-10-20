@@ -7,7 +7,6 @@ use Crm\ApplicationModule\Repository\AuditLogRepository;
 use Crm\ApplicationModule\Repository\ReplicaTrait;
 use Nette\Caching\Storage;
 use Nette\Database\Explorer;
-use Nette\Database\Table\IRow;
 
 class Repository
 {
@@ -79,13 +78,13 @@ class Repository
      * Update updates provided record with given $data array and mutates the provided instance. Operation is logged
      * to audit log.
      *
-     * @param IRow $row
+     * @param \Nette\Database\Table\ActiveRow $row
      * @param array $data values to update
      * @return bool
      *
      * @throws \Exception
      */
-    public function update(IRow &$row, $data)
+    public function update(\Nette\Database\Table\ActiveRow &$row, $data)
     {
         // require non-replicated database connection for updates and subsequent queries
         $this->getReplicaManager()->setWriteFlag();
@@ -133,10 +132,10 @@ class Repository
     /**
      * Delete deletes provided record from repository and mutates the provided instance. Operation is logged to audit log.
      *
-     * @param IRow $row
+     * @param \Nette\Database\Table\ActiveRow $row
      * @return bool
      */
-    public function delete(IRow &$row)
+    public function delete(\Nette\Database\Table\ActiveRow &$row)
     {
         // require non-replicated database connection for deletes and subsequent queries
         $this->getReplicaManager()->setWriteFlag();
@@ -169,7 +168,7 @@ class Repository
      * Insert inserts data to the repository. If single IRow is returned, it attempts to log audit information.
      *
      * @param $data
-     * @return bool|int|IRow
+     * @return bool|int|\Nette\Database\Table\ActiveRow
      */
     public function insert($data)
     {
@@ -180,7 +179,7 @@ class Repository
         $data = $this->processDateFields($data);
 
         $row = $this->getTable()->insert($data);
-        if (!$row instanceof IRow) {
+        if (!$row instanceof \Nette\Database\Table\ActiveRow) {
             return $row;
         }
 

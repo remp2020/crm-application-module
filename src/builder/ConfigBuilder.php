@@ -3,7 +3,7 @@
 namespace Crm\ApplicationModule\Builder;
 
 use DateTime;
-use Nette\Database\Table\IRow;
+use Nette\Database\Table\ActiveRow;
 
 class ConfigBuilder extends Builder
 {
@@ -119,10 +119,10 @@ class ConfigBuilder extends Builder
     }
 
     /**
-     * @param IRow $category
+     * @param ActiveRow $category
      * @return $this
      */
-    public function setConfigCategory(IRow $category)
+    public function setConfigCategory(ActiveRow $category)
     {
         return $this->set('config_category_id', $category->id);
     }

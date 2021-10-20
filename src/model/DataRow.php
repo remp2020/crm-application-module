@@ -3,7 +3,6 @@
 namespace Crm\ApplicationModule;
 
 use Nette\Database\Table\GroupedSelection;
-use Nette\Database\Table\IRow;
 use Nette\Database\Table\Selection;
 
 class DataRow implements \IteratorAggregate, IRow
