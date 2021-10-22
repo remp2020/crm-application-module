@@ -29,7 +29,6 @@ final class ApplicationModuleExtension extends CompilerExtension implements ITra
         $builder->parameters['redis_client_factory'] = $this->config['redis_client_factory'];
 
         // load services from config and register them to Nette\DI Container
-        $builder = $this->getContainerBuilder();
         Compiler::loadDefinitions(
             $builder,
             $this->loadFromFile(__DIR__.'/../config/config.neon')['services']
