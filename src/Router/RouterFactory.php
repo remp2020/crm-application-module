@@ -5,7 +5,6 @@ namespace Crm\ApplicationModule\Router;
 use Crm\ApplicationModule\Config\ApplicationConfig;
 use Crm\ApplicationModule\Config\ConfigsCache;
 use Crm\ApplicationModule\ModuleManager;
-use Nette\Application\Routers\Route;
 use Nette\Application\Routers\RouteList;
 
 /**
@@ -46,10 +45,10 @@ class RouterFactory
             $defaultRoute = 'Application:Default:default';
         }
 
-        $router[] = new Route('admin/', 'Dashboard:Dashboard:default');
-        $router[] = new Route('snippets[/<key>]', 'Application:Snippets:default');
-        $router[] = new Route('<module>/<presenter>/<action>[/<id>]', 'Dashboard:Dashboard:default');
-        $router[] = new Route('/', $defaultRoute);
+        $router->addRoute('admin/', 'Dashboard:Dashboard:default');
+        $router->addRoute('snippets[/<key>]', 'Application:Snippets:default');
+        $router->addRoute('<module>/<presenter>/<action>[/<id>]', 'Dashboard:Dashboard:default');
+        $router->addRoute('/', $defaultRoute);
 
         return $router;
     }
