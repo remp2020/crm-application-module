@@ -37,7 +37,7 @@
     "kdyby/autowired": "^2.1",
     "twig/twig": "^2.4",
     "league/event": "~2.1",
-    "kdyby/translation": "^3.0",
+    "kdyby/translation": "dev-master",
     "tomaj/nette-bootstrap-form": "^2.0",
     "vlucas/phpdotenv": "^5.3",
     "tomaj/hermes": "^4.0",
