@@ -48,7 +48,11 @@ final class ApplicationModuleExtension extends CompilerExtension implements ITra
         $builder->getDefinition($builder->getByType(\Nette\Application\IPresenterFactory::class))
             ->addSetup('setMapping', [['Application' => 'Crm\ApplicationModule\Presenters\*Presenter']]);
 
-        $this->compiler->addExtension('multiplierExtension', new \Contributte\FormMultiplier\DI\MultiplierExtension);
+        $multiplier = new \Contributte\FormMultiplier\DI\MultiplierExtension();
+        $multiplier->setConfig((object) [
+            'name' => 'addMultiplier',
+        ]);
+        $this->compiler->addExtension('multiplierExtension', $multiplier);
     }
 
     /**
