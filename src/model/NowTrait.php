@@ -10,10 +10,10 @@ namespace Crm\ApplicationModule;
  */
 trait NowTrait
 {
-    /** @var \DateTime */
+    /** @var null|\DateTime */
     private $now;
 
-    public function setNow(\DateTime $now)
+    public function setNow(?\DateTime $now)
     {
         $this->now = $now;
     }
