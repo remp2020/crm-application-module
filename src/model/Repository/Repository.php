@@ -55,7 +55,7 @@ class Repository
     }
 
     /**
-     * @return \Nette\Database\Table\ActiveRow
+     * @inheritDoc
      */
     public function find($id)
     {
@@ -63,7 +63,7 @@ class Repository
     }
 
     /**
-     * @return \Nette\Database\Table\ActiveRow
+     * @inheritDoc
      */
     public function findBy($column, $value)
     {
