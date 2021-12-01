@@ -88,11 +88,11 @@
 						{if $user->isLoggedIn()}
 							{_system.logged} <b>{$user->getIdentity()->email}</b>
 						{else}
-							{ifCurrent :Users:Sign:In}
+							{if isLinkCurrent(':Users:Sign:In')}
 								&nbsp;
 							{else}
 								<a href="{link :Users:Sign:In}">{_system.sign_in}</a>
-							{/ifCurrent}
+							{/if}
 						{/if}
 						<br>
 						<br>
