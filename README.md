@@ -433,6 +433,9 @@ namespace Crm\DemoModule\Presenters;
 
 class DemoPresenter extends \Crm\AdminModule\Presenters\AdminPresenter
 {
+    /** @var \Crm\ApplicationModule\Graphs\GraphData\GraphData @inject */
+    public $graphData;
+
     // ...
     public function renderDefault()
     {
@@ -453,12 +456,11 @@ class DemoPresenter extends \Crm\AdminModule\Presenters\AdminPresenter
                         ->setStart('-3 months')
                 );
 
-            $graphData = $this->context->getService('graph_data');
-            $graphData->clear();
-            $graphData->addGraphDataItem($graphDataItem);
-            $graphData->setScaleRange('day');
+            $this->graphData->clear();
+            $this->graphData->addGraphDataItem($graphDataItem);
+            $this->graphData->setScaleRange('day');
 
-            $data = $graphData->getData();
+            $data = $this->graphData->getData();
             if (!empty($data)) {
                 $data = array_pop($data);
             }

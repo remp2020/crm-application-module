@@ -85,7 +85,7 @@ services:
 
 	- Crm\ApplicationModule\ActiveRowFactory
 
-	graph_data: Crm\ApplicationModule\Graphs\GraphData
+	- Crm\ApplicationModule\Graphs\GraphData
 	- Crm\ApplicationModule\Graphs\ScaleFactory
 	redisEventManager: Crm\ApplicationModule\Event\RedisEventManager
 	- Crm\ApplicationModule\User\UserDataRegistrator
