@@ -49,3 +49,7 @@ config:
 integrations:
 	config:
 		category: Integrations
+
+user:
+	delete_user_data:
+		internal_error: "Due to an error we were not able to verify if the account can be deleted."

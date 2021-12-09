@@ -116,3 +116,7 @@ config:
 integrations:
 	config:
 		category: Integrace
+
+user:
+	delete_user_data:
+		internal_error: "Nastala chyba a nepodařilo se ověřit, zda účet může být smazán."

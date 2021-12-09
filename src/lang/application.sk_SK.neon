@@ -49,3 +49,7 @@ config:
 integrations:
 	config:
 		category: Integrácie
+
+user:
+	delete_user_data:
+		internal_error: "Nastala chyba a nepodarilo sa overiť, či konto môže byť zmazané."
