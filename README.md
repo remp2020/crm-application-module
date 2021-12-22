@@ -90,7 +90,7 @@ services:
 
 If your Hermes worker (`application:hermes_worker`) is losing connection to MySQL after a long period of inactivity, add `application:heartbeat` into your scheduler _(e.g. crontab)_ with small interval _(e.g. 1 minute)_.
 
-> **WARNING: Change paths to PHP and command.php according to your installation.**
+> **WARNING: Change paths to PHP and command.php according to your installation.**
 
 ```shell
 # emit heartbeat event
@@ -104,7 +104,7 @@ Event is handled by `HeartbeatMysql` handler which pings MySQL. This simple proc
 
 Command `application:hermes_shutdown` can be used to gracefully shutdown Hermes worker and all other workers which integrate Hermes' `RestartInterface` _(eg. Scenarios worker present in [ScenariosModule](https://github.com/remp2020/crm-scenarios-module))_. This can be used after CRM update when it's needed to reload all workers to new version.
 
-> **WARNING: Change paths to PHP and command.php according to your installation.**
+> **WARNING: Change paths to PHP and command.php according to your installation.**
 
 ```shell
 /usr/bin/php /var/www/html/bin/command.php application:hermes_shutdown
