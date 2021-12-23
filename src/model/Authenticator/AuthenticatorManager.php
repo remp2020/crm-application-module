@@ -2,7 +2,9 @@
 
 namespace Crm\ApplicationModule\Authenticator;
 
-class AuthenticatorManager implements AuthenticatorManagerInterface
+use Crm\ApplicationModule\ResettableInterface;
+
+class AuthenticatorManager implements AuthenticatorManagerInterface, ResettableInterface
 {
     private $authenticators = [];
 
@@ -20,5 +22,10 @@ class AuthenticatorManager implements AuthenticatorManagerInterface
     {
         krsort($this->authenticators);
         return $this->authenticators;
+    }
+
+    public function reset(): void
+    {
+        $this->authenticators = [];
     }
 }

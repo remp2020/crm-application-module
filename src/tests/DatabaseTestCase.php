@@ -3,9 +3,7 @@
 namespace Crm\ApplicationModule\Tests;
 
 use Crm\ApplicationModule\Seeders\ISeeder;
-use Nette\DI\Container;
 use Nette\Database\Context;
-use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
@@ -13,12 +11,9 @@ use Symfony\Component\Console\Output\OutputInterface;
  * Each test truncates all repositories specified in requiredRepositories method, so DB is always in clean state
  * @package Tests
  */
-abstract class DatabaseTestCase extends TestCase
+abstract class DatabaseTestCase extends CrmTestCase
 {
     use RefreshContainerTrait;
-
-    /** @var Container */
-    protected $container;
 
     /** @var  Context */
     protected $database;
@@ -39,10 +34,8 @@ abstract class DatabaseTestCase extends TestCase
 
     protected function setUp(): void
     {
-        $_POST = [];
-        $_GET = [];
+        parent::setUp();
 
-        $this->container = $GLOBALS['container'];
         $this->database = $this->inject(Context::class);
 
         foreach ($this->requiredRepositories() as $repositoryClass) {
@@ -69,10 +62,5 @@ SET FOREIGN_KEY_CHECKS=1;
             $seeder = $this->inject($seederClass);
             $seeder->seed($this->inject(OutputInterface::class));
         }
-    }
-
-    protected function inject($className)
-    {
-        return $this->container->getByType($className);
     }
 }
