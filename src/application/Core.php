@@ -108,7 +108,7 @@ class Core
         return self::env('CRM_ENV_FILE') ?: '.env';
     }
 
-    private function loadEnv(): void
+    public function loadEnv(): void
     {
         $envFile = self::getEnvFilePath();
         $dotenv = Dotenv::createImmutable(APP_ROOT, $envFile);
