@@ -2,6 +2,12 @@
 
 ---
 
+## Table of Contents
+
+- [Minimal requirements](#minimal-requirements)
+- [Nette 3.0](#nette-30)
+- [Nette 3.1](#nette-31)
+
 ## Minimal requirements
 
 - PHP 7.4
@@ -10,7 +16,7 @@
   
   - _Note: We are using Percona 8.0 in production._
 
-- Nette 3.0
+- Nette 3.1
   
   - Packages dependant on Nette were updated too (e.g. `latte/latte`, `kdyby/translation`, `contributte/forms-multiplier`). Check `composer.json` for current minimal versions.
 
@@ -251,3 +257,147 @@ Download `netteForms.js` from link: https://nette.github.io/resources/js/3/nette
 - Class `Crm\ApiModule\Api\JsonResponse` doesn't extend ``Nette\Application\Responses\JsonResponse`` anymore. The parent method was changed to `final`. We copied methods from it into our response (to fulfill interface). No changes are required.
 
 - Extension `contributte/forms-multiplier` was updated. They renamed namespace `WebChemistry` to `Contributte`. If you use forms multiplier (`$form->addMultiplier()`), you have to fix imports.
+
+
+## Nette 3.1
+
+### Official guide  - Migrating to Version 3.1
+
+Check the official [Nette guide for migrating to version 3.1](https://doc.nette.org/en/3.1/migration-3-1). The following steps are changes we had to apply in our CRM extensions.
+
+---
+
+### rector/rector
+
+Package `rector/rector` is the tool that helped us with the upgrade of all our CRM extensions. Check GitHub for more details.
+
+This is the config we used for the upgrade to Nette 3.1.
+
+```php
+<?php
+
+declare(strict_types=1);
+
+use Rector\Core\Configuration\Option;
+use Rector\Core\ValueObject\PhpVersion;
+use Rector\Nette\Set\NetteSetList;
+use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+
+return static function (ContainerConfigurator $containerConfigurator): void {
+    $parameters = $containerConfigurator->parameters();
+
+    // paths to refactor
+    $parameters->set(Option::PATHS, [
+        // set this to path to your extension;
+        // no need to check CRM extensions
+        __DIR__ . '/extensions',
+
+        // updates nette packages automatically;
+        // check result against crm-application-module/composer.json
+        __DIR__ . '/composer.json',
+    ]);
+
+    $parameters->set(Option::PHP_VERSION_FEATURES, PhpVersion::PHP_74);
+
+    // apply upgrade rules for Nette 3.1
+    $containerConfigurator->import(NetteSetList::NETTE_31);
+};
+```
+
+---
+
+### `Nette\Configurator` was moved
+
+`Nette\Configurator` was moved to `Nette\Bootstrap\Configurator`. It is used in `ApplicationModule`'s `Core.php` to configure and create Nette's DI container. If you have own `Core.php` alternative / implementation, you'll need to fix`Configurator` import.
+
+### `Nette\Database` deprecations & cleaning
+
+- `Nette\Database\IRow` is deprecated; use `Nette\Database\Row`.
+- `Nette\Database\Table\IRow` is deprecated; use `Nette\Database\Table\ActiveRow`.
+
+We switched everywhere to `Nette\Database\Table\ActiveRow`. Using `Nette\Database\Row` is not satisfactory for our needs. And also `Nette\Database` changed few arguments to typed. So using IRow/Row is not possible in some cases. You'll have to switch to `ActiveRow` too _(in some cases; and you should in the rest places)_.
+
+#### `DataRow` removed; using new `ActiveRowFactory`
+
+`Crm\ApplicationModule\DataRow` was used as dummy wrapper for sending emails to email addresses without user entry. `NotificationEvent` now requires `ActiveRow` so `DataRow` had to be replaced. In case you need to send `NotificationEvent` to email without user, you can now use `Crm\ApplicationModule\ActiveRowFactory`.
+
+```php
+class ExampleClass
+{
+    /** @var \League\Event\Emitter @inject */
+    public $emitter;
+
+    /** @var \Crm\ApplicationModule\ActiveRowFactory @inject */
+    public $activeRowFactory;
+
+    public function sendNotificationToExample()
+    {
+        $userRow = $this->activeRowFactory->create([
+            'email' => 'example@example.com',
+        ]);
+
+        $this->emitter->emit(new NotificationEvent($this->emitter, $userRow, 'example_template'));
+    }
+}
+```
+
+### `Presenter->getContext()` is deprecated
+
+Getting container directly from Presenters (all extending `Nette\Application\UI\Presenter`) is now deprecated. It concerns every presenter extending CRM's `FrontendPresenter` and `AdminPresenter`.
+
+```php
+class ExampleAdminPresenter extends \Crm\AdminModule\Presenters\AdminPresenter
+{
+    public function renderDefault()
+    {
+        // triggers deprecated error
+        $container = $this->context;
+        // triggers deprecated error
+        $container = $this->getContext();
+
+        // triggers deprecated error
+        $usersRepository = $this->context->getByType('Crm\UsersModule\Repository\UsersRepository')
+    }
+}
+```
+
+Container was injected to `AdminPresenter`. You can use it instead context from:
+
+```php
+class ExampleAdminPresenter extends \Crm\AdminModule\Presenters\AdminPresenter
+{
+    public function renderDefault()
+    {
+        $container = $this->container;
+
+        $usersRepository = $this->container->getByType('Crm\UsersModule\Repository\UsersRepository')
+    }
+}
+```
+
+Notes:
+
+- `Crm\ApplicationModule\Presenters\FrontendPresenter` doesn't have container injected. You have to inject it in case you need to load service on demand.
+- Consider using proper DI instead of loading service manually from container.
+
+### Nette's interfaces renamed
+
+Multiple Nette interfaces lost **I** prefix. Follow migration guide mentioned above. Here are interfaces we had to fix in extensions:
+
+- `Nette\Application\IResponse` is deprecated; use `Nette\Application\Response`.
+- `Nette\Application\UI\ITemplate` is deprecated; use `Nette\Application\UI\Template`.
+- `Nette\Caching\IStorage` is deprecated; use `Nette\Caching\Storage`.
+- `Nette\Mail\IMailer` is deprecated; use `Nette\Mail\Mailer`.
+- `Nette\Security\IAuthorizator` is deprecated; use `Nette\Security\Authorizator`.
+- `Nette\Security\Identity` is deprecated; use `Nette\Security\SimpleIdentity`.
+- `Nette\Localization\ITranslator` is deprecated; use `Nette\Localization\Translator`.
+
+### Latte changes
+
+- Changed deprecated `{ifCurrent 'link'}` latte tag to `{isLinkCurrent('link')}` latte function. _(To be consistent, we changed also `{$presenter->isLinkCurrent('link')}`to new `{isLinkCurrent('link')}`)_.
+- Fixed deprecated use of vars without dollar sign. `{var myVariable = ...}` changed to `{var $myVariable = ...}`.
+
+### Notes
+
+- We switched from `$form->values['field_name]` to `$form->getValues()['field_name]` _(recommended by rector)_.
+- Check validation methods of forms _(when used with `$form->onValidate[]`)_. It's possible that `$form->values` (or `$form->getValues()`) won't return all values for validation. Use `$form->getUnsafeValues()` instead.
