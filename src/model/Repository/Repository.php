@@ -2,12 +2,14 @@
 
 namespace Crm\ApplicationModule;
 
+use Closure;
 use Crm\ApplicationModule\Models\Repository\SlugColumnTrait;
 use Crm\ApplicationModule\Repository\AuditLogRepository;
 use Crm\ApplicationModule\Repository\ReplicaTrait;
 use Nette\Caching\IStorage;
 use Nette\Database\Context;
 use Nette\Database\Table\IRow;
+use Throwable;
 
 class Repository
 {
@@ -30,6 +32,9 @@ class Repository
     /** @var array */
     protected $auditLogExcluded = [];
 
+    /** @var bool */
+    protected $allowReplica = true;
+
     public function __construct(
         Context $database,
         IStorage $cacheStorage = null
@@ -43,7 +48,7 @@ class Repository
      */
     public function getTable()
     {
-        $database = $this->getDatabase(true);
+        $database = $this->getDatabase($this->allowReplica);
         $selection = new Selection(
             $database,
             $database->getConventions(),
@@ -196,6 +201,19 @@ class Repository
         }
 
         return $row;
+    }
+
+    public function ensure(Closure $callback, int $retryTimes = 1)
+    {
+        try {
+            return $callback($this);
+        } catch (Throwable $e) {
+            if ($retryTimes === 0) {
+                throw $e;
+            }
+            $this->getDatabase($this->allowReplica)->getConnection()->reconnect();
+            return $this->ensure($callback, $retryTimes - 1);
+        }
     }
 
     /**
