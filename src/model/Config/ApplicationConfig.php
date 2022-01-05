@@ -23,7 +23,7 @@ class ApplicationConfig
 
     private LocalConfig $localConfig;
 
-    private array $items;
+    private array $items = [];
 
     private IStorage $cacheStorage;
 
