@@ -55,7 +55,10 @@ class ApplicationConfig
         } else {
             $itemRow = $this->configsRepository->loadByName($name);
             $item = $this->formatItem($itemRow);
-            $this->items[$name] = $item;
+            if ($this->cacheExpiration > 0) {
+                // if any kind of caching is allowed, we can store this for future use
+                $this->items[$name] = $item;
+            }
         }
 
         if ($item) {
