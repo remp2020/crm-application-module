@@ -89,6 +89,9 @@ class ApplicationConfig
 
     private function formatItem($itemRow)
     {
+        if (!$itemRow) {
+            return null;
+        }
         return (object) [
             'value' => $itemRow->value,
             'type' => $itemRow->type,
