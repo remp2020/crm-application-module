@@ -18,7 +18,7 @@ class EventGeneratorsListApiHandler extends ApiHandler
         $this->eventsStorage = $eventsStorage;
     }
 
-    public function params()
+    public function params(): array
     {
         return [];
     }
