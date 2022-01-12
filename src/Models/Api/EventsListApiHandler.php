@@ -4,7 +4,7 @@ namespace Crm\ApplicationModule\Api;
 
 use Crm\ApiModule\Api\ApiHandler;
 use Crm\ApiModule\Api\JsonResponse;
-use Crm\ApiModule\Authorization\ApiAuthorizationInterface;
+use Crm\ApiModule\Response\ApiResponseInterface;
 use Crm\ApplicationModule\Event\EventsStorage;
 use Nette\Http\Response;
 
@@ -23,7 +23,7 @@ class EventsListApiHandler extends ApiHandler
         return [];
     }
 
-    public function handle(ApiAuthorizationInterface $authorization)
+    public function handle(array $params): ApiResponseInterface
     {
         $events = $this->eventsStorage->getEventsPublic();
         $result = [];
