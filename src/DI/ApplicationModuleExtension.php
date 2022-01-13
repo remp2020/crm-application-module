@@ -2,8 +2,10 @@
 
 namespace Crm\ApplicationModule\DI;
 
+use Crm\ApplicationModule\Widget\BaseWidget;
 use Kdyby\Translation\DI\ITranslationProvider;
 use Nette\DI\CompilerExtension;
+use Nette\DI\Extensions\InjectExtension;
 
 final class ApplicationModuleExtension extends CompilerExtension implements ITranslationProvider
 {
@@ -53,6 +55,13 @@ final class ApplicationModuleExtension extends CompilerExtension implements ITra
             'name' => 'addMultiplier',
         ]);
         $this->compiler->addExtension('multiplierExtension', $multiplier);
+
+        $builder = $this->getContainerBuilder();
+
+        // autowiring for widgets
+        foreach ($builder->findByType(BaseWidget::class) as $def) {
+            $def->addTag(InjectExtension::TAG_INJECT);
+        }
     }
 
     /**
