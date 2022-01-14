@@ -341,44 +341,16 @@ class ExampleClass
 }
 ```
 
-### `Presenter->getContext()` is deprecated
+### `Presenter->getContext()` was deprecated in Nette
 
-Getting container directly from Presenters (all extending `Nette\Application\UI\Presenter`) is now deprecated. It concerns every presenter extending CRM's `FrontendPresenter` and `AdminPresenter`.
+Getting container directly from Presenters (all extending `Nette\Application\UI\Presenter`) is now deprecated in Nette 3 in favor of using DI. Since some parts of the CRM still require the DI container to be available in presenter, we've overriden `BasePresenter::getContext()` and made `BasePresenter::$container` available.
 
-```php
-class ExampleAdminPresenter extends \Crm\AdminModule\Presenters\AdminPresenter
-{
-    public function renderDefault()
-    {
-        // triggers deprecated error
-        $container = $this->context;
-        // triggers deprecated error
-        $container = $this->getContext();
-
-        // triggers deprecated error
-        $usersRepository = $this->context->getByType('Crm\UsersModule\Repository\UsersRepository')
-    }
-}
-```
-
-Container was injected to `AdminPresenter`. You can use it instead context from:
-
-```php
-class ExampleAdminPresenter extends \Crm\AdminModule\Presenters\AdminPresenter
-{
-    public function renderDefault()
-    {
-        $container = $this->container;
-
-        $usersRepository = $this->container->getByType('Crm\UsersModule\Repository\UsersRepository')
-    }
-}
-```
+If your presenters extend `Crm\ApplicationModule\Presenters\BasePresenter`, no change is necessary. If your presenters don't extend it and need DI container, you'll have to inject it manually.
 
 Notes:
 
-- `Crm\ApplicationModule\Presenters\FrontendPresenter` doesn't have container injected. You have to inject it in case you need to load service on demand.
 - Consider using proper DI instead of loading service manually from container.
+- Not extending `Crm\ApplicationModule\Presenters\BasePresenter` or not injecting DI container to your presenters might cause deprecation notices in widgets rendering other widgets.
 
 ### Nette's interfaces renamed
 
