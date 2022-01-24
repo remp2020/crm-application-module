@@ -32,9 +32,6 @@ class Repository
     /** @var array */
     protected $auditLogExcluded = [];
 
-    /** @var bool */
-    protected $allowReplica = true;
-
     public function __construct(
         Context $database,
         IStorage $cacheStorage = null
@@ -48,7 +45,7 @@ class Repository
      */
     public function getTable()
     {
-        $database = $this->getDatabase($this->allowReplica);
+        $database = $this->getDatabase(true);
         $selection = new Selection(
             $database,
             $database->getConventions(),
@@ -211,7 +208,7 @@ class Repository
             if ($retryTimes === 0) {
                 throw $e;
             }
-            $this->getDatabase($this->allowReplica)->getConnection()->reconnect();
+            $this->getDatabase(true)->getConnection()->reconnect();
             return $this->ensure($callback, $retryTimes - 1);
         }
     }
