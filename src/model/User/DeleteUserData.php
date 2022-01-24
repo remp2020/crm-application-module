@@ -2,7 +2,7 @@
 
 namespace Crm\ApplicationModule\User;
 
-use Nette\Localization\ITranslator;
+use Nette\Localization\Translator;
 use Tracy\Debugger;
 use Tracy\ILogger;
 
@@ -14,7 +14,7 @@ class DeleteUserData
 
     public function __construct(
         UserDataRegistrator $userDataRegistrator,
-        ITranslator $translator
+        Translator $translator
     ) {
         $this->userDataRegistrator = $userDataRegistrator;
         $this->translator = $translator;

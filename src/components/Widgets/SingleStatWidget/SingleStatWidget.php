@@ -4,7 +4,7 @@ namespace Crm\ApplicationModule\Components;
 
 use Crm\ApplicationModule\Widget\BaseWidget;
 use Crm\ApplicationModule\Widget\WidgetManager;
-use Nette\Localization\ITranslator;
+use Nette\Localization\Translator;
 
 /**
  * Widget used for rendering simple single stat widgets in groups.
@@ -17,7 +17,7 @@ class SingleStatWidget extends BaseWidget
 
     private $translator;
 
-    public function __construct(WidgetManager $widgetManager, ITranslator $translator)
+    public function __construct(WidgetManager $widgetManager, Translator $translator)
     {
         parent::__construct($widgetManager);
         $this->translator = $translator;

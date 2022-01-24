@@ -46,6 +46,7 @@ abstract class BaseAuthenticator implements AuthenticatorInterface
      */
     public function setCredentials(array $credentials) : AuthenticatorInterface
     {
+        $this->api = false;
         if (array_key_exists('source', $credentials)) {
             $this->source = $credentials['source'];
 

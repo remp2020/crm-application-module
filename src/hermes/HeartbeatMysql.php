@@ -3,7 +3,7 @@
 namespace Crm\ApplicationModule\Hermes;
 
 use Crm\ApplicationModule\Config\Repository\ConfigsRepository;
-use Nette\Database\Context;
+use Nette\Database\Explorer;
 use Tomaj\Hermes\Handler\HandlerInterface;
 use Tomaj\Hermes\MessageInterface;
 
@@ -13,7 +13,7 @@ class HeartbeatMysql implements HandlerInterface
 
     private $configsRepository;
 
-    public function __construct(Context $database, ConfigsRepository $configsRepository)
+    public function __construct(Explorer $database, ConfigsRepository $configsRepository)
     {
         $this->database = $database;
         $this->configsRepository = $configsRepository;

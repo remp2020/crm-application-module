@@ -2,7 +2,7 @@
 
 namespace Crm\ApplicationModule\Tests;
 
-use Nette\Configurator;
+use Nette\Bootstrap\Configurator;
 
 trait RefreshContainerTrait
 {

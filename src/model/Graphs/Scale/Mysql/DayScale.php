@@ -3,13 +3,13 @@
 namespace Crm\ApplicationModule\Graphs\Scale\Mysql;
 
 use Crm\ApplicationModule\Graphs\Criteria;
-use Nette\Database\Context;
+use Nette\Database\Explorer;
 
 class DayScale extends \Crm\ApplicationModule\Graphs\Scale\DayScale
 {
     private $database;
 
-    public function __construct(Context $database)
+    public function __construct(Explorer $database)
     {
         $this->database = $database;
     }

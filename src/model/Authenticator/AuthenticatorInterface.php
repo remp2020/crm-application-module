@@ -2,12 +2,14 @@
 
 namespace Crm\ApplicationModule\Authenticator;
 
+use Nette\Database\Table\ActiveRow;
+
 interface AuthenticatorInterface
 {
     /**
      * Authenticates & returns user if successful.
      *
-     * @return bool|mixed|\Nette\Database\Table\IRow
+     * @return bool|mixed|ActiveRow
      */
     public function authenticate();
 

@@ -30,7 +30,6 @@ class FrontendMenu extends UI\Control
         ApplicationConfig $applicationConfig,
         DataProviderManager $dataProviderManager
     ) {
-        parent::__construct();
         $this->applicationConfig  = $applicationConfig;
         $this->dataProviderManager = $dataProviderManager;
     }

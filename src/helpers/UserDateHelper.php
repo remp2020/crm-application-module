@@ -4,7 +4,7 @@ namespace Crm\ApplicationModule\Helpers;
 
 use DateTime;
 use IntlDateFormatter;
-use Nette\Localization\ITranslator;
+use Nette\Localization\Translator;
 
 class UserDateHelper
 {
@@ -12,7 +12,7 @@ class UserDateHelper
 
     private $format;
 
-    public function __construct(ITranslator $translator)
+    public function __construct(Translator $translator)
     {
         $this->translator = $translator;
     }

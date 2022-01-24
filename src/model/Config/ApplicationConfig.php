@@ -4,7 +4,7 @@ namespace Crm\ApplicationModule\Config;
 
 use Crm\ApplicationModule\Config\Repository\ConfigsRepository;
 use Nette\Caching\Cache;
-use Nette\Caching\IStorage;
+use Nette\Caching\Storage;
 
 class ApplicationConfig
 {
@@ -30,7 +30,7 @@ class ApplicationConfig
     public function __construct(
         ConfigsRepository $configsRepository,
         LocalConfig $localConfig,
-        IStorage $cacheStorage
+        Storage $cacheStorage
     ) {
         $this->configsRepository = $configsRepository;
         $this->localConfig = $localConfig;

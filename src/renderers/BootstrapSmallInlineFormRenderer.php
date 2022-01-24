@@ -62,9 +62,9 @@ class BootstrapSmallInlineFormRenderer extends DefaultFormRenderer
      * @param  string 'begin', 'errors', 'ownerrors', 'body', 'end' or empty to render all
      * @return string
      */
-    public function render(Nette\Forms\Form $form, $mode = null)
+    public function render(Nette\Forms\Form $form, string $mode = null): string
     {
-        $form->getElementPrototype()->setClass('form-inline');
+        $form->getElementPrototype()->appendAttribute('class', 'form-inline');
 
         foreach ($form->getControls() as $control) {
             if ($control instanceof Controls\Button) {

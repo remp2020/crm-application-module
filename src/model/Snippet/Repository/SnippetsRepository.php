@@ -3,7 +3,7 @@
 namespace Crm\ApplicationModule\Snippet\Repository;
 
 use Crm\ApplicationModule\Repository;
-use Nette\Database\Table\IRow;
+use Nette\Database\Table\ActiveRow;
 use Nette\Utils\DateTime;
 
 class SnippetsRepository extends Repository
@@ -29,7 +29,7 @@ class SnippetsRepository extends Repository
         ]);
     }
 
-    final public function update(IRow &$row, $data)
+    final public function update(ActiveRow &$row, $data)
     {
         $data['updated_at'] = new DateTime();
         if (!isset($data['has_default_value'])) {
@@ -53,7 +53,7 @@ class SnippetsRepository extends Repository
         return $this->getTable()->order('title ASC');
     }
 
-    final public function markUsed(IRow $snippet)
+    final public function markUsed(ActiveRow $snippet)
     {
         return parent::update($snippet, [
             'last_used' => new DateTime(),

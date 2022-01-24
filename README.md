@@ -90,7 +90,7 @@ services:
 
 If your Hermes worker (`application:hermes_worker`) is losing connection to MySQL after a long period of inactivity, add `application:heartbeat` into your scheduler _(e.g. crontab)_ with small interval _(e.g. 1 minute)_.
 
-> **WARNING: Change paths to PHP and command.php according to your installation.**
+> **WARNING: Change paths to PHP and command.php according to your installation.**
 
 ```shell
 # emit heartbeat event
@@ -104,7 +104,7 @@ Event is handled by `HeartbeatMysql` handler which pings MySQL. This simple proc
 
 Command `application:hermes_shutdown` can be used to gracefully shutdown Hermes worker and all other workers which integrate Hermes' `RestartInterface` _(eg. Scenarios worker present in [ScenariosModule](https://github.com/remp2020/crm-scenarios-module))_. This can be used after CRM update when it's needed to reload all workers to new version.
 
-> **WARNING: Change paths to PHP and command.php according to your installation.**
+> **WARNING: Change paths to PHP and command.php according to your installation.**
 
 ```shell
 /usr/bin/php /var/www/html/bin/command.php application:hermes_shutdown
@@ -433,6 +433,9 @@ namespace Crm\DemoModule\Presenters;
 
 class DemoPresenter extends \Crm\AdminModule\Presenters\AdminPresenter
 {
+    /** @var \Crm\ApplicationModule\Graphs\GraphData\GraphData @inject */
+    public $graphData;
+
     // ...
     public function renderDefault()
     {
@@ -453,12 +456,11 @@ class DemoPresenter extends \Crm\AdminModule\Presenters\AdminPresenter
                         ->setStart('-3 months')
                 );
 
-            $graphData = $this->context->getService('graph_data');
-            $graphData->clear();
-            $graphData->addGraphDataItem($graphDataItem);
-            $graphData->setScaleRange('day');
+            $this->graphData->clear();
+            $this->graphData->addGraphDataItem($graphDataItem);
+            $this->graphData->setScaleRange('day');
 
-            $data = $graphData->getData();
+            $data = $this->graphData->getData();
             if (!empty($data)) {
                 $data = array_pop($data);
             }

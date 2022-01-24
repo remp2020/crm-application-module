@@ -3,7 +3,6 @@
 namespace Crm\ApplicationModule\DI;
 
 use Kdyby\Translation\DI\ITranslationProvider;
-use Nette\DI\Compiler;
 use Nette\DI\CompilerExtension;
 
 final class ApplicationModuleExtension extends CompilerExtension implements ITranslationProvider
@@ -29,8 +28,7 @@ final class ApplicationModuleExtension extends CompilerExtension implements ITra
         $builder->parameters['redis_client_factory'] = $this->config['redis_client_factory'];
 
         // load services from config and register them to Nette\DI Container
-        Compiler::loadDefinitions(
-            $builder,
+        $this->compiler->loadDefinitionsFromConfig(
             $this->loadFromFile(__DIR__.'/../config/config.neon')['services']
         );
 
@@ -50,7 +48,11 @@ final class ApplicationModuleExtension extends CompilerExtension implements ITra
         $builder->getDefinition($builder->getByType(\Nette\Application\IPresenterFactory::class))
             ->addSetup('setMapping', [['Application' => 'Crm\ApplicationModule\Presenters\*Presenter']]);
 
-        $this->compiler->addExtension('multiplierExtension', new \WebChemistry\Forms\Controls\DI\MultiplierExtension);
+        $multiplier = new \Contributte\FormMultiplier\DI\MultiplierExtension();
+        $multiplier->setConfig((object) [
+            'name' => 'addMultiplier',
+        ]);
+        $this->compiler->addExtension('multiplierExtension', $multiplier);
     }
 
     /**

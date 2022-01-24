@@ -5,17 +5,17 @@ services:
 	replicaConfig: Crm\ApplicationModule\Repository\ReplicaConfig
 
 	moduleManager:
-		class: Crm\ApplicationModule\ModuleManager
+		factory: Crm\ApplicationModule\ModuleManager
 		setup:
 			- addModule(Crm\ApplicationModule\ApplicationModule(), 1)
 
 	applicationManager:
-		class: Crm\ApplicationModule\ApplicationManager
+		factory: Crm\ApplicationModule\ApplicationManager
 		setup:
 			- initialize
 
 	frontendMenu:
-		class: Crm\ApplicationModule\Components\FrontendMenu
+		factory: Crm\ApplicationModule\Components\FrontendMenu
 
 	# Latte filters
 	nette.latteFactory:
@@ -23,7 +23,7 @@ services:
 			- addFilter(null, [@filterLoader, 'load'])
 
 	filterLoader:
-		class: Crm\ApplicationModule\Helpers\FilterLoader
+		factory: Crm\ApplicationModule\Helpers\FilterLoader
 		setup:
 			- register('activeLabel', [Crm\ApplicationModule\Helpers\ActiveLabelHelper(), process])
 			- register('diff', [Crm\ApplicationModule\Helpers\DiffHelper(), process])
@@ -58,7 +58,7 @@ services:
 	- Crm\ApplicationModule\Commands\GenerateKeyCommand
 
 	applicationConfig:
-		class:  Crm\ApplicationModule\Config\ApplicationConfig
+		factory:  Crm\ApplicationModule\Config\ApplicationConfig
 
 	- Crm\ApplicationModule\Snippet\Control\SnippetFactory
 	- Crm\ApplicationModule\Snippet\SnippetRenderer
@@ -83,7 +83,9 @@ services:
 
 	applicationMountManager: Crm\ApplicationModule\Models\ApplicationMountManager
 
-	graph_data: Crm\ApplicationModule\Graphs\GraphData
+	- Crm\ApplicationModule\ActiveRowFactory
+
+	- Crm\ApplicationModule\Graphs\GraphData
 	- Crm\ApplicationModule\Graphs\ScaleFactory
 	redisEventManager: Crm\ApplicationModule\Event\RedisEventManager
 	- Crm\ApplicationModule\User\UserDataRegistrator
@@ -101,7 +103,7 @@ services:
 
 	hermesLogRedact: Crm\ApplicationModule\Hermes\LogRedact
 	hermesLogger:
-		class: Monolog\Logger('hermes-logger')
+		factory: Monolog\Logger('hermes-logger')
 		setup:
 			- pushProcessor(@hermesLogRedact::add(['password', 'token']))
 			- pushHandler(Monolog\Handler\StreamHandler("%appDir%/../log/hermes-log.txt"))
@@ -112,15 +114,15 @@ services:
 	hermesShutdown: Tomaj\Hermes\Shutdown\PredisShutdown(@redisClientFactory::getClient())
 
 	hermesDriver:
-		class: Crm\ApplicationModule\Hermes\RedisDriver
+		factory: Crm\ApplicationModule\Hermes\RedisDriver
 		setup:
 			- setupPriorityQueue('hermes_tasks_high', 200)
 			- setupPriorityQueue('hermes_tasks', 100)
 			- setupPriorityQueue('hermes_tasks_low', 50)
 	hermesDispatcher:
-		class: Tomaj\Hermes\Dispatcher(@hermesDriver, @hermesLogger, @hermesShutdown)
+		factory: Tomaj\Hermes\Dispatcher(@hermesDriver, @hermesLogger, @hermesShutdown)
 	hermesEmitter:
-		class: Tomaj\Hermes\Emitter(@hermesDriver, @hermesLogger)
+		factory: Tomaj\Hermes\Emitter(@hermesDriver, @hermesLogger)
 	redisTasksQueue: Crm\ApplicationModule\Hermes\RedisTasksQueue
 
 	- Crm\ApplicationModule\Hermes\HeartbeatMysql

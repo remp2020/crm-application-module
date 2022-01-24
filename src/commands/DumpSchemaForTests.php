@@ -5,7 +5,6 @@ namespace Crm\ApplicationModule\Commands;
 use Nette\Utils\FileSystem;
 use Nette\Utils\Finder;
 use Odan\Migration\Command\GenerateCommand;
-use Phinx\Util\Util;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -37,7 +36,7 @@ class DumpSchemaForTests extends GenerateCommand
 
         // HACK!
         // replace migrate file date to fixed date (epoch beginning), so git is enable to track changes
-        $epochBeginning = date(Util::DATE_FORMAT, 0);
+        $epochBeginning = '19700101010000';
         foreach (Finder::findFiles('*_all_tables.php')->in($migrationPath) as $splFileInfo) {
             FileSystem::rename($splFileInfo->getPathname(), $splFileInfo->getPath() . DIRECTORY_SEPARATOR . $epochBeginning . '_all_tables.php');
         }

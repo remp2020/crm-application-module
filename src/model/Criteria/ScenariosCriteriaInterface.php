@@ -2,7 +2,7 @@
 
 namespace Crm\ApplicationModule\Criteria;
 
-use Nette\Database\Table\IRow;
+use Nette\Database\Table\ActiveRow;
 use Nette\Database\Table\Selection;
 
 interface ScenariosCriteriaInterface
@@ -28,14 +28,14 @@ interface ScenariosCriteriaInterface
      * $paramValues may contain array: ["has_id": {"selection": true}]
      * 'selection' value represents state of boolean parameter in ScenarioBuilder (toggled on/off)
      *
-     * @param IRow $criterionItemRow contains IRow object on which $selection query is going to be built.
+     * @param ActiveRow $criterionItemRow contains IRow object on which $selection query is going to be built.
      * This depends on event you have registered the criteria (see CrmModule#registerScenariosCriteria()).
      * For example, if the criteria is registered on subscription event,
      * the criteria will receive the subscription object that has triggered the particular scenario.
      *
      * @return bool
      */
-    public function addConditions(Selection $selection, array $paramValues, IRow $criterionItemRow): bool;
+    public function addConditions(Selection $selection, array $paramValues, ActiveRow $criterionItemRow): bool;
 
     /**
      * label returns human-friendly and descriptive label of the whole Criteria

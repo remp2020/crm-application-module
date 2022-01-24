@@ -9,6 +9,11 @@ class ApplicationMountManager extends MountManager
 {
     private $groups = [];
 
+    public function __construct(array $filesystems = [])
+    {
+        parent::__construct($filesystems);
+    }
+
     public function mountFilesystem($prefix, FilesystemInterface $filesystem, ?string $group = null)
     {
         $this->groups[$group][] = $prefix;

@@ -2,7 +2,7 @@
 
 namespace Crm\ApplicationModule\Repository;
 
-use Nette\Database\Context;
+use Nette\Database\Explorer;
 
 class ReplicaManager
 {
@@ -15,10 +15,10 @@ class ReplicaManager
 
     private $writeFlag = false;
 
-    /** @var Context */
+    /** @var Explorer */
     private $selectedDatabase;
 
-    public function __construct(Context $primaryDatabase, string $tableName, ?ReplicaConfig $replicaConfig)
+    public function __construct(Explorer $primaryDatabase, string $tableName, ?ReplicaConfig $replicaConfig)
     {
         $this->primaryDatabase = $primaryDatabase;
         $this->tableName = $tableName;
@@ -31,7 +31,7 @@ class ReplicaManager
         $this->selectedDatabase = null;
     }
 
-    public function getDatabase($allowReplica): Context
+    public function getDatabase($allowReplica): Explorer
     {
         if (!$allowReplica) {
             $this->setWriteFlag();
@@ -62,7 +62,7 @@ class ReplicaManager
     }
 
     /**
-     * @return Context[]
+     * @return Explorer[]
      */
     public function getReplicas(): array
     {

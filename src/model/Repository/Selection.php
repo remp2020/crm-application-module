@@ -14,10 +14,10 @@ class Selection extends \Nette\Database\Table\Selection
     /**
      * @inheritdoc
      */
-    public function createSelectionInstance($table = null)
+    public function createSelectionInstance(string $table = null): self
     {
         return new self(
-            $this->context,
+            $this->explorer,
             $this->conventions,
             $table ?: $this->name,
             $this->cache ? $this->cache->getStorage() : null
@@ -27,18 +27,18 @@ class Selection extends \Nette\Database\Table\Selection
     /**
      * @inheritdoc
      */
-    public function createRow(array $row)
+    public function createRow(array $row): ActiveRow
     {
         return new ActiveRow($row, $this);
     }
 
-    public function condition($condition, array $params, $tableChain = null)
+    public function condition($condition, array $params, $tableChain = null): void
     {
         $params = $this->processDateFields($params);
         parent::condition($condition, $params, $tableChain);
     }
 
-    public function setReplicaManager(ReplicaManager $replicaManager)
+    public function setReplicaManager(ReplicaManager $replicaManager): void
     {
         $this->replicaManager = $replicaManager;
     }
@@ -47,18 +47,18 @@ class Selection extends \Nette\Database\Table\Selection
      * update (and other write methods) needs to reinitialize context property to use primary database in order
      * to maintain integrity of the application.
      */
-    public function update($data)
+    public function update(iterable $data): int
     {
         if ($this->replicaManager) {
-            $this->context = $this->replicaManager->getDatabase(false);
+            $this->explorer = $this->replicaManager->getDatabase(false);
         }
         return parent::update($data);
     }
 
-    public function delete()
+    public function delete(): int
     {
         if ($this->replicaManager) {
-            $this->context = $this->replicaManager->getDatabase(false);
+            $this->explorer = $this->replicaManager->getDatabase(false);
         }
         return parent::delete();
     }
@@ -66,7 +66,7 @@ class Selection extends \Nette\Database\Table\Selection
     public function insert($data)
     {
         if ($this->replicaManager) {
-            $this->context = $this->replicaManager->getDatabase(false);
+            $this->explorer = $this->replicaManager->getDatabase(false);
         }
         return parent::insert($data);
     }

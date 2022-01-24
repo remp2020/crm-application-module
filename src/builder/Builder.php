@@ -2,12 +2,12 @@
 
 namespace Crm\ApplicationModule\Builder;
 
-use Nette\Database\Context;
-use Nette\Database\Table\IRow;
+use Nette\Database\Explorer;
+use Nette\Database\Table\ActiveRow;
 
 abstract class Builder
 {
-    /** @var  Context; */
+    /** @var Explorer ; */
     protected $database;
 
     /** @var  array */
@@ -25,7 +25,7 @@ abstract class Builder
     /** @return bool */
     abstract public function isValid();
 
-    /** @return IRow|bool */
+    /** @return ActiveRow|bool */
     public function save()
     {
         if ($this->isValid()) {
@@ -36,9 +36,9 @@ abstract class Builder
     }
 
     /**
-     * @param Context $database
+     * @param Explorer $database
      */
-    public function __construct(Context $database)
+    public function __construct(Explorer $database)
     {
         $this->database = $database;
         $this->data = [];
@@ -134,7 +134,7 @@ abstract class Builder
 
     /**
      * @param string $tableName
-     * @return bool|int|\Nette\Database\Table\IRow
+     * @return bool|int|ActiveRow
      */
     protected function store($tableName)
     {

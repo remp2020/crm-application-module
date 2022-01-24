@@ -15,6 +15,8 @@ use Kdyby\Autowired\AutowireComponentFactories;
 use Kdyby\Translation\Translator;
 use League\Event\Emitter;
 use Nette\Application\UI\Presenter;
+use Nette\Application\UI\Template;
+use Nette\DI\Container;
 use Nette\Security\AuthenticationException;
 
 abstract class BasePresenter extends Presenter
@@ -35,6 +37,9 @@ abstract class BasePresenter extends Presenter
 
     /** @var Emitter @inject */
     public $emitter;
+
+    /** @var Container @inject */
+    public $container;
 
     public $locale;
 
@@ -72,7 +77,7 @@ abstract class BasePresenter extends Presenter
         $this->template->siteDescription = $this->applicationConfig->get('site_description');
     }
 
-    protected function createTemplate()
+    protected function createTemplate(): Template
     {
         $template = parent::createTemplate();
 
@@ -113,12 +118,23 @@ abstract class BasePresenter extends Presenter
         return $control;
     }
 
-    public function formatLayoutTemplateFiles()
+    public function formatLayoutTemplateFiles(): array
     {
         if ($this->layout) {
             return [$this->layoutManager->getLayout($this->layout)];
         }
 
         return parent::formatLayoutTemplateFiles();
+    }
+
+    /**
+     * getContext returns DI container as it used in the previous versions of Nette 3.
+     *
+     * Nette deprecated use of this method since it's not used internally anymore, but CRM still requires it for proper
+     * injection of autowired dependencies (e.g. in BaseWidget).
+     */
+    public function getContext(): Container
+    {
+        return $this->container;
     }
 }
