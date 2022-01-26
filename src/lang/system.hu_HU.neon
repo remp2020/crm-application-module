@@ -1,0 +1,4 @@
+message:
+	success: Siker!
+	error: Hiba!
+	warning: Figyelem!
