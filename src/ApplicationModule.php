@@ -46,6 +46,7 @@ class ApplicationModule extends CrmModule
             new ApiIdentifier('1', 'events', 'list'),
             \Crm\ApplicationModule\Api\EventsListApiHandler::class,
             \Crm\ApiModule\Authorization\BearerTokenAuthorization::class
+            // \Tomaj\NetteApi\Authorization\BearerTokenAuthorization::class
         ));
 
         $apiRoutersContainer->attachRouter(new ApiRoute(

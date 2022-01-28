@@ -15,6 +15,7 @@ class EventsListApiHandler extends ApiHandler
     public function __construct(
         EventsStorage $eventsStorage
     ) {
+        parent::__construct();
         $this->eventsStorage = $eventsStorage;
     }
 
@@ -34,6 +35,7 @@ class EventsListApiHandler extends ApiHandler
             ];
         }
 
+//        $response = new JsonApiResponse(Response::S200_OK, ['status' => 'ok', 'events' => $result]);
         $response = new JsonResponse(['status' => 'ok', 'events' => $result]);
         $response->setHttpCode(Response::S200_OK);
 

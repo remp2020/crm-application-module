@@ -7,6 +7,7 @@
 - [Minimal requirements](#minimal-requirements)
 - [Nette 3.0](#nette-30)
 - [Nette 3.1](#nette-31)
+- [Nette API](#nette-api)
 
 ## Minimal requirements
 
@@ -373,3 +374,80 @@ Multiple Nette interfaces lost **I** prefix. Follow migration guide mentioned ab
 
 - We switched from `$form->values['field_name]` to `$form->getValues()['field_name]` _(recommended by rector)_.
 - Check validation methods of forms _(when used with `$form->onValidate[]`)_. It's possible that `$form->values` (or `$form->getValues()`) won't return all values for validation. Use `$form->getUnsafeValues()` instead.
+
+## Nette API
+
+Previously CRM used a custom implementation of API library, which later evolved to https://github.com/tomaj/nette-api/. The library has come a long way since then and we want to bring all of the nice features to the CRM.
+
+Unfortunately, there's no nice upgrade guide, nor rector rules at the moment. Most of the changes are backwards compatible, but you'll still need to change your API handlers.
+
+However, the backwards compatible changes point to the deprecated parts of the API and it's recommended to check the docs of `tomaj/nette-api` and utilize the newer features directly. We'll give a notice before removing deprecated classes.
+
+### Update API handlers
+
+- Changed signature of `handle(ApiAuthorizationInterface $authorization)`  to `handle(array $params): ApiResponseInterface`. There are couple of side effects of this:
+  
+  - You don't need to ask `ParamsProcessor` to retrieve the params since they're passed to the `handle()` method directly:
+    ```php
+    $paramsProcessor = new ParamsProcessor($this->params());
+    $params = $paramsProcessor->getValues();
+    ```
+    
+  - The params are already validated by `Crm\ApiModule\Presenters\ApiPresenter`. You can disable the validation on per-handler basis with `protected boolean $enableValidation = false`. This is handy if you need to manually control error response for invalid params. It's highly recommended to get rid of custom params validation blocks in your APIs.
+    
+  - The authorization is not present by default anymore. If you work with the `ApiAuthorizationInterface $authorization` in your handler, you can retrieve it with:
+    ```php
+    $authorization = $this->getAuthorization();
+    ```
+
+- Changed signature of `Crm\ApiModule\Params\ParamsProcessor::isError()`.
+
+  - As stated in previous part, params are already validated by the base API handler. If you keep the validation snippets in your handlers, it's no longer possible to use `Crm\ApiModule\Params\ParamsProcessor::isError()` to both 1) check if the params contain error, 2) and retrieve the error within the same call. If you still need to run the validation yourself, change this block:
+
+    ```php
+    $error = $paramsProcessor->isError();
+    if ($error) {
+        $response = new JsonResponse(['status' => 'error', 'message' => $error]);
+        $response->setHttpCode(Response::S400_BAD_REQUEST);
+        return $response;
+    }
+    ```
+
+    The minimal change would be to use `hasError()` instead of `isError()`. However, it's recommended to use library-provided methods `isError()` and `getErrors()` instead:
+    
+    ```php
+    if ($paramsProcessor->isError()) {
+        $response = new JsonResponse([
+            'status' => 'error',
+            'code' => 'invalid_request',
+            'errors' => $paramsProcessor->getErrors(),
+        ]);
+    }
+    ```
+
+- Changed signature of `params()` to `params(): array`.
+
+### Update API authorizations
+
+If you implement your own API authorization (`Crm\ApiModule\Authorization\ApiAuthorizationInterface`), follow the changes:
+
+- Change signature of `authorized($resource = Authorizator::ALL)` method to `authorized($resource = Authorizator::ALL): bool`.
+- Change signature of `getErrorMessage()` method to `getErrorMessage(): ?string`.
+
+### Update API response implementations
+
+If you implement your own API response wrapper (`Crm\ApiModule\Response\ApiResponseInterface`), follow the changes:
+
+- Change signature of `private $httpCode` property to `private int $code`.
+
+### Deprecations
+
+##### API handlers
+
+- Definition of param through `InputParam` is deprecated in favor of specific params defined in `Tomaj\NetteApi\Params` namespace.
+- 
+
+##### API response implementations
+
+- `Crm\ApiModule\Response\ApiResponseInterface::setHttpCode()` is deprecated in favor of `Crm\ApiModule\Response\ApiResponseInterface::setCode()`.
+- `Crm\ApiModule\Response\ApiResponseInterface::getHttpCode()` is deprecated in favor of `Crm\ApiModule\Response\ApiResponseInterface::getCode()`.
