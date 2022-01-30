@@ -5,6 +5,8 @@ namespace Crm\ApplicationModule\Config;
 use Crm\ApplicationModule\Config\Repository\ConfigsRepository;
 use Nette\Caching\Cache;
 use Nette\Caching\Storage;
+use Tracy\Debugger;
+use Tracy\ILogger;
 
 class ApplicationConfig
 {
@@ -15,17 +17,17 @@ class ApplicationConfig
     const TYPE_HTML = 'html';
     const TYPE_BOOLEAN = 'boolean';
 
-    private $loaded = false;
+    private bool $loaded = false;
 
-    private $configsRepository;
+    private ConfigsRepository $configsRepository;
 
-    private $localConfig;
+    private LocalConfig $localConfig;
 
-    private $items = null;
+    private array $items = [];
 
-    private $cacheStorage;
+    private Storage $cacheStorage;
 
-    private $cacheExpiration = 60;
+    private int $cacheExpiration = 60;
 
     public function __construct(
         ConfigsRepository $configsRepository,
@@ -37,7 +39,7 @@ class ApplicationConfig
         $this->cacheStorage = $cacheStorage;
     }
 
-    public function setCacheExpiration($cacheExpiration)
+    public function setCacheExpiration(int $cacheExpiration)
     {
         $this->cacheExpiration = $cacheExpiration;
     }
@@ -50,16 +52,15 @@ class ApplicationConfig
 
         if (isset($this->items[$name])) {
             $item = $this->items[$name];
-            $value = $item->value;
-
-            if ($this->localConfig->exists($name)) {
-                $value = $this->localConfig->value($name);
+        } else {
+            $itemRow = $this->configsRepository->loadByName($name);
+            $item = $this->formatItem($itemRow);
+            if ($this->cacheExpiration > 0) {
+                // if any kind of caching is allowed, we can store this for future use
+                $this->items[$name] = $item;
             }
-
-            return $this->formatValue($value, $item->type);
         }
 
-        $item = $this->configsRepository->loadByName($name);
         if ($item) {
             $value = $item->value;
 
@@ -70,23 +71,34 @@ class ApplicationConfig
             return $this->formatValue($value, $item->type);
         }
 
-        // tu mozno bude treba hodit excepnut
+        Debugger::log("Requested config '{$name}' doesn't exist, returning 'null'.", ILogger::WARNING);
         return null;
     }
 
     private function initAutoload()
     {
-        $cacheData = $this->cacheStorage->read('application_autoload_cache');
+        $cacheData = $this->cacheStorage->read('application_autoload_cache_v2');
         if ($cacheData) {
             $this->items = $cacheData;
         } else {
             $items = $this->configsRepository->loadAllAutoload();
-            foreach ($items as $item) {
-                $this->items[$item->name] = (object)$item->toArray();
+            foreach ($items as $itemRow) {
+                $this->items[$itemRow->name] = $this->formatItem($itemRow);
             }
-            $this->cacheStorage->write('application_autoload_cache', $this->items, [Cache::EXPIRE => $this->cacheExpiration]);
+            $this->cacheStorage->write('application_autoload_cache_v2', $this->items, [Cache::EXPIRE => $this->cacheExpiration]);
         }
         $this->loaded = true;
+    }
+
+    private function formatItem($itemRow)
+    {
+        if (!$itemRow) {
+            return null;
+        }
+        return (object) [
+            'value' => $itemRow->value,
+            'type' => $itemRow->type,
+        ];
     }
 
     /**
@@ -94,10 +106,10 @@ class ApplicationConfig
      * @param string $type
      * @return int|string
      */
-    private function formatValue($value, $type = 'string')
+    private function formatValue($value, string $type = 'string')
     {
-        if ($type == self::TYPE_INT) {
-            return intval($value);
+        if ($type === self::TYPE_INT) {
+            return (int) $value;
         }
 
         return $value;

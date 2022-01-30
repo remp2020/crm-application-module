@@ -219,7 +219,7 @@ class DemoFrontendMenuDataProvider implements FrontendMenuDataProviderInterface
 
 Following is a set of various charts provided by the `ApplicationModule` out of the box.
 
-##### [GoogleBarGraph](src/components/Graphs/GoogleBarGraph/GoogleBarGraph.php)
+##### [GoogleBarGraph](src/Components/Graphs/GoogleBarGraph/GoogleBarGraph.php)
 
 Simple bar graph based on Google charts. Usually used within GoogleBarGraphGroup component, but can be also used separately if you need to manage your groups (keys within `$data` parameter) manually.
 
@@ -280,7 +280,7 @@ In your `templates/Demo/default.latte` template, use the component as needed:
 ![alt text](docs/bar_graph.png "Google bar graph")
 </details>
 
-##### [GoogleBarGraphGroup](src/components/Graphs/GoogleBarGraphGroup/GoogleBarGraphGroup.php)
+##### [GoogleBarGraphGroup](src/Components/Graphs/GoogleBarGraphGroup/GoogleBarGraphGroup.php)
 
 Simple bar graph based on Google charts. Component is able to create multiple groups based on `->setGroupBy` method and results of your query. Internally uses `GoogleBarGraph` to render the chart.
 
@@ -338,7 +338,7 @@ In your `templates/Demo/default.latte` template, use the component as needed:
 ![alt text](docs/bar_graph_group.png "Google bar graph group")
 </details>
 
-##### [GoogleLineGraph](src/components/Graphs/GoogleLineGraph/GoogleLineGraph.php)
+##### [GoogleLineGraph](src/Components/Graphs/GoogleLineGraph/GoogleLineGraph.php)
 
 Simple line graph based on Google charts. This component is only being used by `GoogleLineGraphGroup` and is not advised to be used directly unless you really need to provide raw data for the chart.
 
@@ -348,7 +348,7 @@ Simple line graph based on Google charts. This component is only being used by `
 ![alt text](docs/line_graph.png "Line graph")
 </details>
 
-##### [GoogleLineGraphGroup](src/components/Graphs/GoogleLineGraphGroup/GoogleLineGraphGroup.php)
+##### [GoogleLineGraphGroup](src/Components/Graphs/GoogleLineGraphGroup/GoogleLineGraphGroup.php)
 
 Simple line graph based on Google charts. Component is able to create multiple series based on data grouped within built query.
 
@@ -419,7 +419,7 @@ In your `templates/Demo/default.latte` template, use the component as needed:
 ![alt text](docs/line_graph_group.png "Line graph group")
 </details>
 
-##### [InlineBarGraph](src/components/Graphs/InlineBarGraph/InlineBarGraph.php)
+##### [InlineBarGraph](src/Components/Graphs/InlineBarGraph/InlineBarGraph.php)
 
 Inline bar chart is meant to be used directly within grids or with other inline bar charts to provide quick information about the data.
 
@@ -493,7 +493,7 @@ In your `templates/Demo/default.latte` template, use the component as needed:
 ![alt text](docs/inline_bar_graph.png "Inline bar graph")
 </details>
 
-##### [SmallBarchart](src/components/Graphs/SmallBarchart/SmallBarGraph.php)
+##### [SmallBarchart](src/Components/Graphs/SmallBarchart/SmallBarGraph.php)
 
 `SmallBarChart` is targeted to be used within widgets across the CRM admin, but can be also used in user-facing frontend to provide simple countable information.
 
@@ -545,7 +545,7 @@ In your `templates/Demo/default.latte` template, use the component as needed:
 ![alt text](docs/small_bar_graph.png "Small bar graph")
 </details>
 
-##### [GoogleSankeyGraphGroup](src/components/Graphs/GoogleSankeyGraphGroup/GoogleSankeyGraphGroup.php)
+##### [GoogleSankeyGraphGroup](src/Components/Graphs/GoogleSankeyGraphGroup/GoogleSankeyGraphGroup.php)
 
 A sankey graph is a component based on Google Sankey diagram. It's used to depict a flow from one set of values to another.
 
@@ -598,7 +598,7 @@ In your `templates/Demo/default.latte` template, use the component as needed:
 ![alt text](docs/sankey_graph.png "Line graph group")
 </details>
 
-#### [VisualPaginator](src/components/VisualPaginator/VisualPaginator.php)
+#### [VisualPaginator](src/Components/VisualPaginator/VisualPaginator.php)
 
 Paginator is used to limit and offset your results displayed in lists all around the system. Paginator keeps the current page/limit and provides the information to your data-fetching blocks of code.
 
@@ -649,13 +649,13 @@ In your `templates/Demo/default.latte` template, use the component as needed (us
 
 Following is a set of widget wrappers provided by `ApplicationModule` to be used by your widgets. Application provides three set of wrappers:
 
-##### [SimpleWidget](src/components/Widgets/SimpleWidget/SimpleWidget.php)
+##### [SimpleWidget](src/Components/Widgets/SimpleWidget/SimpleWidget.php)
 
 Simple widget is the component allowing simple extension of modules's view by other modules. Module can provide placeholder for widgets in the action's template (in `.latte` file) and other module can register their implementations of widget in their Module class.
 
 You can read more about creating and registering widgets in CRM skeleton documentation available at [github.com/remp2020/crm-skeleton](https://github.com/remp2020/crm-skeleton#registerWidgets).
 
-##### [SingleStatWidget](src/components/Widgets/SingleStatWidget/SingleStatWidget.php)
+##### [SingleStatWidget](src/Components/Widgets/SingleStatWidget/SingleStatWidget.php)
 
 Widget provides wrapper for simple table with single statistic - each provided by separate widget implementation. The primary scenario for this use are dashboards.
 

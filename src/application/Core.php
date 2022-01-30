@@ -144,6 +144,11 @@ class Core
         FileSystem::write(self::getEnvFilePath(), $envContent);
     }
 
+    public function getContainer()
+    {
+        return $this->container;
+    }
+    
     protected function createContainer()
     {
         $configurator = new Configurator;
