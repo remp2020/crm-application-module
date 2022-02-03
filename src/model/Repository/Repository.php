@@ -210,7 +210,7 @@ class Repository
             if ($retryTimes === 0) {
                 throw $e;
             }
-            $this->getDatabase(true)->getConnection()->reconnect();
+            $this->getDatabase(false)->getConnection()->reconnect();
             return $this->ensure($callback, $retryTimes - 1);
         }
     }
