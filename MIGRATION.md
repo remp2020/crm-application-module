@@ -393,12 +393,16 @@ However, the backwards compatible changes point to the deprecated parts of the A
     $params = $paramsProcessor->getValues();
     ```
     
-  - The params are already validated by `Crm\ApiModule\Presenters\ApiPresenter`. You can disable the validation on per-handler basis with `protected boolean $enableValidation = false`. This is handy if you need to manually control error response for invalid params. It's highly recommended to get rid of custom params validation blocks in your APIs.
+  - The params are already validated by `Crm\ApiModule\Presenters\ApiPresenter`. You can disable the validation on per-handler basis by implementing `Crm\ApiModule\Api\ApiParamsValidationInterface`. This is handy if you need to manually control error response for invalid params, but it's still recommended to get rid of the custom validation in handlers and let API module handle it.
     
-  - The authorization is not present by default anymore. If you work with the `ApiAuthorizationInterface $authorization` in your handler, you can retrieve it with:
+  - The `$authorization` is not present by default anymore. If you work with the `ApiAuthorizationInterface $authorization` in your handler, you can retrieve it with:
     ```php
     $authorization = $this->getAuthorization();
     ```
+
+- Changed signature of `idempotentHandle(ApiAuthorizationInterface $authorization)` to `idempotentHandle(array $params): ApiResponseInterface`.
+  
+  - This change only affects you if your API handler implements `Crm\ApiModule\Api\IdempotentHandlerInterface`. The necessary changes should be similar as with the `handle()` method.  
 
 - Changed signature of `Crm\ApiModule\Params\ParamsProcessor::isError()`.
 
@@ -444,8 +448,7 @@ If you implement your own API response wrapper (`Crm\ApiModule\Response\ApiRespo
 
 ##### API handlers
 
-- Definition of param through `InputParam` is deprecated in favor of specific params defined in `Tomaj\NetteApi\Params` namespace.
-- 
+- Definition of param through `InputParam` is deprecated in favor of specific params definitions from `Tomaj\NetteApi\Params` namespace.
 
 ##### API response implementations
 
