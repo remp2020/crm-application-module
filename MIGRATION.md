@@ -393,7 +393,7 @@ However, the backwards compatible changes point to the deprecated parts of the A
     $params = $paramsProcessor->getValues();
     ```
     
-  - The params are already validated by `Crm\ApiModule\Presenters\ApiPresenter`. You can disable the validation on per-handler basis by implementing `Crm\ApiModule\Api\ApiParamsValidationInterface`. This is handy if you need to manually control error response for invalid params, but it's still recommended to get rid of the custom validation in handlers and let API module handle it.
+  - The params are already validated by `Crm\ApiModule\Presenters\ApiPresenter`. You can disable the validation on per-handler basis by implementing `Crm\ApiModule\Api\ApiParamsValidatorInterface`. This is handy if you need to manually control error response for invalid params, but it's still recommended to get rid of the custom validation in handlers and let API module handle it.
     
   - The `$authorization` is not present by default anymore. If you work with the `ApiAuthorizationInterface $authorization` in your handler, you can retrieve it with:
     ```php
