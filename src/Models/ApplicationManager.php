@@ -247,14 +247,13 @@ class ApplicationManager
 
     public function initialize()
     {
-        if (isset($_SERVER['SHELL']) || PHP_SAPI === 'cli' || defined('STDIN')) {
+        if (isset($_SERVER['SHELL'], $_SERVER['SHLVL']) || PHP_SAPI === 'cli' || defined('STDIN')) {
             $this->registerCommands();
             $this->registerCleanupCallbacks();
             $this->registerHermesHandlers();
             $this->registerSeeders();
             $this->registerAssets();
-        }
-        if (!Request::isApi()) {
+        } elseif (!Request::isApi()) {
             $this->registerWidgets();
             $this->registerLayouts();
         }
