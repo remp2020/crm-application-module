@@ -1,4 +1,56 @@
+from: Kezdet
+to: Vég
+actual: Aktuális
+actions: Műveletek
+
+activated: aktív
+deactivated: inaktív
+
+show: Megtekintés
+add: Hozzáadás
+edit: Szerkesztés
+save: Mentés
+delete: Törlés
+export: Exportálás
+total: összesen
+
+logged: "Bejelentkezve: "
+sign_in: Bejelentkezés
+buy_subscription: Előfizetés vásárlása
+confirm_delete: Biztos törli a bejegyzést?
+
+download: Letöltés
+
+back_to_site: "Vissza az blogra"
+dashboard: Dashboard
+
 message:
 	success: Siker!
 	error: Hiba!
 	warning: Figyelem!
+
+"yes": "Igen"
+"no": "Nem"
+
+cancel_filter: Szűrő törlése
+filter: Szűrő
+all: Mind
+filtered: szűrt
+
+vat: ÁFA
+
+date:
+	days: Napok
+	weeks: Hetek
+	months: Hónapok
+	years: Évek
+
+last:
+	month: Múlt hónap
+	months: Utolsó %count%M
+	year: Előző év
+	years: Utolsó %count%Y
+
+fields:
+	updated: Frissítve
+	created: Létrehozva
