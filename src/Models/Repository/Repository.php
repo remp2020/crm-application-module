@@ -2,9 +2,11 @@
 
 namespace Crm\ApplicationModule;
 
+use Closure;
 use Crm\ApplicationModule\Models\Repository\SlugColumnTrait;
 use Crm\ApplicationModule\Repository\AuditLogRepository;
 use Crm\ApplicationModule\Repository\ReplicaTrait;
+use Throwable;
 use Nette\Caching\Storage;
 use Nette\Database\Explorer;
 
@@ -195,6 +197,19 @@ class Repository
         }
 
         return $row;
+    }
+
+    public function ensure(Closure $callback, int $retryTimes = 1)
+    {
+        try {
+            return $callback($this);
+        } catch (Throwable $e) {
+            if ($retryTimes === 0) {
+                throw $e;
+            }
+            $this->getDatabase(false)->getConnection()->reconnect();
+            return $this->ensure($callback, $retryTimes - 1);
+        }
     }
 
     /**
