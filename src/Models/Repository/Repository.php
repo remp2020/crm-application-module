@@ -6,9 +6,9 @@ use Closure;
 use Crm\ApplicationModule\Models\Repository\SlugColumnTrait;
 use Crm\ApplicationModule\Repository\AuditLogRepository;
 use Crm\ApplicationModule\Repository\ReplicaTrait;
-use Throwable;
 use Nette\Caching\Storage;
 use Nette\Database\Explorer;
+use Throwable;
 
 class Repository
 {
