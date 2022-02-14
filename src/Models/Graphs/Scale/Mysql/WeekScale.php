@@ -29,12 +29,12 @@ time_series.time_key,time_series.year,time_series.month,time_series.week,
   {$criteria->getTableName()}.id,{$criteria->getValueField()} AS value
 FROM
 ( SELECT
-    calendar.month, calendar.year, calendar.date,calendar.week, CONCAT(calendar.year, '-', calendar.week) AS time_key
+    calendar.month, calendar.year, calendar.date, WEEK(calendar.date, 3) as week, YEARWEEK(calendar.date, 3) AS time_key
   FROM calendar
   WHERE
     calendar.date >= '{$criteria->getStartDate()}' AND
     calendar.date <  '{$criteria->getEndDate()}'
-  GROUP BY calendar.year,calendar.week
+  GROUP BY YEARWEEK(calendar.date, 3)
 ) AS time_series
 
 LEFT JOIN {$criteria->getTableName()} ON
@@ -69,7 +69,7 @@ GROUP BY time_series.time_key
         $dbData = [];
 
         $res = $this->database->query("SELECT {$criteria->getValueField()} AS value,
-calendar.week AS week,
+WEEK(calendar.date, 3) AS week,
 calendar.month AS month,
 calendar.year AS year,
 {$criteria->getTableName()}.id
@@ -82,7 +82,7 @@ WHERE
     {$criteria->getTableName()}.{$criteria->getTimeField()} >= '{$criteria->getStartDate('Y-m-d 00:00:00')}' 
 AND {$criteria->getTableName()}.{$criteria->getTimeField()} <= '{$criteria->getEndDate('Y-m-d 23:59:59')}'	
 	{$criteria->getWhere()}
-GROUP BY calendar.year,calendar.week
+GROUP BY YEARWEEK(calendar.date, 3)
 
 		");
 
@@ -103,7 +103,7 @@ GROUP BY calendar.year,calendar.week
         $dbData = [];
 
         $res = $this->database->query("SELECT {$criteria->getValueField()} AS value,
-calendar.week AS week,
+WEEK(calendar.date, 3) AS week,
 calendar.month AS month,
 calendar.year AS year,
 {$this->getSeries($criteria->getSeries())}
@@ -117,7 +117,7 @@ WHERE
     {$criteria->getTableName()}.{$criteria->getTimeField()} >= '{$criteria->getStartDate('Y-m-d 00:00:00')}' 
 AND {$criteria->getTableName()}.{$criteria->getTimeField()} <= '{$criteria->getEndDate('Y-m-d 23:59:59')}'
 	{$criteria->getWhere()}
-GROUP BY calendar.year,calendar.week" . $this->getGroupBy($criteria->getGroupBy()) . '
+GROUP BY YEARWEEK(calendar.date, 3)" . $this->getGroupBy($criteria->getGroupBy()) . '
 		');
 
         foreach ($res as $row) {
