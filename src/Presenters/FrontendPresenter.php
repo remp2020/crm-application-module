@@ -3,6 +3,7 @@
 namespace Crm\ApplicationModule\Presenters;
 
 use Crm\ApplicationModule\Components\FrontendMenu;
+use Crm\ApplicationModule\Events\FrontendRequestEvent;
 use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
 use Crm\UsersModule\Auth\AutoLogin\AutoLogin;
 use Crm\UsersModule\Repository\UsersRepository;
@@ -42,8 +43,9 @@ class FrontendPresenter extends BasePresenter
     public function startup()
     {
         parent::startup();
-        $this->buildTrackingParamsSession();
 
+        $this->emitter->emit(new FrontendRequestEvent());
+        $this->buildTrackingParamsSession();
         $this->setLayout($this->getLayoutName());
 
         // mega krasny header P3P - security my ass
