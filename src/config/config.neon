@@ -58,7 +58,7 @@ services:
 	- Crm\ApplicationModule\Commands\GenerateKeyCommand
 
 	applicationConfig:
-		class:  Crm\ApplicationModule\Config\ApplicationConfig
+		class: Crm\ApplicationModule\Config\ApplicationConfig
 
 	- Crm\ApplicationModule\Snippet\Control\SnippetFactory
 	- Crm\ApplicationModule\Snippet\SnippetRenderer
