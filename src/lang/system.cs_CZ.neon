@@ -27,6 +27,9 @@ cancel_filter: Zruš filtr
 filter: Filtr
 all: Všechny
 filtered: vyfiltrované
+
+vat: DPH
+
 date:
 	days: Dny
 	weeks: Týdny
