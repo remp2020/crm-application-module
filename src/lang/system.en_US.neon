@@ -23,9 +23,9 @@ confirm_delete: Are you sure you want to delete this record?
 download: Download
 
 message:
-	success: Success!
-	error: Error!
-	warning: Warning!
+    success: Success!
+    error: Error!
+    warning: Warning!
 
 "yes": "Yes"
 "no": "No"
@@ -38,18 +38,18 @@ filtered: filtered
 vat: VAT
 
 date:
-	days: Days
-	weeks: Weeks
-	months: Months
-	years: Years
+    days: Days
+    weeks: Weeks
+    months: Months
+    years: Years
 
 last:
-	month: Last month
-	months: Last %count%M
-	year: Last year
-	years: Last %count%Y
-	all: All
+    month: Last month
+    months: Last %count%M
+    year: Last year
+    years: Last %count%Y
+    all: All
 
 fields:
-	updated: Updated
-	created: Created
+    updated: Updated
+    created: Created

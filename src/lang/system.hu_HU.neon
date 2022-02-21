@@ -22,9 +22,9 @@ confirm_delete: Biztos törli a bejegyzést?
 download: Letöltés
 
 message:
-	success: Siker!
-	error: Hiba!
-	warning: Figyelem!
+    success: Siker!
+    error: Hiba!
+    warning: Figyelem!
 
 "yes": "Igen"
 "no": "Nem"
@@ -37,17 +37,17 @@ filtered: szűrt
 vat: ÁFA
 
 date:
-	days: Napok
-	weeks: Hetek
-	months: Hónapok
-	years: Évek
+    days: Napok
+    weeks: Hetek
+    months: Hónapok
+    years: Évek
 
 last:
-	month: Múlt hónap
-	months: Utolsó %count%M
-	year: Előző év
-	years: Utolsó %count%Y
+    month: Múlt hónap
+    months: Utolsó %count%M
+    year: Előző év
+    years: Utolsó %count%Y
 
 fields:
-	updated: Frissítve
-	created: Létrehozva
+    updated: Frissítve
+    created: Létrehozva
