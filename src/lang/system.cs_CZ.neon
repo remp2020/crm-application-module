@@ -2,8 +2,10 @@ from: Od
 to: Do
 actual: Aktuálně
 actions: Akce
+
 activated: aktivovaný
 deactivated: deaktivovaný
+
 show: Zobraz
 add: Přidej
 edit: Uprav
@@ -12,17 +14,22 @@ delete: Smaž
 export: Export
 total: celkem
 pcs: ks
+
 logged: Přihlášený
 sign_in: Přihlásit
 buy_subscription: Koupit předplatné
 confirm_delete: "Jste si skutečně jistý/á, že chcete smazat tento záznam?"
+
 download: Stáhni
+
 message:
 	success: Úspěch!
 	error: Chyba!
 	warning: Pozor!
+
 "yes": "Ano"
 "no": "Ne"
+
 cancel_filter: Zruš filtr
 filter: Filtr
 all: Všechny
@@ -35,6 +42,7 @@ date:
 	weeks: Týdny
 	months: Měsíce
 	years: Roky
+
 last:
 	month: Poslední měsíc
 	months: '%count%M'
