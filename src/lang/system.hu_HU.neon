@@ -21,9 +21,6 @@ confirm_delete: Biztos törli a bejegyzést?
 
 download: Letöltés
 
-back_to_site: "Vissza az blogra"
-dashboard: Dashboard
-
 message:
 	success: Siker!
 	error: Hiba!
