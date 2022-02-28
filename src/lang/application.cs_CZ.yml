@@ -1,0 +1,55 @@
+frontend:
+    layout:
+        warning: Pozor!
+        danger: Chyba!
+        success: Úspěch!
+
+config:
+    category: Aplikace
+    currency:
+        name: 'Globální měna'
+        description: 'Globální měna používána při všech platbách v ISO-4217 formátu (např. EUR)'
+    site_title:
+        name: 'Jméno stránky'
+        description: 'Základní název stránky - to co zobrazí jako titulek okno v prohlížeči (např. Deník N)'
+    site_description:
+        name: 'Popis stránky'
+        description: 'Používá se v metadatech stránky (např. Denník N - Nezávislé Noviny)'
+    site_url:
+        name: 'Base URL stránky'
+        description: 'Základní URL kde běží CRM (např. https://crm.press)'
+    cms_url:
+        name: 'CMS URL'
+        description: 'URL směřující na titulku CMS (např. https://example.com)'
+    contact_email:
+        name: 'Kontaktní email'
+        description: 'Kontaktní email (např. info@example.com)'
+    default_route:
+        name: 'Výchozí routa'
+        description: 'Nette Routa, která se má použít při requestu na / (např. Subscriptions:Subscriptions:new)'
+    home_route:
+        name: 'Výchozí stránka'
+        description: 'Nette Routa, která se má použít při přesměrování uživatele po přihlášení, změně hesla, apod. (např. Application:Default:default)'
+    not_logged_in_route:
+        name: 'Stránka pro nepřihlášených'
+        description: 'Nette Routa, na kterou má být uživatel přesměrován při návštěvě URL, která je dostupná pouze pro přihlášené uživatele (např. :Users:Sign:in)'
+    layout_name:
+        name: 'Layout stránky'
+        description: 'Název layoutu zaregistrovaného jedním z modulů. Pozor, nesprávná nota může vyřadit stránku! (např. dennikn)'
+    og_image:
+        name: 'Meta obrázek stránky v předplatném'
+        description: 'URL k obrázku (např. <code>/layouts/admin/images/logo_with_text.svg</code>)'
+    header_block:
+        name: 'Kód v hlavičce'
+        description: 'Libovolný kód (např. Google analytics nebo další), který se má vložit do hlavičky šablony'
+    admin_logo:
+        name: Admin logo
+        description: 'HTML zobrazující logo v hlavičce (např. <code>&lt;a href=&quot;/&quot;&gt;&lt;img height=&quot;50px&quot; style=&quot;float:left; padding: 0.3em; background: #e7e7e7;&quot; src=&quot;/layouts/admin/images/logo.svg&quot; alt=&quot;logo&quot;&gt;&lt;/a&gt;</code>)'
+
+integrations:
+    config:
+        category: Integrace
+
+user:
+    delete_user_data:
+        internal_error: "Nastala chyba a nepodařilo se ověřit, zda účet může být smazán."

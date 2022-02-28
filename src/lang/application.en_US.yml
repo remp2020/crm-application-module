@@ -1,0 +1,55 @@
+frontend:
+    layout:
+        warning: Warning!
+        danger: Error!
+        success: Success!
+
+config:
+    category: Application
+    currency:
+        name: 'Global currency'
+        description: 'Global currency used for every payment in ISO-4217 format (e.g. EUR)'
+    site_title:
+        name: 'Page name'
+        description: 'Global page name - shown in browsers page title (e.g. Denník N)'
+    site_description:
+        name: 'Page description'
+        description: 'Used in page meta data (e.g. Denník N - Nezávislé Noviny)'
+    site_url:
+        name: 'Base page URL'
+        description: 'Base URL where CRM is deployed (e.g. https://crm.press)'
+    cms_url:
+        name: 'CMS URL'
+        description: 'Default URL of CMS (e.g. https://example.com)'
+    contact_email:
+        name: 'Contact email'
+        description: 'Contact email (e.g. info@example.com)'
+    default_route:
+        name: 'Default route'
+        description: 'Nette route, used when requesting / (e.g. Subscriptions:Subscriptions:new)'
+    home_route:
+        name: 'Default page'
+        description: 'Nette route, used for redirect after user logs in, changes password, etc. (e.g. Application:Default:default)'
+    not_logged_in_route:
+        name: 'Page for not logged in users'
+        description: 'Nette route, where to redirect user after hits URL only for logged in users (e.g. :Users:Sign:in)'
+    layout_name:
+        name: 'Page layout'
+        description: 'Name of the layout registered by one of the modules. Warning, bad value can make page dysfunctional! (e.g. dennikn)'
+    og_image:
+        name: 'Meta image for page with subscription'
+        description: 'Full URL to the image (e.g. <code>/layouts/admin/images/logo_with_text.svg</code>)'
+    header_block:
+        name: 'Code in header'
+        description: 'Any optional code (e.g. Google Analytics) that should be injected to the head of layout'
+    admin_logo:
+        name: Admin logo
+        description: 'HTML displaying logo in header (e.g. <code>&lt;a href=&quot;/&quot;&gt;&lt;img height=&quot;50px&quot; style=&quot;float:left; padding: 0.3em; background: #e7e7e7;&quot; src=&quot;/layouts/admin/images/logo.svg&quot; alt=&quot;logo&quot;&gt;&lt;/a&gt;</code>)'
+
+integrations:
+    config:
+        category: Integrations
+
+user:
+    delete_user_data:
+        internal_error: "Due to an error we were not able to verify if the account can be deleted."

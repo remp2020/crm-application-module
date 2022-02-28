@@ -23,9 +23,9 @@ confirm_delete: Ste si naozaj istý že chcete zmazať tento záznam?
 download: Stiahni
 
 message:
-	success: Úspech!
-	error: Chyba!
-	warning: Pozor!
+    success: Úspech!
+    error: Chyba!
+    warning: Pozor!
 
 "yes": "Áno"
 "no": "Nie"
@@ -38,18 +38,18 @@ filtered: vyfiltrovaných
 vat: DPH
 
 date:
-	days: Dni
-	weeks: Týždne
-	months: Mesiace
-	years: Roky
+    days: Dni
+    weeks: Týždne
+    months: Mesiace
+    years: Roky
 
 last:
-	month: Posledný mesiac
-	months: "%count%M"
-	year: Posledný rok
-	years: "%count%R"
-	all: Všetko
+    month: Posledný mesiac
+    months: "%count%M"
+    year: Posledný rok
+    years: "%count%R"
+    all: Všetko
 
 fields:
-	updated: Upravené
-	created: Vytvorené
+    updated: Upravené
+    created: Vytvorené
