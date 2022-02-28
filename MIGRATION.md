@@ -367,7 +367,7 @@ Multiple Nette interfaces lost **I** prefix. Follow migration guide mentioned ab
 
 ### Latte changes
 
-- Changed deprecated `{ifCurrent 'link'}` latte tag to `{isLinkCurrent('link')}` latte function. _(To be consistent, we changed also `{$presenter->isLinkCurrent('link')}`to new `{isLinkCurrent('link')}`)_.
+- Changed deprecated `{ifCurrent 'link'}` latte tag to `{if isLinkCurrent('link')}` latte function. _(To be consistent, we changed also `{$presenter->isLinkCurrent('link')}`to new `{isLinkCurrent('link')}`)_.
 - Fixed deprecated use of vars without dollar sign. `{var myVariable = ...}` changed to `{var $myVariable = ...}`.
 
 ### Notes
