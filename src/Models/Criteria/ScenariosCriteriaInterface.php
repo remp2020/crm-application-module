@@ -28,7 +28,7 @@ interface ScenariosCriteriaInterface
      * $paramValues may contain array: ["has_id": {"selection": true}]
      * 'selection' value represents state of boolean parameter in ScenarioBuilder (toggled on/off)
      *
-     * @param ActiveRow $criterionItemRow contains IRow object on which $selection query is going to be built.
+     * @param ActiveRow $criterionItemRow contains ActiveRow object on which $selection query is going to be built.
      * This depends on event you have registered the criteria (see CrmModule#registerScenariosCriteria()).
      * For example, if the criteria is registered on subscription event,
      * the criteria will receive the subscription object that has triggered the particular scenario.

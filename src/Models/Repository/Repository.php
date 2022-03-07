@@ -167,7 +167,7 @@ class Repository
     }
 
     /**
-     * Insert inserts data to the repository. If single IRow is returned, it attempts to log audit information.
+     * Insert inserts data to the repository. If single ActiveRow is returned, it attempts to log audit information.
      *
      * @param $data
      * @return bool|int|\Nette\Database\Table\ActiveRow
