@@ -44,7 +44,6 @@ class FrontendPresenter extends BasePresenter
     {
         parent::startup();
 
-        $this->emitter->emit(new FrontendRequestEvent());
         $this->buildTrackingParamsSession();
         $this->setLayout($this->getLayoutName());
 
@@ -71,26 +70,26 @@ class FrontendPresenter extends BasePresenter
     {
         parent::beforeRender();
 
+        $event = $this->emitter->emit(new FrontendRequestEvent());
+        foreach ($event->getFlashMessages() as $flashMessage) {
+            $this->flashMessage($flashMessage['message'], $flashMessage['type']);
+        }
+
         // tento kod by bolo dobre nejak oddelit
         // a spravit nejaky mechanizmus aby jednotlive moduly vedeli pridavat tuto funkcioianlitu dynamicky
         if (!$this->getUser()->isLoggedIn() && $this->getParameter('autologin') !== 'done' &&
-            (isset($this->params['login_t']) || $this->request->getCookie('n_token') || isset($this->params['token']))) {
+            (isset($this->params['login_t']) || isset($this->params['token']))) {
             try {
                 $mailAutologinToken = isset($this->params['login_t']) ? $this->params['login_t'] : null;
                 if (!$mailAutologinToken && isset($this->params['token'])) {
                     $mailAutologinToken = $this->params['token'];
                 }
-                $accessToken = $this->request->getCookie('n_token') ? $this->request->getCookie('n_token') : null;
-                $this->getUser()->login(['mailToken' => $mailAutologinToken, 'accessToken' => $accessToken]);
+                $this->getUser()->login(['mailToken' => $mailAutologinToken]);
 
                 $redirect = true;
             } catch (AuthenticationException $exp) {
                 if ($exp->getMessage()) {
                     $this->flashMessage($exp->getMessage(), 'notice');
-                }
-
-                if ($this->request->getCookie('n_token')) {
-                    $this->response->deleteCookie('n_token');
                 }
                 $redirect = false;
             }
