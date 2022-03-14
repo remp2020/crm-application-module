@@ -4,6 +4,7 @@ namespace Crm\ApplicationModule\Tests;
 
 use Crm\ApplicationModule\ResettableInterface;
 use Nette\DI\Container;
+use Nette\Http\Session;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -20,6 +21,7 @@ abstract class CrmTestCase extends TestCase
     {
         $_POST = [];
         $_GET = [];
+        $_SESSION = [];
 
         $this->container = $GLOBALS['container'];
 
@@ -28,6 +30,13 @@ abstract class CrmTestCase extends TestCase
             $resettable = $this->container->getService($serviceName);
             $resettable->reset();
         }
+    }
+
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+        $session = $this->container->getByType(Session::class);
+        $session->close();
     }
 
     protected function inject($className)
