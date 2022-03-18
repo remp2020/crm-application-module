@@ -385,7 +385,7 @@ However, the backwards compatible changes point to the deprecated parts of the A
 
 ### Update API handlers
 
-- Changed signature of `handle(ApiAuthorizationInterface $authorization)`  to `handle(array $params): ApiResponseInterface`. There are couple of side effects of this:
+- Changed signature of `handle(ApiAuthorizationInterface $authorization)`  to `handle(array $params): \Tomaj\NetteApi\Response\ResponseInterface`. There are couple of side effects of this:
   
   - You don't need to ask `ParamsProcessor` to retrieve the params since they're passed to the `handle()` method directly:
     ```php
@@ -400,7 +400,7 @@ However, the backwards compatible changes point to the deprecated parts of the A
     $authorization = $this->getAuthorization();
     ```
 
-- Changed signature of `idempotentHandle(ApiAuthorizationInterface $authorization)` to `idempotentHandle(array $params): ApiResponseInterface`.
+- Changed signature of `idempotentHandle(ApiAuthorizationInterface $authorization)` to `idempotentHandle(array $params): Tomaj\NetteApi\Response\ResponseInterface`.
   
   - This change only affects you if your API handler implements `Crm\ApiModule\Api\IdempotentHandlerInterface`. The necessary changes should be similar as with the `handle()` method.  
 
