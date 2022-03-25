@@ -3,10 +3,10 @@
 namespace Crm\ApplicationModule\Api;
 
 use Crm\ApiModule\Api\ApiHandler;
-use Crm\ApiModule\Api\JsonResponse;
-use Crm\ApiModule\Response\ApiResponseInterface;
 use Crm\ApplicationModule\Event\EventsStorage;
 use Nette\Http\Response;
+use Tomaj\NetteApi\Response\JsonApiResponse;
+use Tomaj\NetteApi\Response\ResponseInterface;
 
 class EventGeneratorsListApiHandler extends ApiHandler
 {
@@ -23,7 +23,7 @@ class EventGeneratorsListApiHandler extends ApiHandler
         return [];
     }
 
-    public function handle(array $params): ApiResponseInterface
+    public function handle(array $params): ResponseInterface
     {
         $events = $this->eventsStorage->getEvents();
         $eventGenerators = $this->eventsStorage->getEventGenerators();
@@ -36,8 +36,7 @@ class EventGeneratorsListApiHandler extends ApiHandler
             ];
         }
 
-        $response = new JsonResponse(['status' => 'ok', 'events' => $result]);
-        $response->setHttpCode(Response::S200_OK);
+        $response = new JsonApiResponse(Response::S200_OK, ['status' => 'ok', 'events' => $result]);
 
         return $response;
     }
