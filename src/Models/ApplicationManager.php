@@ -247,7 +247,7 @@ class ApplicationManager
 
     public function initialize()
     {
-        if (isset($_SERVER['SHELL'], $_SERVER['SHLVL']) || PHP_SAPI === 'cli' || defined('STDIN')) {
+        if (Core::isCli()) {
             $this->registerCommands();
             $this->registerCleanupCallbacks();
             $this->registerHermesHandlers();

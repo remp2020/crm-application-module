@@ -167,7 +167,7 @@ class Core
         }
 
         # terminal
-        if (!isset($_SERVER['HTTP_HOST']) && (isset($_SERVER['SHELL']) || isset($_SERVER['TERM']))) {
+        if (self::isCli()) {
             $configurator->setDebugMode(true);
 
             // CLI has no clue about host, but sometimes needs to generate absolute URLs via LinkGenerator.
@@ -207,5 +207,14 @@ class Core
     public static function env(string $key, string $default = null): ?string
     {
         return $_ENV[$key] ?? $default;
+    }
+
+    public static function isCli()
+    {
+        return PHP_SAPI === 'cli'
+            || isset($_SERVER['SHELL'])
+            || isset($_SERVER['SHLVL'])
+            || isset($_SERVER['TERM'])
+            || defined('STDIN');
     }
 }
