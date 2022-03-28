@@ -143,49 +143,27 @@ class FrontendPresenter extends BasePresenter
         $this->rtmSession = $this->getSession('rtm_session');
         $this->rtmSession->setExpiration('30 minutes');
 
-        // Transition from UTM to RTM
-        $utmSession = $this->getSession('utm_session');
-
-        $rtmSource = $this->getParameter('rtm_source') ?? $this->getParameter('utm_source');
-        $rtmMedium = $this->getParameter('rtm_medium') ?? $this->getParameter('utm_medium');
-        $rtmCampaign = $this->getParameter('rtm_campaign') ?? $this->getParameter('utm_campaign');
-        $rtmContent = $this->getParameter('rtm_content') ?? $this->getParameter('utm_content');
-        $rtmVariant = $this->getParameter('rtm_variant') ?? $this->getParameter('banner_variant');
+        $rtmSource = $this->getParameter('rtm_source') ?? $this->getHttpRequest()->getCookie('rtm_source');
+        $rtmMedium = $this->getParameter('rtm_medium') ?? $this->getHttpRequest()->getCookie('rtm_medium');
+        $rtmCampaign = $this->getParameter('rtm_campaign') ?? $this->getHttpRequest()->getCookie('rtm_campaign');
+        $rtmContent = $this->getParameter('rtm_content') ?? $this->getHttpRequest()->getCookie('rtm_content');
+        $rtmVariant = $this->getParameter('rtm_variant') ?? $this->getHttpRequest()->getCookie('rtm_variant');
 
         if ($rtmSource) {
             $this->rtmSession->rtmSource = $rtmSource;
-        } elseif (isset($utmSession->utmSource)) { // Deprecated, will be removed after transition
-            $this->rtmSession->rtmSource = $utmSession->utmSource;
         }
-        unset($utmSession->utmSource);
-
         if ($rtmMedium) {
             $this->rtmSession->rtmMedium = $rtmMedium;
-        } elseif (isset($utmSession->utmMedium)) { // Deprecated, will be removed after transition
-            $this->rtmSession->rtmMedium = $utmSession->utmMedium;
         }
-        unset($utmSession->utmMedium);
-
         if ($rtmCampaign) {
             $this->rtmSession->rtmCampaign = $rtmCampaign;
-        } elseif (isset($utmSession->utmCampaign)) { // Deprecated, will be removed after transition
-            $this->rtmSession->rtmCampaign = $utmSession->utmCampaign;
         }
-        unset($utmSession->utmCampaign);
-
         if ($rtmContent) {
             $this->rtmSession->rtmContent = $rtmContent;
-        } elseif (isset($utmSession->utmContent)) { // Deprecated, will be removed after transition
-            $this->rtmSession->rtmContent = $utmSession->utmContent;
         }
-        unset($utmSession->utmContent);
-
         if ($rtmVariant) {
             $this->rtmSession->rtmVariant = $rtmVariant;
-        } elseif (isset($this->rtmSession->bannerVariant)) { // Migration from bannerVariant -> rtmVariant
-            $this->rtmSession->rtmVariant = $this->rtmSession->bannerVariant;
         }
-        unset($this->rtmSession->bannerVariant);
     }
 
     public function getReferer()
