@@ -342,6 +342,8 @@ class ExampleClass
 }
 ```
 
+> Warning: If this email is linked to inactive user account, email won't be send (flag `inactive` has precedence).
+
 ### `Presenter->getContext()` was deprecated in Nette
 
 Getting container directly from Presenters (all extending `Nette\Application\UI\Presenter`) is now deprecated in Nette 3 in favor of using DI. Since some parts of the CRM still require the DI container to be available in presenter, we've overriden `BasePresenter::getContext()` and made `BasePresenter::$container` available.
