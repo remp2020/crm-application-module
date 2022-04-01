@@ -14,6 +14,7 @@ use Crm\ApplicationModule\Snippet\Control\SnippetFactory;
 use Kdyby\Autowired\AutowireComponentFactories;
 use Kdyby\Translation\Translator;
 use League\Event\Emitter;
+use Locale;
 use Nette\Application\UI\Presenter;
 use Nette\Application\UI\Template;
 use Nette\DI\Container;
@@ -73,6 +74,7 @@ abstract class BasePresenter extends Presenter
         $this->template->homeRoute = $this->homeRoute;
         $this->template->ENV = Core::env('CRM_ENV');
         $this->template->locale = $this->locale;
+        $this->template->language = Locale::getPrimaryLanguage($this->locale);
         $this->template->siteTitle = $this->applicationConfig->get('site_title');
         $this->template->siteDescription = $this->applicationConfig->get('site_description');
     }
