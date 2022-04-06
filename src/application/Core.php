@@ -212,8 +212,8 @@ class Core
     public static function isCli()
     {
         return PHP_SAPI === 'cli'
+            || PHP_SAPI === 'phpdbg'
             || isset($_SERVER['SHELL'])
-            || isset($_SERVER['SHLVL'])
             || isset($_SERVER['TERM'])
             || defined('STDIN');
     }
