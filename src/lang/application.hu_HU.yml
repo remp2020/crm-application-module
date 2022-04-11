@@ -14,7 +14,7 @@ config:
         description: 'Általános oldalnév - megjelenítve a böngésző címsorában (pl. Ujszo)'
     site_description:
         name: 'Oldal leírás'
-        description: 'Oldal meta adatoknál használt leírás (pl. Ujszo - hirportál)'
+        description: 'Oldal meta adatoknál használt leírás (pl. Ujszo - hírportál)'
     site_url:
         name: 'Weboldal URL'
         description: 'Alap URL ahol a weboldal elérhető (pl. https://ujszo.com)'
@@ -22,8 +22,8 @@ config:
         name: 'CMS URL'
         description: 'Alapértelmezett CMS URL (pl. https://example.com)'
     contact_email:
-        name: 'Kapcsolattartó email cím'
-        description: 'Kapcsolattartó email cím (pl. info@example.com)'
+        name: 'Kapcsolattartó e-mail cím'
+        description: 'Kapcsolattartó e-mail cím (pl. info@example.com)'
     default_route:
         name: 'Alapértelmezett útvonal'
         description: 'Nette útvonal, / betöltésnél érvényes (pl. Subscriptions:Subscriptions:new)'
@@ -45,3 +45,9 @@ config:
     admin_logo:
         name: Admin logó
         description: 'HTML ami logót jelenít meg a head-ben (pl. <code>&lt;a href=&quot;/&quot;&gt;&lt;img height=&quot;50px&quot; style=&quot;float:left; padding: 0.3em; background: #e7e7e7;&quot; src=&quot;/layouts/admin/images/logo.svg&quot; alt=&quot;logo&quot;&gt;&lt;/a&gt;</code>)'
+user:
+    delete_user_data:
+        internal_error: Hiba történt, nem sikerült ellenőrizni, hogy lehetséges-e a fiók törlése
+integrations:
+    config:
+        category: Integrációk
