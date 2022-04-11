@@ -8,7 +8,7 @@ config:
     category: Applikáció
     currency:
         name: 'Általános pénznem'
-        description: 'Minden fieztésnél használt általános pénznem ISO-4217 formátumban (pl. EUR)'
+        description: 'Minden fizetésnél használt általános pénznem ISO-4217 formátumban (pl. EUR)'
     site_title:
         name: 'Oldal neve'
         description: 'Általános oldalnév - megjelenítve a böngésző címsorában (pl. Ujszo)'
