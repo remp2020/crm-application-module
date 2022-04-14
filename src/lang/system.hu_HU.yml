@@ -44,10 +44,12 @@ date:
 
 last:
     month: Múlt hónap
-    months: Utolsó %count%M
-    year: Előző év
-    years: Utolsó %count%Y
+    months: '%count%H'
+    year: Legutóbbi év
+    years: '%count% Év'
 
+    all: Mind
 fields:
     updated: Frissítve
     created: Létrehozva
+pcs: db
