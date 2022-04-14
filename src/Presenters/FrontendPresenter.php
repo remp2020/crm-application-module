@@ -75,16 +75,11 @@ class FrontendPresenter extends BasePresenter
             $this->flashMessage($flashMessage['message'], $flashMessage['type']);
         }
 
-        // tento kod by bolo dobre nejak oddelit
-        // a spravit nejaky mechanizmus aby jednotlive moduly vedeli pridavat tuto funkcioianlitu dynamicky
-        if (!$this->getUser()->isLoggedIn() && $this->getParameter('autologin') !== 'done' &&
-            (isset($this->params['login_t']) || isset($this->params['token']))) {
+        // TODO: move this functionality to mail-related module (to a handler of FrontendRequestEvent)
+        $mailAutologinToken = $this->params['login_t'] ?? $this->params['token'] ?? null;
+        if ($mailAutologinToken && $this->getParameter('autologin') !== 'done' && !$this->getUser()->isLoggedIn()) {
             $redirect = false;
             try {
-                $mailAutologinToken = isset($this->params['login_t']) ? $this->params['login_t'] : null;
-                if (!$mailAutologinToken && isset($this->params['token'])) {
-                    $mailAutologinToken = $this->params['token'];
-                }
                 $this->getUser()->login(['mailToken' => $mailAutologinToken]);
                 // Do not refresh POST/PUT requests (otherwise data will get lost)
                 if (!in_array($this->request->getMethod(), ['POST', 'PUT'])) {
