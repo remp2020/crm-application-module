@@ -25,17 +25,13 @@ class YearScale extends ScaleBase implements ScaleInterface
         $years = intval($diff->y);
         $result = [];
 
-        $result[] = $actual->format('Y');
+        $result[$actual->format('Y')] = $actual->format('Y');
         for ($i = 0; $i < $years; $i++) {
             $actual = $actual->modify('+1 year');
-            $result[] = $actual->format('Y');
-        }
-        $finalResult = [];
-        foreach ($result as $year) {
-            $finalResult[$year] = 0;
+            $result[$actual->format('Y')] = $actual->format('Y');
         }
 
-        return $finalResult;
+        return $result;
     }
 
     public function getDatabaseRangeData(Criteria $criteria)
