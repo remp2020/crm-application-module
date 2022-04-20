@@ -42,7 +42,8 @@ abstract class BasePresenter extends Presenter
     /** @var Container @inject */
     public $container;
 
-    public $locale;
+    /** @persistent */
+    public ?string $locale = null;
 
     public $layoutPath;
 
@@ -70,11 +71,14 @@ abstract class BasePresenter extends Presenter
 
     protected function beforeRender()
     {
-        $this->locale = $this->translator->getLocale();
+        if ($this->locale) {
+            $this->translator->setLocale($this->locale);
+        }
+        $this->template->locale = $this->translator->getLocale();
+        $this->template->language = Locale::getPrimaryLanguage($this->translator->getLocale());
+
         $this->template->homeRoute = $this->homeRoute;
         $this->template->ENV = Core::env('CRM_ENV');
-        $this->template->locale = $this->locale;
-        $this->template->language = Locale::getPrimaryLanguage($this->locale);
         $this->template->siteTitle = $this->applicationConfig->get('site_title');
         $this->template->siteDescription = $this->applicationConfig->get('site_description');
     }
