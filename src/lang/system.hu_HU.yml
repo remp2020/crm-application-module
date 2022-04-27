@@ -3,8 +3,8 @@ to: Vég
 actual: Aktuális
 actions: Műveletek
 
-activated: aktív
-deactivated: inaktív
+activated: aktivált
+deactivated: inaktivált
 
 show: Megtekintés
 add: Hozzáadás
@@ -17,7 +17,7 @@ total: összesen
 logged: "Bejelentkezve"
 sign_in: Bejelentkezés
 buy_subscription: Előfizetés vásárlása
-confirm_delete: Biztos törli a bejegyzést?
+confirm_delete: Biztosan törli a bejegyzést?
 
 download: Letöltés
 
@@ -50,6 +50,6 @@ last:
 
     all: Mind
 fields:
-    updated: Frissítve
+    updated: Szerkesztve
     created: Létrehozva
 pcs: db
