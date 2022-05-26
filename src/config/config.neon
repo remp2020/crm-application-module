@@ -20,7 +20,7 @@ services:
 	# Latte filters
 	nette.latteFactory:
 		setup:
-			- addFilter(null, [@filterLoader, 'load'])
+			- addFilterLoader([@filterLoader, 'load'])
 
 	filterLoader:
 		class: Crm\ApplicationModule\Helpers\FilterLoader

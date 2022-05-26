@@ -14,11 +14,11 @@
     {/foreach}
   {/if}
   <a href="{plink $menuItem->link()}"{implode(' ', $append)|noescape}>{block |strip}
-    {ifCurrent $menuItem->link()}
+    {if $presenter->isLinkCurrent($menuItem->link())}
         <strong><i n:if="$menuItem->icon()" class="{$menuItem->icon()}"></i>{$menuItem->name()}</strong>
     {else}
         <i n:if="$menuItem->icon()" class="{$menuItem->icon()}"></i>{$menuItem->name()}
-    {/ifCurrent}
+    {/if}
   {/block}</a>
 
   {sep}<div class="menu-separator"></div>{/sep}
