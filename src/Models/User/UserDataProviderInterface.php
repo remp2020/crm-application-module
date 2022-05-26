@@ -11,6 +11,9 @@ interface UserDataProviderInterface
      * frontend or cached for later use.
      * Only frequently accessed data should be returned here.
      *
+     * Return null if your provider doesn't provide any user data.
+     * Return empty array if your provider does return data, but they're empty.
+     *
      * @param $userId
      * @return mixed
      */

@@ -40,7 +40,10 @@ class UserDataRegistrator
     {
         $result = [];
         foreach ($this->getProviders() as $provider) {
-            $result[$provider::identifier()] = $provider->data($userId);
+            $data = $provider->data($userId);
+            if ($data !== null) {
+                $result[$provider::identifier()] = $provider->data($userId);
+            }
         }
         return $result;
     }
