@@ -67,9 +67,7 @@ class BootstrapSmallInlineFormRenderer extends DefaultFormRenderer
         $form->getElementPrototype()->appendAttribute('class', 'form-inline');
 
         foreach ($form->getControls() as $control) {
-            if ($control instanceof Controls\Button) {
-                $usedPrimary = true;
-            } elseif ($control instanceof Controls\TextBase ||
+            if ($control instanceof Controls\TextBase ||
                 $control instanceof Controls\SelectBox ||
                 $control instanceof Controls\MultiSelectBox) {
                 $control->getControlPrototype()->addClass('form-control');

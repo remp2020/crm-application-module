@@ -12,7 +12,7 @@ abstract class MonthScale extends ScaleBase implements ScaleInterface
         $endDateTime = new DateTime(date('Y-m-d', strtotime($end)));
         $diff = $actual->diff($endDateTime);
 
-        $months = (int) $diff->m + $diff->y * 12;
+        $months = $diff->m + $diff->y * 12;
         $result = [];
 
         $result[$actual->format('Y-n')] = "new Date({$actual->format('Y,n-1')})";

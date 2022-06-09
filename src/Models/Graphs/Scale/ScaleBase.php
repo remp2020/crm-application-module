@@ -24,7 +24,7 @@ abstract class ScaleBase
 
     protected function isSeries($series)
     {
-        return ($series != '') ? true : false;
+        return $series != '';
     }
 
     protected function formatData($res)

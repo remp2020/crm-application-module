@@ -11,9 +11,6 @@ class Selection extends \Nette\Database\Table\Selection
     /** @var ReplicaManager|null */
     private $replicaManager;
 
-    /**
-     * @inheritdoc
-     */
     public function createSelectionInstance(string $table = null): self
     {
         return new self(
@@ -24,9 +21,6 @@ class Selection extends \Nette\Database\Table\Selection
         );
     }
 
-    /**
-     * @inheritdoc
-     */
     public function createRow(array $row): ActiveRow
     {
         return new ActiveRow($row, $this);

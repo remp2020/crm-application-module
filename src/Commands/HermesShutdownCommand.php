@@ -29,7 +29,6 @@ class HermesShutdownCommand extends Command
                 InputOption::VALUE_NONE,
                 'Assume YES for all questions (shutdown without user confirmation).'
             );
-        ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)

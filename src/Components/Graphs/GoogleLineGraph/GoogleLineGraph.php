@@ -62,7 +62,7 @@ class GoogleLineGraph extends BaseGraphControl
         $this->template->height = empty($this->series) ? 0 : $this->height;
         $this->template->graphDataJs = $this->getDataForJs();
         $this->template->asyncLoad = $asyncLoad;
-        $this->template->loaded = !$asyncLoad || $this->getPresenter()->isAjax() ? true : false;
+        $this->template->loaded = !$asyncLoad || $this->getPresenter()->isAjax();
 
         $this->template->setFile(__DIR__ . '/' . $this->view . '.latte');
         $this->template->render();

@@ -79,11 +79,6 @@ abstract class AbstractPopulator
         $this->faker = $faker;
     }
 
-    public function storeImage($filename)
-    {
-        return $this->populator->storeImage($filename);
-    }
-
     /**
      * Returns random record from given table.
      * @param string $tableName

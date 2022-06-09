@@ -55,17 +55,11 @@ class Repository
         return $selection;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function find($id)
     {
         return $this->getTable()->where(['id' => $id])->fetch();
     }
 
-    /**
-     * @inheritDoc
-     */
     public function findBy($column, $value)
     {
         return $this->getTable()->where([$column => $value])->fetch();
@@ -93,11 +87,7 @@ class Repository
 
         $this->assertSlugs((array) $data);
         $data = $this->processDateFields($data);
-
-        $oldValues = [];
-        if ($row instanceof \Nette\Database\Table\ActiveRow) {
-            $oldValues = $row->toArray();
-        }
+        $oldValues = $row->toArray();
 
         $res = $this->getTable()->wherePrimary($row->getPrimary())->update($data);
         if (!$res) {

@@ -3,42 +3,50 @@
 namespace Crm\ApplicationModule\DI;
 
 use Kdyby\Translation\DI\ITranslationProvider;
+use Nette;
 use Nette\DI\CompilerExtension;
+use Nette\Schema\Expect;
 
 final class ApplicationModuleExtension extends CompilerExtension implements ITranslationProvider
 {
-    private $defaults = [
-        'redis_client_factory' => [
-            'prefix' => null,
-            'replication' => [
-                'service' => null,
-                'sentinels' => [],
-            ],
-        ],
-    ];
-
     public function loadConfiguration()
     {
         $builder = $this->getContainerBuilder();
 
-        // load config and preset defaults if value is missing
-        $this->config = $this->validateConfig($this->defaults);
-
-        // set extension parameters for use in config
-        $builder->parameters['redis_client_factory'] = $this->config['redis_client_factory'];
+        // set extension parameters for use in config; forcing array as DI Helper doesn't support objects
+        $builder->parameters['redis_client_factory'] = (array) $this->config->redis_client_factory;
 
         // load services from config and register them to Nette\DI Container
         $this->compiler->loadDefinitionsFromConfig(
             $this->loadFromFile(__DIR__.'/../config/config.neon')['services']
         );
 
-        if (count($this->config['redis_client_factory']['replication']['sentinels'])) {
+        if (count($this->config->redis_client_factory->replication->sentinels)) {
             $builder->getDefinition('redisClientFactory')
                 ->addSetup('configureSentinel', [
-                    $this->config['redis_client_factory']['replication']['service'],
-                    $this->config['redis_client_factory']['replication']['sentinels'],
+                    $this->config->redis_client_factory->replication->service,
+                    $this->config->redis_client_factory->replication->sentinels,
                 ]);
         }
+    }
+
+    public function getConfigSchema(): Nette\Schema\Schema
+    {
+        $sentinelConfig = Expect::structure([
+            'scheme' => Expect::string()->dynamic(),
+            'host' => Expect::string()->dynamic(),
+            'port' => Expect::int()->dynamic(),
+        ])->castTo('array');
+
+        return Expect::structure([
+            'redis_client_factory' => Expect::structure([
+                'prefix' => Expect::string()->dynamic(),
+                'replication' => Expect::structure([
+                    'service' => Expect::string()->dynamic(),
+                    'sentinels' => Expect::arrayOf($sentinelConfig)->dynamic()
+                ])
+            ])
+        ]);
     }
 
     public function beforeCompile()

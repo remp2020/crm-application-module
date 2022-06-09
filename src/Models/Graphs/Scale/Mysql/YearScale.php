@@ -22,7 +22,7 @@ class YearScale extends ScaleBase implements ScaleInterface
         $actual = new DateTime(date('Y-m-d', strtotime($start)));
         $endDateTime = new DateTime(date('Y-m-d', strtotime($end)));
         $diff = $actual->diff($endDateTime);
-        $years = intval($diff->y);
+        $years = $diff->y;
         $result = [];
 
         $result[$actual->format('Y')] = $actual->format('Y');

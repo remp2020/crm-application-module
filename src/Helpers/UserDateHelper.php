@@ -31,7 +31,7 @@ class UserDateHelper
     {
         if (!$date instanceof DateTime) {
             return (string) $date;
-        };
+        }
 
         if ($this->format) {
             $format = $this->format;

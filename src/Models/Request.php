@@ -21,7 +21,7 @@ class Request
 
     public static function getUserAgent()
     {
-        return isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
+        return $_SERVER['HTTP_USER_AGENT'] ?? '';
     }
 
     public static function getDomain()

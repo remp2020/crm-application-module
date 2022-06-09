@@ -4,7 +4,7 @@ namespace Crm\ApplicationModule\Api;
 
 use Crm\ApiModule\Api\ApiHandler;
 use Crm\ApplicationModule\Event\EventsStorage;
-use Nette\Http\Response;
+use Nette\Http\IResponse;
 use Tomaj\NetteApi\Response\JsonApiResponse;
 use Tomaj\NetteApi\Response\ResponseInterface;
 
@@ -15,6 +15,7 @@ class EventGeneratorsListApiHandler extends ApiHandler
     public function __construct(
         EventsStorage $eventsStorage
     ) {
+        parent::__construct();
         $this->eventsStorage = $eventsStorage;
     }
 
@@ -36,7 +37,7 @@ class EventGeneratorsListApiHandler extends ApiHandler
             ];
         }
 
-        $response = new JsonApiResponse(Response::S200_OK, ['status' => 'ok', 'events' => $result]);
+        $response = new JsonApiResponse(IResponse::S200_OK, ['status' => 'ok', 'events' => $result]);
 
         return $response;
     }

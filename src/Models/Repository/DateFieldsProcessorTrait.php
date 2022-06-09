@@ -8,7 +8,7 @@ trait DateFieldsProcessorTrait
     {
         foreach ($fields as $i => $field) {
             if ($field instanceof \DateTime) {
-                $fields[$i] = $fields[$i]->setTimezone(new \DateTimeZone(date_default_timezone_get()));
+                $fields[$i] = $field->setTimezone(new \DateTimeZone(date_default_timezone_get()));
             }
         }
 

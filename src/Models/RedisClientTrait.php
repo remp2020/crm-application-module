@@ -28,7 +28,7 @@ trait RedisClientTrait
 
     protected function redis(): Client
     {
-        if (!$this->redisClientFactory || !($this->redisClientFactory instanceof RedisClientFactory)) {
+        if (!($this->redisClientFactory instanceof RedisClientFactory)) {
             throw new RedisClientTraitException('In order to use `RedisClientTrait`, you need to initialize `RedisClientFactory $redisClientFactory` in your service');
         }
 
