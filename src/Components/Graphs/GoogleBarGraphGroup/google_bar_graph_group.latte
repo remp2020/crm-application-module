@@ -6,10 +6,10 @@
       <button type="button" class="btn btn-xs btn-default" data-toggle="tooltip" data-placement="top" title="{$graphHelp}"><i class="fa fa-question-circle"></i></button>
       <div class="btn-toolbar pull-right" role="toolbar">
         <div class="btn-group btn-group-xs" role="group" aria-label="...">
-          <a n:href="change! $range, 'day'" role="tab" type="button" n:class="$groupBy == 'day' ? btn-primary : btn-default, btn, ajax">{_system.date.days}</a>
-          <a n:href="change! $range, 'week'" role="tab" type="button" n:class="$groupBy == 'week' ? btn-primary : btn-default, btn, ajax">{_system.date.weeks}</a>
-          <a n:href="change! $range, 'month'" role="tab" type="button" n:class="$groupBy == 'month' ? btn-primary : btn-default, btn, ajax">{_system.date.months}</a>
-          <a n:href="change! $range, 'year'" role="tab" type="button" n:class="$groupBy == 'year' ? btn-primary : btn-default, btn, ajax">{_system.date.years}</a>
+          <a n:href="change! $range, 'day', $from, $to" role="tab" type="button" n:class="$groupBy == 'day' ? btn-primary : btn-default, btn, ajax">{_system.date.days}</a>
+          <a n:href="change! $range, 'week', $from, $to" role="tab" type="button" n:class="$groupBy == 'week' ? btn-primary : btn-default, btn, ajax">{_system.date.weeks}</a>
+          <a n:href="change! $range, 'month', $from, $to" role="tab" type="button" n:class="$groupBy == 'month' ? btn-primary : btn-default, btn, ajax">{_system.date.months}</a>
+          <a n:href="change! $range, 'year', $from, $to" role="tab" type="button" n:class="$groupBy == 'year' ? btn-primary : btn-default, btn, ajax">{_system.date.years}</a>
         </div>
 
         <div class="btn-group btn-group-xs" role="group" aria-label="...">
@@ -39,7 +39,7 @@
     <script>
       $(document).ready(function() {
         $.nette.ajax({
-          url: {link change!, null, $groupBy},
+          url: {link change!, null, $groupBy, $from, $to},
           off: ['unique']
         }).done(function() {
             $('[data-toggle="tooltip"]').tooltip();

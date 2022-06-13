@@ -4,6 +4,7 @@ namespace Crm\ApplicationModule\Components\Graphs;
 
 use Crm\ApplicationModule\Graphs\GraphData;
 use Nette\Application\UI\Multiplier;
+use Nette\Utils\DateTime;
 
 /**
  * Google bar graph group component
@@ -43,6 +44,10 @@ class GoogleBarGraphGroup extends BaseGraphControl
 
     /** @var GraphData */
     private $graphData;
+
+    private $from;
+
+    private $to;
 
     public function __construct(GoogleBarGraphControlFactoryInterface $factory, GraphData $graphData)
     {
@@ -102,6 +107,18 @@ class GoogleBarGraphGroup extends BaseGraphControl
         return $this;
     }
 
+    public function setFrom($from)
+    {
+        $this->from = $from;
+        return $this;
+    }
+
+    public function setTo($to)
+    {
+        $this->to = $to;
+        return $this;
+    }
+
     public function render($asyncLoad = true)
     {
         if ($asyncLoad && !$this->getPresenter()->isAjax()) {
@@ -114,8 +131,10 @@ class GoogleBarGraphGroup extends BaseGraphControl
         $this->template->yLabel = $this->yLabel;
         $this->template->series = $this->series;
         $this->template->height = $this->height;
-        $this->template->range = $this->getParameter('range', $this->start['day']);
+        $this->template->range = $this->getParameter('range');
         $this->template->groupBy = $this->getParameter('groupBy', 'day');
+        $this->template->from = $this->getParameter('from', $this->from);
+        $this->template->to = $this->getParameter('to', $this->to);
         $this->template->asyncLoad = $asyncLoad;
 
         $this->template->setFile(__DIR__ . '/' . $this->view . '.latte');
@@ -137,8 +156,20 @@ class GoogleBarGraphGroup extends BaseGraphControl
                 ->setGraphTitle($this->graphTitle);
 
             $this->graphData->setScaleRange($groupBy);
-            if ($range = $this->getParameter('range')) {
+
+            $from = $this->getParameter('from');
+            $to = $this->getParameter('to');
+            $range = $this->getParameter('range');
+
+            if ($range) {
                 $this->graphData->setStart($range);
+                $this->graphData->setEnd(DateTime::from('today')->format('Y-m-d'));
+            } elseif ($from || $to) {
+                $this->graphData->setStart($from);
+                $this->graphData->setEnd($to);
+            } else {
+                $this->graphData->setStart($this->start['day']);
+                $this->graphData->setEnd(DateTime::from('today')->format('Y-m-d'));
             }
 
             foreach ($this->graphData->getSeriesData() as $k => $v) {
@@ -152,10 +183,12 @@ class GoogleBarGraphGroup extends BaseGraphControl
         });
     }
 
-    public function handleChange($range, $groupBy)
+    public function handleChange($range, $groupBy, $from = null, $to = null)
     {
         $this->template->range = $range;
         $this->template->groupBy = $groupBy;
+        $this->template->from = $from;
+        $this->template->to = $to;
         $this->template->redraw = true;
         $this->redrawControl('ajaxChange');
     }

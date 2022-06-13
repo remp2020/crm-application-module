@@ -69,6 +69,9 @@ class GraphData
     public function setEnd($end)
     {
         $this->end = $end;
+        foreach ($this->graphDataItems as $graphDataItem) {
+            $graphDataItem->getCriteria()->setEnd($this->end);
+        }
         return $this;
     }
 
