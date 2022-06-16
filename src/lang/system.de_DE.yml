@@ -12,3 +12,33 @@ from: Von
 activated: Aktiv
 to: Bis
 actions: Aktionen
+logged: Angemeldet
+sign_in: Anmelden
+buy_subscription: Abonnement kaufen
+confirm_delete: Möchten Sie diesen Datensatz wirklich löschen?
+download: Herunterladen
+message:
+    success: Erfolg!
+    error: Fehler!
+    warning: Warnung!
+"yes": Ja
+"no": Nein
+cancel_filter: Filter löschen
+all: Alle
+date:
+    weeks: Wochen
+    months: Monate
+    years: Jahre
+    days: Tage
+last:
+    month: Letzter Monat
+    months: '%count%M'
+    years: '%count%J'
+    all: Alle
+    year: Letztes Jahr
+filtered: gefiltert
+vat: MwSt
+fields:
+    updated: Geändert
+    created: Erstellt
+filter: Filter
