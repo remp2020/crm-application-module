@@ -1,4 +1,52 @@
-config: {}
-integrations: {}
-user: {}
-frontend: {}
+config:
+    cms_url:
+        name: CMS-URL
+        description: Default-URL des CMS (z.B. https://example.com)
+    contact_email:
+        description: Kontakt-E-Mail (z.B. info@example.com)
+        name: Kontakt-E-Mail
+    default_route:
+        description: Nette-Route für den Zugriff auf / (z.B. Subscriptions:Subscriptions:new)
+        name: Standard-Route
+    home_route:
+        name: Standardseite
+        description: Nette-Route für den Redirect nach der Nutzeranmeldung, Passwort-Änderungen etc. (z.B. Application:Default:default)
+    not_logged_in_route:
+        name: Seite für nicht-angemeldete Nutzer
+        description: Nette-Route, zu der ein Nutzer umgeleitet wird, nach dem dieser eine URL angesteuert hat, die nur für angemeldete Nutzer zulässig ist (z.B. :Users:Sign:in)
+    layout_name:
+        name: Seitenlayout
+        description: 'Name des Layouts wie es von einem Module definiert wurde. Achtung: ein falscher Wert führt unmittelbar zu einem Seitenfehler! (z.B. dennikn)'
+    og_image:
+        name: Meta-Bild für die Abonnement-Seite
+        description: Vollständige URL zum Bild (z.B. <code>/layouts/admin/images/logo_with_text.svg</code>)
+    admin_logo:
+        name: Admin-Logo
+        description: 'HTML für die Logo-Darstellung im Seitenkopf (z.B. <code>&lt;a href=&quot;/&quot;&gt;&lt;img height=&quot;50px&quot; style=&quot;float:left; padding: 0.3em; background: #e7e7e7;&quot; src=&quot;/layouts/admin/images/logo.svg&quot; alt=&quot;logo&quot;&gt;&lt;/a&gt;</code>)'
+    header_block:
+        name: Code für die Seiten-Head-Sektion
+        description: Jeglicher zusätzlicher Code im Head der Seite (z.B. Google Analytics)
+    site_title:
+        description: Globaler Seitenname - wird in der Titelleiste des Browser-Fensters angezeigt (z.B. Denník N)
+        name: Seitenname
+    category: Anwendung
+    currency:
+        description: Globale Währung für jede Zahlung im ISO-4217-Format (z.B. EUR)
+        name: Globale Währung
+    site_description:
+        description: Wird benutzt in der Metadaten-Angabe der Seite (z.B. Denník N - Nezávislé Noviny)
+        name: Seitenbeschreibung
+    site_url:
+        description: Basis-URL des CRM (z.B. https://crm.press)
+        name: Basis-URL der Webseite
+integrations:
+    config:
+        category: Integrationen
+user:
+    delete_user_data:
+        internal_error: Aufgrund eines Fehlers können wir nicht prüfen, ob das Konto gelöscht werden kann.
+frontend:
+    layout:
+        warning: Warnung!
+        success: Erfolg!
+        danger: Fehler!
