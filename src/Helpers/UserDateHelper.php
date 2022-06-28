@@ -4,14 +4,22 @@ namespace Crm\ApplicationModule\Helpers;
 
 use DateTime;
 use IntlDateFormatter;
+use Nette\Localization\Translator;
 
 class UserDateHelper
 {
+    private $translator;
+
     private $format;
 
     private $shortFormat = 'dd.MM.yyyy HH:mm:ss';
 
     private $longFormat = 'd. MMMM yyyy HH:mm:ss';
+
+    public function __construct(Translator $translator)
+    {
+        $this->translator = $translator;
+    }
 
     /**
      * setFormat accepts any format supported by IntlDateFormatter.
@@ -60,6 +68,7 @@ class UserDateHelper
         return IntlDateFormatter::formatObject(
             $date,
             $format,
+            $this->translator->getLocale()
         );
     }
 }
