@@ -4,18 +4,14 @@ namespace Crm\ApplicationModule\Helpers;
 
 use DateTime;
 use IntlDateFormatter;
-use Nette\Localization\Translator;
 
 class UserDateHelper
 {
-    private $translator;
-
     private $format;
 
-    public function __construct(Translator $translator)
-    {
-        $this->translator = $translator;
-    }
+    private $shortFormat = 'dd.MM.yyyy HH:mm:ss';
+
+    private $longFormat = 'd. MMMM yyyy HH:mm:ss';
 
     /**
      * setFormat accepts any format supported by IntlDateFormatter.
@@ -27,6 +23,26 @@ class UserDateHelper
         $this->format = $format;
     }
 
+    /**
+     * setShortFormat accepts any format supported by IntlDateFormatter.
+     *
+     * @param array|string $format
+     */
+    public function setShortFormat($format)
+    {
+        $this->shortFormat = $format;
+    }
+
+    /**
+     * setLongFormat accepts any format supported by IntlDateFormatter.
+     *
+     * @param array|string $format
+     */
+    public function setLongFormat($format)
+    {
+        $this->longFormat = $format;
+    }
+
     public function process($date, $long = false)
     {
         if (!$date instanceof DateTime) {
@@ -36,15 +52,14 @@ class UserDateHelper
         if ($this->format) {
             $format = $this->format;
         } elseif ($long) {
-            $format = "d. MMMM yyyy HH:mm:ss";
+            $format = $this->longFormat;
         } else {
-            $format = "dd.MM.yyyy HH:mm:ss";
+            $format = $this->shortFormat;
         }
 
         return IntlDateFormatter::formatObject(
             $date,
             $format,
-            $this->translator->getLocale()
         );
     }
 }

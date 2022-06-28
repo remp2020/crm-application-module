@@ -33,7 +33,8 @@ services:
 			- register('activeLabel', [Crm\ApplicationModule\Helpers\ActiveLabelHelper(), process])
 			- register('diff', [Crm\ApplicationModule\Helpers\DiffHelper(), process])
 			- register('helpIcon', [Crm\ApplicationModule\Helpers\HelpIconHelper(), process])
-			- register('userDate', [Crm\ApplicationModule\Helpers\UserDateHelper(), process])
+			- register('userDate', [@userDateHelper, process])
+			- register('localizedDate', [@localizedDateHelper, process])
 			- register('yesNo', [Crm\ApplicationModule\Helpers\YesNoHelper(), process])
 			- register('price', [Crm\ApplicationModule\Helpers\PriceHelper(), process])
 			- register('diffPrice', [Crm\ApplicationModule\Helpers\DiffPriceHelper(), process])
@@ -83,7 +84,8 @@ services:
 	configsCache: Crm\ApplicationModule\Config\ConfigsCache
 	- Crm\ApplicationModule\Helpers\PriceHelper
 	- Crm\ApplicationModule\Helpers\DiffPriceHelper
-	- Crm\ApplicationModule\Helpers\UserDateHelper
+	userDateHelper: Crm\ApplicationModule\Helpers\UserDateHelper
+	localizedDateHelper: Crm\ApplicationModule\Helpers\LocalizedDateHelper
 	assetsManager: Crm\ApplicationModule\AssetsManager('%wwwDir%')
 
 	applicationMountManager: Crm\ApplicationModule\Models\ApplicationMountManager
