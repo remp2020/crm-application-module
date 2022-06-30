@@ -2,8 +2,6 @@
 
 namespace Crm\ApplicationModule\Helpers;
 
-use Nette\Utils\Strings;
-
 class FilterLoader
 {
     /** @var array All registered filters */
@@ -22,6 +20,6 @@ class FilterLoader
 
     public function register(string $name, callable $callback)
     {
-        $this->filters[Strings::lower($name)] = $callback;
+        $this->filters[$name] = $callback;
     }
 }
