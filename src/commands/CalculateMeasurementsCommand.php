@@ -43,8 +43,8 @@ class CalculateMeasurementsCommand extends Command
 
     protected function configure()
     {
-        $this->setName('application:calculate-measurement')
-            ->setDescription('Calculate measurement')
+        $this->setName('application:calculate-measurements')
+            ->setDescription('Calculate measurements')
             ->addOption('from', 'f', InputOption::VALUE_REQUIRED)
             ->addOption('to', 't', InputOption::VALUE_REQUIRED)
             ->addOption('measurement', 'm', InputOption::VALUE_REQUIRED, 'Specific measurement to calculate')
