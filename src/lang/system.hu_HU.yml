@@ -14,6 +14,9 @@ delete: Törlés
 export: Exportálás
 total: összesen
 
+next: Következő
+previous: Előző
+
 logged: "Bejelentkezve"
 sign_in: Bejelentkezés
 buy_subscription: Előfizetés vásárlása

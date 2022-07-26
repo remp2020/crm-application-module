@@ -7,6 +7,10 @@ delete: Löschen
 export: Export
 total: Insgesamt
 pcs: Stk
+
+next: Nächste
+previous: Vorherige
+
 actual: Aktuell
 from: Von
 activated: Aktiv
