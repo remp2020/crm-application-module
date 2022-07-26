@@ -14,7 +14,10 @@ delete: Törlés
 export: Exportálás
 total: összesen
 
-logged: "Bejelentkezve: "
+next: Következő
+previous: Előző
+
+logged: "Bejelentkezve"
 sign_in: Bejelentkezés
 buy_subscription: Előfizetés vásárlása
 confirm_delete: Biztos törli a bejegyzést?

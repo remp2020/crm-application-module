@@ -15,6 +15,9 @@ export: Export
 total: total
 pcs: pcs
 
+next: Next
+previous: Previous
+
 logged: Logged
 sign_in: Sign in
 buy_subscription: Buy subscription

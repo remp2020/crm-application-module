@@ -15,6 +15,9 @@ export: Export
 total: celkovo
 pcs: ks
 
+next: Nasledujúca
+previous: Predchádzajúca
+
 logged: Prihlásený
 sign_in: Prihlásiť
 buy_subscription: Kúpiť predplatné
