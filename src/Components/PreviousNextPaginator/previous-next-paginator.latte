@@ -4,11 +4,11 @@
         {if $paginator->isFirst()}
             <li class="disabled"><a href="#"><span aria-hidden="true">&laquo;</span> {_system.previous}</a></li>
         {else}
-            <li><a href="{link this, 'page' => $paginator->page-1}"><span aria-hidden="true">&larr;</span> {_system.previous}</a></li>
+            <li><a href="{link this, 'page' => $paginator->page-1}"><span aria-hidden="true">&laquo;</span> {_system.previous}</a></li>
         {/if}
 
         {if $isLastPage}
-            <li class="disabled"><a href="#">{_system.next} <span aria-hidden="true">&rarr;</span></a></li>
+            <li class="disabled"><a href="#">{_system.next} <span aria-hidden="true">&raquo;</span></a></li>
         {else}
             <li><a href="{link this, 'page' => $paginator->page+1}">{_system.next} <span aria-hidden="true">&raquo;</span></a></li>
         {/if}
