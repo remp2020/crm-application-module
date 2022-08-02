@@ -20,7 +20,7 @@ class DeleteUserData
         $this->translator = $translator;
     }
 
-    public function canBeDeleted($userId): array
+    public function canBeDeleted(int $userId): array
     {
         try {
             $canBeDeleted =  $this->userDataRegistrator->canBeDeleted($userId);
@@ -32,12 +32,20 @@ class DeleteUserData
         return $canBeDeleted;
     }
 
-    public function deleteData($userId)
+    /**
+     * @param int $userId
+     * @param bool $forceDelete If set to true, check if user can be removed is ignored. Default is false.
+     * @throws \Exception Thrown when user cannot be deleted and $forceDelete is not set to true. Contains errors from providers.
+     */
+    public function deleteData(int $userId, bool $forceDelete = false): bool
     {
-        [$canBeDeleted, $errors] = $this->canBeDeleted($userId);
-        if (!$canBeDeleted) {
-            throw new \Exception(sprintf("cannot delete user {$userId}: %s", implode(', ', $errors)));
+        if (!$forceDelete) {
+            [$canBeDeleted, $errors] = $this->canBeDeleted($userId);
+            if (!$canBeDeleted) {
+                throw new \Exception(sprintf("cannot delete user {$userId}: %s", implode(', ', $errors)));
+            }
         }
+
         $this->userDataRegistrator->protect($userId);
         return $this->userDataRegistrator->delete($userId);
     }
