@@ -26,6 +26,7 @@ class RedisTasksQueue
     public function setupPriorityQueue(string $name, int $priority): void
     {
         $this->queues[$priority] = $name;
+        krsort($this->queues);
     }
 
     private function getKey(int $priority): string
@@ -44,9 +45,7 @@ class RedisTasksQueue
 
     public function getTask(array $priorities = [])
     {
-        $queues = array_reverse($this->queues, true);
-
-        foreach ($queues as $priority => $name) {
+        foreach ($this->queues as $priority => $name) {
             if (count($priorities) > 0 && !in_array($priority, $priorities)) {
                 continue;
             }
