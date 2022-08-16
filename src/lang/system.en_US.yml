@@ -32,6 +32,7 @@ message:
 
 "yes": "Yes"
 "no": "No"
+"not_available": "N/A"
 
 cancel_filter: Cancel filter
 filter: Filter

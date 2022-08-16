@@ -32,6 +32,7 @@ message:
 
 "yes": "Ano"
 "no": "Ne"
+"not_available": "N/A"
 
 cancel_filter: Zruš filtr
 filter: Filtr

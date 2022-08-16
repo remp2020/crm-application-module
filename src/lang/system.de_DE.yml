@@ -27,6 +27,7 @@ message:
     warning: Warnung!
 "yes": Ja
 "no": Nein
+"not_available": "N/A"
 cancel_filter: Filter löschen
 all: Alle
 date:
