@@ -65,7 +65,7 @@ abstract class BaseWidget extends UI\Control implements WidgetInterface
 
 
             $args = [];
-            if (($first = reset($parameters)) && !$first->getClass()) {
+            if (($first = reset($parameters)) && !$first->getType()) {
                 $args[] = $name;
             }
 

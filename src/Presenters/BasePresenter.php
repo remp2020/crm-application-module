@@ -2,6 +2,7 @@
 
 namespace Crm\ApplicationModule\Presenters;
 
+use Contributte\Translation\Translator;
 use Crm\ApplicationModule\ApplicationManager;
 use Crm\ApplicationModule\Components\SimpleWidgetFactoryInterface;
 use Crm\ApplicationModule\Components\SingleStatWidgetFactoryInterface;
@@ -12,11 +13,9 @@ use Crm\ApplicationModule\Events\AuthenticationEvent;
 use Crm\ApplicationModule\LayoutManager;
 use Crm\ApplicationModule\Snippet\Control\SnippetFactory;
 use Kdyby\Autowired\AutowireComponentFactories;
-use Kdyby\Translation\Translator;
 use League\Event\Emitter;
 use Locale;
 use Nette\Application\UI\Presenter;
-use Nette\Application\UI\Template;
 use Nette\DI\Container;
 use Nette\Security\AuthenticationException;
 
@@ -81,16 +80,6 @@ abstract class BasePresenter extends Presenter
         $this->template->ENV = Core::env('CRM_ENV');
         $this->template->siteTitle = $this->applicationConfig->get('site_title');
         $this->template->siteDescription = $this->applicationConfig->get('site_description');
-    }
-
-    protected function createTemplate(): Template
-    {
-        $template = parent::createTemplate();
-
-        $this->translator->createTemplateHelpers()
-            ->register($template->getLatte());
-
-        return $template;
     }
 
     protected function getIp()

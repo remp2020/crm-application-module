@@ -2,12 +2,12 @@
 
 namespace Crm\ApplicationModule\DI;
 
-use Kdyby\Translation\DI\ITranslationProvider;
+use Contributte\Translation\DI\TranslationProviderInterface;
 use Nette;
 use Nette\DI\CompilerExtension;
 use Nette\Schema\Expect;
 
-final class ApplicationModuleExtension extends CompilerExtension implements ITranslationProvider
+final class ApplicationModuleExtension extends CompilerExtension implements TranslationProviderInterface
 {
     public function loadConfiguration()
     {
@@ -67,7 +67,7 @@ final class ApplicationModuleExtension extends CompilerExtension implements ITra
      * Return array of directories, that contain resources for translator.
      * @return string[]
      */
-    public function getTranslationResources()
+    public function getTranslationResources(): array
     {
         return [__DIR__ . '/../lang/'];
     }

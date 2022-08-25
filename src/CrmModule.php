@@ -2,6 +2,7 @@
 
 namespace Crm\ApplicationModule;
 
+use Contributte\Translation\Translator;
 use Crm\ApiModule\Api\ApiRoutersContainerInterface;
 use Crm\ApplicationModule\Access\AccessManager;
 use Crm\ApplicationModule\Authenticator\AuthenticatorManagerInterface;
@@ -13,7 +14,6 @@ use Crm\ApplicationModule\Event\EventsStorage;
 use Crm\ApplicationModule\Menu\MenuContainerInterface;
 use Crm\ApplicationModule\User\UserDataRegistrator;
 use Crm\ApplicationModule\Widget\WidgetManagerInterface;
-use Kdyby\Translation\Translator;
 use League\Event\Emitter;
 use Nette\Application\Routers\RouteList;
 use Nette\DI\Container;

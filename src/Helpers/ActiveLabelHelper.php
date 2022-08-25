@@ -2,7 +2,7 @@
 
 namespace Crm\ApplicationModule\Helpers;
 
-use Kdyby\Translation\Translator;
+use Contributte\Translation\Translator;
 use Nette\Utils\Html;
 
 class ActiveLabelHelper

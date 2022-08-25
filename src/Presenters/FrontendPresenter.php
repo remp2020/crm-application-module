@@ -7,7 +7,6 @@ use Crm\ApplicationModule\Events\FrontendRequestEvent;
 use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
 use Crm\UsersModule\Auth\AutoLogin\AutoLogin;
 use Crm\UsersModule\Repository\UsersRepository;
-use Kdyby\Translation\Translator;
 use Nette\Http\Request;
 use Nette\Http\Response;
 use Nette\Http\SessionSection;
@@ -21,9 +20,6 @@ class FrontendPresenter extends BasePresenter
 
     /** @var SubscriptionsRepository @inject */
     public $subscriptionsRepository;
-
-    /** @var Translator @inject */
-    public $translator;
 
     /** @var Response @inject */
     public $response;

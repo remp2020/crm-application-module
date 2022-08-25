@@ -12,10 +12,10 @@
         var data = google.visualization.arrayToDataTable
         ([
                 ['Day',{foreach $series as $k => $v}{$k}{sep},{/sep}{/foreach}, { 'type': 'string', 'role': 'tooltip', 'p': { 'html': true } } ],
-                {foreach $xAxis as $date}[{php echo $date;}, {foreach $series as $k => $v}{$v[$date]}, "<b style='padding:2px'>{$v[$date]}</b>"{sep},{/sep}{/foreach}]{sep},{/sep}{/foreach}
+                {foreach $xAxis as $date}[{$date}, {foreach $series as $k => $v}{$v[$date]}, "<b style='padding:2px'>{$v[$date]}</b>"{sep},{/sep}{/foreach}]{sep},{/sep}{/foreach}
         ]);
 
-        var chart = new google.visualization.ColumnChart(document.getElementById('graph_{$graphId|noescape}'));
+        var chart = new google.visualization.ColumnChart(document.getElementById('graph_' + {$graphId|noescape}));
 
         var options = {
             height: 50,

@@ -35,4 +35,13 @@ abstract class BaseGraphControl extends Control
 
         return trim($graphDataJs, ',');
     }
+
+    protected function isFirstColumnString(): bool
+    {
+        foreach ($this->getGroupedData() as $xData => $yDataArray) {
+            // first column can be either date or string
+            return strpos($xData, 'new Date') === false;
+        }
+        return false;
+    }
 }
