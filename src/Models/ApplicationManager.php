@@ -12,6 +12,7 @@ use Crm\ApplicationModule\DataProvider\DataProviderManager;
 use Crm\ApplicationModule\Event\EventsStorage;
 use Crm\ApplicationModule\Menu\MenuContainer;
 use Crm\ApplicationModule\User\UserDataRegistrator;
+use Crm\ApplicationModule\Widget\LazyWidgetManager;
 use Crm\ApplicationModule\Widget\WidgetManager;
 use League\Event\Emitter;
 use Tomaj\Hermes\Dispatcher;
@@ -58,6 +59,8 @@ class ApplicationManager
 
     private $assetsManager;
 
+    private LazyWidgetManager $lazyWidgetManager;
+
     public function __construct(
         Emitter $emitter,
         ModuleManager $moduleManager,
@@ -74,7 +77,8 @@ class ApplicationManager
         AccessManager $accessManager,
         AssetsManager $assetsManager,
         DataProviderManager $dataProviderManager,
-        EventsStorage $eventsStorage
+        EventsStorage $eventsStorage,
+        LazyWidgetManager $lazyWidgetManager
     ) {
         $this->widgetManager = $widgetManager;
         $this->emitter = $emitter;
@@ -93,6 +97,7 @@ class ApplicationManager
         $this->eventsStorage = $eventsStorage;
         $this->scenariosCriteriaStorage = $scenariosCriteriaStorage;
         $this->assetsManager = $assetsManager;
+        $this->lazyWidgetManager = $lazyWidgetManager;
     }
 
     public function registerEventHandlers()
@@ -134,10 +139,20 @@ class ApplicationManager
         }
     }
 
+    /**
+     * @deprecated use registerLazyWidget() instead
+     */
     public function registerWidgets()
     {
         foreach ($this->moduleManager->getModules() as $module) {
             $module->registerWidgets($this->widgetManager);
+        }
+    }
+
+    public function registerLazyWidget()
+    {
+        foreach ($this->moduleManager->getModules() as $module) {
+            $module->registerLazyWidgets($this->lazyWidgetManager);
         }
     }
 
@@ -256,6 +271,7 @@ class ApplicationManager
         } elseif (!Request::isApi()) {
             $this->registerWidgets();
             $this->registerLayouts();
+            $this->registerLazyWidget();
         }
 
         $this->registerEventHandlers();
