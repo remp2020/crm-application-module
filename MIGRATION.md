@@ -1,3 +1,30 @@
+# Migration guide to CRM 2.0
+
+---
+
+## Minimal requirements
+
+- PHP 8.0
+- MySQL 8.0
+  - _Note: We are using Percona 8.0 in production._
+- Nette 3.1
+  - Including Latte 3.0
+
+## Migration 
+
+Make sure to follow breaking changes described in each module changelog you require. Notably:
+
+- **ApplicationModule**: change registered translation extension from `Kdyby\Translation\DI\TranslationExtension` to `Contributte\Translation\DI\TranslationExtension`
+- Replace dependency `Kdyby\Translation\Translator` with `Contributte\Translation\Translator;`
+
+### PHP 8.0
+
+Most of the 7.4 code should be compatible with 8.0. However, make sure to check the official 7.4 to 8.0 [migration guide](https://www.php.net/manual/en/migration80.php). 
+
+### Latte 3.0
+
+Latte was migrated from v2 to v3. Please follow the official [migration guide](https://latte.nette.org/en/cookbook/migration-from-latte2).
+
 # Migration guide to CRM 1.0
 
 ---
