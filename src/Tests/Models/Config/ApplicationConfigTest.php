@@ -103,10 +103,10 @@ class ApplicationConfigTest extends DatabaseTestCase
         // handler should be received only once and should contain correct payment id
         $cacheStorageObserver->expects($this->never())
             ->method('read')
-            ->with('application_autoload_cache_v2');
+            ->with(ApplicationConfig::CACHE_KEY);
         $cacheStorageObserver->expects($this->never())
             ->method('write')
-            ->with('application_autoload_cache_v2');
+            ->with(ApplicationConfig::CACHE_KEY);
 
         $applicationConfig = new ApplicationConfig(
             $this->configsRepository,
@@ -121,11 +121,11 @@ class ApplicationConfigTest extends DatabaseTestCase
         $this->assertEquals($siteUrlDefaultValue, $siteTitleConfig->value);
         // confirm that same config value as in DB is in cache
         // this shouldn't internally call cache storage
-        // (nor Storage->read('application_autoload_cache_v2') nor Storage->write('application_autoload_cache_v2'))
+        // (nor Storage->read(ApplicationConfig::CACHE_KEY) nor Storage->write(ApplicationConfig::CACHE_KEY))
         $this->assertEquals($siteUrlDefaultValue, $applicationConfig->get($siteUrlKey));
         // this is just random call to different config
         // this shouldn't internally call cache storage
-        // (nor Storage->read('application_autoload_cache_v2') nor Storage->write('application_autoload_cache_v2'))
+        // (nor Storage->read(ApplicationConfig::CACHE_KEY) nor Storage->write(ApplicationConfig::CACHE_KEY))
         $this->assertNotNull($applicationConfig->get('site_title'));
     }
 
@@ -142,10 +142,10 @@ class ApplicationConfigTest extends DatabaseTestCase
         // handler should be received only once and should contain correct payment id
         $cacheStorageObserver->expects($this->once())
             ->method('read')
-            ->with('application_autoload_cache_v2');
+            ->with(ApplicationConfig::CACHE_KEY);
         $cacheStorageObserver->expects($this->once())
             ->method('write')
-            ->with('application_autoload_cache_v2');
+            ->with(ApplicationConfig::CACHE_KEY);
 
         $applicationConfig = new ApplicationConfig(
             $this->configsRepository,
@@ -160,11 +160,11 @@ class ApplicationConfigTest extends DatabaseTestCase
         $this->assertEquals($siteUrlDefaultValue, $siteTitleConfig->value);
         // confirm that same config value as in DB is in cache
         // this shouldn't internally call cache storage
-        // (nor Storage->read('application_autoload_cache_v2') nor Storage->write('application_autoload_cache_v2'))
+        // (nor Storage->read(ApplicationConfig::CACHE_KEY) nor Storage->write(ApplicationConfig::CACHE_KEY))
         $this->assertEquals($siteUrlDefaultValue, $applicationConfig->get($siteUrlKey));
         // this is just random call to different config
         // this shouldn't internally call cache storage
-        // (nor Storage->read('application_autoload_cache_v2') nor Storage->write('application_autoload_cache_v2'))
+        // (nor Storage->read(ApplicationConfig::CACHE_KEY) nor Storage->write(ApplicationConfig::CACHE_KEY))
         $this->assertNotNull($applicationConfig->get('site_title'));
     }
 }

@@ -7,11 +7,6 @@ use Nette\DI\Container;
 use Nette\Http\Session;
 use PHPUnit\Framework\TestCase;
 
-/**
- * Class DatabaseTestCase
- * Each test truncates all repositories specified in requiredRepositories method, so DB is always in clean state
- * @package Tests
- */
 abstract class CrmTestCase extends TestCase
 {
     /** @var Container */

@@ -10,12 +10,14 @@ use Tracy\ILogger;
 
 class ApplicationConfig
 {
-    const TYPE_STRING = 'string';
-    const TYPE_INT = 'integer';
-    const TYPE_TEXT = 'text';
-    const TYPE_PASSWORD = 'password';
-    const TYPE_HTML = 'html';
-    const TYPE_BOOLEAN = 'boolean';
+    public const TYPE_STRING = 'string';
+    public const TYPE_INT = 'integer';
+    public const TYPE_TEXT = 'text';
+    public const TYPE_PASSWORD = 'password';
+    public const TYPE_HTML = 'html';
+    public const TYPE_BOOLEAN = 'boolean';
+
+    public const CACHE_KEY = 'application_autoload_cache_v2';
 
     private bool $loaded = false;
 
@@ -39,12 +41,15 @@ class ApplicationConfig
         $this->cacheStorage = $cacheStorage;
     }
 
-    public function setCacheExpiration(int $cacheExpiration)
+    public function setCacheExpiration(int $cacheExpiration): void
     {
         $this->cacheExpiration = $cacheExpiration;
     }
 
-    public function get($name)
+    /**
+     * @return int|string|null
+     */
+    public function get(string $name)
     {
         if (!$this->loaded) {
             $this->initAutoload();
@@ -75,7 +80,7 @@ class ApplicationConfig
         return null;
     }
 
-    private function initAutoload()
+    private function initAutoload(): void
     {
         $cacheData = $this->cacheStorage->read('application_autoload_cache_v2');
         if ($cacheData) {
@@ -90,7 +95,7 @@ class ApplicationConfig
         $this->loaded = true;
     }
 
-    private function formatItem($itemRow)
+    private function formatItem($itemRow): ?object
     {
         if (!$itemRow) {
             return null;
@@ -102,8 +107,6 @@ class ApplicationConfig
     }
 
     /**
-     * @param $value
-     * @param string $type
      * @return int|string
      */
     private function formatValue($value, string $type = 'string')
