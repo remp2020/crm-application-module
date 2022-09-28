@@ -6,6 +6,7 @@ use Crm\ApplicationModule\Builder\ConfigBuilder;
 use Crm\ApplicationModule\Config\ApplicationConfig;
 use Crm\ApplicationModule\Config\Repository\ConfigCategoriesRepository;
 use Crm\ApplicationModule\Config\Repository\ConfigsRepository;
+use Crm\ApplicationModule\Core;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class ConfigsSeeder implements ISeeder
@@ -17,7 +18,7 @@ class ConfigsSeeder implements ISeeder
     private $configsRepository;
 
     private $configBuilder;
-    
+
     public function __construct(
         ConfigCategoriesRepository $configCategoriesRepository,
         ConfigsRepository $configsRepository,
@@ -69,7 +70,7 @@ class ConfigsSeeder implements ISeeder
             ApplicationConfig::TYPE_STRING,
             'application.config.site_url.name',
             'application.config.site_url.description',
-            'http://crm.press',
+            Core::env('CRM_HOST'),
             110
         );
 
