@@ -51,9 +51,7 @@ class ApplicationConfig
      */
     public function get(string $name)
     {
-        if (!$this->loaded) {
-            $this->initAutoload();
-        }
+        $this->initAutoload();
 
         if (isset($this->items[$name])) {
             $item = $this->items[$name];
@@ -80,19 +78,38 @@ class ApplicationConfig
         return null;
     }
 
-    private function initAutoload(): void
+    private function initAutoload(): bool
     {
-        $cacheData = $this->cacheStorage->read('application_autoload_cache_v2');
-        if ($cacheData) {
-            $this->items = $cacheData;
-        } else {
-            $items = $this->configsRepository->loadAllAutoload();
-            foreach ($items as $itemRow) {
-                $this->items[$itemRow->name] = $this->formatItem($itemRow);
-            }
-            $this->cacheStorage->write('application_autoload_cache_v2', $this->items, [Cache::EXPIRE => $this->cacheExpiration]);
+        // items are loaded & cache expiration is non zero => nothing to autoload, items are loaded
+        if ($this->loaded === true && $this->cacheExpiration > 0) {
+            return false;
         }
+
+        // items not loaded; expiration is non zero => try to autoload items from cache storage
+        if ($this->cacheExpiration > 0) {
+            $cacheData = $this->cacheStorage->read(self::CACHE_KEY);
+            if ($cacheData) {
+                $this->items = $cacheData;
+
+                $this->loaded = true;
+                return true;
+            }
+        }
+
+        // cache is disabled (expiration is zero)
+        // or cache data are missing (this is initial autoload, nothing was stored yet)
+        $items = $this->configsRepository->loadAllAutoload();
+        foreach ($items as $itemRow) {
+            $this->items[$itemRow->name] = $this->formatItem($itemRow);
+        }
+
+        // write into cache storage only if cache expiration is non zero
+        if ($this->cacheExpiration > 0) {
+            $this->cacheStorage->write(self::CACHE_KEY, $this->items, [Cache::EXPIRE => $this->cacheExpiration]);
+        }
+
         $this->loaded = true;
+        return true;
     }
 
     private function formatItem($itemRow): ?object
