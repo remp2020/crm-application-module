@@ -2,8 +2,8 @@
 
 namespace Crm\ApplicationModule\Components;
 
-use Crm\ApplicationModule\Widget\BaseWidget;
-use Crm\ApplicationModule\Widget\WidgetManager;
+use Crm\ApplicationModule\Widget\BaseLazyWidget;
+use Crm\ApplicationModule\Widget\LazyWidgetManager;
 use Nette\Localization\Translator;
 
 /**
@@ -11,15 +11,18 @@ use Nette\Localization\Translator;
  *
  * @package Crm\ApplicationModule\Components
  */
-class SingleStatWidget extends BaseWidget
+class SingleStatWidget extends BaseLazyWidget
 {
     private $templateName = 'single_stat_widget.latte';
 
     private $translator;
 
-    public function __construct(WidgetManager $widgetManager, Translator $translator)
-    {
-        parent::__construct($widgetManager);
+    public function __construct(
+        Translator $translator,
+        LazyWidgetManager $lazyWidgetManager
+    ) {
+        parent::__construct($lazyWidgetManager);
+
         $this->translator = $translator;
     }
 

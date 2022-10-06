@@ -2,14 +2,14 @@
 
 namespace Crm\ApplicationModule\Components;
 
-use Crm\ApplicationModule\Widget\BaseWidget;
+use Crm\ApplicationModule\Widget\BaseLazyWidget;
 
 /**
  * Widget used for rendering other widgets in groups.
  *
  * @package Crm\ApplicationModule\Components
  */
-class SimpleWidget extends BaseWidget
+class SimpleWidget extends BaseLazyWidget
 {
     private $templateName = 'simple_widget.latte';
 

@@ -12,6 +12,7 @@ use Crm\ApplicationModule\DataProvider\DataProviderManager;
 use Crm\ApplicationModule\Event\EventsStorage;
 use Crm\ApplicationModule\Menu\MenuContainerInterface;
 use Crm\ApplicationModule\User\UserDataRegistrator;
+use Crm\ApplicationModule\Widget\LazyWidgetManagerInterface;
 use Crm\ApplicationModule\Widget\WidgetManagerInterface;
 use League\Event\Emitter;
 use Nette\Application\Routers\RouteList;
@@ -26,7 +27,10 @@ interface ApplicationModuleInterface
 
     public function registerEventHandlers(Emitter $emitter);
 
+    /** @deprecated use registerLazyWidgets() instead */
     public function registerWidgets(WidgetManagerInterface $widgetManager);
+
+    public function registerLazyWidgets(LazyWidgetManagerInterface $lazyWidgetManager);
 
     public function registerCommands(CommandsContainerInterface $commandsContainer);
 

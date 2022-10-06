@@ -10,22 +10,20 @@ use Nette\ComponentModel\IComponent;
 use Nette\DI\Resolver;
 use Nette\UnexpectedValueException;
 
-abstract class BaseWidget extends UI\Control implements WidgetInterface
+abstract class BaseLazyWidget extends UI\Control implements WidgetInterface
 {
     use AutowireComponentFactories;
 
-    /** @var WidgetManager */
-    protected $widgetManager;
+    protected LazyWidgetManager $widgetManager;
 
-    /** @deprecated use BaseLazyWidget instead */
-    public function __construct(WidgetManager $widgetManager)
+    public function __construct(LazyWidgetManager $widgetManager)
     {
         $this->widgetManager = $widgetManager;
     }
 
     public function header()
     {
-        return 'base widget';
+        return 'base lazy widget';
     }
 
     public function identifier()
@@ -47,14 +45,6 @@ abstract class BaseWidget extends UI\Control implements WidgetInterface
 
     protected function createComponent(string $name): ?IComponent
     {
-        $widget = $this->widgetManager->getWidgetByIdentifier($name);
-        if ($widget) {
-            if (!isset($this->components[$widget->identifier()])) {
-                $this->addComponent($widget, $widget->identifier());
-            }
-            return $widget;
-        }
-
         $ucName = ucfirst($name);
         $method = 'createComponent' . $ucName;
         if ($ucName !== $name && method_exists($this, $method)) {
@@ -80,6 +70,14 @@ abstract class BaseWidget extends UI\Control implements WidgetInterface
             }
 
             return $component;
+        }
+
+        $widget = $this->widgetManager->getWidgetByIdentifier($name);
+        if ($widget) {
+            if (!isset($this->components[$widget->identifier()])) {
+                $this->addComponent($widget, $widget->identifier());
+            }
+            return $widget;
         }
 
         return null;

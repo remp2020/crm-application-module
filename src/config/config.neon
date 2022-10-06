@@ -49,6 +49,7 @@ services:
 
 	- Crm\ApplicationModule\Authenticator\AuthenticatorManager
 	- Crm\ApplicationModule\Widget\WidgetManager
+	lazyWidgetManager: Crm\ApplicationModule\Widget\LazyWidgetManager
 	- Crm\ApplicationModule\DataProvider\DataProviderManager
 	- Crm\ApplicationModule\Builder\ConfigBuilder
 
