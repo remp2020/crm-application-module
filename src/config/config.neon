@@ -47,6 +47,9 @@ services:
 	- Crm\ApplicationModule\Router\RouterFactory
 	router: @Crm\ApplicationModule\Router\RouterFactory::createRouter
 
+	redirectValidator:
+		factory: Crm\ApplicationModule\Router\RedirectValidator
+
 	- Crm\ApplicationModule\Authenticator\AuthenticatorManager
 	- Crm\ApplicationModule\Widget\WidgetManager
 	lazyWidgetManager: Crm\ApplicationModule\Widget\LazyWidgetManager

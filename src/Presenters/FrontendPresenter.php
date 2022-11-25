@@ -157,7 +157,12 @@ class FrontendPresenter extends BasePresenter
         }
     }
 
-    public function getReferer()
+    /**
+     * Referer (either set as 'url' GET parameter or HTTP header)
+     * Make sure it's validated before using as a redirect URL (@see RedirectValidator)
+     * @return ?string
+     */
+    public function getReferer(): ?string
     {
         $referer = null;
         if (isset($_GET['referer'])) {
