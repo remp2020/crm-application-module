@@ -12,6 +12,8 @@ use Crm\ApplicationModule\Events\AuthenticatedAccessRequiredEvent;
 use Crm\ApplicationModule\Events\AuthenticationEvent;
 use Crm\ApplicationModule\LayoutManager;
 use Crm\ApplicationModule\Snippet\Control\SnippetFactory;
+use Crm\UsersModule\Auth\UserAuthenticator;
+use Crm\UsersModule\Repository\UsersRepository;
 use Kdyby\Autowired\AutowireComponentFactories;
 use League\Event\Emitter;
 use Locale;
@@ -21,6 +23,8 @@ use Nette\Security\AuthenticationException;
 
 abstract class BasePresenter extends Presenter
 {
+    public const SESSION_RELOAD_USER = 'reloadUser';
+
     use AutowireComponentFactories;
 
     /** @var  ApplicationManager @inject */
@@ -58,6 +62,7 @@ abstract class BasePresenter extends Presenter
         if ($this->getUser()->isLoggedIn()) {
             try {
                 $this->emitter->emit(new AuthenticationEvent($this->getHttpRequest(), $this->getUser()->id));
+                $this->reloadSessionUser();
             } catch (AuthenticationException $e) {
                 $this->getUser()->logout(true);
                 $this->flashMessage($e->getMessage(), 'warning');
@@ -131,5 +136,20 @@ abstract class BasePresenter extends Presenter
     public function getContext(): Container
     {
         return $this->container;
+    }
+
+    private function reloadSessionUser()
+    {
+        // reload user in session if flagged for reload
+        if (!$this->isAjax() && $this->session->getSection('auth')->get(self::SESSION_RELOAD_USER)) {
+            $this->session->getSection('auth')->remove(self::SESSION_RELOAD_USER);
+            $currentUser = $this->container->getByType(UsersRepository::class)?->find($this->getUser()->id);
+            if ($currentUser) {
+                $userIdentity = $this->container->getByType(UserAuthenticator::class)?->getIdentity($currentUser);
+                if ($userIdentity) {
+                    $this->user->getStorage()?->saveAuthentication($userIdentity);
+                }
+            }
+        }
     }
 }
