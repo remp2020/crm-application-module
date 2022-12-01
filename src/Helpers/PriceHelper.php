@@ -7,27 +7,38 @@ use Nette\Utils\Html;
 
 class PriceHelper
 {
-    private $applicationConfig;
-
-    public function __construct(ApplicationConfig $applicationConfig)
-    {
-        $this->applicationConfig = $applicationConfig;
+    public function __construct(
+        private ApplicationConfig $applicationConfig
+    ) {
     }
 
-    public function getFormattedPrice($value, $currency = null, $precision = 2): ?string
-    {
+    public function getFormattedPrice(
+        $value,
+        ?string $currency = null,
+        int $precision = 2,
+        bool $withoutCurrencySymbol = false
+    ): ?string {
         if (!$currency) {
-            $currency = $this->applicationConfig->get('currency');
+            $currency = (string) $this->applicationConfig->get('currency');
         }
 
         // TODO - refactor with https://akrabat.com/using-phps-numberformatter-to-format-currencies/
 
         if ($currency === 'EUR') {
-            $text = number_format($value, $precision, ',', ' ') . '&nbsp;&euro;';
+            $text = number_format($value, $precision, ',', ' ');
+            if (!$withoutCurrencySymbol) {
+                $text .= '&nbsp;&euro;';
+            }
         } elseif ($currency === 'CZK') {
-            $text = number_format($value, $precision, ',', ' ') . '&nbsp;Kč';
+            $text = number_format($value, $precision, ',', ' ');
+            if (!$withoutCurrencySymbol) {
+                $text .= '&nbsp;Kč';
+            }
         } elseif ($currency === 'USD') {
-            $text = '$ ' . number_format($value, $precision, '.', ',');
+            $text = number_format($value, $precision, '.', ',');
+            if (!$withoutCurrencySymbol) {
+                $text = '$&nbsp;' . $text;
+            }
         } else {
             $text = $value;
         }
@@ -35,8 +46,8 @@ class PriceHelper
         return $text;
     }
 
-    public function process($value, $currency = null, $precision = 2)
+    public function process($value, ?string $currency = null, int $precision = 2, bool $withoutCurrencySign = false)
     {
-        return Html::el('span')->setHtml($this->getFormattedPrice($value, $currency, $precision));
+        return Html::el('span')->setHtml($this->getFormattedPrice($value, $currency, $precision, $withoutCurrencySign));
     }
 }
