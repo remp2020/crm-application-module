@@ -10,7 +10,8 @@ use Crm\UsersModule\Repository\UsersRepository;
 use Nette\Http\Request;
 use Nette\Http\Response;
 use Nette\Http\SessionSection;
-use Nette\Http\Url;
+use Nette\Http\UrlImmutable;
+use Nette\InvalidArgumentException;
 use Nette\Security\AuthenticationException;
 
 class FrontendPresenter extends BasePresenter
@@ -160,26 +161,21 @@ class FrontendPresenter extends BasePresenter
     /**
      * Referer (either set as 'url' GET parameter or HTTP header)
      * Make sure it's validated before using as a redirect URL (@see RedirectValidator)
-     * @return ?string
      */
     public function getReferer(): ?string
     {
-        $referer = null;
-        if (isset($_GET['referer'])) {
-            $referer = $_GET['referer'];
-        } else {
-            $refererUrl = $this->request->getReferer();
-            if ($refererUrl) {
-                $referer = $refererUrl->__toString();
+        $refererUrl = null;
+
+        try {
+            if ($this->request->getQuery('referer')) {
+                $refererUrl = new UrlImmutable($this->request->getQuery('referer'));
+            } else {
+                $refererUrl = $this->request->getReferer();
             }
+        } catch (InvalidArgumentException $e) {
+            // occasionally bots send invalid (non-URL) referer; no action necessary
         }
 
-        $url = new Url($referer);
-        $refererParam = $url->getQueryParameter('referer');
-        if ($refererParam) {
-            $referer = $refererParam;
-        }
-
-        return $referer;
+        return $refererUrl?->__toString();
     }
 }
