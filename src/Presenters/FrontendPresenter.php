@@ -171,6 +171,9 @@ class FrontendPresenter extends BasePresenter
                 $refererUrl = new UrlImmutable($this->request->getQuery('referer'));
             } else {
                 $refererUrl = $this->request->getReferer();
+                if ($refererUrl?->getQueryParameter('referer')) {
+                    $refererUrl = new UrlImmutable($refererUrl->getQueryParameter('referer'));
+                }
             }
         } catch (InvalidArgumentException $e) {
             // occasionally bots send invalid (non-URL) referer; no action necessary
