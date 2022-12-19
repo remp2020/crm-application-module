@@ -4,6 +4,5 @@ namespace Crm\ApplicationModule\Components\Graphs;
 
 interface SmallBarGraphControlFactoryInterface
 {
-    /** @return SmallBarGraph */
-    public function create();
+    public function create(): SmallBarGraph;
 }

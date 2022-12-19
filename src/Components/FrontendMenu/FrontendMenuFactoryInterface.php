@@ -4,6 +4,5 @@ namespace Crm\ApplicationModule\Components;
 
 interface FrontendMenuFactoryInterface
 {
-    /** @return FrontendMenu */
-    public function create();
+    public function create(): FrontendMenu;
 }
