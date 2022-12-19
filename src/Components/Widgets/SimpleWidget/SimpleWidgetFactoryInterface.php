@@ -4,6 +4,5 @@ namespace Crm\ApplicationModule\Components;
 
 interface SimpleWidgetFactoryInterface
 {
-    /** @return SimpleWidget */
-    public function create();
+    public function create(): SimpleWidget;
 }
