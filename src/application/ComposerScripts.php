@@ -10,6 +10,7 @@ use Nette\Database\DriverException;
 use Nette\InvalidArgumentException;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Console\Input\InputInterface;
 
 class ComposerScripts
 {
@@ -23,11 +24,15 @@ class ComposerScripts
     {
         $vendorDir = $event->getComposer()->getConfig()->get('vendor-dir');
 
+        // This is initialized before calling require_once. Autoloader would otherwise pick up some different (internal)
+        // version of Symfony dependencies and cause compatibility issues.
+        $installAssets = new ArrayInput(['command' => 'application:install_assets']);
+
         require_once $vendorDir . '/autoload.php';
 
         if (file_exists($vendorDir . '/../.env')) {
             try {
-                static::runCommand($event, 'application:install_assets');
+                static::runCommand($event, $installAssets);
             } catch (DriverException | InvalidArgumentException $exception) {
                 $event->getIO()->write("<warning> CRM </warning> Unable to run <comment>application:install_assets</comment> command, please run <comment>php bin/command.php phinx:migrate</comment> command first.");
             }
@@ -41,7 +46,7 @@ class ComposerScripts
         touch($vendorDir . '/../app/config/config.neon');
     }
 
-    private static function runCommand($event, $commandName)
+    private static function runCommand(Event $event, InputInterface $input)
     {
         $core = new \Crm\ApplicationModule\Core(
             realpath($event->getComposer()->getConfig()->get('vendor-dir') . '/../')
@@ -57,7 +62,8 @@ class ComposerScripts
         foreach ($commands as $command) {
             $application->add($command);
         }
-        $application->run(new ArrayInput(['command' => $commandName]));
+
+        $application->run($input);
     }
 
     public static function checkVersion(Event $event)
