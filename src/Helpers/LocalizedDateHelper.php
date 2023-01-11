@@ -2,9 +2,9 @@
 
 namespace Crm\ApplicationModule\Helpers;
 
-use DateTime;
 use IntlDateFormatter;
 use Nette\Localization\Translator;
+use Nette\Utils\DateTime;
 
 class LocalizedDateHelper
 {
@@ -52,14 +52,18 @@ class LocalizedDateHelper
         return $this->shortFormat[$locale] ?? $this->shortFormat[null];
     }
 
-    public function process($date, $long = false)
+    public function process($date, bool $long = false, bool $includeTime = true)
     {
-        if (!$date instanceof DateTime) {
-            return (string)$date;
+        if (!$date instanceof \DateTime) {
+            $date = DateTime::from($date);
         }
 
         $locale = $this->translator->getLocale();
+
         $format = $this->getFormat($long, $locale);
+        if (!$includeTime) {
+            $format[1] = IntlDateFormatter::NONE;
+        }
 
         return IntlDateFormatter::formatObject(
             $date,
