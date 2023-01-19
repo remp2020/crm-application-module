@@ -168,8 +168,6 @@ class Core
 
         # terminal
         if (self::isCli()) {
-            $configurator->setDebugMode(true);
-
             // CLI has no clue about host, but sometimes needs to generate absolute URLs via LinkGenerator.
             // Router usually infers the host from current URL or referer, but there's no such thing here.
             // We need to hint the router the correct host (if available).
