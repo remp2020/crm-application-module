@@ -69,7 +69,7 @@ class PhinxRegistrator
             ],
             'environments' => [
                 'default_migration_table' => 'phinxlog',
-                'default_database' => $env,
+                'default_environment' => $env,
             ],
         ];
 
