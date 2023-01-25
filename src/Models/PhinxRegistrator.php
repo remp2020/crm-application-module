@@ -64,6 +64,9 @@ class PhinxRegistrator
         $env = Core::env('CRM_ENV');
 
         $configData = [
+            'feature_flags' => [
+                'unsigned_primary_keys' => false,
+            ],
             'paths' => [
                 'migrations' => $migrationPaths,
             ],
@@ -82,6 +85,9 @@ class PhinxRegistrator
         $env = Core::env('CRM_ENV');
 
         $configData = [
+            'feature_flags' => [
+                'unsigned_primary_keys' => false,
+            ],
             'paths' => [
                 'migrations' => APP_ROOT . 'tests/migrations',
             ],
