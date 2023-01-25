@@ -93,7 +93,7 @@ class PhinxRegistrator
             ],
             'environments' => [
                 'default_migration_table' => 'phinxlog',
-                'default_database' => $env,
+                'default_environment' => $env,
             ],
 
             // configuration of odan/phinx-migrations-generator; not interfering with default phinx options
