@@ -17,7 +17,6 @@ interface ScenariosCriteriaInterface
 
     /**
      * Adds conditions to $selection query according to $paramValues criteria parameters saved values (saved by user in ScenarioBuilder.
-     * Returns false if criteria based on $criterionItemRow is evaluated as untrue, otherwise returns true.
      *
      * @param Selection $selection
      * @param array     $paramValues array containing values saved by CriteriaParams registered in params() method.
@@ -33,7 +32,7 @@ interface ScenariosCriteriaInterface
      * For example, if the criteria is registered on subscription event,
      * the criteria will receive the subscription object that has triggered the particular scenario.
      *
-     * @return bool
+     * @return bool false if criteria based on $criterionItemRow is evaluated as untrue, otherwise true
      */
     public function addConditions(Selection $selection, array $paramValues, ActiveRow $criterionItemRow): bool;
 
