@@ -39,10 +39,7 @@ class Repository
         $this->cacheStorage = $cacheStorage;
     }
 
-    /**
-     * @return Selection
-     */
-    public function getTable()
+    public function getTable(): Selection
     {
         $database = $this->getDatabase(true);
         $selection = new Selection(
@@ -55,17 +52,21 @@ class Repository
         return $selection;
     }
 
-    public function find($id)
+    public function find($id): ?ActiveRow
     {
-        return $this->getTable()->where(['id' => $id])->fetch();
+        /** @var ActiveRow $result */
+        $result = $this->getTable()->where(['id' => $id])->fetch();
+        return $result;
     }
 
-    public function findBy($column, $value)
+    public function findBy($column, $value): ?ActiveRow
     {
-        return $this->getTable()->where([$column => $value])->fetch();
+        /** @var ActiveRow $result */
+        $result = $this->getTable()->where([$column => $value])->fetch();
+        return $result;
     }
 
-    public function totalCount()
+    public function totalCount(): int
     {
         return $this->getTable()->count('*');
     }
