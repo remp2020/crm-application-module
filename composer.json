@@ -15,7 +15,6 @@
     "ext-iconv": "*",
     "ext-PDO": "*",
     "ext-dom": "*",
-    "ext-posix": "*",
     "ext-curl": "*",
     "fakerphp/faker": "^1.13",
     "nette/application": "^3.1",
