@@ -71,7 +71,6 @@ LEFT JOIN {$criteria->getTableName()} ON
 GROUP BY time_series.time_key
 ");
 
-        /** @var \Nette\Database\Table\IRow $row */
         foreach ($res as $row) {
             $value = 0;
             if ($row->id != null) {

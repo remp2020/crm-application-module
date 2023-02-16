@@ -32,7 +32,6 @@ abstract class ScaleBase
     protected function formatData(ResultSet $res)
     {
         $dbData = [];
-        /** @var \Nette\Database\Table\IRow $row */
         foreach ($res as $row) {
             $value = 0;
             if ($row->id != null) {

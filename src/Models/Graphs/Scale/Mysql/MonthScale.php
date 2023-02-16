@@ -52,7 +52,6 @@ LEFT JOIN {$criteria->getTableName()} ON
 GROUP BY time_series.time_key
 ");
 
-        /** @var \Nette\Database\Table\IRow $row */
         foreach ($res as $row) {
             $value = 0;
             if ($row->id != null) {
@@ -87,7 +86,6 @@ AND {$criteria->getTableName()}.{$criteria->getTimeField()} <= '{$criteria->getE
 GROUP BY calendar.year,calendar.month
 		");
 
-        /** @var \Nette\Database\Table\IRow $row */
         foreach ($res as $row) {
             $value = 0;
             if ($row->id != null) {
@@ -119,7 +117,6 @@ AND {$criteria->getTableName()}.{$criteria->getTimeField()} <= '{$criteria->getE
 GROUP BY calendar.year,calendar.month" . $this->getGroupBy($criteria->getGroupBy()) . '
 		');
 
-        /** @var \Nette\Database\Table\IRow $row */
         foreach ($res as $row) {
             $value = 0;
             if ($row->id != null) {
