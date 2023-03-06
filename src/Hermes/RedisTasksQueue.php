@@ -46,7 +46,7 @@ class RedisTasksQueue
     public function getTask(array $priorities = [])
     {
         foreach ($this->queues as $priority => $name) {
-            if (count($priorities) > 0 && !in_array($priority, $priorities)) {
+            if (count($priorities) > 0 && !in_array($priority, $priorities, true)) {
                 continue;
             }
 

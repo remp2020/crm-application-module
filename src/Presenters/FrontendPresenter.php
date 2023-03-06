@@ -79,7 +79,7 @@ class FrontendPresenter extends BasePresenter
             try {
                 $this->getUser()->login(['mailToken' => $mailAutologinToken]);
                 // Do not refresh POST/PUT requests (otherwise data will get lost)
-                if (!in_array($this->request->getMethod(), ['POST', 'PUT'])) {
+                if (!in_array($this->request->getMethod(), ['POST', 'PUT'], true)) {
                     $redirect = true;
                 }
             } catch (AuthenticationException $exp) {
