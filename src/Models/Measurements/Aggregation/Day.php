@@ -18,7 +18,7 @@ class Day extends Aggregation
 
     public function nextDate(DateTime $date): DateTime
     {
-        $beginningOfDay = $date->modifyClone('midnight');
+        $beginningOfDay = (clone $date)->modify('midnight');
         if ($beginningOfDay <= $date) {
             return $beginningOfDay->add(new DateInterval('P1D'));
         }

@@ -17,7 +17,7 @@ class Month extends Aggregation
 
     public function nextDate(DateTime $date): DateTime
     {
-        $beginningOfMonth = $date->modifyClone('first day of this month')->setTime(0, 0);
+        $beginningOfMonth = (clone $date)->modify('first day of this month')->setTime(0, 0);
         if ($beginningOfMonth <= $date) {
             return $beginningOfMonth->add(new DateInterval('P1M'));
         }

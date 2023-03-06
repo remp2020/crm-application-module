@@ -69,14 +69,14 @@ LEFT JOIN {$criteria->getTableName()} ON
 {$where}
 
 GROUP BY time_series.time_key
-");
+")->fetchAll();
 
         foreach ($res as $row) {
             $value = 0;
             if ($row->id != null) {
                 $value = $row['value'];
             }
-            if (isset($row->name)) {
+            if (isset($row->name, $row->year)) {
                 $dbData[$row->name]["{$row->year}"] = $value;
             } else {
                 $dbData[' ']["{$row->year}"] = $value;
@@ -102,7 +102,7 @@ WHERE
 AND {$criteria->getTableName()}.{$criteria->getTimeField()} <= '{$criteria->getEndDate()}'
 	{$criteria->getWhere()}
 GROUP BY calendar.year
-		");
+		")->fetchAll();
 
         foreach ($res as $row) {
             $value = 0;

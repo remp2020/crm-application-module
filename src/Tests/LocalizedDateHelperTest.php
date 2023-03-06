@@ -2,9 +2,9 @@
 
 namespace Crm\ApplicationModule\Tests;
 
+use Contributte\Translation\Translator;
 use Crm\ApplicationModule\Helpers\LocalizedDateHelper;
 use DateTime;
-use Nette\Localization\Translator;
 
 class LocalizedDateHelperTest extends CrmTestCase
 {

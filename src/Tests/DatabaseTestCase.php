@@ -56,7 +56,6 @@ SET FOREIGN_KEY_CHECKS=1;
 ";
         $db->exec($sql);
 
-        /** @var  $seederClass */
         foreach ($this->requiredSeeders() as $seederClass) {
             /** @var ISeeder $seeder */
             $seeder = $this->inject($seederClass);

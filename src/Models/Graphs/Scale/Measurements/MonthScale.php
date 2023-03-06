@@ -29,7 +29,7 @@ class MonthScale implements ScaleInterface
         $endDate = DateTime::from($end);
 
         $diff = $startDate->diff($endDate);
-        $months = (int) ($diff->format('%y')*12) + (int) $diff->format('%m') + 1;
+        $months = ((int) $diff->format('%y') * 12) + (int) $diff->format('%m') + 1;
         $result = [];
 
         $result[$aggregation->key($startDate)] = $startDate->format('Y-m');

@@ -67,6 +67,7 @@ class FrontendPresenter extends BasePresenter
     {
         parent::beforeRender();
 
+        /** @var FrontendRequestEvent $event */
         $event = $this->emitter->emit(new FrontendRequestEvent());
         foreach ($event->getFlashMessages() as $flashMessage) {
             $this->flashMessage($flashMessage['message'], $flashMessage['type']);

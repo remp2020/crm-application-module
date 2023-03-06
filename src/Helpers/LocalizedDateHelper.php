@@ -2,14 +2,12 @@
 
 namespace Crm\ApplicationModule\Helpers;
 
+use Contributte\Translation\Translator;
 use IntlDateFormatter;
-use Nette\Localization\Translator;
 use Nette\Utils\DateTime;
 
 class LocalizedDateHelper
 {
-    private Translator $translator;
-
     private array $longFormat = [
         null => [IntlDateFormatter::LONG, IntlDateFormatter::MEDIUM]
     ];
@@ -18,9 +16,8 @@ class LocalizedDateHelper
         null => [IntlDateFormatter::SHORT, IntlDateFormatter::MEDIUM]
     ];
 
-    public function __construct(Translator $translator)
+    public function __construct(private Translator $translator)
     {
-        $this->translator = $translator;
     }
 
     /**

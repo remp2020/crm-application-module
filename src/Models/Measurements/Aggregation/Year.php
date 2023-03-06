@@ -16,7 +16,7 @@ class Year extends Aggregation
 
     public function nextDate(DateTime $date): DateTime
     {
-        $beginningOfYear = $date->modifyClone('first day of january this year')->setTime(0, 0);
+        $beginningOfYear = (clone $date)->modify('first day of january this year')->setTime(0, 0);
         if ($beginningOfYear <= $date) {
             return $beginningOfYear->add(new DateInterval('P1Y'));
         }

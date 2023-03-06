@@ -5,9 +5,6 @@ namespace Crm\ApplicationModule\Models\Repository;
 use Crm\ApplicationModule\Models\Traits\SlugColumnException;
 use Nette\Utils\Strings;
 
-/**
- * @property $slugs Defines the repository columns which should be asserted as slugs.
- */
 trait SlugColumnTrait
 {
     /**

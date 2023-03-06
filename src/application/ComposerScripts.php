@@ -32,7 +32,7 @@ class ComposerScripts
 
         if (file_exists($vendorDir . '/../.env')) {
             try {
-                static::runCommand($event, $installAssets);
+                self::runCommand($event, $installAssets);
             } catch (DriverException | InvalidArgumentException $exception) {
                 $event->getIO()->write("<warning> CRM </warning> Unable to run <comment>application:install_assets</comment> command, please run <comment>php bin/command.php phinx:migrate</comment> command first.");
             }

@@ -57,11 +57,6 @@ class VisualPaginator extends Control
         $this->template->render();
     }
 
-    /**
-     * Loads state informations.
-     * @param  array
-     * @return void
-     */
     public function loadState(array $params): void
     {
         parent::loadState($params);

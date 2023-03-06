@@ -21,6 +21,9 @@ use Nette\Application\UI\Presenter;
 use Nette\DI\Container;
 use Nette\Security\AuthenticationException;
 
+/**
+ * @property-read \Nette\Bridges\ApplicationLatte\Template $template
+ */
 abstract class BasePresenter extends Presenter
 {
     public const SESSION_RELOAD_USER = 'reloadUser';

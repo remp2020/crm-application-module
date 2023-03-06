@@ -7,11 +7,8 @@ use Nette\Database\Explorer;
 
 class DayScale extends \Crm\ApplicationModule\Graphs\Scale\DayScale
 {
-    private $database;
-
-    public function __construct(Explorer $database)
+    public function __construct(private Explorer $database)
     {
-        $this->database = $database;
     }
 
     public function getDatabaseRangeData(Criteria $criteria)
@@ -38,7 +35,7 @@ AND {$criteria->getTableName()}.{$criteria->getRangeStart()} <= '{$criteria->get
 	{$criteria->getWhere()}
 GROUP BY calendar.date
 
-		");
+		")->fetchAll();
 
         foreach ($res as $row) {
             $value = 0;

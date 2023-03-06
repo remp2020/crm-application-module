@@ -17,7 +17,7 @@ class Week extends Aggregation
 
     public function nextDate(DateTime $date): DateTime
     {
-        $beginningOfWeek = $date->modifyClone('this week')->setTime(0, 0);
+        $beginningOfWeek = (clone $date)->modify('this week')->setTime(0, 0);
         if ($beginningOfWeek <= $date) {
             return $beginningOfWeek->add(new DateInterval('P7D'));
         }

@@ -58,8 +58,7 @@ class BootstrapSmallInlineFormRenderer extends DefaultFormRenderer
 
     /**
      * Provides complete form rendering.
-     * @param  Nette\Forms\Form
-     * @param  string 'begin', 'errors', 'ownerrors', 'body', 'end' or empty to render all
+     * @param string $mode 'begin', 'errors', 'ownerrors', 'body', 'end' or empty to render all
      * @return string
      */
     public function render(Nette\Forms\Form $form, string $mode = null): string

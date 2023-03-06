@@ -8,11 +8,8 @@ use Nette\Database\Explorer;
 
 class MonthScale extends \Crm\ApplicationModule\Graphs\Scale\MonthScale implements ScaleInterface
 {
-    private $database;
-
-    public function __construct(Explorer $database)
+    public function __construct(private Explorer $database)
     {
-        $this->database = $database;
     }
 
     public function getDatabaseRangeData(Criteria $criteria)
@@ -50,7 +47,7 @@ LEFT JOIN {$criteria->getTableName()} ON
 {$where}
 
 GROUP BY time_series.time_key
-");
+")->fetchAll();
 
         foreach ($res as $row) {
             $value = 0;
@@ -84,7 +81,7 @@ WHERE
 AND {$criteria->getTableName()}.{$criteria->getTimeField()} <= '{$criteria->getEndDate('Y-m-d 23:59:59')}'
 	{$criteria->getWhere()}
 GROUP BY calendar.year,calendar.month
-		");
+		")->fetchAll();
 
         foreach ($res as $row) {
             $value = 0;
@@ -115,7 +112,7 @@ WHERE
 AND {$criteria->getTableName()}.{$criteria->getTimeField()} <= '{$criteria->getEndDate('Y-m-d 23:59:59')}'
 	{$criteria->getWhere()}
 GROUP BY calendar.year,calendar.month" . $this->getGroupBy($criteria->getGroupBy()) . '
-		');
+		')->fetchAll();
 
         foreach ($res as $row) {
             $value = 0;
