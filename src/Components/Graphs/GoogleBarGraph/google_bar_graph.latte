@@ -38,29 +38,21 @@
             }
         }
 
-        var oneDay = (1000 * 60 * 60 * 24);
-        var dateRange = data.getColumnRange(0);
-
-        var minDateRange = new Date;
-        var maxDateRange = new Date;
-        if (dateRange.min !== null) {
-            minDateRange = new Date(dateRange.min);
-        }
-        if (dateRange.max !== null) {
-            maxDateRange = new Date(dateRange.max);
-        }
-
         var options = {
             chartArea: { width: '90%', height: '70%'},
             fontSize: ['11'],
             lineWidth: 3,
             series: series,
             hAxis: {
+                viewWindowMode: "maximized"
+            },
+            {if isset($chartViewWindowMin)}
+            vAxis: {
                 viewWindow: {
-                    min: new Date(minDateRange.getTime() - oneDay),
-                    max: new Date(maxDateRange.getTime() + oneDay)
+                    min: {$chartViewWindowMin}
                 }
             },
+            {/if}
             legend: { position:'top', maxLines: 2}{if $stacked},
             isStacked: true
             {/if}

@@ -40,6 +40,16 @@
             fontSize: ['11'],
             lineWidth: 3,
             series: series,
+            hAxis: {
+                viewWindowMode: "maximized"
+            },
+            {if isset($chartViewWindowMin)}
+            vAxis: {
+                viewWindow: {
+                    min: {$chartViewWindowMin}
+                }
+            },
+            {/if}
             legend: { position:'top', maxLines: 2},
             trendlines: {
               0: { type: 'linear', opacity: 0.5, tooltip: false },
