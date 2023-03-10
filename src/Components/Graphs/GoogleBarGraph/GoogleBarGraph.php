@@ -71,6 +71,7 @@ class GoogleBarGraph extends BaseGraphControl
         $this->template->height = empty($this->series) ? 0 : $this->height;
         $this->template->stacked = $this->stacked;
         $this->template->graphDataJs = $this->getDataForJs();
+        $this->template->chartViewWindowMin = $this->getChartViewWindowMin();
         $this->template->isFirstColumnString = $this->isFirstColumnString();
         $this->template->asyncLoad = $asyncLoad;
         $this->template->loaded = !$asyncLoad || $this->getPresenter()->isAjax();

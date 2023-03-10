@@ -28,13 +28,36 @@ abstract class BaseGraphControl extends Control
     {
         $graphDataJs = '';
         foreach ($this->getGroupedData() as $xData => $yDataArray) {
-            $xDataString = implode(',', $yDataArray);
+            $yDataString = implode(',', $yDataArray);
             $graphDataJs .= strpos($xData, 'new Date') !== false
-                ? "[$xData, $xDataString],"
-                : "['$xData', $xDataString],";
+                ? "[$xData, $yDataString],"
+                : "['$xData', $yDataString],";
         }
 
         return trim($graphDataJs, ',');
+    }
+
+    protected function getChartViewWindowMin(): ?int
+    {
+        $globalMax = PHP_INT_MIN;
+        $globalMin = PHP_INT_MAX;
+        foreach ($this->getGroupedData() as $xData => $yDataArray) {
+            if (($localMin = min($yDataArray)) < $globalMin) {
+                $globalMin = $localMin;
+            }
+            if (($localMax = max($yDataArray)) > $globalMax) {
+                $globalMax = $localMax;
+            }
+        }
+
+        // If the difference between chart extremes is greater than 30%, the chart should be readable without
+        // any further manipulation.
+        if ($globalMin < $globalMax * 0.7) {
+            return null;
+        }
+
+        $viewWindowMin = floor($globalMin * 0.95);
+        return max($viewWindowMin, 0);
     }
 
     protected function isFirstColumnString(): bool
