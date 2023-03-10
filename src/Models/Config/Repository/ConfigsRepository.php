@@ -2,9 +2,11 @@
 
 namespace Crm\ApplicationModule\Config\Repository;
 
+use Crm\ApplicationModule\Events\ConfigUpdatedEvent;
 use Crm\ApplicationModule\Repository;
 use Crm\ApplicationModule\Repository\AuditLogRepository;
 use DateTime;
+use League\Event\Emitter;
 use Nette\Database\Explorer;
 use Nette\Database\Table\ActiveRow;
 
@@ -14,7 +16,8 @@ class ConfigsRepository extends Repository
 
     public function __construct(
         Explorer $database,
-        AuditLogRepository $auditLogRepository
+        AuditLogRepository $auditLogRepository,
+        private Emitter $emitter,
     ) {
         parent::__construct($database);
         $this->auditLogRepository = $auditLogRepository;
@@ -42,10 +45,18 @@ class ConfigsRepository extends Repository
 
     final public function update(ActiveRow &$row, $data)
     {
+        $originalValue = $row->value;
+
         $data['updated_at'] = new DateTime();
         if (!isset($data['has_default_value'])) {
             $data['has_default_value'] = false;
         }
-        return parent::update($row, $data);
+
+        $result = parent::update($row, $data);
+        if (isset($data['value']) && $originalValue !== $data['value']) {
+            $this->emitter->emit(new ConfigUpdatedEvent($row, $originalValue));
+        }
+
+        return $result;
     }
 }

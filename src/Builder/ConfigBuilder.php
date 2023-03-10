@@ -2,15 +2,20 @@
 
 namespace Crm\ApplicationModule\Builder;
 
+use Crm\ApplicationModule\Events\ConfigCreatedEvent;
 use DateTime;
+use League\Event\Emitter;
+use Nette\Database\Explorer;
 use Nette\Database\Table\ActiveRow;
 
 class ConfigBuilder extends Builder
 {
-    /**
-     * @var string
-     */
     protected $tableName = 'configs';
+
+    public function __construct(Explorer $database, private Emitter $emitter)
+    {
+        parent::__construct($database);
+    }
 
     /**
      * @return bool
@@ -125,5 +130,14 @@ class ConfigBuilder extends Builder
     public function setConfigCategory(ActiveRow $category)
     {
         return $this->set('config_category_id', $category->id);
+    }
+
+    protected function store($tableName)
+    {
+        $row = parent::store($tableName);
+        if ($row) {
+            $this->emitter->emit(new ConfigCreatedEvent($row));
+        }
+        return $row;
     }
 }

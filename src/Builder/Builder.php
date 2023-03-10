@@ -7,19 +7,10 @@ use Nette\Database\Table\ActiveRow;
 
 abstract class Builder
 {
-    /** @var Explorer ; */
-    protected $database;
+    private array $data;
+    private array $options;
+    private array $errors;
 
-    /** @var  array */
-    private $data;
-
-    /** @var  array */
-    private $options = [];
-
-    /** @var  array */
-    private $errors;
-
-    /** @var string */
     protected $tableName = 'undefined';
 
     /** @return bool */
@@ -35,12 +26,8 @@ abstract class Builder
         }
     }
 
-    /**
-     * @param Explorer $database
-     */
-    public function __construct(Explorer $database)
+    public function __construct(protected Explorer $database)
     {
-        $this->database = $database;
         $this->data = [];
         $this->errors = [];
         $this->options = [];
@@ -64,53 +51,44 @@ abstract class Builder
     }
 
     /**
-     * @param string $error
      * @return $this
      */
-    protected function addError($error)
+    protected function addError(string $error)
     {
         $this->errors[] = $error;
         return $this;
     }
 
-    /**
-     * @return array
-     */
-    public function getErrors()
+    public function getErrors(): array
     {
         return $this->errors;
     }
 
-    /**
-     * @return array
-     */
-    protected function getData()
+    protected function getData(): array
     {
         return $this->data;
     }
 
     /**
-     * @param string $key
      * @param string $value
      * @return $this
      */
-    public function set($key, $value)
+    public function set(string $key, $value)
     {
         $this->data[$key] = $value;
         return $this;
     }
 
-    public function setOption($key, $value)
+    public function setOption(string $key, $value)
     {
         $this->options[$key] = $value;
         return $this;
     }
 
     /**
-     * @param $key
      * @return mixed
      */
-    protected function get($key)
+    protected function get(string $key)
     {
         if ($this->exists($key)) {
             return $this->data[$key];
@@ -118,25 +96,20 @@ abstract class Builder
         return null;
     }
 
-    protected function getOption($key)
+    protected function getOption(string $key)
     {
         return $this->options[$key] ?? null;
     }
 
-    /**
-     * @param string $key
-     * @return bool
-     */
-    protected function exists($key)
+    protected function exists(string $key): bool
     {
         return isset($this->data[$key]);
     }
 
     /**
-     * @param string $tableName
      * @return bool|int|ActiveRow
      */
-    protected function store($tableName)
+    protected function store(string $tableName)
     {
         return $this->database->table($tableName)->insert($this->getData());
     }
