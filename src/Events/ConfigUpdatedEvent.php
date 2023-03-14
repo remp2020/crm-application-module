@@ -7,7 +7,7 @@ use Nette\Database\Table\ActiveRow;
 
 class ConfigUpdatedEvent extends AbstractEvent
 {
-    public function __construct(private ActiveRow $config, private string $originalValue)
+    public function __construct(private ActiveRow $config, private ?string $originalValue)
     {
     }
 
