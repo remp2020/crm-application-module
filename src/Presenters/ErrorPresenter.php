@@ -18,7 +18,7 @@ class ErrorPresenter extends Presenter
     /**
      * @throws \Nette\Application\AbortException
      */
-    public function renderDefault(\Exception $exception)
+    public function renderDefault(\Throwable $exception)
     {
         if ($exception instanceof BadRequestException) {
             $code = $exception->getHttpCode();
