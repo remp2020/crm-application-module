@@ -2,8 +2,10 @@
 
 namespace Crm\ApplicationModule\Commands;
 
+use Composer\Console\Input\InputOption;
 use Crm\ApplicationModule\Populator\AbstractPopulator;
 use Faker\Factory;
+use Faker\Generator;
 use Nette\Database\Explorer;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
@@ -13,14 +15,13 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class PopulatorCommand extends Command
 {
-    /** @var Explorer */
-    private $database;
+    use DecoratedCommandTrait;
 
-    /** @var \Faker\Generator */
-    private $faker;
+    private Explorer $database;
+    private Generator $faker;
 
     /** @var AbstractPopulator[] */
-    private $populators = [];
+    private array $populators = [];
 
     /**
      *
@@ -39,7 +40,13 @@ class PopulatorCommand extends Command
     protected function configure()
     {
         $this->setName('application:populate')
-            ->setDescription('Populate data to system');
+            ->setDescription('Populate data to system')
+            ->addOption(
+                'populator',
+                'p',
+                InputOption::VALUE_IS_ARRAY | InputOption::VALUE_REQUIRED,
+                'Filters populators with provided names; multiple options are allowed. (e.g. "-p Autologin -p Payments")'
+            );
     }
 
     /**
@@ -68,11 +75,15 @@ class PopulatorCommand extends Command
             "  * %populating%: %current%/%max% [%bar%] %percent:3s%% %elapsed:6s%/%estimated:-6s% %memory:6s%"
         );
 
-        $output->writeln('');
-        $output->writeln('<info>***** POPULATOR *****</info>');
-        $output->writeln('');
+        $allowedPopulators = array_flip($input->getOption('populator'));
+        if (count($allowedPopulators)) {
+            $output->writeln('Using filter: ' . implode(', ', array_keys($allowedPopulators)));
+        }
 
         foreach ($this->populators as $seeder) {
+            if (count($allowedPopulators) > 0 && !array_key_exists($seeder->getName(), $allowedPopulators)) {
+                continue;
+            }
             $progressBar = new ProgressBar($output, $seeder->getCount());
             $progressBar->setFormat('custom');
             $progressBar->setMessage('Populating <comment>' . $seeder->getName() . '</comment>', 'populating');
