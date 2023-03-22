@@ -160,7 +160,7 @@ class Core
             'tempRoot' => APP_ROOT . 'temp',
         ]);
 
-        if ($this->environment === 'local' || isset($_GET['mirocdebug'])) {
+        if ($this->environment === 'local') {
             $configurator->setDebugMode(true);
         } else {
             $configurator->setDebugMode(false);
