@@ -8,6 +8,7 @@ use Crm\ApplicationModule\Repository\AuditLogRepository;
 use Crm\ApplicationModule\Repository\ReplicaTrait;
 use Nette\Caching\Storage;
 use Nette\Database\Explorer;
+use Nette\Utils\DateTime;
 use Throwable;
 
 class Repository
@@ -245,5 +246,12 @@ class Repository
             }
         }
         $this->auditLogRepository->add($operation, $this->tableName, $signature, $data);
+    }
+
+    public function markAuditLogsForDelete($signature): void
+    {
+        $this->auditLogRepository->getByTableAndSignature($this->tableName, $signature)->update([
+            'deleted_at' => new DateTime(),
+        ]);
     }
 }

@@ -3,6 +3,7 @@
 namespace Crm\ApplicationModule\Repository;
 
 use Crm\ApplicationModule\Repository;
+use Crm\ApplicationModule\Selection;
 use Nette\Database\Explorer;
 use Nette\Security\IUserStorage;
 
@@ -36,6 +37,14 @@ class AuditLogRepository extends Repository
             'signature' => $signature,
             'data' => json_encode($data),
             'created_at' => date('Y-m-d H:i:s'),
+        ]);
+    }
+
+    final public function getByTableAndSignature(string $tableName, string $signature): Selection
+    {
+        return $this->getTable()->where([
+            'table_name' => $tableName,
+            'signature' => $signature
         ]);
     }
 }
