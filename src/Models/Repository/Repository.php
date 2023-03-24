@@ -250,7 +250,7 @@ class Repository
 
     public function markAuditLogsForDelete($signature): void
     {
-        $this->auditLogRepository->getByTableAndSignature($this->tableName, $signature)->update([
+        $this->auditLogRepository?->getByTableAndSignature($this->tableName, $signature)->update([
             'deleted_at' => new DateTime(),
         ]);
     }
