@@ -6,9 +6,12 @@ use Crm\ApplicationModule\Repository;
 use Crm\ApplicationModule\Selection;
 use Nette\Database\Explorer;
 use Nette\Security\IUserStorage;
+use Remp\MailerModule\Repositories\NewTableDataMigrationTrait;
 
 class AuditLogRepository extends Repository
 {
+    use NewTableDataMigrationTrait;
+
     protected $tableName = 'audit_logs';
 
     protected $userStorage;

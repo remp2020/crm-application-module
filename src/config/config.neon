@@ -42,7 +42,12 @@ services:
 	cacheRepository: Crm\ApplicationModule\Cache\CacheRepository
 	snippetsRepository: Crm\ApplicationModule\Snippet\Repository\SnippetsRepository
 	hermesTasksRepository: Crm\ApplicationModule\Repository\HermesTasksRepository
-	auditLogRepository: Crm\ApplicationModule\Repository\AuditLogRepository
+	auditLogRepository:
+		factory: Crm\ApplicationModule\Repository\AuditLogRepository
+		setup:
+			- setNewTableName('audit_logs_v2')
+			- setNewTableDataMigrationIsRunningFlag(Crm\ApplicationModule\Commands\MigrateAuditLogsCommand::AUDIT_LOGS_MIGRATION_RUNNING)
+			- setRedisClientFactory(@redisClientFactory)
 
 	- Crm\ApplicationModule\Router\RouterFactory
 	router: @Crm\ApplicationModule\Router\RouterFactory::createRouter
@@ -63,6 +68,7 @@ services:
 	- Crm\ApplicationModule\Commands\GenerateKeyCommand
 	- Crm\ApplicationModule\Commands\CalculateMeasurementsCommand
 	- Crm\ApplicationModule\Commands\AuditLogsCleanupCommand
+	- Crm\ApplicationModule\Commands\MigrateAuditLogsCommand
 
 	applicationConfig:
 		factory: Crm\ApplicationModule\Config\ApplicationConfig

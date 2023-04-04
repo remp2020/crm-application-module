@@ -666,3 +666,17 @@ Widget provides wrapper for simple table with single statistic - each provided b
 
 ![alt text](docs/simple_widget.png "Simple widget")
 </details>
+
+## Database tables migration
+
+Because of need of changing primary keys (int -> bigint), in tables that contain lots of data (or have risk of overflowing primary key if its int), we had to create migration process. Since some tables are very exposed and cannot be locked for more than a couple of seconds, we decided to create new tables, migrate the data manually and keep the old and new table in sync while migrating.
+
+_This migration process is necessary only for installations after specific version for specific table, and is two steps process._
+
+### Audit logs migration (installed before 2.5.0)
+
+Consists of `audit_logs` table migration.
+
+Steps:
+1. Run phinx migrations command `phinx:migrate`, which creates new table `audit_logs_v2` (in case there is no data in table, migration just changes type of primary key and next steps are not needed).
+2. Run command `application:convert_audit_logs_to_bigint`, which copies data from old table to new (e.g. `audit_logs` to `audit_logs_v2`). Command will after successful migration atomically rename tables (e.g. `audit_logs` -> `audit_logs_old` and `audit_logs_v2` -> `audit_logs`), so when the migration ends only new tables are used.
