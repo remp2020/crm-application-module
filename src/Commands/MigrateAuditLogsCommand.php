@@ -45,12 +45,17 @@ class MigrateAuditLogsCommand extends Command
         $auditLogRepositoryTableName = $this->auditLogRepository->getTable()->getName();
         $auditLogRepositoryV2TableName = $this->auditLogRepository->getNewTable()->getName();
 
+        $output->writeln("Migrating data from '{$auditLogRepositoryTableName}' table TO '{$auditLogRepositoryV2TableName}' table.");
+
         // Set migration running/start time flag in redis
         $migrationStartTime = new DateTime();
+        $output->writeln("Migration start time: '{$migrationStartTime}'");
         if ($this->redis()->exists(self::AUDIT_LOGS_MIGRATION_RUNNING)) {
             $migrationStartTime = new DateTime($this->redis()->get(self::AUDIT_LOGS_MIGRATION_RUNNING));
+            $output->writeln("Migration start time pulled from redis: '{$migrationStartTime}'");
         } else {
             $this->redis()->set(self::AUDIT_LOGS_MIGRATION_RUNNING, $migrationStartTime);
+            $output->writeln("Store migration start time in redis: '{$migrationStartTime}'");
         }
 
         $this->database->query("
@@ -58,6 +63,8 @@ class MigrateAuditLogsCommand extends Command
             SET UNIQUE_CHECKS=0;
         ");
 
+        $output->writeln("Before start migration paging loop.");
+        $output->writeln('');
         // Paging LOOP
         $pageSize = 10000;
         while (true) {
@@ -66,15 +73,21 @@ class MigrateAuditLogsCommand extends Command
                 ->fetch()
                 ?->id ?? 0;
 
+            $output->writeln("lastMigratedId: {$lastMigratedId}");
+
             $maxId = $this->database
                 ->query("SELECT id FROM `{$auditLogRepositoryTableName}` WHERE created_at <= ? ORDER BY id DESC LIMIT 1", $migrationStartTime)
                 ->fetch()
                 ?->id ?? 0;
 
+            $output->writeln("maxId: {$maxId}");
+
             if ($maxId === 0 || $lastMigratedId === $maxId) {
+                $output->writeln("BREAK migration paging loop: maxId: {$maxId}, lastMigratedId: {$lastMigratedId}");
                 break;
             }
 
+            $output->writeln("Call INSERT page");
             $this->database->query("
                 INSERT IGNORE INTO `{$auditLogRepositoryV2TableName}` (`id`, `operation`, `user_id`, `table_name`, `signature`, `data`, `created_at`, `deleted_at`)
                 SELECT `id`, `operation`, `user_id`, `table_name`, `signature`, `data`, `created_at`, `deleted_at`
