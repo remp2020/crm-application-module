@@ -59,7 +59,7 @@ class GenerateKeyCommand extends Command
      */
     protected function setKeyInEnvironmentFile(string $key): bool
     {
-        $currentKey = Core::env('CRM_KEY');
+        $currentKey = Core::env('CRM_KEY', '');
 
         if (strlen($currentKey) !== 0 && !$this->confirmToProceed()) {
             return false;
