@@ -7,6 +7,8 @@ use DateTime;
 use League\Event\Emitter;
 use Nette\Database\Explorer;
 use Nette\Database\Table\ActiveRow;
+use Nette\Utils\Json;
+use Nette\Utils\JsonException;
 
 class ConfigBuilder extends Builder
 {
@@ -112,6 +114,19 @@ class ConfigBuilder extends Builder
     public function setAutoload($autoload)
     {
         return $this->set('autoload', $autoload);
+    }
+
+    /**
+     * Set config value options
+     *
+     * @throws JsonException
+     */
+    public function setOptions(?array $options): self
+    {
+        if (!empty($options)) {
+            $this->set('options', Json::encode($options));
+        }
+        return $this;
     }
 
     /**

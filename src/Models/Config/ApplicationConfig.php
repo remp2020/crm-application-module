@@ -16,6 +16,7 @@ class ApplicationConfig
     public const TYPE_PASSWORD = 'password';
     public const TYPE_HTML = 'html';
     public const TYPE_BOOLEAN = 'boolean';
+    public const TYPE_SELECT = 'select';
 
     public const CACHE_KEY = 'application_autoload_cache_v2';
 

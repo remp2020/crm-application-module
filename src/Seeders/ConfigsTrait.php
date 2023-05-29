@@ -14,7 +14,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 trait ConfigsTrait
 {
-    private function addConfig(OutputInterface $output, $category, $name, $type, $displayName, $description, $defaultValue, $sorting)
+    private function addConfig(OutputInterface $output, $category, $name, $type, $displayName, $description, $defaultValue, $sorting, array $options = null)
     {
         $config = $this->configsRepository->loadByName($name);
         if (!$config) {
@@ -27,7 +27,9 @@ trait ConfigsTrait
                 ->setAutoload(true)
                 ->setConfigCategory($category)
                 ->setSorting($sorting)
+                ->setOptions($options)
                 ->save();
+
             $output->writeln("  <comment>* config item <info>$name</info> created</comment>");
         } else {
             $output->writeln("  * config item <info>$name</info> exists");
