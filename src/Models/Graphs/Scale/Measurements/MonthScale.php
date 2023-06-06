@@ -7,19 +7,17 @@ use Crm\ApplicationModule\Graphs\Scale\ScaleInterface;
 use Crm\ApplicationModule\Models\Measurements\Aggregation\Month;
 use Crm\ApplicationModule\Models\Measurements\Repository\MeasurementGroupValuesRepository;
 use Crm\ApplicationModule\Models\Measurements\Repository\MeasurementValuesRepository;
+use Nette\Localization\Translator;
 use Nette\Utils\DateTime;
 
 class MonthScale implements ScaleInterface
 {
-    private MeasurementValuesRepository $measurementValuesRepository;
-    private MeasurementGroupValuesRepository $measurementGroupValuesRepository;
 
     public function __construct(
-        MeasurementValuesRepository $measurementValuesRepository,
-        MeasurementGroupValuesRepository $measurementGroupValuesRepository
+        private MeasurementValuesRepository $measurementValuesRepository,
+        private MeasurementGroupValuesRepository $measurementGroupValuesRepository,
+        private Translator $translator,
     ) {
-        $this->measurementValuesRepository = $measurementValuesRepository;
-        $this->measurementGroupValuesRepository = $measurementGroupValuesRepository;
     }
 
     public function getKeys(string $start, string $end)
@@ -54,6 +52,7 @@ class MonthScale implements ScaleInterface
     public function getDatabaseSeriesData(Criteria $criteria)
     {
         if ($group = $criteria->getGroupBy()) {
+            $notAvailableLabel = $this->translator->translate('system.not_available');
             $measurementValues = $this->measurementGroupValuesRepository
                 ->values(
                     $criteria->getSeries(),
@@ -61,7 +60,7 @@ class MonthScale implements ScaleInterface
                     DateTime::from($criteria->getStartDate('Y-m-d 00:00:00')),
                     DateTime::from($criteria->getEndDate('Y-m-d 23:59:59')),
                 )
-                ->select('measurement_group_values.key, SUM(measurement_group_values.value) AS sum, measurement_value.sorting_day')
+                ->select("IFNULL(`measurement_group_values`.`key`, '{$notAvailableLabel}') AS `key`, SUM(`measurement_group_values`.`value`) AS `sum`, `measurement_value`.`sorting_day`")
                 ->where('day IS NULL')
                 ->where('week IS NULL')
                 ->where('month IS NOT NULL')
