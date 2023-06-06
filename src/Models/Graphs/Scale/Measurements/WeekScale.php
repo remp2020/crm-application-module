@@ -78,6 +78,10 @@ class WeekScale implements ScaleInterface
                 ->where('month IS NULL');
         }
 
+        if ($criteria->getWhere()) {
+            $measurementValues->where($criteria->getWhere());
+        }
+
         $aggregation = new Week();
 
         $result = [];

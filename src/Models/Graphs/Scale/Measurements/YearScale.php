@@ -78,6 +78,10 @@ class YearScale implements ScaleInterface
                 ->where('month IS NULL');
         }
 
+        if ($criteria->getWhere()) {
+            $measurementValues->where($criteria->getWhere());
+        }
+
         $aggregation = new Year();
 
         $result = [];

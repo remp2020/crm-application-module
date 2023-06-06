@@ -74,6 +74,10 @@ class DayScale implements ScaleInterface
                 ->where('day IS NOT NULL');
         }
 
+        if ($criteria->getWhere()) {
+            $measurementValues->where($criteria->getWhere());
+        }
+
         $aggregation = new Day();
 
         $result = [];

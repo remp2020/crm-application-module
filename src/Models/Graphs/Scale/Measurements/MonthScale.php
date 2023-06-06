@@ -78,6 +78,10 @@ class MonthScale implements ScaleInterface
                 ->where('month IS NOT NULL');
         }
 
+        if ($criteria->getWhere()) {
+            $measurementValues->where($criteria->getWhere());
+        }
+
         $aggregation = new Month();
 
         $result = [];
