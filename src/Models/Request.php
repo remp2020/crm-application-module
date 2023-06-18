@@ -26,21 +26,21 @@ class Request
 
     public static function getDomain()
     {
-        if (!isset($_SERVER['HTTP_HOST'])) {
-            return '';
-        }
-        $parts = explode('.', $_SERVER['HTTP_HOST']);
-        if (count($parts) > 2) {
-            return '.' . $parts[count($parts) - 2] . '.' . $parts[count($parts) - 1];
+        $host = $_SERVER['HTTP_HOST'] ?? '';
+
+        // remove port from host
+        if (($index = strrpos($host, ':')) !== false) {
+            $host = substr($host, 0, $index);
         }
 
-        // remove port from HTTP_HOST if present
-        $parts = explode(':', $_SERVER['HTTP_HOST']);
-        if (count($parts) > 1) {
-            return $parts[0];
+        // remove subdomain from host
+        if (($index = strrpos($host, '.')) !== false) {
+            if (($index = strrpos($host, '.', $index - strlen($host) - 1)) !== false) {
+                $host = substr($host, $index);
+            }
         }
 
-        return $_SERVER['HTTP_HOST'];
+        return $host;
     }
 
     public static function isApi()
