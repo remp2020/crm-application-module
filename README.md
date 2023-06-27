@@ -680,3 +680,5 @@ Consists of `audit_logs` table migration.
 Steps:
 1. Run phinx migrations command `phinx:migrate`, which creates new table `audit_logs_v2` (in case there is no data in table, migration just changes type of primary key and next steps are not needed).
 2. Run command `application:convert_audit_logs_to_bigint`, which copies data from old table to new (e.g. `audit_logs` to `audit_logs_v2`). Command will after successful migration atomically rename tables (e.g. `audit_logs` -> `audit_logs_old` and `audit_logs_v2` -> `audit_logs`), so when the migration ends only new tables are used.
+
+It's recommended to run `application:bigint_migration_cleanup audit_logs` command, at least 2 weeks (to preserve backup data, if some issue emerges) after successful migration to drop left-over tables.

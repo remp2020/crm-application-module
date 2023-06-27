@@ -69,6 +69,7 @@ services:
 	- Crm\ApplicationModule\Commands\CalculateMeasurementsCommand
 	- Crm\ApplicationModule\Commands\AuditLogsCleanupCommand
 	- Crm\ApplicationModule\Commands\MigrateAuditLogsCommand
+	- Crm\ApplicationModule\Commands\BigintMigrationCleanupCommand
 
 	applicationConfig:
 		factory: Crm\ApplicationModule\Config\ApplicationConfig

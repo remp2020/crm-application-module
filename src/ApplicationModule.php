@@ -36,6 +36,7 @@ class ApplicationModule extends CrmModule
         $commandsContainer->registerCommand($this->getInstance(\Crm\ApplicationModule\Commands\CalculateMeasurementsCommand::class));
         $commandsContainer->registerCommand($this->getInstance(\Crm\ApplicationModule\Commands\AuditLogsCleanupCommand::class));
         $commandsContainer->registerCommand($this->getInstance(\Crm\ApplicationModule\Commands\MigrateAuditLogsCommand::class));
+        $commandsContainer->registerCommand($this->getInstance(\Crm\ApplicationModule\Commands\BigintMigrationCleanupCommand::class));
     }
 
     public function registerHermesHandlers(Dispatcher $dispatcher)
