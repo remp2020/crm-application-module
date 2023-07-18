@@ -29,7 +29,11 @@ time_series.time_key,time_series.year,time_series.month,time_series.week,
   {$criteria->getTableName()}.id,{$criteria->getValueField()} AS value
 FROM
 ( SELECT
-    calendar.month, calendar.year, calendar.date, WEEK(calendar.date, 3) as week, YEARWEEK(calendar.date, 3) AS time_key
+    calendar.month,
+    calendar.year, 
+    calendar.date, 
+    WEEK(calendar.date, 3) as week, 
+    YEARWEEK(calendar.date, 3) AS time_key
   FROM calendar
   WHERE
     calendar.date >= '{$criteria->getStartDate()}' AND
@@ -68,10 +72,17 @@ GROUP BY time_series.time_key
     {
         $dbData = [];
 
+        // NOTE: function will for some dates return an incorrect value in the month column.
+        //       For example, the date 2019-30-12 will return:
+        //       - week: 1
+        //       - month: 12
+        //       - year: 2020
+        //
+        //       The reason for this behavior can be found in the explainer comment of the function `getDatabaseSeriesData` found bellow.
         $res = $this->database->query("SELECT {$criteria->getValueField()} AS value,
 WEEK(calendar.date, 3) AS week,
 calendar.month AS month,
-calendar.year AS year,
+YEARWEEK(calendar.date, 3) DIV 100 AS year,
 {$criteria->getTableName()}.id
 FROM {$criteria->getTableName()}
 INNER JOIN calendar ON date({$criteria->getTableName()}.{$criteria->getTimeField()}) = calendar.date
@@ -102,10 +113,19 @@ GROUP BY YEARWEEK(calendar.date, 3)
     {
         $dbData = [];
 
+        
+        // The year column has to be calculated with the expression YEARWEEK(calendar.date, 3) DIV 100.
+        // We do this because, for example, the date 2019-30-12 is the 1st week of the year 2020.
+        // This means that if we were to return the year normally, the result would be:
+        // - year 2019
+        // - month 12
+        // - week 1
+        //
+        // This is technically correct but obviously not what we want, we want the year the week is a part of.
+        
         $res = $this->database->query("SELECT {$criteria->getValueField()} AS value,
 WEEK(calendar.date, 3) AS week,
-calendar.month AS month,
-calendar.year AS year,
+YEARWEEK(calendar.date, 3) DIV 100 AS year,
 {$this->getSeries($criteria->getSeries())}
 {$criteria->getTableName()}.id
 FROM {$criteria->getTableName()}
