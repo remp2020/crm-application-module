@@ -2,20 +2,22 @@
 
 namespace Crm\ApplicationModule\Snippet;
 
+use Contributte\Translation\Translator;
 use Crm\ApplicationModule\Snippet\Repository\SnippetsRepository;
 
 class SnippetRenderer
 {
-    private $snippetsRepository;
-
-    public function __construct(SnippetsRepository $snippetsRepository)
-    {
-        $this->snippetsRepository = $snippetsRepository;
+    public function __construct(
+        private SnippetsRepository $snippetsRepository,
+        private Translator $translator,
+    ) {
     }
 
     public function render($key)
     {
-        $params = [];
+        $params = [
+            'locale' => $this->translator->getLocale(),
+        ];
         if (is_array($key)) {
             $params = array_diff_key($key, [0 => true]);
             $key = $key[0];
