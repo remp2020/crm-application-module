@@ -41,7 +41,7 @@
     "vlucas/phpdotenv": "^5.3",
     "tomaj/hermes": "^4.0",
     "predis/predis": "^1.0",
-    "monolog/monolog": "^1.23",
+    "monolog/monolog": "^1.23|^2.3",
     "contributte/forms-multiplier": "^3.2",
     "composer/composer": "^2.0",
     "malkusch/lock": "^2.1",
