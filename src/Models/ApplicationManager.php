@@ -107,6 +107,13 @@ class ApplicationManager
         }
     }
 
+    public function registerLazyEventHandlers()
+    {
+        foreach ($this->moduleManager->getModules() as $module) {
+            $module->registerLazyEventHandlers($this->emitter);
+        }
+    }
+
     public function getAdminMenuItems()
     {
         if (!$this->adminMenu) {
@@ -275,6 +282,7 @@ class ApplicationManager
         }
 
         $this->registerEventHandlers();
+        $this->registerLazyEventHandlers();
         $this->registerApiCalls();
         $this->registerAuthenticators();
         $this->registerUserDataRegistrators();

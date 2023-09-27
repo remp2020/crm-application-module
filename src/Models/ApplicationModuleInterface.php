@@ -10,6 +10,7 @@ use Crm\ApplicationModule\Criteria\CriteriaStorage;
 use Crm\ApplicationModule\Criteria\ScenariosCriteriaStorage;
 use Crm\ApplicationModule\DataProvider\DataProviderManager;
 use Crm\ApplicationModule\Event\EventsStorage;
+use Crm\ApplicationModule\Event\LazyEventEmitter;
 use Crm\ApplicationModule\Menu\MenuContainerInterface;
 use Crm\ApplicationModule\User\UserDataRegistrator;
 use Crm\ApplicationModule\Widget\LazyWidgetManagerInterface;
@@ -26,6 +27,8 @@ interface ApplicationModuleInterface
     public function registerFrontendMenuItems(MenuContainerInterface $menuContainer);
 
     public function registerEventHandlers(Emitter $emitter);
+
+    public function registerLazyEventHandlers(LazyEventEmitter $lazyEventEmitter);
 
     /** @deprecated use registerLazyWidgets() instead */
     public function registerWidgets(WidgetManagerInterface $widgetManager);
