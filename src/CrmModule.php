@@ -11,6 +11,7 @@ use Crm\ApplicationModule\Criteria\CriteriaStorage;
 use Crm\ApplicationModule\Criteria\ScenariosCriteriaStorage;
 use Crm\ApplicationModule\DataProvider\DataProviderManager;
 use Crm\ApplicationModule\Event\EventsStorage;
+use Crm\ApplicationModule\Event\LazyEventEmitter;
 use Crm\ApplicationModule\Menu\MenuContainerInterface;
 use Crm\ApplicationModule\User\UserDataRegistrator;
 use Crm\ApplicationModule\Widget\LazyWidgetManagerInterface;
@@ -148,6 +149,11 @@ abstract class CrmModule implements ApplicationModuleInterface
     }
 
     public function registerLazyWidgets(LazyWidgetManagerInterface $lazyWidgetManager)
+    {
+        // nothing
+    }
+
+    public function registerLazyEventHandlers(LazyEventEmitter $lazyEventEmitter)
     {
         // nothing
     }
