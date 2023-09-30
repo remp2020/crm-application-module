@@ -2,16 +2,17 @@
 
 namespace Crm\ApplicationModule\Criteria;
 
+use Crm\ApplicationModule\Scenarios\ScenarioCriteriaParamInterface;
 use Nette\Database\Table\ActiveRow;
 use Nette\Database\Table\Selection;
 
 interface ScenariosCriteriaInterface
 {
     /**
-     * Criteria may define several CriteriaParams.
+     * Criteria may define several ScenarioCriteriaParams.
      * Each param is rendered as an input component in ScenarioBuilder (grouped under the criteria)
      *
-     * @return CriteriaParam[]
+     * @return ScenarioCriteriaParamInterface[]
      */
     public function params(): array;
 
