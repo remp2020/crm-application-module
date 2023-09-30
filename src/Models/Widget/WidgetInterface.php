@@ -2,7 +2,9 @@
 
 namespace Crm\ApplicationModule\Widget;
 
-interface WidgetInterface
+use Nette\ComponentModel\IComponent;
+
+interface WidgetInterface extends IComponent
 {
     public function header();
 
