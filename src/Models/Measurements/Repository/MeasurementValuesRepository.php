@@ -47,7 +47,7 @@ class MeasurementValuesRepository extends Repository
 
     public function deleteValues(ActiveRow $measurementRow, DateTime $from, DateTime $to): bool
     {
-        return $this->getTable()
+        return (bool) $this->getTable()
             ->where('measurement_id = ?', $measurementRow->id)
             ->where('sorting_day >= ?', (clone $from)->setTime(0, 0))
             ->where('sorting_day <= ?', $to)
