@@ -15,7 +15,7 @@ class ReplicaManager
 
     private $writeFlag = false;
 
-    /** @var Explorer */
+    /** @var Explorer|null */
     private $selectedDatabase;
 
     public function __construct(Explorer $primaryDatabase, string $tableName, ?ReplicaConfig $replicaConfig)
@@ -36,7 +36,7 @@ class ReplicaManager
         if (!$allowReplica) {
             $this->setWriteFlag();
         }
-        
+
         if ($this->selectedDatabase) {
             return $this->selectedDatabase;
         }
