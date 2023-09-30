@@ -17,13 +17,13 @@ class RedisEventManager implements EventManagerInterface
         $this->redisClientFactory = $redisClientFactory;
     }
 
-    public function push(Event $event)
+    public function push(Event $event): int
     {
         $jsonValue = Json::encode($event->value);
         return $this->redis()->zadd(static::EVENTS, ["{$event->type}|{$jsonValue}" => $event->score]);
     }
 
-    public function shift()
+    public function shift(): ?Event
     {
         $events = $this->redis()->zrangebyscore(static::EVENTS, PHP_INT_MIN, PHP_INT_MAX, [
             'LIMIT' => [
@@ -34,18 +34,18 @@ class RedisEventManager implements EventManagerInterface
         ]);
 
         if (empty($events)) {
-            return false;
+            return null;
         }
 
         foreach ($events as $rawEvent => $score) {
             $result = $this->redis()->zrem(static::EVENTS, $rawEvent);
             if (!$result) {
-                return false;
+                return null;
             }
             list($type, $value) = explode("|", $rawEvent);
             return new Event($type, Json::decode($value, Json::FORCE_ARRAY), $score);
         }
 
-        return false;
+        return null;
     }
 }

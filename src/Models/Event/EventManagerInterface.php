@@ -4,14 +4,7 @@ namespace Crm\ApplicationModule\Event;
 
 interface EventManagerInterface
 {
-    /**
-     * @param Event $event
-     * @return integer
-     */
-    public function push(Event $event);
+    public function push(Event $event): int;
 
-    /**
-     * @return Event
-     */
-    public function shift();
+    public function shift(): ?Event;
 }
