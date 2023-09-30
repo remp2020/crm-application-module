@@ -4,7 +4,7 @@ namespace Crm\ApplicationModule\Models\Measurements;
 
 use Crm\ApplicationModule\Models\Measurements\Aggregation\Aggregation;
 use Crm\ApplicationModule\NowTrait;
-use Nette\Utils\DateTime;
+use DateTime;
 
 class Criteria
 {
@@ -54,7 +54,7 @@ class Criteria
         $series = new Series();
 
         // If $this->from matches the nextDate, make sure it's not skipped by moving it one second behind.
-        $dateFrom = $this->aggregation->nextDate($this->from->modifyClone('-1 second'));
+        $dateFrom = $this->aggregation->nextDate((clone $this->from)->modify('-1 second'));
 
         // If $this->to matches last day of period, this period should be considered complete. We force this by letting
         // system it's working with the following period, by moving it 1 second forward (we already are at 23:59:59).
