@@ -127,7 +127,7 @@ services:
 	hermesLogger:
 		factory: Monolog\Logger('hermes-logger')
 		setup:
-			- pushProcessor(@hermesLogRedact::add(['password', 'token']))
+			- pushProcessor(@hermesLogRedact::add(['password', 'token', 'responseBody']))
 			- pushHandler(Monolog\Handler\StreamHandler("%appDir%/../log/hermes-log.txt"))
 
 	# shutdowm hermes and mail worker through hermes_shutdown key in redis
