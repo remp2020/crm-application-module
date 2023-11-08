@@ -24,6 +24,7 @@ buy_subscription: Kúpiť predplatné
 confirm_delete: Ste si naozaj istý že chcete zmazať tento záznam?
 
 download: Stiahni
+copied_to_clipboard: Odkaz skopírovaný
 
 message:
     success: Úspech!

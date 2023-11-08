@@ -24,6 +24,7 @@ buy_subscription: Buy subscription
 confirm_delete: Are you sure you want to delete this record?
 
 download: Download
+copied_to_clipboard: Copied successfully
 
 message:
     success: Success!
