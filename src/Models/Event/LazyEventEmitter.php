@@ -15,6 +15,17 @@ class LazyEventEmitter extends Emitter
     ) {
     }
 
+    /**
+     * @param string $event
+     * @param ListenerInterface|callable|string $listener
+     * @param int $priority
+     * @return $this
+     */
+    public function addListener($event, $listener, $priority = self::P_NORMAL)
+    {
+        return parent::addListener($event, $listener, $priority);
+    }
+
     protected function getSortedListeners($event)
     {
         if (! $this->hasListeners($event)) {
@@ -35,6 +46,11 @@ class LazyEventEmitter extends Emitter
         return call_user_func_array('array_merge', $listeners);
     }
 
+    /**
+     * @param string $event
+     * @param ListenerInterface|callable|string $listener
+     * @return $this
+     */
     public function removeListener($event, $listener)
     {
         $this->clearSortedListeners($event);
@@ -69,6 +85,10 @@ class LazyEventEmitter extends Emitter
         return $this;
     }
 
+    /**
+     * @param ListenerInterface|callable|string $listener
+     * @return callable|CallbackListener|ListenerInterface|string
+     */
     protected function ensureListener($listener)
     {
         if ($listener instanceof ListenerInterface) {
