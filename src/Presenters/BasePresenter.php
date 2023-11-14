@@ -68,7 +68,9 @@ abstract class BasePresenter extends Presenter
                 $this->reloadSessionUser();
             } catch (AuthenticationException $e) {
                 $this->getUser()->logout(true);
-                $this->flashMessage($e->getMessage(), 'warning');
+                if ($e->getMessage()) {
+                    $this->flashMessage($e->getMessage(), 'warning');
+                }
                 $this->redirect('this');
             }
         }
