@@ -10,6 +10,8 @@ use Nette\DI\Container;
 
 class LazyEventEmitter extends Emitter
 {
+    private array $listenersToRemove = [];
+
     public function __construct(
         private Container $container
     ) {
@@ -28,9 +30,12 @@ class LazyEventEmitter extends Emitter
 
     protected function getSortedListeners($event)
     {
-        if (! $this->hasListeners($event)) {
+        if (!$this->hasListeners($event)) {
             return [];
         }
+
+        // remove listeners which were stored for removal
+        $this->processListenersToRemove($event);
 
         $listeners = $this->listeners[$event];
         krsort($listeners);
@@ -53,31 +58,57 @@ class LazyEventEmitter extends Emitter
      */
     public function removeListener($event, $listener)
     {
+        $this->listenersToRemove[$event][] = $listener;
+        return $this;
+    }
+
+    public function removeAllListeners($event)
+    {
+        parent::removeAllListeners($event);
+
+        // all listeners of event were removed; clear also listeners queued for removal
+        if (isset($this->listenersToRemove[$event])) {
+            unset($this->listenersToRemove[$event]);
+        }
+
+        return $this;
+    }
+
+    private function processListenersToRemove($event): self
+    {
+        if (empty($this->listenersToRemove[$event])) {
+            return $this;
+        }
+
         $this->clearSortedListeners($event);
+
         $listeners = $this->hasListeners($event)
             ? $this->listeners[$event]
             : [];
-
-        if (is_string($listener)) {
-            $filter = function ($registered) use ($listener) {
-                if (is_string($registered)) {
-                    return $registered !== $listener;
-                } else {
-                    return $registered::class !== $listener;
-                }
-            };
-        } else {
-            $filter = function ($registered) use ($listener) {
-                if (is_string($registered)) {
-                    return $registered !== get_class($listener);
-                } else {
-                    return ! $registered->isListener($listener);
-                }
-            };
+        if (empty($listeners)) {
+            return $this;
         }
 
-        foreach ($listeners as $priority => $collection) {
-            $listeners[$priority] = array_filter($collection, $filter);
+        foreach ($this->listenersToRemove[$event] as $listener) {
+            if (is_string($listener)) {
+                $filter = function ($registered) use ($listener) {
+                    if (is_string($registered)) {
+                        return $registered !== $listener;
+                    }
+                    return $registered::class !== $listener;
+                };
+            } else {
+                $filter = function ($registered) use ($listener) {
+                    if (is_string($registered)) {
+                        return $registered !== get_class($listener);
+                    }
+                    return !($registered->isListener($listener));
+                };
+            }
+
+            foreach ($listeners as $priority => $collection) {
+                $listeners[$priority] = array_filter($collection, $filter);
+            }
         }
 
         $this->listeners[$event] = $listeners;

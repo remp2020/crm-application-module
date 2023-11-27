@@ -20,7 +20,10 @@ class LazyEventEmitterTest extends CrmTestCase
     {
         parent::setUp();
 
-        $this->lazyEventEmitter = $this->inject(LazyEventEmitter::class);
+        // reset lazy emitter between tests (we need to clean $listeners and $listenersToRemove)
+        $this->container->removeService(LazyEventEmitter::class);
+        $lazyEventEmitterServices = $this->container->findByType(LazyEventEmitter::class);
+        $this->lazyEventEmitter = $this->container->createService($lazyEventEmitterServices[0]);
 
         $this->testListenerA = new TestListenerA();
 
@@ -32,6 +35,10 @@ class LazyEventEmitterTest extends CrmTestCase
         if (!$this->container->hasService(TestListenerB::class)) {
             $this->container->addService(TestListenerB::class, $this->testListenerB);
         }
+
+        // clear event storage before test to have "clean slate"
+        $this->lazyEventEmitter->removeAllListeners(TestEvent::class);
+        $this->lazyEventEmitter->removeAllListeners(AbstractEvent::class);
     }
 
     /**
@@ -40,8 +47,6 @@ class LazyEventEmitterTest extends CrmTestCase
     public function testAddListener(array $eventListeners, array $expectedForEvent)
     {
         foreach ($eventListeners as $event => $listeners) {
-            $this->lazyEventEmitter->removeAllListeners($event);
-
             foreach ($listeners as $listener) {
                 if (isset($listener['instance']) && $listener['instance']) {
                     $listener['listener'] = $this->inject($listener['listener']);
@@ -172,8 +177,6 @@ class LazyEventEmitterTest extends CrmTestCase
     public function testRemoveListener(array $eventListeners, array $removeListeners, array $expectedForEvent)
     {
         foreach ($eventListeners as $event => $listeners) {
-            $this->lazyEventEmitter->removeAllListeners($event);
-
             foreach ($listeners as $listener) {
                 if (isset($listener['instance']) && $listener['instance']) {
                     $listener['listener'] = $this->inject($listener['listener']);
@@ -191,6 +194,45 @@ class LazyEventEmitterTest extends CrmTestCase
                     $listener['listener'] = $this->inject($listener['listener']);
                 }
                 $this->lazyEventEmitter->removeListener(
+                    $event,
+                    $listener['listener'],
+                );
+            }
+        }
+
+        foreach ($expectedForEvent as $event => $expected) {
+            $listeners = $this->lazyEventEmitter->getListeners($event);
+
+            $this->assertCount($expected['count'], $listeners);
+
+            $this->assertEquals(array_map(fn($listener) => $this->inject($listener), $expected['sortedListeners']), $listeners);
+        }
+    }
+
+    /**
+     * @dataProvider removeListenerDataProvider
+     */
+    public function testRemoveListenerRemovalBeforeRegistration(array $eventListeners, array $removeListeners, array $expectedForEvent)
+    {
+        // remove listeners before they are registered (to test listenersToRemove queue)
+        foreach ($removeListeners as $event => $listeners) {
+            foreach ($listeners as $listener) {
+                if (isset($listener['instance']) && $listener['instance']) {
+                    $listener['listener'] = $this->inject($listener['listener']);
+                }
+                $this->lazyEventEmitter->removeListener(
+                    $event,
+                    $listener['listener'],
+                );
+            }
+        }
+
+        foreach ($eventListeners as $event => $listeners) {
+            foreach ($listeners as $listener) {
+                if (isset($listener['instance']) && $listener['instance']) {
+                    $listener['listener'] = $this->inject($listener['listener']);
+                }
+                $this->lazyEventEmitter->addListener(
                     $event,
                     $listener['listener'],
                 );
