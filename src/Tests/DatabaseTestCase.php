@@ -42,24 +42,22 @@ abstract class DatabaseTestCase extends CrmTestCase
             $this->repositories[$repositoryClass] = $this->inject($repositoryClass);
         }
 
-        $truncateTables = implode(' ', array_map(function ($repo) {
-            $property = (new \ReflectionClass($repo))->getProperty('tableName');
-            $property->setAccessible(true);
-            return "DELETE FROM `{$property->getValue($repo)}`;";
-        }, array_values($this->repositories)));
-
         $db = $this->database->getConnection()->getPdo();
-        $sql = "
-SET FOREIGN_KEY_CHECKS=0;
-{$truncateTables}
-SET FOREIGN_KEY_CHECKS=1;
-";
-        $db->exec($sql);
+        $db->exec('SET autocommit=0; START TRANSACTION;');
 
         foreach ($this->requiredSeeders() as $seederClass) {
             /** @var ISeeder $seeder */
             $seeder = $this->inject($seederClass);
             $seeder->seed($this->inject(OutputInterface::class));
         }
+    }
+
+    protected function tearDown(): void
+    {
+        $this->database = $this->inject(Explorer::class);
+        $db = $this->database->getConnection()->getPdo();
+        $db->exec('ROLLBACK;');
+
+        parent::tearDown();
     }
 }
