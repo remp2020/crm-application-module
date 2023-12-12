@@ -8,7 +8,7 @@ use League\MimeTypeDetection\FinfoMimeTypeDetector;
 
 class ApplicationMountManager extends MountManager
 {
-    private const BUCKET_DELIMITER = '://';
+    public const BUCKET_DELIMITER = '://';
 
     private array $groups = [];
 
@@ -91,10 +91,5 @@ class ApplicationMountManager extends MountManager
         array_multisort($columnData, $sort, $files);
 
         return $files;
-    }
-
-    public function getMimetype($path): string
-    {
-        return $this->mimeTypeDetector->detectMimeTypeFromPath($path);
     }
 }
