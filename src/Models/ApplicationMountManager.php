@@ -32,7 +32,7 @@ class ApplicationMountManager extends MountManager
         return $bucket . self::BUCKET_DELIMITER . $filename;
     }
 
-    public function getFileName(string $path): string
+    public static function getFileName(string $path): string
     {
         $filePath = explode(self::BUCKET_DELIMITER, $path);
 
