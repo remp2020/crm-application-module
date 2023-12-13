@@ -96,6 +96,7 @@ services:
 	localizedDateHelper: Crm\ApplicationModule\Helpers\LocalizedDateHelper
 	assetsManager: Crm\ApplicationModule\AssetsManager('%wwwDir%')
 
+	mountManagerConfig: Crm\ApplicationModule\Models\MountManagerConfig
 	applicationMountManager: Crm\ApplicationModule\Models\ApplicationMountManager
 
 	- Crm\ApplicationModule\ActiveRowFactory
