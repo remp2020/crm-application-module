@@ -7,6 +7,7 @@ use Crm\ApplicationModule\Tests\Events\TestEvent;
 use Crm\ApplicationModule\Tests\Events\TestListenerA;
 use Crm\ApplicationModule\Tests\Events\TestListenerB;
 use League\Event\AbstractEvent;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class LazyEventEmitterTest extends CrmTestCase
 {
@@ -41,9 +42,7 @@ class LazyEventEmitterTest extends CrmTestCase
         $this->lazyEventEmitter->removeAllListeners(AbstractEvent::class);
     }
 
-    /**
-     * @dataProvider addListenerDataProvider
-     */
+    #[DataProvider('addListenerDataProvider')]
     public function testAddListener(array $eventListeners, array $expectedForEvent)
     {
         foreach ($eventListeners as $event => $listeners) {
@@ -68,7 +67,7 @@ class LazyEventEmitterTest extends CrmTestCase
         }
     }
 
-    public function addListenerDataProvider()
+    public static function addListenerDataProvider()
     {
         return [
             'noListeners' => [
@@ -171,9 +170,7 @@ class LazyEventEmitterTest extends CrmTestCase
         ];
     }
 
-    /**
-     * @dataProvider removeListenerDataProvider
-     */
+    #[DataProvider('removeListenerDataProvider')]
     public function testRemoveListener(array $eventListeners, array $removeListeners, array $expectedForEvent)
     {
         foreach ($eventListeners as $event => $listeners) {
@@ -209,9 +206,7 @@ class LazyEventEmitterTest extends CrmTestCase
         }
     }
 
-    /**
-     * @dataProvider removeListenerDataProvider
-     */
+    #[DataProvider('removeListenerDataProvider')]
     public function testRemoveListenerRemovalBeforeRegistration(array $eventListeners, array $removeListeners, array $expectedForEvent)
     {
         // remove listeners before they are registered (to test listenersToRemove queue)
@@ -248,7 +243,7 @@ class LazyEventEmitterTest extends CrmTestCase
         }
     }
 
-    public function removeListenerDataProvider()
+    public static function removeListenerDataProvider()
     {
         return [
             'noListeners' => [

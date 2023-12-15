@@ -4,13 +4,12 @@ namespace Crm\ApplicationModule\Tests;
 
 use Crm\ApplicationModule\Models\Repository\SlugColumnTrait;
 use Crm\ApplicationModule\Models\Traits\SlugColumnException;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class RepositoryTest extends TestCase
 {
-    /**
-     * @dataProvider slugColumnTraitDataProvider
-     */
+    #[DataProvider('slugColumnTraitDataProvider')]
     public function testSlugColumnTrait(array $slugs, array $data, bool $exception = false)
     {
         if ($exception) {
@@ -23,7 +22,7 @@ class RepositoryTest extends TestCase
         $dummyRepository->test($data);
     }
 
-    public function slugColumnTraitDataProvider()
+    public static function slugColumnTraitDataProvider()
     {
         $data = [
             'id' => 123,

@@ -6,11 +6,12 @@ use Crm\ApplicationModule\Models\Measurements\Aggregation\Month;
 use Crm\ApplicationModule\Models\Measurements\Aggregation\Year;
 use Crm\ApplicationModule\Models\Measurements\Criteria;
 use Nette\Utils\DateTime;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class CriteriaTest extends TestCase
 {
-    public function emptySeriesDataProvider()
+    public static function emptySeriesDataProvider()
     {
         // All tests are expecting EPOCH to be '1982-06-01 02:34:56' and NOW to be '1986-04-26 01:23:45'.
         return [
@@ -120,7 +121,7 @@ class CriteriaTest extends TestCase
         ];
     }
 
-    /** @dataProvider emptySeriesDataProvider */
+    #[DataProvider('emptySeriesDataProvider')]
     public function testEmptySeries($aggregation, $from, $to, $expectedResult): void
     {
         $criteria = new Criteria(

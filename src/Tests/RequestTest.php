@@ -3,6 +3,7 @@
 namespace Crm\ApplicationModule\Tests;
 
 use Crm\ApplicationModule\Request;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class RequestTest extends TestCase
@@ -13,7 +14,7 @@ class RequestTest extends TestCase
         unset($_REQUEST['HTTP_HOST']);
     }
 
-    public function emptySeriesDataProvider()
+    public static function emptySeriesDataProvider()
     {
         return [
             ['url' => 'example.com', 'example.com'],
@@ -23,7 +24,7 @@ class RequestTest extends TestCase
         ];
     }
 
-    /** @dataProvider emptySeriesDataProvider */
+    #[DataProvider('emptySeriesDataProvider')]
     public function testGetDomain(string $host, string $domain): void
     {
         $_SERVER['HTTP_HOST'] = $host;

@@ -5,13 +5,12 @@ namespace Crm\ApplicationModule\Tests;
 use Crm\ApplicationModule\Router\RedirectValidator;
 use Nette\Http\Request;
 use Nette\Http\UrlScript;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class RedirectValidatorTest extends TestCase
 {
-    /**
-     * @dataProvider provider
-     */
+    #[DataProvider('provider')]
     public function testValidation(string $crmHost, array $allowedDomains, string $urlToValidate, bool $isValidRedirect): void
     {
         $r = new Request(new UrlScript($crmHost));
@@ -20,7 +19,7 @@ class RedirectValidatorTest extends TestCase
         $this->assertEquals($isValidRedirect, $validator->isAllowed($urlToValidate));
     }
 
-    public function provider(): array
+    public static function provider(): array
     {
         return [
             ['https://predplatne.dennikn.sk', [], 'https://predplatne.dennikn.sk', true],

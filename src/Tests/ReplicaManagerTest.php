@@ -6,13 +6,12 @@ use Crm\ApplicationModule\Repository\ReplicaConfig;
 use Crm\ApplicationModule\Repository\ReplicaManager;
 use Nette\Database\Connection;
 use Nette\Database\Explorer;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class ReplicaManagerTest extends TestCase
 {
-    /**
-     * @dataProvider replicaTraitDataProvider
-     */
+    #[DataProvider('replicaTraitDataProvider')]
     public function testReplicaTrait(string $table, array $dsns, array $allowedTables, bool $mightReturnReplica)
     {
         $replicaConfig = new ReplicaConfig();
@@ -46,7 +45,7 @@ class ReplicaManagerTest extends TestCase
         $this->assertEquals('primary', $db->getConnection()->getDsn());
     }
 
-    public function replicaTraitDataProvider()
+    public static function replicaTraitDataProvider()
     {
         return [
             'NoReplica_TableNotAllowed_ShouldReturnPrimary' => [
