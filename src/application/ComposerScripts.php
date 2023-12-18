@@ -6,8 +6,6 @@ use Composer\Composer;
 use Composer\Factory;
 use Composer\Script\Event;
 use Composer\SelfUpdate\Versions;
-use Nette\Database\DriverException;
-use Nette\InvalidArgumentException;
 
 class ComposerScripts
 {
@@ -16,10 +14,15 @@ class ComposerScripts
         $vendorDir = $event->getComposer()->getConfig()->get('vendor-dir');
 
         if (file_exists($vendorDir . '/../.env')) {
-            try {
-                system('php bin/command.php application:install_assets'); // @phpstan-ignore-line
-            } catch (DriverException | InvalidArgumentException $exception) {
+            $resultCode = 0;
+            $output = [];
+
+            /** @phpstan-ignore-next-line */
+            exec('php bin/command.php application:install_assets', $output, $resultCode); // @phpstan-ignore-line
+            if ($resultCode) {
                 $event->getIO()->write("<warning> CRM </warning> Unable to run <comment>application:install_assets</comment> command, please run <comment>php bin/command.php phinx:migrate</comment> command first.");
+            } else {
+                $event->getIO()->write(implode("\n", $output));
             }
         }
     }
