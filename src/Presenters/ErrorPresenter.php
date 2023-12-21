@@ -4,6 +4,7 @@ namespace Crm\ApplicationModule\Presenters;
 
 use Crm\ApplicationModule\Snippet\Control\SnippetFactory;
 use Kdyby\Autowired\AutowireComponentFactories;
+use Nette\Application\AbortException;
 use Nette\Application\BadRequestException;
 use Nette\Application\UI\Presenter;
 use Tracy\Debugger;
@@ -16,7 +17,7 @@ class ErrorPresenter extends Presenter
     use AutowireComponentFactories;
 
     /**
-     * @throws \Nette\Application\AbortException
+     * @throws AbortException
      */
     public function renderDefault(\Throwable $exception)
     {

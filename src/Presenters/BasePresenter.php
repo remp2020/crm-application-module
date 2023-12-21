@@ -17,12 +17,16 @@ use Crm\UsersModule\Repository\UsersRepository;
 use Kdyby\Autowired\AutowireComponentFactories;
 use League\Event\Emitter;
 use Locale;
+use Nette\Application\Attributes\Persistent;
+use Nette\Application\Request;
 use Nette\Application\UI\Presenter;
+use Nette\Bridges\ApplicationLatte\Template;
+use Nette\DI\Attributes\Inject;
 use Nette\DI\Container;
 use Nette\Security\AuthenticationException;
 
 /**
- * @property-read \Nette\Bridges\ApplicationLatte\Template $template
+ * @property-read Template $template
  */
 abstract class BasePresenter extends Presenter
 {
@@ -30,25 +34,25 @@ abstract class BasePresenter extends Presenter
 
     use AutowireComponentFactories;
 
-    /** @var  ApplicationManager @inject */
-    public $applicationManager;
+    #[Inject]
+    public ApplicationManager $applicationManager;
 
-    /** @var  ApplicationConfig @inject */
-    public $applicationConfig;
+    #[Inject]
+    public ApplicationConfig $applicationConfig;
 
-    /** @var LayoutManager @inject */
-    public $layoutManager;
+    #[Inject]
+    public LayoutManager $layoutManager;
 
-    /** @var Translator @inject */
-    public $translator;
+    #[Inject]
+    public Translator $translator;
 
-    /** @var Emitter @inject */
-    public $emitter;
+    #[Inject]
+    public Emitter $emitter;
 
-    /** @var Container @inject */
-    public $container;
+    #[Inject]
+    public Container $container;
 
-    /** @persistent */
+    #[Persistent]
     public ?string $locale = null;
 
     public $layoutPath;
@@ -58,7 +62,7 @@ abstract class BasePresenter extends Presenter
     public function startup()
     {
         parent::startup();
-        if ($this->getRequest()->hasFlag(\Nette\Application\Request::RESTORED)) {
+        if ($this->getRequest()->hasFlag(Request::RESTORED)) {
             $this->redirect('this');
         }
 

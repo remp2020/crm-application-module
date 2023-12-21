@@ -7,6 +7,8 @@ use Crm\ApplicationModule\Events\FrontendRequestEvent;
 use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
 use Crm\UsersModule\Auth\AutoLogin\AutoLogin;
 use Crm\UsersModule\Repository\UsersRepository;
+use Nette\Application\Attributes\Persistent;
+use Nette\DI\Attributes\Inject;
 use Nette\Http\Request;
 use Nette\Http\Response;
 use Nette\Http\SessionSection;
@@ -16,26 +18,26 @@ use Nette\Security\AuthenticationException;
 
 class FrontendPresenter extends BasePresenter
 {
-    /** @var UsersRepository @inject */
-    public $usersRepository;
+    #[Inject]
+    public UsersRepository $usersRepository;
 
-    /** @var SubscriptionsRepository @inject */
-    public $subscriptionsRepository;
+    #[Inject]
+    public SubscriptionsRepository $subscriptionsRepository;
 
-    /** @var Response @inject */
-    public $response;
+    #[Inject]
+    public Response $response;
 
-    /** @var AutoLogin @inject */
-    public $autologin;
+    #[Inject]
+    public AutoLogin $autologin;
 
-    /** @var Request @inject */
-    public $request;
+    #[Inject]
+    public Request $request;
 
-    /** @persistent */
+    #[Persistent]
     public $from;
 
     /** @var SessionSection */
-    protected $rtmSession;
+    protected SessionSection $rtmSession;
 
     public function startup()
     {
@@ -118,6 +120,10 @@ class FrontendPresenter extends BasePresenter
      */
     public function rtmParams() : array
     {
+        if (!isset($this->rtmSession)) {
+            return [];
+        }
+
         return array_filter([
             'rtm_source' => $this->rtmSession->rtmSource,
             'rtm_medium' => $this->rtmSession->rtmMedium,

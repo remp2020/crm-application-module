@@ -2,6 +2,7 @@
 
 namespace Crm\ApplicationModule\Components;
 
+use Nette\Application\Attributes\Persistent;
 use Nette\Application\UI\Control;
 use Nette\Utils\Paginator;
 
@@ -16,10 +17,9 @@ use Nette\Utils\Paginator;
  */
 class VisualPaginator extends Control
 {
-    /** @var Paginator */
-    private $paginator;
+    private Paginator $paginator;
 
-    /** @persistent */
+    #[Persistent]
     public $page = 1;
 
     /**
@@ -27,7 +27,7 @@ class VisualPaginator extends Control
      */
     public function getPaginator()
     {
-        if (!$this->paginator) {
+        if (!isset($this->paginator)) {
             $this->paginator = new Paginator;
         }
         return $this->paginator;
