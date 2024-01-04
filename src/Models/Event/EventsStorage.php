@@ -2,8 +2,6 @@
 
 namespace Crm\ApplicationModule\Event;
 
-use stringEncode\Exception;
-
 class EventsStorage
 {
     private $events = [];
@@ -50,12 +48,12 @@ class EventsStorage
      *
      * @param string $code
      * @param EventGeneratorInterface $eventGenerator
-     * @throws Exception
+     * @throws \Exception
      */
     public function registerEventGenerator(string $code, EventGeneratorInterface $eventGenerator): void
     {
         if (!isset($this->events[$code])) {
-            throw new Exception("It is allowed to register event generator only for already registered events - event code: '{$code}'");
+            throw new \Exception("It is allowed to register event generator only for already registered events - event code: '{$code}'");
         }
 
         $this->eventGenerators[$code] = $eventGenerator;
