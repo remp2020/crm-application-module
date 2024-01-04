@@ -34,7 +34,7 @@
     "odan/phinx-migrations-generator": "^6.1",
     "phpoffice/phpspreadsheet": "^1.2",
     "robmorgan/phinx": "~0.15",
-    "kdyby/autowired": "^2.1",
+    "kdyby/autowired": "^3.0",
     "twig/twig": "^2.4",
     "league/event": "~2.1",
     "tomaj/nette-bootstrap-form": "^2.0",
