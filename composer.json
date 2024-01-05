@@ -41,7 +41,7 @@
     "tomaj/hermes": "^4.0",
     "predis/predis": "^1.0",
     "monolog/monolog": "^1.23|^2.3|^3.5",
-    "contributte/forms-multiplier": "^3.2",
+    "contributte/forms-multiplier": "^4.0",
     "composer/composer": "^2.0",
     "malkusch/lock": "^2.1",
     "symfony/yaml": "^v6.4",
