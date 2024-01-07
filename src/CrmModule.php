@@ -3,7 +3,7 @@
 namespace Crm\ApplicationModule;
 
 use Contributte\Translation\Translator;
-use Crm\ApiModule\Api\ApiRoutersContainerInterface;
+use Crm\ApiModule\Models\Api\ApiRoutersContainerInterface;
 use Crm\ApplicationModule\Access\AccessManager;
 use Crm\ApplicationModule\Authenticator\AuthenticatorManagerInterface;
 use Crm\ApplicationModule\Commands\CommandsContainerInterface;

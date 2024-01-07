@@ -2,7 +2,7 @@
 
 namespace Crm\ApplicationModule\Api;
 
-use Crm\ApiModule\Api\ApiHandler;
+use Crm\ApiModule\Models\Api\ApiHandler;
 use Crm\ApplicationModule\Event\EventsStorage;
 use Nette\Http\IResponse;
 use Tomaj\NetteApi\Response\JsonApiResponse;

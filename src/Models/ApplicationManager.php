@@ -2,7 +2,7 @@
 
 namespace Crm\ApplicationModule;
 
-use Crm\ApiModule\Router\ApiRoutesContainer;
+use Crm\ApiModule\Models\Router\ApiRoutesContainer;
 use Crm\ApplicationModule\Access\AccessManager;
 use Crm\ApplicationModule\Authenticator\AuthenticatorManager;
 use Crm\ApplicationModule\Commands\CommandsContainer;
