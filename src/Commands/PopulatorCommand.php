@@ -2,7 +2,6 @@
 
 namespace Crm\ApplicationModule\Commands;
 
-use Composer\Console\Input\InputOption;
 use Crm\ApplicationModule\Populator\AbstractPopulator;
 use Faker\Factory;
 use Faker\Generator;
@@ -11,6 +10,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class PopulatorCommand extends Command
