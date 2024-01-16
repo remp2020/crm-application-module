@@ -5,12 +5,12 @@ namespace Crm\ApplicationModule\Widget;
 use Crm\ApplicationModule\Components\SimpleWidgetFactoryInterface;
 use Crm\ApplicationModule\Snippet\Control\SnippetFactory;
 use Kdyby\Autowired\AutowireComponentFactories;
-use Nette\Application\UI;
+use Nette\Application\UI\Control;
 use Nette\ComponentModel\IComponent;
 use Nette\DI\Resolver;
 use Nette\UnexpectedValueException;
 
-abstract class BaseLazyWidget extends UI\Control implements WidgetInterface
+abstract class BaseLazyWidget extends Control implements WidgetInterface
 {
     use AutowireComponentFactories;
 

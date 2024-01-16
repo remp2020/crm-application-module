@@ -6,6 +6,7 @@ use Crm\ApplicationModule\Hermes\HermesMessage;
 use Crm\UsersModule\Events\LoginAttemptEvent;
 use Crm\UsersModule\Events\UserSignInEvent;
 use League\Event\Emitter;
+use Nette\Http\Request;
 
 abstract class BaseAuthenticator implements AuthenticatorInterface
 {
@@ -24,7 +25,7 @@ abstract class BaseAuthenticator implements AuthenticatorInterface
     public function __construct(
         Emitter $emitter,
         \Tomaj\Hermes\Emitter $hermesEmitter,
-        \Nette\Http\Request $request
+        Request $request
     ) {
         $this->emitter = $emitter;
         $this->hermesEmitter = $hermesEmitter;

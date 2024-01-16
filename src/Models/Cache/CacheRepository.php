@@ -4,6 +4,7 @@ namespace Crm\ApplicationModule\Cache;
 
 use Crm\ApplicationModule\Repository;
 use Nette\Database\Explorer;
+use Nette\Database\Table\ActiveRow;
 use Nette\Utils\DateTime;
 
 class CacheRepository extends Repository
@@ -20,13 +21,13 @@ class CacheRepository extends Repository
     }
 
     /**
-     * Retrieve value either from cache or using $getValue callable (and subsequently cache it in DB)
+     * Retrieve value either from cache or using $getValue callable(and subsequently cache it in DB)
      * @param               $key
      * @param callable      $getValue
      * @param DateTime|null $notOlderThan
      * @param bool          $forceUpdate
      *
-     * @return mixed|\Nette\Database\Table\ActiveRow
+     * @return mixed|ActiveRow
      */
     final public function loadAndUpdate($key, callable $getValue, DateTime $notOlderThan = null, $forceUpdate = false)
     {

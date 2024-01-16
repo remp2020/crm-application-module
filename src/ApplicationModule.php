@@ -3,9 +3,26 @@
 namespace Crm\ApplicationModule;
 
 use Crm\ApiModule\Api\ApiRoutersContainerInterface;
+use Crm\ApiModule\Authorization\BearerTokenAuthorization;
 use Crm\ApiModule\Router\ApiIdentifier;
 use Crm\ApiModule\Router\ApiRoute;
+use Crm\ApplicationModule\Api\EventGeneratorsListApiHandler;
+use Crm\ApplicationModule\Api\EventsListApiHandler;
+use Crm\ApplicationModule\Commands\AuditLogsCleanupCommand;
+use Crm\ApplicationModule\Commands\BigintMigrationCleanupCommand;
+use Crm\ApplicationModule\Commands\CacheCommand;
+use Crm\ApplicationModule\Commands\CalculateMeasurementsCommand;
+use Crm\ApplicationModule\Commands\CleanupCommand;
 use Crm\ApplicationModule\Commands\CommandsContainerInterface;
+use Crm\ApplicationModule\Commands\DatabaseSeedCommand;
+use Crm\ApplicationModule\Commands\GenerateKeyCommand;
+use Crm\ApplicationModule\Commands\HeartbeatCommand;
+use Crm\ApplicationModule\Commands\HermesShutdownCommand;
+use Crm\ApplicationModule\Commands\HermesWorkerCommand;
+use Crm\ApplicationModule\Commands\InstallAssetsCommand;
+use Crm\ApplicationModule\Commands\MigrateAuditLogsCommand;
+use Crm\ApplicationModule\Commands\PopulatorCommand;
+use Crm\ApplicationModule\Hermes\HeartbeatMysql;
 use Crm\ApplicationModule\Seeders\CalendarSeeder;
 use Crm\ApplicationModule\Seeders\ConfigsSeeder;
 use Crm\ApplicationModule\Seeders\CountriesSeeder;
@@ -21,42 +38,42 @@ class ApplicationModule extends CrmModule
 
     public function registerCommands(CommandsContainerInterface $commandsContainer)
     {
-        $commandsContainer->registerCommand($this->getInstance(\Crm\ApplicationModule\Commands\DatabaseSeedCommand::class));
+        $commandsContainer->registerCommand($this->getInstance(DatabaseSeedCommand::class));
         if ($this->hasInstance('populator')) {
-            $commandsContainer->registerCommand($this->getInstance(\Crm\ApplicationModule\Commands\PopulatorCommand::class));
+            $commandsContainer->registerCommand($this->getInstance(PopulatorCommand::class));
         }
 
-        $commandsContainer->registerCommand($this->getInstance(\Crm\ApplicationModule\Commands\HeartbeatCommand::class));
-        $commandsContainer->registerCommand($this->getInstance(\Crm\ApplicationModule\Commands\HermesShutdownCommand::class));
-        $commandsContainer->registerCommand($this->getInstance(\Crm\ApplicationModule\Commands\HermesWorkerCommand::class));
-        $commandsContainer->registerCommand($this->getInstance(\Crm\ApplicationModule\Commands\CleanupCommand::class));
-        $commandsContainer->registerCommand($this->getInstance(\Crm\ApplicationModule\Commands\CacheCommand::class));
-        $commandsContainer->registerCommand($this->getInstance(\Crm\ApplicationModule\Commands\InstallAssetsCommand::class));
-        $commandsContainer->registerCommand($this->getInstance(\Crm\ApplicationModule\Commands\GenerateKeyCommand::class));
-        $commandsContainer->registerCommand($this->getInstance(\Crm\ApplicationModule\Commands\CalculateMeasurementsCommand::class));
-        $commandsContainer->registerCommand($this->getInstance(\Crm\ApplicationModule\Commands\AuditLogsCleanupCommand::class));
-        $commandsContainer->registerCommand($this->getInstance(\Crm\ApplicationModule\Commands\MigrateAuditLogsCommand::class));
-        $commandsContainer->registerCommand($this->getInstance(\Crm\ApplicationModule\Commands\BigintMigrationCleanupCommand::class));
+        $commandsContainer->registerCommand($this->getInstance(HeartbeatCommand::class));
+        $commandsContainer->registerCommand($this->getInstance(HermesShutdownCommand::class));
+        $commandsContainer->registerCommand($this->getInstance(HermesWorkerCommand::class));
+        $commandsContainer->registerCommand($this->getInstance(CleanupCommand::class));
+        $commandsContainer->registerCommand($this->getInstance(CacheCommand::class));
+        $commandsContainer->registerCommand($this->getInstance(InstallAssetsCommand::class));
+        $commandsContainer->registerCommand($this->getInstance(GenerateKeyCommand::class));
+        $commandsContainer->registerCommand($this->getInstance(CalculateMeasurementsCommand::class));
+        $commandsContainer->registerCommand($this->getInstance(AuditLogsCleanupCommand::class));
+        $commandsContainer->registerCommand($this->getInstance(MigrateAuditLogsCommand::class));
+        $commandsContainer->registerCommand($this->getInstance(BigintMigrationCleanupCommand::class));
     }
 
     public function registerHermesHandlers(Dispatcher $dispatcher)
     {
-        $dispatcher->registerHandler('heartbeat', $this->getInstance(\Crm\ApplicationModule\Hermes\HeartbeatMysql::class));
+        $dispatcher->registerHandler('heartbeat', $this->getInstance(HeartbeatMysql::class));
     }
 
     public function registerApiCalls(ApiRoutersContainerInterface $apiRoutersContainer)
     {
         $apiRoutersContainer->attachRouter(new ApiRoute(
             new ApiIdentifier('1', 'events', 'list'),
-            \Crm\ApplicationModule\Api\EventsListApiHandler::class,
-            \Crm\ApiModule\Authorization\BearerTokenAuthorization::class
+            EventsListApiHandler::class,
+            BearerTokenAuthorization::class
             // \Tomaj\NetteApi\Authorization\BearerTokenAuthorization::class
         ));
 
         $apiRoutersContainer->attachRouter(new ApiRoute(
             new ApiIdentifier('1', 'event-generators', 'list'),
-            \Crm\ApplicationModule\Api\EventGeneratorsListApiHandler::class,
-            \Crm\ApiModule\Authorization\BearerTokenAuthorization::class
+            EventGeneratorsListApiHandler::class,
+            BearerTokenAuthorization::class
         ));
     }
 
@@ -78,7 +95,7 @@ class ApplicationModule extends CrmModule
         $assetsManager->copyAssets(__DIR__ . '/assets/' . self::COPY_ASSETS_CHECK_FILE, self::COPY_ASSETS_CHECK_FILE);
 
         /** @var Command $installAssetsCommand */
-        $installAssetsCommand = $this->getInstance(\Crm\ApplicationModule\Commands\InstallAssetsCommand::class);
+        $installAssetsCommand = $this->getInstance(InstallAssetsCommand::class);
         $cmd = $_SERVER['argv'][0] ?? null;
         $arg = $_SERVER['argv'][1] ?? null;
 

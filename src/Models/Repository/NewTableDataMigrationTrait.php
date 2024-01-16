@@ -5,6 +5,7 @@ namespace Remp\MailerModule\Repositories;
 use Crm\ApplicationModule\RedisClientFactory;
 use Crm\ApplicationModule\RedisClientTrait;
 use Crm\ApplicationModule\Selection;
+use Nette\Database\Table\ActiveRow;
 
 /**
  * @internal
@@ -51,7 +52,7 @@ trait NewTableDataMigrationTrait
         return $result;
     }
 
-    public function update(\Nette\Database\Table\ActiveRow &$row, $data)
+    public function update(ActiveRow &$row, $data)
     {
         $result = parent::update($row, $data);
         if ($this->newTableDataMigrationIsRunning()) {

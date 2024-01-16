@@ -2,10 +2,12 @@
 
 namespace Crm\ApplicationModule\DI;
 
+use Contributte\FormMultiplier\DI\MultiplierExtension;
 use Contributte\Translation\DI\TranslationProviderInterface;
-use Nette;
+use Nette\Application\IPresenterFactory;
 use Nette\DI\CompilerExtension;
 use Nette\Schema\Expect;
+use Nette\Schema\Schema;
 
 final class ApplicationModuleExtension extends CompilerExtension implements TranslationProviderInterface
 {
@@ -30,7 +32,7 @@ final class ApplicationModuleExtension extends CompilerExtension implements Tran
         }
     }
 
-    public function getConfigSchema(): Nette\Schema\Schema
+    public function getConfigSchema(): Schema
     {
         $sentinelConfig = Expect::structure([
             'scheme' => Expect::string()->dynamic(),
@@ -53,10 +55,10 @@ final class ApplicationModuleExtension extends CompilerExtension implements Tran
     {
         $builder = $this->getContainerBuilder();
         // load presenters from extension to Nette
-        $builder->getDefinition($builder->getByType(\Nette\Application\IPresenterFactory::class))
+        $builder->getDefinition($builder->getByType(IPresenterFactory::class))
             ->addSetup('setMapping', [['Application' => 'Crm\ApplicationModule\Presenters\*Presenter']]);
 
-        $multiplier = new \Contributte\FormMultiplier\DI\MultiplierExtension();
+        $multiplier = new MultiplierExtension();
         $multiplier->setConfig((object) [
             'name' => 'addMultiplier',
         ]);

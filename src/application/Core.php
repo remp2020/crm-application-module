@@ -47,7 +47,7 @@ class Core
         $this->setDatabase();
 
         // make sure application is initialized by manager
-        $this->container->getByType(\Crm\ApplicationModule\ApplicationManager::class);
+        $this->container->getByType(ApplicationManager::class);
 
         return $this->container;
     }
@@ -69,12 +69,12 @@ class Core
 
         new PhinxRegistrator(
             $application,
-            $this->container->getByType(\Crm\ApplicationModule\ModuleManager::class)
+            $this->container->getByType(ModuleManager::class)
         );
 
         try {
             /** @var ApplicationManager $applicationManager */
-            $applicationManager = $this->container->getByType(\Crm\ApplicationModule\ApplicationManager::class);
+            $applicationManager = $this->container->getByType(ApplicationManager::class);
             $commands = $applicationManager->getCommands();
             foreach ($commands as $command) {
                 $application->add($command);

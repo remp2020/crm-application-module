@@ -4,6 +4,8 @@ namespace Crm\ApplicationModule\Snippet;
 
 use Contributte\Translation\Translator;
 use Crm\ApplicationModule\Snippet\Repository\SnippetsRepository;
+use Twig\Environment;
+use Twig\Loader\ArrayLoader;
 
 class SnippetRenderer
 {
@@ -28,10 +30,10 @@ class SnippetRenderer
         foreach ($snippets as $snippet) {
             $this->snippetsRepository->markUsed($snippet);
 
-            $loader = new \Twig\Loader\ArrayLoader([
+            $loader = new ArrayLoader([
                 'snippet' => $snippet->html,
             ]);
-            $twig = new \Twig\Environment($loader);
+            $twig = new Environment($loader);
             $template = $twig->render('snippet', $params);
             return $template;
         }

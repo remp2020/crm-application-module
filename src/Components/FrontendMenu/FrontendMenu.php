@@ -6,7 +6,7 @@ use Crm\ApplicationModule\Config\ApplicationConfig;
 use Crm\ApplicationModule\DataProvider\DataProviderManager;
 use Crm\ApplicationModule\DataProvider\FrontendMenuDataProviderInterface;
 use Crm\ApplicationModule\Menu\MenuContainerInterface;
-use Nette\Application\UI;
+use Nette\Application\UI\Control;
 
 /**
  * Basic frontend menu component.
@@ -15,7 +15,7 @@ use Nette\Application\UI;
  *
  * @package Crm\ApplicationModule\Components
  */
-class FrontendMenu extends UI\Control
+class FrontendMenu extends Control
 {
     private $templateName = 'frontend_menu.latte';
 

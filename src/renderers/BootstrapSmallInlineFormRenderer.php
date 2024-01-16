@@ -2,8 +2,13 @@
 
 namespace Crm\ApplicationModule\Forms;
 
-use Nette;
-use Nette\Forms\Controls;
+use Nette\Forms\Controls\Checkbox;
+use Nette\Forms\Controls\CheckboxList;
+use Nette\Forms\Controls\MultiSelectBox;
+use Nette\Forms\Controls\RadioList;
+use Nette\Forms\Controls\SelectBox;
+use Nette\Forms\Controls\TextBase;
+use Nette\Forms\Form;
 use Nette\Forms\Rendering\DefaultFormRenderer;
 
 class BootstrapSmallInlineFormRenderer extends DefaultFormRenderer
@@ -61,18 +66,18 @@ class BootstrapSmallInlineFormRenderer extends DefaultFormRenderer
      * @param string $mode 'begin', 'errors', 'ownerrors', 'body', 'end' or empty to render all
      * @return string
      */
-    public function render(Nette\Forms\Form $form, string $mode = null): string
+    public function render(Form $form, string $mode = null): string
     {
         $form->getElementPrototype()->appendAttribute('class', 'form-inline');
 
         foreach ($form->getControls() as $control) {
-            if ($control instanceof Controls\TextBase ||
-                $control instanceof Controls\SelectBox ||
-                $control instanceof Controls\MultiSelectBox) {
+            if ($control instanceof TextBase ||
+                $control instanceof SelectBox ||
+                $control instanceof MultiSelectBox) {
                 $control->getControlPrototype()->addClass('form-control');
-            } elseif ($control instanceof Controls\Checkbox ||
-                $control instanceof Controls\CheckboxList ||
-                $control instanceof Controls\RadioList) {
+            } elseif ($control instanceof Checkbox ||
+                $control instanceof CheckboxList ||
+                $control instanceof RadioList) {
                 $control->getSeparatorPrototype()->setName('div')->addClass($control->getControlPrototype()->type);
             }
         }
