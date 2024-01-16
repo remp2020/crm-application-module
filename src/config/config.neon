@@ -34,6 +34,7 @@ services:
 			- register('price', [Crm\ApplicationModule\Helpers\PriceHelper(), process])
 			- register('diffPrice', [Crm\ApplicationModule\Helpers\DiffPriceHelper(), process])
 			- register('json', [Crm\ApplicationModule\Helpers\JsonHelper(), process])
+			- register('maskEmail', [Crm\ApplicationModule\Helpers\MaskEmailHelper(), process])
 
 	redisClientFactory: Crm\ApplicationModule\RedisClientFactory(%redis.host%, %redis.port%, %redis.password%, %redis.database%, %redis_client_factory.prefix%)
 
