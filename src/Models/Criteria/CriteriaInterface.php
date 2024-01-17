@@ -2,8 +2,8 @@
 
 namespace Crm\ApplicationModule\Criteria;
 
-use Crm\SegmentModule\Params\BaseParam;
-use Crm\SegmentModule\Params\ParamsBag;
+use Crm\SegmentModule\Models\Params\BaseParam;
+use Crm\SegmentModule\Models\Params\ParamsBag;
 
 interface CriteriaInterface
 {
