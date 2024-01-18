@@ -2,7 +2,7 @@
 
 namespace Crm\ApplicationModule\Seeders;
 
-use Crm\UsersModule\Repository\CountriesRepository;
+use Crm\UsersModule\Repositories\CountriesRepository;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class CountriesSeeder implements ISeeder
