@@ -4,7 +4,7 @@ namespace Crm\ApplicationModule\Presenters;
 
 use Crm\ApplicationModule\Components\FrontendMenu;
 use Crm\ApplicationModule\Events\FrontendRequestEvent;
-use Crm\SubscriptionsModule\Repository\SubscriptionsRepository;
+use Crm\SubscriptionsModule\Repositories\SubscriptionsRepository;
 use Crm\UsersModule\Auth\AutoLogin\AutoLogin;
 use Crm\UsersModule\Repository\UsersRepository;
 use Nette\Application\Attributes\Persistent;
