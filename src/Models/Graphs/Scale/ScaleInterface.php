@@ -2,7 +2,7 @@
 
 namespace Crm\ApplicationModule\Models\Graphs\Scale;
 
-use Crm\ApplicationModule\Graphs\Criteria;
+use Crm\ApplicationModule\Models\Graphs\Criteria;
 
 interface ScaleInterface
 {

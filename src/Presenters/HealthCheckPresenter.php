@@ -2,8 +2,8 @@
 
 namespace Crm\ApplicationModule\Presenters;
 
-use Crm\ApplicationModule\Config\Repository\ConfigsRepository;
-use Crm\ApplicationModule\User\UserDataStorageInterface;
+use Crm\ApplicationModule\Models\User\UserDataStorageInterface;
+use Crm\ApplicationModule\Repositories\ConfigsRepository;
 use Nette\Application\BadRequestException;
 use Nette\Application\Responses\TextResponse;
 

@@ -2,7 +2,7 @@
 
 namespace Crm\ApplicationModule\Seeders;
 
-use Crm\ApplicationModule\Snippet\Repository\SnippetsRepository;
+use Crm\ApplicationModule\Repositories\SnippetsRepository;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class SnippetsSeeder implements ISeeder

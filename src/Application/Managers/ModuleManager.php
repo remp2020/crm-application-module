@@ -2,6 +2,7 @@
 
 namespace Crm\ApplicationModule\Application\Managers;
 
+use Crm\ApplicationModule\Application\ApplicationModuleInterface;
 use Nette\Application\ApplicationException;
 use Nette\Utils\Strings;
 

@@ -2,9 +2,8 @@
 
 namespace Crm\ApplicationModule\Models\Database;
 
-use Crm\ApplicationModule\RedisClientFactory;
-use Crm\ApplicationModule\RedisClientTrait;
-use Crm\ApplicationModule\Selection;
+use Crm\ApplicationModule\Models\Redis\RedisClientFactory;
+use Crm\ApplicationModule\Models\Redis\RedisClientTrait;
 use Nette\Database\Table\ActiveRow;
 
 /**

@@ -2,7 +2,7 @@
 
 namespace Crm\ApplicationModule\Commands;
 
-use Crm\ApplicationModule\AssetsManager;
+use Crm\ApplicationModule\Application\Managers\AssetsManager;
 use Nette\Utils\FileSystem;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;

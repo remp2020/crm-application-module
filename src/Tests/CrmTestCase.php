@@ -2,7 +2,7 @@
 
 namespace Crm\ApplicationModule\Tests;
 
-use Crm\ApplicationModule\ResettableInterface;
+use Crm\ApplicationModule\Models\ResettableInterface;
 use Nette\DI\Container;
 use Nette\Http\Session;
 use PHPUnit\Framework\TestCase;

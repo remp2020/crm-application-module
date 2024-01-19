@@ -2,7 +2,7 @@
 
 namespace Crm\ApplicationModule\Models\Graphs\Scale\Mysql;
 
-use Crm\ApplicationModule\Graphs\ScaleFactory;
+use Crm\ApplicationModule\Models\Graphs\ScaleFactory;
 use Nette\Database\Explorer;
 
 class RangeScaleFactory

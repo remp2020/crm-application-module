@@ -2,10 +2,10 @@
 
 namespace Crm\ApplicationModule\Models\Graphs\Scale\Mysql;
 
-use Crm\ApplicationModule\Graphs\Criteria;
+use Crm\ApplicationModule\Models\Graphs\Criteria;
 use Nette\Database\Explorer;
 
-class DayScale extends \Crm\ApplicationModule\Graphs\Scale\DayScale
+class DayScale extends \Crm\ApplicationModule\Models\Graphs\Scale\DayScale
 {
     public function __construct(private Explorer $database)
     {

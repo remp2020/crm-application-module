@@ -2,8 +2,8 @@
 
 namespace Crm\ApplicationModule\Application;
 
+use Crm\ApplicationModule\Application\Managers\ModuleManager;
 use Crm\ApplicationModule\Commands\DumpSchemaForTests;
-use Crm\ApplicationModule\ModuleManager;
 use Phinx\Config\Config;
 use Phinx\Console\Command\Create;
 use Phinx\Console\Command\Init;

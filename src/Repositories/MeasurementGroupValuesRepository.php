@@ -2,8 +2,8 @@
 
 namespace Crm\ApplicationModule\Repositories;
 
+use Crm\ApplicationModule\Models\Database\Repository;
 use Crm\ApplicationModule\Models\Measurements\PointAggregate;
-use Crm\ApplicationModule\Repository;
 use Nette\Caching\Storage;
 use Nette\Database\Explorer;
 use Nette\Database\Table\ActiveRow;

@@ -2,8 +2,8 @@
 
 namespace Crm\ApplicationModule\Tests;
 
-use Crm\ApplicationModule\Repository\ReplicaConfig;
-use Crm\ApplicationModule\Repository\ReplicaManager;
+use Crm\ApplicationModule\Models\Database\ReplicaConfig;
+use Crm\ApplicationModule\Models\Database\ReplicaManager;
 use Nette\Database\Connection;
 use Nette\Database\Explorer;
 use PHPUnit\Framework\Attributes\DataProvider;

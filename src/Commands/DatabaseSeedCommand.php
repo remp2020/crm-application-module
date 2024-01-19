@@ -2,7 +2,7 @@
 
 namespace Crm\ApplicationModule\Commands;
 
-use Crm\ApplicationModule\SeederManager;
+use Crm\ApplicationModule\Application\Managers\SeederManager;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;

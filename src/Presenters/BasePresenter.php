@@ -3,15 +3,15 @@
 namespace Crm\ApplicationModule\Presenters;
 
 use Contributte\Translation\Translator;
-use Crm\ApplicationModule\ApplicationManager;
-use Crm\ApplicationModule\Components\SimpleWidgetFactoryInterface;
-use Crm\ApplicationModule\Components\SingleStatWidgetFactoryInterface;
-use Crm\ApplicationModule\Config\ApplicationConfig;
-use Crm\ApplicationModule\Core;
+use Crm\ApplicationModule\Application\Core;
+use Crm\ApplicationModule\Application\Managers\ApplicationManager;
+use Crm\ApplicationModule\Application\Managers\LayoutManager;
+use Crm\ApplicationModule\Components\Widgets\SimpleWidget\SimpleWidgetFactoryInterface;
+use Crm\ApplicationModule\Components\Widgets\SingleStatWidget\SingleStatWidgetFactoryInterface;
 use Crm\ApplicationModule\Events\AuthenticatedAccessRequiredEvent;
 use Crm\ApplicationModule\Events\AuthenticationEvent;
-use Crm\ApplicationModule\LayoutManager;
-use Crm\ApplicationModule\Snippet\Control\SnippetFactory;
+use Crm\ApplicationModule\Models\Config\ApplicationConfig;
+use Crm\ApplicationModule\Models\Snippet\Control\SnippetFactory;
 use Crm\UsersModule\Models\Auth\UserAuthenticator;
 use Crm\UsersModule\Repositories\UsersRepository;
 use Kdyby\Autowired\AutowireComponentFactories;
@@ -98,7 +98,7 @@ abstract class BasePresenter extends Presenter
 
     protected function getIp()
     {
-        return \Crm\ApplicationModule\Request::getIp();
+        return \Crm\ApplicationModule\Models\Request::getIp();
     }
 
     public function onlyLoggedIn()

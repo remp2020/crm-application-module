@@ -2,9 +2,8 @@
 
 namespace Crm\ApplicationModule\Models\Graphs;
 
-use Crm\ApplicationModule\Graphs\Scale\Mysql\RangeScaleFactory as MysqlScaleFactory;
-use Crm\ApplicationModule\Graphs\Scale\ScaleInterface;
 use Crm\ApplicationModule\Models\Graphs\Scale\Measurements\RangeScaleFactory as MeasurementsScaleFactory;
+use Crm\ApplicationModule\Models\Graphs\Scale\ScaleInterface;
 
 class ScaleFactory
 {
@@ -13,11 +12,11 @@ class ScaleFactory
     public const RANGE_MONTH = 'month';
     public const RANGE_YEAR = 'year';
 
-    private MysqlScaleFactory $mysqlScaleFactory;
+    private \Crm\ApplicationModule\Models\Graphs\Scale\Mysql\RangeScaleFactory $mysqlScaleFactory;
     private MeasurementsScaleFactory $measurementsScaleFactory;
 
     public function __construct(
-        MysqlScaleFactory $mysqlScaleFactory,
+        \Crm\ApplicationModule\Models\Graphs\Scale\Mysql\RangeScaleFactory $mysqlScaleFactory,
         MeasurementsScaleFactory $measurementsScaleFactory
     ) {
         $this->mysqlScaleFactory = $mysqlScaleFactory;
@@ -27,7 +26,7 @@ class ScaleFactory
     public function create($provider, $range): ScaleInterface
     {
         switch ($provider) {
-            case MysqlScaleFactory::PROVIDER_MYSQL:
+            case \Crm\ApplicationModule\Models\Graphs\Scale\Mysql\RangeScaleFactory::PROVIDER_MYSQL:
                 $factory = $this->mysqlScaleFactory;
                 break;
             case MeasurementsScaleFactory::PROVIDER_MEASUREMENT:

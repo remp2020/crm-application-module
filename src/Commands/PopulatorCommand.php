@@ -2,7 +2,7 @@
 
 namespace Crm\ApplicationModule\Commands;
 
-use Crm\ApplicationModule\Populator\AbstractPopulator;
+use Crm\ApplicationModule\Populators\AbstractPopulator;
 use Faker\Factory;
 use Faker\Generator;
 use Nette\Database\Explorer;

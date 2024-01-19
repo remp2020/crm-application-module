@@ -3,8 +3,8 @@
 namespace Crm\ApplicationModule\Seeders;
 
 use Crm\ApplicationModule\Builder\ConfigBuilder;
-use Crm\ApplicationModule\Config\Repository\ConfigCategoriesRepository;
-use Crm\ApplicationModule\Config\Repository\ConfigsRepository;
+use Crm\ApplicationModule\Repositories\ConfigCategoriesRepository;
+use Crm\ApplicationModule\Repositories\ConfigsRepository;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**

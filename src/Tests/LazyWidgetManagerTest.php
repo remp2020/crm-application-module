@@ -2,9 +2,9 @@
 
 namespace Crm\ApplicationModule\Tests;
 
+use Crm\ApplicationModule\Models\Widget\LazyWidgetManager;
 use Crm\ApplicationModule\Tests\Widgets\TestingAWidget;
 use Crm\ApplicationModule\Tests\Widgets\TestingBWidget;
-use Crm\ApplicationModule\Widget\LazyWidgetManager;
 
 class LazyWidgetManagerTest extends CrmTestCase
 {

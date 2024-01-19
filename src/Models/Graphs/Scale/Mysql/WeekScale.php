@@ -2,11 +2,11 @@
 
 namespace Crm\ApplicationModule\Models\Graphs\Scale\Mysql;
 
-use Crm\ApplicationModule\Graphs\Criteria;
-use Crm\ApplicationModule\Graphs\Scale\ScaleInterface;
+use Crm\ApplicationModule\Models\Graphs\Criteria;
+use Crm\ApplicationModule\Models\Graphs\Scale\ScaleInterface;
 use Nette\Database\Explorer;
 
-class WeekScale extends \Crm\ApplicationModule\Graphs\Scale\WeekScale implements ScaleInterface
+class WeekScale extends \Crm\ApplicationModule\Models\Graphs\Scale\WeekScale implements ScaleInterface
 {
     private $database;
 

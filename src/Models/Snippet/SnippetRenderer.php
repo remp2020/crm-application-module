@@ -3,7 +3,7 @@
 namespace Crm\ApplicationModule\Models\Snippet;
 
 use Contributte\Translation\Translator;
-use Crm\ApplicationModule\Snippet\Repository\SnippetsRepository;
+use Crm\ApplicationModule\Repositories\SnippetsRepository;
 use Twig\Environment;
 use Twig\Loader\ArrayLoader;
 

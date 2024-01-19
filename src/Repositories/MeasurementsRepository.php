@@ -2,9 +2,9 @@
 
 namespace Crm\ApplicationModule\Repositories;
 
+use Crm\ApplicationModule\Models\Database\Repository;
+use Crm\ApplicationModule\Models\Database\Selection;
 use Crm\ApplicationModule\Models\Measurements\BaseMeasurement;
-use Crm\ApplicationModule\Repository;
-use Crm\ApplicationModule\Selection;
 use Nette\Database\Table\ActiveRow;
 use Nette\Utils\DateTime;
 

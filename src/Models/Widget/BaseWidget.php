@@ -2,8 +2,8 @@
 
 namespace Crm\ApplicationModule\Models\Widget;
 
-use Crm\ApplicationModule\Components\SimpleWidgetFactoryInterface;
-use Crm\ApplicationModule\Snippet\Control\SnippetFactory;
+use Crm\ApplicationModule\Components\Widgets\SimpleWidget\SimpleWidgetFactoryInterface;
+use Crm\ApplicationModule\Models\Snippet\Control\SnippetFactory;
 use Kdyby\Autowired\AutowireComponentFactories;
 use Nette\Application\UI\Control;
 use Nette\ComponentModel\IComponent;

@@ -2,7 +2,7 @@
 
 namespace Crm\ApplicationModule\Helpers;
 
-use Crm\ApplicationModule\Config\ApplicationConfig;
+use Crm\ApplicationModule\Models\Config\ApplicationConfig;
 use Nette\Utils\Html;
 
 class PriceHelper

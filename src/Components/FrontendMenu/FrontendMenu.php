@@ -2,10 +2,10 @@
 
 namespace Crm\ApplicationModule\Components\FrontendMenu;
 
-use Crm\ApplicationModule\Config\ApplicationConfig;
-use Crm\ApplicationModule\DataProvider\DataProviderManager;
-use Crm\ApplicationModule\DataProvider\FrontendMenuDataProviderInterface;
-use Crm\ApplicationModule\Menu\MenuContainerInterface;
+use Crm\ApplicationModule\Models\Config\ApplicationConfig;
+use Crm\ApplicationModule\Models\DataProvider\DataProviderManager;
+use Crm\ApplicationModule\Models\DataProvider\FrontendMenuDataProviderInterface;
+use Crm\ApplicationModule\Models\Menu\MenuContainerInterface;
 use Nette\Application\UI\Control;
 
 /**

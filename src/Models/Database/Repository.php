@@ -3,9 +3,7 @@
 namespace Crm\ApplicationModule\Models\Database;
 
 use Closure;
-use Crm\ApplicationModule\Models\Repository\SlugColumnTrait;
-use Crm\ApplicationModule\Repository\AuditLogRepository;
-use Crm\ApplicationModule\Repository\ReplicaTrait;
+use Crm\ApplicationModule\Repositories\AuditLogRepository;
 use Nette\Caching\Storage;
 use Nette\Database\Explorer;
 use Nette\Utils\DateTime;

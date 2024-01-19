@@ -2,7 +2,7 @@
 
 namespace Crm\ApplicationModule\Models\Snippet\Control;
 
-use Crm\ApplicationModule\Snippet\SnippetRenderer;
+use Crm\ApplicationModule\Models\Snippet\SnippetRenderer;
 use Nette\Application\UI\Control;
 
 class Snippet extends Control

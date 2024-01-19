@@ -3,7 +3,7 @@
 namespace Crm\ApplicationModule\Commands;
 
 use Closure;
-use Crm\ApplicationModule\Core;
+use Crm\ApplicationModule\Application\Core;
 use Nette\Utils\DateTime;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\Console\Input\InputInterface;

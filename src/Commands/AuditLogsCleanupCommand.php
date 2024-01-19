@@ -2,7 +2,7 @@
 
 namespace Crm\ApplicationModule\Commands;
 
-use Crm\ApplicationModule\Repository\AuditLogRepository;
+use Crm\ApplicationModule\Repositories\AuditLogRepository;
 use Nette\Utils\DateTime;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;

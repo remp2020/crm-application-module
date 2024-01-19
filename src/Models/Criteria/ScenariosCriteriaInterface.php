@@ -2,7 +2,6 @@
 
 namespace Crm\ApplicationModule\Models\Criteria;
 
-use Crm\ApplicationModule\Scenarios\ScenarioCriteriaParamInterface;
 use Nette\Database\Table\ActiveRow;
 use Nette\Database\Table\Selection;
 

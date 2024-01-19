@@ -3,7 +3,7 @@
 namespace Crm\ApplicationModule\Models\Measurements;
 
 use Crm\ApplicationModule\Models\Measurements\Aggregation\Aggregation;
-use Crm\ApplicationModule\NowTrait;
+use Crm\ApplicationModule\Models\NowTrait;
 use DateTime;
 
 class Criteria

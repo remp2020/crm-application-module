@@ -3,7 +3,7 @@
 namespace Crm\ApplicationModule\Hermes;
 
 use Closure;
-use Crm\ApplicationModule\Repository\HermesTasksRepository;
+use Crm\ApplicationModule\Repositories\HermesTasksRepository;
 use Tomaj\Hermes\Dispatcher;
 use Tomaj\Hermes\Driver\DriverInterface;
 use Tomaj\Hermes\Driver\ShutdownTrait;

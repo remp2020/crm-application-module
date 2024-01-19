@@ -2,7 +2,7 @@
 
 namespace Crm\ApplicationModule\Hermes;
 
-use Crm\ApplicationModule\Config\Repository\ConfigsRepository;
+use Crm\ApplicationModule\Repositories\ConfigsRepository;
 use Nette\Database\Explorer;
 use Tomaj\Hermes\Handler\HandlerInterface;
 use Tomaj\Hermes\MessageInterface;

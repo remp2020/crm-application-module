@@ -3,8 +3,9 @@
 namespace Crm\ApplicationModule\Components\Graphs\GoogleLineGraphGroup;
 
 use Crm\ApplicationModule\Components\Graphs\BaseGraphControl;
-use Crm\ApplicationModule\Graphs\GraphData;
-use Crm\ApplicationModule\Graphs\ScaleFactory;
+use Crm\ApplicationModule\Components\Graphs\GoogleLineGraph\GoogleLineGraphControlFactoryInterface;
+use Crm\ApplicationModule\Models\Graphs\GraphData;
+use Crm\ApplicationModule\Models\Graphs\ScaleFactory;
 use Nette\Application\UI\Multiplier;
 use Nette\Utils\DateTime;
 

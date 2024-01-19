@@ -2,7 +2,6 @@
 
 namespace Crm\ApplicationModule\Commands;
 
-use Crm\ApplicationModule\Config\Repository\ConfigsRepository;
 use Crm\ApplicationModule\Helpers\UserDateHelper;
 use Crm\ApplicationModule\Models\Measurements\Aggregation\Day;
 use Crm\ApplicationModule\Models\Measurements\Aggregation\Month;
@@ -10,8 +9,9 @@ use Crm\ApplicationModule\Models\Measurements\Aggregation\Week;
 use Crm\ApplicationModule\Models\Measurements\Aggregation\Year;
 use Crm\ApplicationModule\Models\Measurements\Criteria;
 use Crm\ApplicationModule\Models\Measurements\MeasurementManager;
-use Crm\ApplicationModule\Models\Measurements\Repository\MeasurementValuesRepository;
-use Crm\ApplicationModule\Models\Measurements\Repository\MeasurementsRepository;
+use Crm\ApplicationModule\Repositories\ConfigsRepository;
+use Crm\ApplicationModule\Repositories\MeasurementValuesRepository;
+use Crm\ApplicationModule\Repositories\MeasurementsRepository;
 use Nette\Utils\DateTime;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;

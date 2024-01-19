@@ -2,7 +2,7 @@
 
 namespace Crm\ApplicationModule\Seeders;
 
-use Crm\ApplicationModule\Models\Measurements\Repository\MeasurementsRepository;
+use Crm\ApplicationModule\Repositories\MeasurementsRepository;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**

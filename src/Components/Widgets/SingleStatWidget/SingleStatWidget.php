@@ -2,8 +2,8 @@
 
 namespace Crm\ApplicationModule\Components\Widgets\SingleStatWidget;
 
-use Crm\ApplicationModule\Widget\BaseLazyWidget;
-use Crm\ApplicationModule\Widget\LazyWidgetManager;
+use Crm\ApplicationModule\Models\Widget\BaseLazyWidget;
+use Crm\ApplicationModule\Models\Widget\LazyWidgetManager;
 use Nette\Localization\Translator;
 
 /**

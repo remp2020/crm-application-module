@@ -3,8 +3,7 @@
 namespace Crm\ApplicationModule\Repositories;
 
 use Crm\ApplicationModule\Events\ConfigUpdatedEvent;
-use Crm\ApplicationModule\Repository;
-use Crm\ApplicationModule\Repository\AuditLogRepository;
+use Crm\ApplicationModule\Models\Database\Repository;
 use DateTime;
 use League\Event\Emitter;
 use Nette\Database\Explorer;

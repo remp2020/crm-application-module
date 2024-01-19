@@ -2,7 +2,7 @@
 
 namespace Crm\ApplicationModule\Models\Criteria;
 
-use Crm\ApplicationModule\Selection;
+use Crm\ApplicationModule\Models\Database\Selection;
 
 interface ScenarioConditionModelInterface
 {

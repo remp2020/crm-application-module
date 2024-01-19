@@ -2,7 +2,7 @@
 
 namespace Crm\ApplicationModule\Models\Graphs;
 
-use Crm\ApplicationModule\Graphs\Scale\ScaleInterface;
+use Crm\ApplicationModule\Models\Graphs\Scale\ScaleInterface;
 
 class GraphDataItem
 {

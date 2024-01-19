@@ -2,7 +2,7 @@
 
 namespace Crm\ApplicationModule\Models\Graphs\Scale\Measurements;
 
-use Crm\ApplicationModule\Graphs\ScaleFactory;
+use Crm\ApplicationModule\Models\Graphs\ScaleFactory;
 
 class RangeScaleFactory
 {

@@ -2,9 +2,9 @@
 
 namespace Crm\ApplicationModule\Router;
 
-use Crm\ApplicationModule\Config\ApplicationConfig;
-use Crm\ApplicationModule\Config\ConfigsCache;
-use Crm\ApplicationModule\ModuleManager;
+use Crm\ApplicationModule\Application\Managers\ModuleManager;
+use Crm\ApplicationModule\Models\Config\ApplicationConfig;
+use Crm\ApplicationModule\Models\Config\ConfigsCache;
 use Nette\Application\Routers\RouteList;
 
 /**

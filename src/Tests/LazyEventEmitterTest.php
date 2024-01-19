@@ -2,7 +2,7 @@
 
 namespace Crm\ApplicationModule\Tests;
 
-use Crm\ApplicationModule\Event\LazyEventEmitter;
+use Crm\ApplicationModule\Models\Event\LazyEventEmitter;
 use Crm\ApplicationModule\Tests\Events\TestEvent;
 use Crm\ApplicationModule\Tests\Events\TestListenerA;
 use Crm\ApplicationModule\Tests\Events\TestListenerB;

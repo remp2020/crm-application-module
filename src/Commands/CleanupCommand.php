@@ -2,7 +2,7 @@
 
 namespace Crm\ApplicationModule\Commands;
 
-use Crm\ApplicationModule\CallbackManagerInterface;
+use Crm\ApplicationModule\Application\Managers\CallbackManagerInterface;
 use Nette\DI\Container;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;

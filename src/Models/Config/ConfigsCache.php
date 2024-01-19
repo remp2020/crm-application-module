@@ -2,8 +2,8 @@
 
 namespace Crm\ApplicationModule\Models\Config;
 
-use Crm\ApplicationModule\RedisClientFactory;
-use Crm\ApplicationModule\RedisClientTrait;
+use Crm\ApplicationModule\Models\Redis\RedisClientFactory;
+use Crm\ApplicationModule\Models\Redis\RedisClientTrait;
 
 class ConfigsCache
 {

@@ -2,11 +2,11 @@
 
 namespace Crm\ApplicationModule\Models\Graphs\Scale\Measurements;
 
-use Crm\ApplicationModule\Graphs\Criteria;
-use Crm\ApplicationModule\Graphs\Scale\ScaleInterface;
+use Crm\ApplicationModule\Models\Graphs\Criteria;
+use Crm\ApplicationModule\Models\Graphs\Scale\ScaleInterface;
 use Crm\ApplicationModule\Models\Measurements\Aggregation\Day;
-use Crm\ApplicationModule\Models\Measurements\Repository\MeasurementGroupValuesRepository;
-use Crm\ApplicationModule\Models\Measurements\Repository\MeasurementValuesRepository;
+use Crm\ApplicationModule\Repositories\MeasurementGroupValuesRepository;
+use Crm\ApplicationModule\Repositories\MeasurementValuesRepository;
 use Nette\Localization\Translator;
 use Nette\Utils\DateTime;
 

@@ -2,10 +2,10 @@
 
 namespace Crm\ApplicationModule\Commands;
 
-use Crm\ApplicationModule\EnvironmentConfig;
-use Crm\ApplicationModule\RedisClientFactory;
-use Crm\ApplicationModule\RedisClientTrait;
-use Crm\ApplicationModule\Repository\AuditLogRepository;
+use Crm\ApplicationModule\Application\EnvironmentConfig;
+use Crm\ApplicationModule\Models\Redis\RedisClientFactory;
+use Crm\ApplicationModule\Models\Redis\RedisClientTrait;
+use Crm\ApplicationModule\Repositories\AuditLogRepository;
 use Nette\Database\Explorer;
 use Nette\Utils\DateTime;
 use Symfony\Component\Console\Command\Command;

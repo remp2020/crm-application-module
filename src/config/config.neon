@@ -1,21 +1,21 @@
 services:
-	emitter: Crm\ApplicationModule\Event\LazyEventEmitter
+	emitter: Crm\ApplicationModule\Models\Event\LazyEventEmitter
 
-	environmentConfig: Crm\ApplicationModule\EnvironmentConfig
-	replicaConfig: Crm\ApplicationModule\Repository\ReplicaConfig
+	environmentConfig: Crm\ApplicationModule\Application\EnvironmentConfig
+	replicaConfig: Crm\ApplicationModule\Models\Database\ReplicaConfig
 
 	moduleManager:
-		factory: Crm\ApplicationModule\ModuleManager
+		factory: Crm\ApplicationModule\Application\Managers\ModuleManager
 		setup:
 			- addModule(Crm\ApplicationModule\ApplicationModule(), 1)
 
 	applicationManager:
-		factory: Crm\ApplicationModule\ApplicationManager
+		factory: Crm\ApplicationModule\Application\Managers\ApplicationManager
 		setup:
 			- initialize
 
 	frontendMenu:
-		factory: Crm\ApplicationModule\Components\FrontendMenu
+		factory: Crm\ApplicationModule\Components\FrontendMenu\FrontendMenu
 
 	# Latte filters
 	nette.latteFactory:
@@ -36,15 +36,15 @@ services:
 			- register('json', [Crm\ApplicationModule\Helpers\JsonHelper(), process])
 			- register('maskEmail', [Crm\ApplicationModule\Helpers\MaskEmailHelper(), process])
 
-	redisClientFactory: Crm\ApplicationModule\RedisClientFactory(%redis.host%, %redis.port%, %redis.password%, %redis.database%, %redis_client_factory.prefix%)
+	redisClientFactory: Crm\ApplicationModule\Models\Redis\RedisClientFactory(%redis.host%, %redis.port%, %redis.password%, %redis.database%, %redis_client_factory.prefix%)
 
-	configCategoriesRepository: Crm\ApplicationModule\Config\Repository\ConfigCategoriesRepository
-	configsRepository: Crm\ApplicationModule\Config\Repository\ConfigsRepository
-	cacheRepository: Crm\ApplicationModule\Cache\CacheRepository
-	snippetsRepository: Crm\ApplicationModule\Snippet\Repository\SnippetsRepository
-	hermesTasksRepository: Crm\ApplicationModule\Repository\HermesTasksRepository
+	configCategoriesRepository: Crm\ApplicationModule\Repositories\ConfigCategoriesRepository
+	configsRepository: Crm\ApplicationModule\Repositories\ConfigsRepository
+	cacheRepository: Crm\ApplicationModule\Repositories\CacheRepository
+	snippetsRepository: Crm\ApplicationModule\Repositories\SnippetsRepository
+	hermesTasksRepository: Crm\ApplicationModule\Repositories\HermesTasksRepository
 	auditLogRepository:
-		factory: Crm\ApplicationModule\Repository\AuditLogRepository
+		factory: Crm\ApplicationModule\Repositories\AuditLogRepository
 		setup:
 			- setNewTableName('audit_logs_v2')
 			- setNewTableDataMigrationIsRunningFlag(Crm\ApplicationModule\Commands\MigrateAuditLogsCommand::AUDIT_LOGS_MIGRATION_RUNNING)
@@ -56,10 +56,10 @@ services:
 	redirectValidator:
 		factory: Crm\ApplicationModule\Router\RedirectValidator
 
-	- Crm\ApplicationModule\Authenticator\AuthenticatorManager
-	- Crm\ApplicationModule\Widget\WidgetManager
-	lazyWidgetManager: Crm\ApplicationModule\Widget\LazyWidgetManager
-	- Crm\ApplicationModule\DataProvider\DataProviderManager
+	- Crm\ApplicationModule\Models\Authenticator\AuthenticatorManager
+	- Crm\ApplicationModule\Models\Widget\WidgetManager
+	lazyWidgetManager: Crm\ApplicationModule\Models\Widget\LazyWidgetManager
+	- Crm\ApplicationModule\Models\DataProvider\DataProviderManager
 	- Crm\ApplicationModule\Builder\ConfigBuilder
 
 	- Crm\ApplicationModule\Commands\DatabaseSeedCommand
@@ -73,57 +73,57 @@ services:
 	- Crm\ApplicationModule\Commands\BigintMigrationCleanupCommand
 
 	applicationConfig:
-		factory: Crm\ApplicationModule\Config\ApplicationConfig
+		factory: Crm\ApplicationModule\Models\Config\ApplicationConfig
 
-	- Crm\ApplicationModule\Snippet\Control\SnippetFactory
-	- Crm\ApplicationModule\Snippet\SnippetRenderer
-	- Crm\ApplicationModule\Components\FrontendMenuFactoryInterface
-	- Crm\ApplicationModule\Components\SimpleWidgetFactoryInterface
-	- Crm\ApplicationModule\Components\SingleStatWidgetFactoryInterface
-	- Crm\ApplicationModule\Criteria\CriteriaStorage
-	- Crm\ApplicationModule\Criteria\ScenariosCriteriaStorage
-	- Crm\ApplicationModule\Event\EventsStorage
-	- Crm\ApplicationModule\ExcelFactory
-	- Crm\ApplicationModule\CleanUpManager
-	- Crm\ApplicationModule\LayoutManager
-	- Crm\ApplicationModule\SeederManager
+	- Crm\ApplicationModule\Models\Snippet\Control\SnippetFactory
+	- Crm\ApplicationModule\Models\Snippet\SnippetRenderer
+	- Crm\ApplicationModule\Components\FrontendMenu\FrontendMenuFactoryInterface
+	- Crm\ApplicationModule\Components\Widgets\SimpleWidget\SimpleWidgetFactoryInterface
+	- Crm\ApplicationModule\Components\Widgets\SingleStatWidget\SingleStatWidgetFactoryInterface
+	- Crm\ApplicationModule\Models\Criteria\CriteriaStorage
+	- Crm\ApplicationModule\Models\Criteria\ScenariosCriteriaStorage
+	- Crm\ApplicationModule\Models\Event\EventsStorage
+	- Crm\ApplicationModule\Models\Exports\ExcelFactory
+	- Crm\ApplicationModule\Application\Managers\CleanUpManager
+	- Crm\ApplicationModule\Application\Managers\LayoutManager
+	- Crm\ApplicationModule\Application\Managers\SeederManager
 	- Crm\ApplicationModule\Commands\HermesShutdownCommand
 	- Crm\ApplicationModule\Commands\HermesWorkerCommand
 	- Crm\ApplicationModule\Commands\CleanupCommand
-	configsCache: Crm\ApplicationModule\Config\ConfigsCache
+	configsCache: Crm\ApplicationModule\Models\Config\ConfigsCache
 	- Crm\ApplicationModule\Helpers\PriceHelper
 	- Crm\ApplicationModule\Helpers\DiffPriceHelper
 	userDateHelper: Crm\ApplicationModule\Helpers\UserDateHelper
 	localizedDateHelper: Crm\ApplicationModule\Helpers\LocalizedDateHelper
-	assetsManager: Crm\ApplicationModule\AssetsManager('%wwwDir%')
+	assetsManager: Crm\ApplicationModule\Application\Managers\AssetsManager('%wwwDir%')
 
-	mountManagerConfig: Crm\ApplicationModule\Models\MountManagerConfig
-	applicationMountManager: Crm\ApplicationModule\Models\ApplicationMountManager
+	mountManagerConfig: Crm\ApplicationModule\Application\Managers\MountManagerConfig
+	applicationMountManager: Crm\ApplicationModule\Application\Managers\ApplicationMountManager
 
-	- Crm\ApplicationModule\ActiveRowFactory
+	- Crm\ApplicationModule\Models\Database\ActiveRowFactory
 
-	- Crm\ApplicationModule\Graphs\GraphData
-	- Crm\ApplicationModule\Graphs\ScaleFactory
-	- Crm\ApplicationModule\Graphs\Scale\Mysql\RangeScaleFactory
+	- Crm\ApplicationModule\Models\Graphs\GraphData
+	- Crm\ApplicationModule\Models\Graphs\ScaleFactory
+	- Crm\ApplicationModule\Models\Graphs\Scale\Mysql\RangeScaleFactory
 	- Crm\ApplicationModule\Models\Graphs\Scale\Measurements\RangeScaleFactory
 	- Crm\ApplicationModule\Models\Graphs\Scale\Measurements\DayScale
 	- Crm\ApplicationModule\Models\Graphs\Scale\Measurements\WeekScale
 	- Crm\ApplicationModule\Models\Graphs\Scale\Measurements\MonthScale
 	- Crm\ApplicationModule\Models\Graphs\Scale\Measurements\YearScale
 
-	redisEventManager: Crm\ApplicationModule\Event\RedisEventManager
-	- Crm\ApplicationModule\User\UserDataRegistrator
+	redisEventManager: Crm\ApplicationModule\Models\Event\RedisEventManager
+	- Crm\ApplicationModule\Models\User\UserDataRegistrator
 	- Crm\ApplicationModule\Api\EventsListApiHandler
 	- Crm\ApplicationModule\Api\EventGeneratorsListApiHandler
-	- Crm\ApplicationModule\User\DownloadUserData
-	- Crm\ApplicationModule\User\DeleteUserData
-	redisUserDataStorage: Crm\ApplicationModule\User\RedisUserDataStorage
+	- Crm\ApplicationModule\Models\User\DownloadUserData
+	- Crm\ApplicationModule\Models\User\DeleteUserData
+	redisUserDataStorage: Crm\ApplicationModule\Models\User\RedisUserDataStorage
 
 	- Crm\ApplicationModule\Seeders\CalendarSeeder
 	- Crm\ApplicationModule\Seeders\ConfigsSeeder
 	- Crm\ApplicationModule\Seeders\CountriesSeeder
 	- Crm\ApplicationModule\Seeders\SnippetsSeeder
-	accessManager: Crm\ApplicationModule\Access\AccessManager
+	accessManager: Crm\ApplicationModule\Models\Access\AccessManager
 
 	hermesLogRedact: Crm\ApplicationModule\Hermes\LogRedact
 	hermesLogger:
@@ -150,20 +150,20 @@ services:
 	redisTasksQueue: Crm\ApplicationModule\Hermes\RedisTasksQueue
 
 	- Crm\ApplicationModule\Hermes\HeartbeatMysql
-	- Crm\ApplicationModule\Request
+	- Crm\ApplicationModule\Models\Request
 
-	- Crm\ApplicationModule\Models\Measurements\Repository\MeasurementValuesRepository
-	- Crm\ApplicationModule\Models\Measurements\Repository\MeasurementsRepository
-	- Crm\ApplicationModule\Models\Measurements\Repository\MeasurementGroupsRepository
-	- Crm\ApplicationModule\Models\Measurements\Repository\MeasurementGroupValuesRepository
+	- Crm\ApplicationModule\Repositories\MeasurementValuesRepository
+	- Crm\ApplicationModule\Repositories\MeasurementsRepository
+	- Crm\ApplicationModule\Repositories\MeasurementGroupsRepository
+	- Crm\ApplicationModule\Repositories\MeasurementGroupValuesRepository
 	measurementManager:
 		factory: Crm\ApplicationModule\Models\Measurements\MeasurementManager
 
 	# components factories
-	- Crm\ApplicationModule\Components\Graphs\GoogleBarGraphControlFactoryInterface
-	- Crm\ApplicationModule\Components\Graphs\GoogleBarGraphGroupControlFactoryInterface
-	- Crm\ApplicationModule\Components\Graphs\GoogleLineGraphControlFactoryInterface
-	- Crm\ApplicationModule\Components\Graphs\GoogleLineGraphGroupControlFactoryInterface
-	- Crm\ApplicationModule\Components\Graphs\SmallBarGraphControlFactoryInterface
-	- Crm\ApplicationModule\Components\Graphs\InlineBarGraphControlFactoryInterface
-	- Crm\ApplicationModule\Components\Graphs\GoogleSankeyGraphGroupControlFactoryInterface
+	- Crm\ApplicationModule\Components\Graphs\GoogleBarGraph\GoogleBarGraphControlFactoryInterface
+	- Crm\ApplicationModule\Components\Graphs\GoogleBarGraphGroup\GoogleBarGraphGroupControlFactoryInterface
+	- Crm\ApplicationModule\Components\Graphs\GoogleLineGraph\GoogleLineGraphControlFactoryInterface
+	- Crm\ApplicationModule\Components\Graphs\GoogleLineGraphGroup\GoogleLineGraphGroupControlFactoryInterface
+	- Crm\ApplicationModule\Components\Graphs\SmallBarGraph\SmallBarGraphControlFactoryInterface
+	- Crm\ApplicationModule\Components\Graphs\InlineBarGraph\InlineBarGraphControlFactoryInterface
+	- Crm\ApplicationModule\Components\Graphs\GoogleSankeyGraphGroup\GoogleSankeyGraphGroupControlFactoryInterface

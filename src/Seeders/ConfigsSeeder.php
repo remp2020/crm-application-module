@@ -2,11 +2,11 @@
 
 namespace Crm\ApplicationModule\Seeders;
 
+use Crm\ApplicationModule\Application\Core;
 use Crm\ApplicationModule\Builder\ConfigBuilder;
-use Crm\ApplicationModule\Config\ApplicationConfig;
-use Crm\ApplicationModule\Config\Repository\ConfigCategoriesRepository;
-use Crm\ApplicationModule\Config\Repository\ConfigsRepository;
-use Crm\ApplicationModule\Core;
+use Crm\ApplicationModule\Models\Config\ApplicationConfig;
+use Crm\ApplicationModule\Repositories\ConfigCategoriesRepository;
+use Crm\ApplicationModule\Repositories\ConfigsRepository;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class ConfigsSeeder implements ISeeder

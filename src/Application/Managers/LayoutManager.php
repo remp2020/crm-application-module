@@ -2,8 +2,6 @@
 
 namespace Crm\ApplicationModule\Application\Managers;
 
-use Crm\ApplicationModule\model\MissingLayoutException;
-
 class LayoutManager
 {
     private $layouts = [];

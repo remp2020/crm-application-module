@@ -2,8 +2,8 @@
 
 namespace Crm\ApplicationModule\Tests;
 
-use Crm\ApplicationModule\Models\Repository\SlugColumnTrait;
-use Crm\ApplicationModule\Models\Traits\SlugColumnException;
+use Crm\ApplicationModule\Models\Database\SlugColumnException;
+use Crm\ApplicationModule\Models\Database\SlugColumnTrait;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 

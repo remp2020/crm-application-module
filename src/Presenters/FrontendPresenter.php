@@ -2,7 +2,7 @@
 
 namespace Crm\ApplicationModule\Presenters;
 
-use Crm\ApplicationModule\Components\FrontendMenu;
+use Crm\ApplicationModule\Components\FrontendMenu\FrontendMenu;
 use Crm\ApplicationModule\Events\FrontendRequestEvent;
 use Crm\SubscriptionsModule\Repositories\SubscriptionsRepository;
 use Crm\UsersModule\Models\Auth\AutoLogin\AutoLogin;

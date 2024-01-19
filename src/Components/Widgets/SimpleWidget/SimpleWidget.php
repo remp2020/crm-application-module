@@ -2,7 +2,7 @@
 
 namespace Crm\ApplicationModule\Components\Widgets\SimpleWidget;
 
-use Crm\ApplicationModule\Widget\BaseLazyWidget;
+use Crm\ApplicationModule\Models\Widget\BaseLazyWidget;
 
 /**
  * Widget used for rendering other widgets in groups.

@@ -3,7 +3,8 @@
 namespace Crm\ApplicationModule\Components\Graphs\GoogleBarGraphGroup;
 
 use Crm\ApplicationModule\Components\Graphs\BaseGraphControl;
-use Crm\ApplicationModule\Graphs\GraphData;
+use Crm\ApplicationModule\Components\Graphs\GoogleBarGraph\GoogleBarGraphControlFactoryInterface;
+use Crm\ApplicationModule\Models\Graphs\GraphData;
 use Nette\Application\UI\Multiplier;
 use Nette\Utils\DateTime;
 

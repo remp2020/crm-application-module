@@ -2,7 +2,7 @@
 
 namespace Crm\ApplicationModule\Models\DataProvider;
 
-use Crm\ApplicationModule\Menu\MenuContainerInterface;
+use Crm\ApplicationModule\Models\Menu\MenuContainerInterface;
 
 interface FrontendMenuDataProviderInterface extends DataProviderInterface
 {

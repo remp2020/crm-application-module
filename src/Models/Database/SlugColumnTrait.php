@@ -2,7 +2,6 @@
 
 namespace Crm\ApplicationModule\Models\Database;
 
-use Crm\ApplicationModule\Models\Traits\SlugColumnException;
 use Nette\Utils\Strings;
 
 trait SlugColumnTrait

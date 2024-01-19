@@ -3,17 +3,20 @@
 namespace Crm\ApplicationModule\Application\Managers;
 
 use Crm\ApiModule\Models\Router\ApiRoutesContainer;
-use Crm\ApplicationModule\Access\AccessManager;
-use Crm\ApplicationModule\Authenticator\AuthenticatorManager;
-use Crm\ApplicationModule\Commands\CommandsContainer;
-use Crm\ApplicationModule\Criteria\CriteriaStorage;
-use Crm\ApplicationModule\Criteria\ScenariosCriteriaStorage;
-use Crm\ApplicationModule\DataProvider\DataProviderManager;
-use Crm\ApplicationModule\Event\EventsStorage;
-use Crm\ApplicationModule\Menu\MenuContainer;
-use Crm\ApplicationModule\User\UserDataRegistrator;
-use Crm\ApplicationModule\Widget\LazyWidgetManager;
-use Crm\ApplicationModule\Widget\WidgetManager;
+use Crm\ApplicationModule\Application\ApplicationModuleInterface;
+use Crm\ApplicationModule\Application\CommandsContainer;
+use Crm\ApplicationModule\Application\Core;
+use Crm\ApplicationModule\Models\Access\AccessManager;
+use Crm\ApplicationModule\Models\Authenticator\AuthenticatorManager;
+use Crm\ApplicationModule\Models\Criteria\CriteriaStorage;
+use Crm\ApplicationModule\Models\Criteria\ScenariosCriteriaStorage;
+use Crm\ApplicationModule\Models\DataProvider\DataProviderManager;
+use Crm\ApplicationModule\Models\Event\EventsStorage;
+use Crm\ApplicationModule\Models\Menu\MenuContainer;
+use Crm\ApplicationModule\Models\Request;
+use Crm\ApplicationModule\Models\User\UserDataRegistrator;
+use Crm\ApplicationModule\Models\Widget\LazyWidgetManager;
+use Crm\ApplicationModule\Models\Widget\WidgetManager;
 use League\Event\Emitter;
 use Tomaj\Hermes\Dispatcher;
 

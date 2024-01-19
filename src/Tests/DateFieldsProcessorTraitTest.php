@@ -2,7 +2,7 @@
 
 namespace Crm\ApplicationModule\Tests;
 
-use Crm\ApplicationModule\DateFieldsProcessorTrait;
+use Crm\ApplicationModule\Models\Database\DateFieldsProcessorTrait;
 use Nette\Utils\DateTime;
 use PHPUnit\Framework\TestCase;
 

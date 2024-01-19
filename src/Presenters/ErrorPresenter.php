@@ -2,7 +2,7 @@
 
 namespace Crm\ApplicationModule\Presenters;
 
-use Crm\ApplicationModule\Snippet\Control\SnippetFactory;
+use Crm\ApplicationModule\Models\Snippet\Control\SnippetFactory;
 use Kdyby\Autowired\AutowireComponentFactories;
 use Nette\Application\AbortException;
 use Nette\Application\BadRequestException;

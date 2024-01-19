@@ -2,9 +2,9 @@
 
 namespace Crm\ApplicationModule\Models\Graphs\Scale\Mysql;
 
-use Crm\ApplicationModule\Graphs\Criteria;
-use Crm\ApplicationModule\Graphs\Scale\ScaleBase;
-use Crm\ApplicationModule\Graphs\Scale\ScaleInterface;
+use Crm\ApplicationModule\Models\Graphs\Criteria;
+use Crm\ApplicationModule\Models\Graphs\Scale\ScaleBase;
+use Crm\ApplicationModule\Models\Graphs\Scale\ScaleInterface;
 use DateTime;
 use Nette\Database\Explorer;
 

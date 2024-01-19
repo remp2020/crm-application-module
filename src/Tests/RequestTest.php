@@ -2,7 +2,7 @@
 
 namespace Crm\ApplicationModule\Tests;
 
-use Crm\ApplicationModule\Request;
+use Crm\ApplicationModule\Models\Request;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 

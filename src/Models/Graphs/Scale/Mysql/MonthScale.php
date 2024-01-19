@@ -2,11 +2,11 @@
 
 namespace Crm\ApplicationModule\Models\Graphs\Scale\Mysql;
 
-use Crm\ApplicationModule\Graphs\Criteria;
-use Crm\ApplicationModule\Graphs\Scale\ScaleInterface;
+use Crm\ApplicationModule\Models\Graphs\Criteria;
+use Crm\ApplicationModule\Models\Graphs\Scale\ScaleInterface;
 use Nette\Database\Explorer;
 
-class MonthScale extends \Crm\ApplicationModule\Graphs\Scale\MonthScale implements ScaleInterface
+class MonthScale extends \Crm\ApplicationModule\Models\Graphs\Scale\MonthScale implements ScaleInterface
 {
     public function __construct(private Explorer $database)
     {

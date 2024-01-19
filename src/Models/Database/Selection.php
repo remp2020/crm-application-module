@@ -2,8 +2,6 @@
 
 namespace Crm\ApplicationModule\Models\Database;
 
-use Crm\ApplicationModule\Repository\ReplicaManager;
-
 class Selection extends \Nette\Database\Table\Selection
 {
     use DateFieldsProcessorTrait;

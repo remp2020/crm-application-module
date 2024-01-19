@@ -2,7 +2,7 @@
 
 namespace Crm\ApplicationModule\Models\Criteria\ScenarioParams;
 
-use Crm\ApplicationModule\Scenarios\ScenarioCriteriaParamInterface;
+use Crm\ApplicationModule\Models\Criteria\ScenarioCriteriaParamInterface;
 
 class TimeframeParam implements ScenarioCriteriaParamInterface
 {

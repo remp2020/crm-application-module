@@ -2,11 +2,11 @@
 
 namespace Crm\ApplicationModule\Repositories;
 
-use Crm\ApplicationModule\Repository;
-use Crm\ApplicationModule\Selection;
+use Crm\ApplicationModule\Models\Database\NewTableDataMigrationTrait;
+use Crm\ApplicationModule\Models\Database\Repository;
+use Crm\ApplicationModule\Models\Database\Selection;
 use Nette\Database\Explorer;
 use Nette\Security\UserStorage;
-use Remp\MailerModule\Repositories\NewTableDataMigrationTrait;
 
 class AuditLogRepository extends Repository
 {

@@ -2,7 +2,7 @@
 
 namespace Crm\ApplicationModule\Models\Exports;
 
-use Crm\ApplicationModule\Config\ApplicationConfig;
+use Crm\ApplicationModule\Models\Config\ApplicationConfig;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
 class ExcelFactory

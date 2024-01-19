@@ -2,7 +2,7 @@
 
 namespace Crm\ApplicationModule\Models\Config;
 
-use Crm\ApplicationModule\Config\Repository\ConfigsRepository;
+use Crm\ApplicationModule\Repositories\ConfigsRepository;
 use Nette\Caching\Cache;
 use Nette\Caching\Storage;
 use Tracy\Debugger;

@@ -2,7 +2,7 @@
 
 namespace Crm\ApplicationModule\Repositories;
 
-use Crm\ApplicationModule\Repository;
+use Crm\ApplicationModule\Models\Database\Repository;
 use DateTime;
 
 class ConfigCategoriesRepository extends Repository

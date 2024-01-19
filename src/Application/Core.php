@@ -2,6 +2,8 @@
 
 namespace Crm\ApplicationModule\Application;
 
+use Crm\ApplicationModule\Application\Managers\ApplicationManager;
+use Crm\ApplicationModule\Application\Managers\ModuleManager;
 use Dotenv\Dotenv;
 use Nette\Bootstrap\Configurator;
 use Nette\DI\Container;

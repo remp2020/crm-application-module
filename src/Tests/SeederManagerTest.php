@@ -2,7 +2,7 @@
 
 namespace Crm\ApplicationModule\Tests;
 
-use Crm\ApplicationModule\SeederManager;
+use Crm\ApplicationModule\Application\Managers\SeederManager;
 use Crm\ApplicationModule\Seeders\ISeeder;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Output\OutputInterface;

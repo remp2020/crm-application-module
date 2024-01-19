@@ -2,7 +2,7 @@
 
 namespace Crm\ApplicationModule\Models\Authenticator;
 
-use Crm\ApplicationModule\ResettableInterface;
+use Crm\ApplicationModule\Models\ResettableInterface;
 
 class AuthenticatorManager implements AuthenticatorManagerInterface, ResettableInterface
 {

@@ -2,10 +2,10 @@
 
 namespace Crm\ApplicationModule\Tests\Models\Config;
 
-use Crm\ApplicationModule\Config\ApplicationConfig;
-use Crm\ApplicationModule\Config\LocalConfig;
-use Crm\ApplicationModule\Config\Repository\ConfigsRepository;
-use Crm\ApplicationModule\Core;
+use Crm\ApplicationModule\Application\Core;
+use Crm\ApplicationModule\Models\Config\ApplicationConfig;
+use Crm\ApplicationModule\Models\Config\LocalConfig;
+use Crm\ApplicationModule\Repositories\ConfigsRepository;
 use Crm\ApplicationModule\Seeders\ConfigsSeeder;
 use Crm\ApplicationModule\Tests\DatabaseTestCase;
 use Nette\Caching\Storage;
