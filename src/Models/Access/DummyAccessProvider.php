@@ -1,6 +1,6 @@
 <?php
 
-namespace Crm\ApplicationModule\Access;
+namespace Crm\ApplicationModule\Models\Access;
 
 class DummyAccessProvider implements ProviderInterface
 {

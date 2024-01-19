@@ -1,6 +1,6 @@
 <?php
 
-namespace Crm\ApplicationModule\Graphs\Scale\Mysql;
+namespace Crm\ApplicationModule\Models\Graphs\Scale\Mysql;
 
 use Crm\ApplicationModule\Graphs\ScaleFactory;
 use Nette\Database\Explorer;

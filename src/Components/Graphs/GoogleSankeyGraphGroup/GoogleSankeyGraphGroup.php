@@ -1,7 +1,8 @@
 <?php
 
-namespace Crm\ApplicationModule\Components\Graphs;
+namespace Crm\ApplicationModule\Components\Graphs\GoogleSankeyGraphGroup;
 
+use Crm\ApplicationModule\Components\Graphs\BaseGraphControl;
 use Nette\Utils\Json;
 
 class GoogleSankeyGraphGroup extends BaseGraphControl

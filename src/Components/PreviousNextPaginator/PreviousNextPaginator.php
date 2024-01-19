@@ -1,6 +1,6 @@
 <?php
 
-namespace Crm\ApplicationModule\Components;
+namespace Crm\ApplicationModule\Components\PreviousNextPaginator;
 
 use Nette\Application\Attributes\Persistent;
 use Nette\Application\UI\Control;

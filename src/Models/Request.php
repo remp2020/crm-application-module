@@ -1,6 +1,6 @@
 <?php
 
-namespace Crm\ApplicationModule;
+namespace Crm\ApplicationModule\Models;
 
 // hnusna skareda staticka vec! fuj!
 class Request

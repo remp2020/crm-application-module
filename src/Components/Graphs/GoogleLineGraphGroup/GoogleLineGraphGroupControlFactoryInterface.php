@@ -1,6 +1,6 @@
 <?php
 
-namespace Crm\ApplicationModule\Components\Graphs;
+namespace Crm\ApplicationModule\Components\Graphs\GoogleLineGraphGroup;
 
 interface GoogleLineGraphGroupControlFactoryInterface
 {

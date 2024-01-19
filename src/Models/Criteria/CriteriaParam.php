@@ -1,6 +1,6 @@
 <?php
 
-namespace Crm\ApplicationModule\Criteria;
+namespace Crm\ApplicationModule\Models\Criteria;
 
 interface CriteriaParam
 {

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Crm\ApplicationModule\Widget;
+namespace Crm\ApplicationModule\Models\Widget;
 
 use Nette\Caching\Cache;
 use Nette\Caching\Storage;

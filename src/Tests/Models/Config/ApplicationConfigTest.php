@@ -1,6 +1,6 @@
 <?php
 
-namespace Crm\ApplicationModule\Models\Config\Tests;
+namespace Crm\ApplicationModule\Tests\Models\Config;
 
 use Crm\ApplicationModule\Config\ApplicationConfig;
 use Crm\ApplicationModule\Config\LocalConfig;

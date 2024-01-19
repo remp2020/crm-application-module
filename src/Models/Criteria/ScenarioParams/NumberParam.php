@@ -1,6 +1,6 @@
 <?php
 
-namespace Crm\ApplicationModule\Criteria\ScenarioParams;
+namespace Crm\ApplicationModule\Models\Criteria\ScenarioParams;
 
 use Crm\ApplicationModule\Scenarios\ScenarioCriteriaParamInterface;
 

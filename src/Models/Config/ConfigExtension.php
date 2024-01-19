@@ -1,6 +1,6 @@
 <?php
 
-namespace Crm\ApplicationModule\Config;
+namespace Crm\ApplicationModule\Models\Config;
 
 use Nette\DI\CompilerExtension;
 
@@ -13,7 +13,7 @@ class ConfigExtension extends CompilerExtension
         $builder = $this->getContainerBuilder();
 
         $builder->addDefinition($this->prefix('config_overrider'))
-            ->setType('Crm\ApplicationModule\Config\LocalConfig')
+            ->setType('Crm\ApplicationModule\Models\Config\LocalConfig')
             ->setArguments([$config])
             ->setAutowired(true);
     }

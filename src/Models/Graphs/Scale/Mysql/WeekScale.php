@@ -1,6 +1,6 @@
 <?php
 
-namespace Crm\ApplicationModule\Graphs\Scale\Mysql;
+namespace Crm\ApplicationModule\Models\Graphs\Scale\Mysql;
 
 use Crm\ApplicationModule\Graphs\Criteria;
 use Crm\ApplicationModule\Graphs\Scale\ScaleInterface;

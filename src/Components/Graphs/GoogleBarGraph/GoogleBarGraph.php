@@ -1,6 +1,8 @@
 <?php
 
-namespace Crm\ApplicationModule\Components\Graphs;
+namespace Crm\ApplicationModule\Components\Graphs\GoogleBarGraph;
+
+use Crm\ApplicationModule\Components\Graphs\BaseGraphControl;
 
 /**
  * Google bar graph component

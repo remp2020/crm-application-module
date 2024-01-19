@@ -1,6 +1,6 @@
 <?php
 
-namespace Crm\ApplicationModule\User;
+namespace Crm\ApplicationModule\Models\User;
 
 use Nette\Localization\Translator;
 use Tracy\Debugger;

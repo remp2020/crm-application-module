@@ -1,6 +1,6 @@
 <?php
 
-namespace Crm\ApplicationModule\Widget;
+namespace Crm\ApplicationModule\Models\Widget;
 
 use Nette\ComponentModel\IComponent;
 

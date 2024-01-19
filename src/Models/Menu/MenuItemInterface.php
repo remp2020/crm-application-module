@@ -1,6 +1,6 @@
 <?php
 
-namespace Crm\ApplicationModule\Menu;
+namespace Crm\ApplicationModule\Models\Menu;
 
 interface MenuItemInterface
 {

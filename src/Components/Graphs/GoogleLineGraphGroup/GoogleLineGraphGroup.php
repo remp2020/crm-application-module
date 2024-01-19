@@ -1,7 +1,8 @@
 <?php
 
-namespace Crm\ApplicationModule\Components\Graphs;
+namespace Crm\ApplicationModule\Components\Graphs\GoogleLineGraphGroup;
 
+use Crm\ApplicationModule\Components\Graphs\BaseGraphControl;
 use Crm\ApplicationModule\Graphs\GraphData;
 use Crm\ApplicationModule\Graphs\ScaleFactory;
 use Nette\Application\UI\Multiplier;

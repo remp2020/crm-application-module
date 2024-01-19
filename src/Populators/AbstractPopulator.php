@@ -1,6 +1,6 @@
 <?php
 
-namespace Crm\ApplicationModule\Populator;
+namespace Crm\ApplicationModule\Populators;
 
 use Crm\ApplicationModule\Commands\PopulatorCommand;
 use Faker\Generator;

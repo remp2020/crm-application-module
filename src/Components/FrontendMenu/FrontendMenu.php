@@ -1,6 +1,6 @@
 <?php
 
-namespace Crm\ApplicationModule\Components;
+namespace Crm\ApplicationModule\Components\FrontendMenu;
 
 use Crm\ApplicationModule\Config\ApplicationConfig;
 use Crm\ApplicationModule\DataProvider\DataProviderManager;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Crm\ApplicationModule\Config;
+namespace Crm\ApplicationModule\Models\Config;
 
 use Crm\ApplicationModule\RedisClientFactory;
 use Crm\ApplicationModule\RedisClientTrait;

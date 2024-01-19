@@ -1,6 +1,6 @@
 <?php
 
-namespace Crm\ApplicationModule;
+namespace Crm\ApplicationModule\Models;
 
 /**
  * Trait serving as getter and setter of $now value, useful for testing and controlling time in components.

@@ -1,6 +1,8 @@
 <?php
 
-namespace Crm\ApplicationModule\Components\Graphs;
+namespace Crm\ApplicationModule\Components\Graphs\InlineBarGraph;
+
+use Crm\ApplicationModule\Components\Graphs\BaseGraphControl;
 
 /**
  * Inline bar graph

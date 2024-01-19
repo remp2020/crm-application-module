@@ -1,6 +1,6 @@
 <?php
 
-namespace Crm\ApplicationModule\Widget;
+namespace Crm\ApplicationModule\Models\Widget;
 
 use Crm\ApplicationModule\Components\SimpleWidgetFactoryInterface;
 use Crm\ApplicationModule\Snippet\Control\SnippetFactory;

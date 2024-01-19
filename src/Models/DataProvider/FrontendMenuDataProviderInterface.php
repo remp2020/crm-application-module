@@ -1,6 +1,6 @@
 <?php
 
-namespace Crm\ApplicationModule\DataProvider;
+namespace Crm\ApplicationModule\Models\DataProvider;
 
 use Crm\ApplicationModule\Menu\MenuContainerInterface;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Crm\ApplicationModule\Snippet;
+namespace Crm\ApplicationModule\Models\Snippet;
 
 use Contributte\Translation\Translator;
 use Crm\ApplicationModule\Snippet\Repository\SnippetsRepository;

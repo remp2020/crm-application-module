@@ -1,6 +1,6 @@
 <?php
 
-namespace Crm\ApplicationModule\Event;
+namespace Crm\ApplicationModule\Models\Event;
 
 use DateInterval;
 

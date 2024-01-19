@@ -1,6 +1,6 @@
 <?php
 
-namespace Crm\ApplicationModule\Config;
+namespace Crm\ApplicationModule\Models\Config;
 
 class LocalConfig
 {

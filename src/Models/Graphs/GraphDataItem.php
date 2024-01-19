@@ -1,6 +1,6 @@
 <?php
 
-namespace Crm\ApplicationModule\Graphs;
+namespace Crm\ApplicationModule\Models\Graphs;
 
 use Crm\ApplicationModule\Graphs\Scale\ScaleInterface;
 

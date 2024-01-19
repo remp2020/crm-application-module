@@ -1,6 +1,6 @@
 <?php
 
-namespace Crm\ApplicationModule\Authenticator;
+namespace Crm\ApplicationModule\Models\Authenticator;
 
 use Nette\Database\Table\ActiveRow;
 

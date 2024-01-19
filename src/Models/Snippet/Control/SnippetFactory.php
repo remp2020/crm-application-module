@@ -1,6 +1,6 @@
 <?php
 
-namespace Crm\ApplicationModule\Snippet\Control;
+namespace Crm\ApplicationModule\Models\Snippet\Control;
 
 interface SnippetFactory
 {

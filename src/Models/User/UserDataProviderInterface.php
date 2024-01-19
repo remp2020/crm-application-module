@@ -1,6 +1,6 @@
 <?php
 
-namespace Crm\ApplicationModule\User;
+namespace Crm\ApplicationModule\Models\User;
 
 interface UserDataProviderInterface
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Crm\ApplicationModule\Criteria;
+namespace Crm\ApplicationModule\Models\Criteria;
 
 use Crm\SegmentModule\Models\Params\BaseParam;
 use Crm\SegmentModule\Models\Params\ParamsBag;

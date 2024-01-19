@@ -1,6 +1,6 @@
 <?php
 
-namespace Crm\ApplicationModule\Components;
+namespace Crm\ApplicationModule\Components\Widgets\SimpleWidget;
 
 use Crm\ApplicationModule\Widget\BaseLazyWidget;
 

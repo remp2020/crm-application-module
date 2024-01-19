@@ -1,6 +1,8 @@
 <?php
 
-namespace Crm\ApplicationModule\Components\Graphs;
+namespace Crm\ApplicationModule\Components\Graphs\GoogleLineGraph;
+
+use Crm\ApplicationModule\Components\Graphs\BaseGraphControl;
 
 /**
  * Google line graph component
