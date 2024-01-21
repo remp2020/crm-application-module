@@ -5,7 +5,7 @@ namespace Crm\ApplicationModule\Repository;
 use Crm\ApplicationModule\Repository;
 use Crm\ApplicationModule\Selection;
 use Nette\Database\Explorer;
-use Nette\Security\IUserStorage;
+use Nette\Security\UserStorage;
 use Remp\MailerModule\Repositories\NewTableDataMigrationTrait;
 
 class AuditLogRepository extends Repository
@@ -14,23 +14,20 @@ class AuditLogRepository extends Repository
 
     protected $tableName = 'audit_logs';
 
-    protected $userStorage;
-
     const OPERATION_CREATE = 'create';
     const OPERATION_READ = 'read';
     const OPERATION_UPDATE = 'update';
     const OPERATION_DELETE = 'delete';
 
-    public function __construct(Explorer $database, IUserStorage $userStorage)
+    public function __construct(Explorer $database, protected UserStorage $userStorage)
     {
         parent::__construct($database);
         $this->database = $database;
-        $this->userStorage = $userStorage;
     }
 
     final public function add($operation, $tableName, $signature, $data = [])
     {
-        $identity = $this->userStorage->getIdentity();
+        [$isAuthenticated, $identity, $reason] = $this->userStorage->getState();
         $userId = $identity ? $identity->getId() : null;
 
         return $this->insert([
