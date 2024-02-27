@@ -9,23 +9,23 @@ use Tomaj\Hermes\Driver\DriverInterface;
 use Tomaj\Hermes\Driver\ShutdownTrait;
 use Tomaj\Hermes\MessageInterface;
 use Tomaj\Hermes\MessageSerializer;
+use Tomaj\Hermes\SerializerInterface;
 
 class RedisDriver implements DriverInterface
 {
     use ShutdownTrait;
 
-    private $tasksRepository;
+    private SerializerInterface $serializer;
 
-    private $redisTasksQueue;
+    private int $sleepTime = 1;
 
-    private $serializer;
+    /** @var RedisDriverWaitCallbackInterface[] */
+    private array $waitCallbacks = [];
 
-    private $sleepTime = 1;
-
-    public function __construct(HermesTasksRepository $tasksRepository, RedisTasksQueue $redisTasksQueue)
-    {
-        $this->tasksRepository = $tasksRepository;
-        $this->redisTasksQueue = $redisTasksQueue;
+    public function __construct(
+        private HermesTasksRepository $tasksRepository,
+        private RedisTasksQueue $redisTasksQueue,
+    ) {
         $this->serializer = new MessageSerializer();
     }
 
@@ -50,6 +50,11 @@ class RedisDriver implements DriverInterface
         $this->redisTasksQueue->setupPriorityQueue($name, $priority);
     }
 
+    public function setupWaitCallback(string $key, RedisDriverWaitCallbackInterface $waitCallback): void
+    {
+        $this->waitCallbacks[$key] = $waitCallback;
+    }
+
     public function wait(Closure $callback, array $priorities): void
     {
         while (true) {
@@ -72,6 +77,9 @@ class RedisDriver implements DriverInterface
                     );
                 }
             } else {
+                foreach ($this->waitCallbacks as $waitCallback) {
+                    $waitCallback->call();
+                }
                 sleep($this->sleepTime);
             }
         }
