@@ -118,6 +118,9 @@ class Repository
         }
 
         $row = $this->getTable()->wherePrimary($row->getPrimary())->fetch();
+        if ($row instanceof OriginalDataAwareInterface) {
+            $row->setOriginalData($oldValues);
+        }
         return true;
     }
 
