@@ -17,13 +17,13 @@ class SnippetRenderer
 
     public function render($key)
     {
-        $params = [
-            'locale' => $this->translator->getLocale(),
-        ];
+        $params = [];
         if (is_array($key)) {
             $params = array_diff_key($key, [0 => true]);
             $key = $key[0];
         }
+        // if locale was not set for snippet, use locale from translator
+        $params['locale'] = $params['locale'] ?? $this->translator->getLocale();
 
         $snippets = $this->snippetsRepository->loadAllByIdentifier($key);
 
