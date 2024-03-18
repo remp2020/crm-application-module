@@ -11,20 +11,21 @@
     <div id="graph_{$graphId}" class="contains-chart graph line-graph" data-gchart="drawChart{$graphId|noescape}" style="height:{$height}px;"></div>
 
     <script type="text/javascript">
+    let graphId = 'graph_' + {$graphId};
+    let rawData = [
+        [
+            {"label": 'Day', "type": "date"},
+            {foreach $series as $label => $_}
+                {"label": {$label}, "type": "number"}{sep},{/sep}
+            {/foreach}
+        ],
+        {$graphDataJs|noescape}
+    ];
 
     function drawChart{$graphId|noescape}() {
-        var data = google.visualization.arrayToDataTable
-        ([
-            [
-                {"label": 'Day', "type": "date"},
-                {foreach $series as $label => $_}
-                {"label": {$label}, "type": "number"}{sep},{/sep}
-                {/foreach}
-            ],
-            {$graphDataJs|noescape}
-        ]);
+        var data = google.visualization.arrayToDataTable(rawData);
 
-        var chart = new google.visualization.LineChart(document.getElementById('graph_' + {$graphId}));
+        var chart = new google.visualization.LineChart(document.getElementById(graphId));
 
         var columns = [];
         var series = {};
@@ -103,5 +104,17 @@
         {/if}
     {/if}
 
+    // CSV export feature
+    $('#' + graphId)
+        .closest('.panel')
+        .find('[data-export-csv]')
+        .on('click', function () {
+            var csvBlob = new Blob([
+                window.crmAdmin.googleVisualizationDataToCsv(rawData),
+            ], { type: 'text/csv' });
+
+            var prettyDate = moment().format('YYYYMMDD_HHmmss');
+            window.crmAdmin.downloadBlob(csvBlob, '{$graphTitle|webalize|noescape}_' + prettyDate + '.csv');
+        });
     </script>
 {/if}

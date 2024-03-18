@@ -21,6 +21,12 @@
           <a n:href="change! '-5 years', $groupBy" type="button" n:class="$range == '-5 years' ? btn-primary : btn-default, btn, ajax">{_system.last.years, ['count' => 5]}</a>
           <a n:href="change! '-20 years', $groupBy" type="button" n:class="$range == '-20 years' ? btn-primary : btn-default, btn, ajax">{_system.last.all}</a>
         </div>
+
+        <div class="btn-group btn-group-xs" role="group" aria-label="Additional actions">
+          <button class="btn btn-default" type="button" data-export-csv>
+            <i class="fa fa-download"></i> CSV
+          </button>
+        </div>
       </div>
     </h3>
   </div>
