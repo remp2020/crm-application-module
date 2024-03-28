@@ -5,12 +5,24 @@ namespace Crm\ApplicationModule\DI;
 use Contributte\FormMultiplier\DI\MultiplierExtension;
 use Contributte\Translation\DI\TranslationProviderInterface;
 use Nette\Application\IPresenterFactory;
+use Nette\DI\Compiler;
 use Nette\DI\CompilerExtension;
 use Nette\Schema\Expect;
 use Nette\Schema\Schema;
 
 final class ApplicationModuleExtension extends CompilerExtension implements TranslationProviderInterface
 {
+    public function setCompiler(Compiler $compiler, string $name): static
+    {
+        $multiplier = new MultiplierExtension();
+        $multiplier->setConfig((object) [
+            'name' => 'addMultiplier',
+        ]);
+        $compiler->addExtension('multiplier', $multiplier);
+
+        return parent::setCompiler($compiler, $name);
+    }
+
     public function loadConfiguration()
     {
         $builder = $this->getContainerBuilder();
@@ -57,12 +69,6 @@ final class ApplicationModuleExtension extends CompilerExtension implements Tran
         // load presenters from extension to Nette
         $builder->getDefinition($builder->getByType(IPresenterFactory::class))
             ->addSetup('setMapping', [['Application' => 'Crm\ApplicationModule\Presenters\*Presenter']]);
-
-        $multiplier = new MultiplierExtension();
-        $multiplier->setConfig((object) [
-            'name' => 'addMultiplier',
-        ]);
-        $this->compiler->addExtension('multiplierExtension', $multiplier);
     }
 
     /**
