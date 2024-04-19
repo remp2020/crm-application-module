@@ -14,7 +14,7 @@
                     No data available.
                 </div>
             {else}
-                <div style="height: {$height}px; width: 100%" id="graph_{$graphId}" class="contains-chart graph line-graph" data-gchart="drawChart{$graphId|noescape}"></div>
+                <div style="height: {$height}px; width: 100%" id="graph_{$graphId}" class="contains-chart graph line-graph" data-gchart="drawChart{$graphId}"></div>
 
                 <script type="text/javascript">
                     function drawChart{$graphId|noescape}() {

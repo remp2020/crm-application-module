@@ -3,7 +3,7 @@
         No data available.
     </div>
 {else}
-    <div id="graph_{$graphId}" class="contains-chart graph line-graph" data-gchart="drawChart{$graphId|noescape}"></div>
+    <div id="graph_{$graphId}" class="contains-chart graph line-graph" data-gchart="drawChart{$graphId}"></div>
 
     <script type="text/javascript">
 
@@ -15,7 +15,7 @@
                 {foreach $xAxis as $date}[{$date}, {foreach $series as $k => $v}{$v[$date]}, "<b style='padding:2px'>{$v[$date]}</b>"{sep},{/sep}{/foreach}]{sep},{/sep}{/foreach}
         ]);
 
-        var chart = new google.visualization.ColumnChart(document.getElementById('graph_' + {$graphId|noescape}));
+        var chart = new google.visualization.ColumnChart(document.getElementById('graph_' + {$graphId}));
 
         var options = {
             height: 50,

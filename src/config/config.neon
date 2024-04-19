@@ -21,6 +21,7 @@ services:
 	nette.latteFactory:
 		setup:
 			- addFilterLoader([@filterLoader, 'load'])
+			- addFunction('escapehtml', [Crm\ApplicationModule\LatteFunctions\EscapeHTMLFunction(), 'process'])
 
 	filterLoader:
 		factory: Crm\ApplicationModule\Helpers\FilterLoader

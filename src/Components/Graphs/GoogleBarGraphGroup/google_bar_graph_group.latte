@@ -32,7 +32,7 @@
   </div>
   <div class="panel-body">
     <div class="tab-content">
-      <div id="graph_{$graphId|noescape}" class="tab-pane active">
+      <div id="graph_{$graphId}" class="tab-pane active">
         {control graph-{$groupBy} isset($redraw) ? $redraw : false, $asyncLoad}
       </div>
     </div>

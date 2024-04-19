@@ -8,7 +8,7 @@
     </div>
 {else}
 
-    <div id="graph_{$graphId}" class="contains-chart graph line-graph" data-gchart="drawChart{$graphId|noescape}" style="height:{$height}px;"></div>
+    <div id="graph_{$graphId}" class="contains-chart graph line-graph" data-gchart="drawChart{$graphId}" style="height:{$height}px;"></div>
 
     <script type="text/javascript">
     let graphId = 'graph_' + {$graphId};
@@ -115,7 +115,7 @@
             ], { type: 'text/csv' });
 
             var prettyDate = moment().format('YYYYMMDD_HHmmss');
-            window.crmAdmin.downloadBlob(csvBlob, '{$graphTitle|webalize|noescape}_' + prettyDate + '.csv');
+            window.crmAdmin.downloadBlob(csvBlob, {$graphTitle|webalize} + '_' + prettyDate + '.csv');
         });
     </script>
 {/if}
