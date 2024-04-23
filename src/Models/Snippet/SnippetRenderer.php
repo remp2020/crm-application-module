@@ -25,17 +25,13 @@ class SnippetRenderer
         // if locale was not set for snippet, use locale from translator
         $params['locale'] = $params['locale'] ?? $this->translator->getLocale();
 
-        $snippets = $this->snippetsRepository->loadAllByIdentifier($key);
-
-        foreach ($snippets as $snippet) {
+        $snippet = $this->snippetsRepository->loadByIdentifier($key);
+        if ($snippet) {
             $this->snippetsRepository->markUsed($snippet);
-
             $loader = new ArrayLoader([
                 'snippet' => $snippet->html,
             ]);
-            $twig = new Environment($loader);
-            $template = $twig->render('snippet', $params);
-            return $template;
+            return (new Environment($loader))->render('snippet', $params);
         }
         return false;
     }

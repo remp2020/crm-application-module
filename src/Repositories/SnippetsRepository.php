@@ -43,9 +43,17 @@ class SnippetsRepository extends Repository
         return $this->getTable()->where(['identifier' => $identifier])->count('*') > 0;
     }
 
+    /**
+     * @deprecated Use `loadByIdentifier` instead
+     */
     final public function loadAllByIdentifier($identifier)
     {
         return $this->getTable()->where('identifier', $identifier)->fetchAll();
+    }
+
+    final public function loadByIdentifier($identifier): ?ActiveRow
+    {
+        return $this->getTable()->where('identifier', $identifier)->fetch();
     }
 
     final public function loadAll()
