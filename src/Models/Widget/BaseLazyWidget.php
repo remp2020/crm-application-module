@@ -23,12 +23,17 @@ abstract class BaseLazyWidget extends Control implements WidgetInterface
 
     public function header()
     {
-        return 'base lazy widget';
+        // default implementation returns classname words separated by ' '
+        $classnameParts = explode('\\', static::class);
+        $classname = end($classnameParts);
+        $pieces = array_filter(preg_split('/(?=[A-Z])/', $classname));
+        return strtolower(implode(' ', $pieces));
     }
 
     public function identifier()
     {
-        return 'identifier';
+        // name of the extending class (with namespace), character '\' replaced by '_'
+        return str_replace("\\", "_", static::class);
     }
 
     protected function createComponentSimpleWidget(SimpleWidgetFactoryInterface $factory)
