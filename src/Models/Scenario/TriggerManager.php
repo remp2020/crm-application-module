@@ -74,6 +74,7 @@ class TriggerManager implements HandlerInterface
 
         try {
             $triggerData = $triggerHandler->handleEvent($message->getPayload());
+            $this->validateTriggerData($triggerHandler, $triggerData);
         } catch (SkipTriggerException) {
             return true;
         } catch (Exception $exception) {
@@ -88,5 +89,26 @@ class TriggerManager implements HandlerInterface
             JobsRepository::CONTEXT_HERMES_MESSAGE_TYPE => $triggerHandler->getEventType()
         ]);
         return true;
+    }
+
+    private function validateTriggerData(TriggerHandlerInterface $triggerHandler, TriggerData $triggerData): void
+    {
+        foreach ($triggerHandler->getOutputParams() as $outputParam) {
+            if (!array_key_exists($outputParam, $triggerData->payload)) {
+                throw new Exception(sprintf(
+                    "Output param '%s' is missing in trigger data payload.",
+                    $outputParam
+                ));
+            }
+        }
+
+        foreach (array_keys($triggerData->payload) as $outputParam) {
+            if (!in_array($outputParam, $triggerHandler->getOutputParams(), strict: true)) {
+                throw new Exception(sprintf(
+                    "Payload contains an undefined param '%s'.",
+                    $outputParam
+                ));
+            }
+        }
     }
 }

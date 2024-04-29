@@ -73,6 +73,7 @@ class TriggerManagerTest extends TestCase
 
         $triggerHandler = $this->createMock(TriggerHandlerInterface::class);
         $triggerHandler->method('getKey')->willReturn('test');
+        $triggerHandler->method('getOutputParams')->willReturn(['user_id']);
         $triggerHandler->method('getEventType')->willReturn('test_event');
         $triggerHandler->expects($this->once())
             ->method('handleEvent')
@@ -134,6 +135,66 @@ class TriggerManagerTest extends TestCase
             ->method('handleEvent')
             ->with(['some_payload'])
             ->willThrowException(new Exception('some error'));
+
+        $triggerManager->registerTriggerHandler($triggerHandler);
+
+        $message = $this->createMock(MessageInterface::class);
+        $message->method('getType')->willReturn('test_event');
+        $message->method('getPayload')->willReturn(['some_payload']);
+
+        $triggerManager->handle($message);
+    }
+
+    public function testHandleHermesEventWithMissingParamsInTriggerData(): void
+    {
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage("Error while handling a trigger handler Test: Output param 'another_id' is missing in trigger data payload.");
+
+        $hermesDispatcher = $this->createMock(Dispatcher::class);
+
+        $jobDispatcher = $this->createMock(JobDispatcher::class);
+        $jobDispatcher->expects($this->never())->method('dispatch');
+
+        $triggerManager = new TriggerManager($hermesDispatcher, $jobDispatcher);
+
+        $triggerHandler = $this->createMock(TriggerHandlerInterface::class);
+        $triggerHandler->method('getName')->willReturn('Test');
+        $triggerHandler->method('getOutputParams')->willReturn(['user_id', 'another_id']);
+        $triggerHandler->method('getEventType')->willReturn('test_event');
+        $triggerHandler->expects($this->once())
+            ->method('handleEvent')
+            ->with(['some_payload'])
+            ->willReturn(new TriggerData(1, ['user_id' => 2]));
+
+        $triggerManager->registerTriggerHandler($triggerHandler);
+
+        $message = $this->createMock(MessageInterface::class);
+        $message->method('getType')->willReturn('test_event');
+        $message->method('getPayload')->willReturn(['some_payload']);
+
+        $triggerManager->handle($message);
+    }
+
+    public function testHandleHermesEventWithAdditionalParamsInTriggerData(): void
+    {
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage("Error while handling a trigger handler Test: Payload contains an undefined param 'another_id'.");
+
+        $hermesDispatcher = $this->createMock(Dispatcher::class);
+
+        $jobDispatcher = $this->createMock(JobDispatcher::class);
+        $jobDispatcher->expects($this->never())->method('dispatch');
+
+        $triggerManager = new TriggerManager($hermesDispatcher, $jobDispatcher);
+
+        $triggerHandler = $this->createMock(TriggerHandlerInterface::class);
+        $triggerHandler->method('getName')->willReturn('Test');
+        $triggerHandler->method('getOutputParams')->willReturn(['user_id']);
+        $triggerHandler->method('getEventType')->willReturn('test_event');
+        $triggerHandler->expects($this->once())
+            ->method('handleEvent')
+            ->with(['some_payload'])
+            ->willReturn(new TriggerData(1, ['user_id' => 2, 'another_id' => 3]));
 
         $triggerManager->registerTriggerHandler($triggerHandler);
 
