@@ -58,6 +58,13 @@ abstract class DatabaseTestCase extends CrmTestCase
         $db = $this->database->getConnection()->getPdo();
         $db->exec('ROLLBACK;');
 
+        /**
+         * Explicitly disconnect from the database to avoid "Too many connections" error when BaseTestCases
+         * asks for refreshContainer() which always creates a new instance of Connection & Explorer which then
+         * are creating a new connections to the database.
+         */
+        $this->database->getConnection()->disconnect();
+
         parent::tearDown();
     }
 }
