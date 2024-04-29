@@ -3,7 +3,6 @@
 namespace Crm\ApplicationModule\Application;
 
 use Crm\ApiModule\Models\Api\ApiRoutersContainerInterface;
-use Crm\ApplicationModule\Application\CommandsContainerInterface;
 use Crm\ApplicationModule\Application\Managers\AssetsManager;
 use Crm\ApplicationModule\Application\Managers\CallbackManagerInterface;
 use Crm\ApplicationModule\Application\Managers\LayoutManager;
@@ -16,6 +15,7 @@ use Crm\ApplicationModule\Models\DataProvider\DataProviderManager;
 use Crm\ApplicationModule\Models\Event\EventsStorage;
 use Crm\ApplicationModule\Models\Event\LazyEventEmitter;
 use Crm\ApplicationModule\Models\Menu\MenuContainerInterface;
+use Crm\ApplicationModule\Models\Scenario\TriggerManager;
 use Crm\ApplicationModule\Models\User\UserDataRegistrator;
 use Crm\ApplicationModule\Models\Widget\LazyWidgetManagerInterface;
 use Crm\ApplicationModule\Models\Widget\WidgetManagerInterface;
@@ -52,6 +52,8 @@ interface ApplicationModuleInterface
     public function registerUserData(UserDataRegistrator $dataRegistrator);
 
     public function registerSegmentCriteria(CriteriaStorage $criteriaStorage);
+
+    public function registerScenariosTriggers(TriggerManager $triggerManager);
 
     public function registerScenariosCriteria(ScenariosCriteriaStorage $scenariosCriteriaStorage);
 

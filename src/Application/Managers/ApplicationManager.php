@@ -14,6 +14,7 @@ use Crm\ApplicationModule\Models\DataProvider\DataProviderManager;
 use Crm\ApplicationModule\Models\Event\EventsStorage;
 use Crm\ApplicationModule\Models\Menu\MenuContainer;
 use Crm\ApplicationModule\Models\Request;
+use Crm\ApplicationModule\Models\Scenario\TriggerManager;
 use Crm\ApplicationModule\Models\User\UserDataRegistrator;
 use Crm\ApplicationModule\Models\Widget\LazyWidgetManager;
 use Crm\ApplicationModule\Models\Widget\WidgetManager;
@@ -81,7 +82,8 @@ class ApplicationManager
         AssetsManager $assetsManager,
         DataProviderManager $dataProviderManager,
         EventsStorage $eventsStorage,
-        LazyWidgetManager $lazyWidgetManager
+        LazyWidgetManager $lazyWidgetManager,
+        private TriggerManager $triggerManager,
     ) {
         $this->widgetManager = $widgetManager;
         $this->emitter = $emitter;
@@ -221,6 +223,13 @@ class ApplicationManager
         }
     }
 
+    public function registerScenariosTriggers(): void
+    {
+        foreach ($this->moduleManager->getModules() as $module) {
+            $module->registerScenariosTriggers($this->triggerManager);
+        }
+    }
+
     public function registerScenariosCriteriaStorage()
     {
         foreach ($this->moduleManager->getModules() as $module) {
@@ -290,6 +299,7 @@ class ApplicationManager
         $this->registerAuthenticators();
         $this->registerUserDataRegistrators();
         $this->registerCriteriaStorage();
+        $this->registerScenariosTriggers();
         $this->registerScenariosCriteriaStorage();
         $this->registerAccessProviders();
         $this->registerDataProviders();

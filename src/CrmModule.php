@@ -18,6 +18,7 @@ use Crm\ApplicationModule\Models\DataProvider\DataProviderManager;
 use Crm\ApplicationModule\Models\Event\EventsStorage;
 use Crm\ApplicationModule\Models\Event\LazyEventEmitter;
 use Crm\ApplicationModule\Models\Menu\MenuContainerInterface;
+use Crm\ApplicationModule\Models\Scenario\TriggerManager;
 use Crm\ApplicationModule\Models\User\UserDataRegistrator;
 use Crm\ApplicationModule\Models\Widget\LazyWidgetManagerInterface;
 use Crm\ApplicationModule\Models\Widget\WidgetManagerInterface;
@@ -99,6 +100,11 @@ abstract class CrmModule implements ApplicationModuleInterface
     }
 
     public function registerUserData(UserDataRegistrator $dataRegistrator)
+    {
+        // nothing
+    }
+
+    public function registerScenariosTriggers(TriggerManager $triggerManager): void
     {
         // nothing
     }
