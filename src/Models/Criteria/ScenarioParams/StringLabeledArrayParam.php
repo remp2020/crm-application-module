@@ -6,17 +6,9 @@ use Crm\ApplicationModule\Models\Criteria\ScenarioCriteriaParamInterface;
 
 class StringLabeledArrayParam implements ScenarioCriteriaParamInterface
 {
-    protected $type = 'string_labeled_array';
+    protected string $type = 'string_labeled_array';
 
-    private $key;
-
-    private $label;
-
-    private $options;
-
-    private $operator;
-
-    private $freeSolo;
+    private array $options;
 
     /**
      * Constructor.
@@ -30,8 +22,13 @@ class StringLabeledArrayParam implements ScenarioCriteriaParamInterface
      * @param string $operator Operator applied between selected values (and/or)
      * @param bool   $freeSolo If enabled, allow values outside of provided options
      */
-    public function __construct(string $key, string $label, array $options, $operator = 'or', $freeSolo = false)
-    {
+    public function __construct(
+        private string $key,
+        private string $label,
+        array $options,
+        private string $operator = 'or',
+        private bool $freeSolo = false
+    ) {
         $this->options = array_map(function ($value) use ($options) {
             if (is_array($options[$value])) {
                 return array_filter([
@@ -47,10 +44,6 @@ class StringLabeledArrayParam implements ScenarioCriteriaParamInterface
                 'label' => $options[$value],
             ];
         }, array_keys($options));
-        $this->key = $key;
-        $this->label = $label;
-        $this->operator = $operator;
-        $this->freeSolo = $freeSolo;
     }
 
     public function key(): string
@@ -65,7 +58,7 @@ class StringLabeledArrayParam implements ScenarioCriteriaParamInterface
 
     public function blueprint(): array
     {
-        $result = [
+        return [
             'key' => $this->key(),
             'type' => $this->type(),
             'label' => $this->label(),
@@ -73,7 +66,6 @@ class StringLabeledArrayParam implements ScenarioCriteriaParamInterface
             'operator' => $this->operator,
             'freeSolo' => $this->freeSolo,
         ];
-        return $result;
     }
 
     public function type(): string
