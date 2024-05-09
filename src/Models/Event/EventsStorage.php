@@ -2,6 +2,8 @@
 
 namespace Crm\ApplicationModule\Models\Event;
 
+use Exception;
+
 class EventsStorage
 {
     private $events = [];
@@ -62,6 +64,15 @@ class EventsStorage
     public function getEventGenerators(): array
     {
         return $this->eventGenerators;
+    }
+
+    public function getEventGeneratorByCode(string $code): EventGeneratorInterface
+    {
+        if (!array_key_exists($code, $this->eventGenerators)) {
+            throw new Exception(sprintf("Event generator with code '%s' doesn't exist.", $code));
+        }
+
+        return $this->eventGenerators[$code];
     }
 
     public function getEventsPublic(): array
