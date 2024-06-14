@@ -29,7 +29,7 @@ class DatabaseSeedCommand extends Command
                 'Single seeder to run. Seeder has to be registered. Whole namespace is required, see usage.',
                 null
             )
-            ->addUsage('--seeder=Crm\\ApplicationModule\\Seeders\\ConfigsSeeder (escaped backslashes)')
+            ->addUsage('--seeder=Crm\\\ApplicationModule\\\Seeders\\\ConfigsSeeder (escaped backslashes)')
             ->addUsage('--seeder="Crm\ApplicationModule\Seeders\ConfigsSeeder" (quoted string)')
             ->addUsage('-s "Crm\ApplicationModule\Seeders\ConfigsSeeder" (short option, quoted string')
         ;
