@@ -26,4 +26,15 @@ class ActiveRowFactory
 
         return new ActiveRow($data, $selection);
     }
+
+    /**
+     * @return ActiveRow[]
+     */
+    public function createMultiple(array $data): array
+    {
+        return array_map(
+            fn (array $data) => $this->create($data),
+            $data,
+        );
+    }
 }
