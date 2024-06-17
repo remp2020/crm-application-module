@@ -4,6 +4,7 @@ namespace Crm\ApplicationModule\Repositories;
 
 use Crm\ApplicationModule\Events\ConfigUpdatedEvent;
 use Crm\ApplicationModule\Models\Database\Repository;
+use Crm\ApplicationModule\Models\Database\Selection;
 use DateTime;
 use League\Event\Emitter;
 use Nette\Database\Explorer;
@@ -22,6 +23,14 @@ class ConfigsRepository extends Repository
         $this->auditLogRepository = $auditLogRepository;
     }
 
+    final public function all(): Selection
+    {
+        return $this->getTable()->order('sorting');
+    }
+
+    /**
+     * @deprecated `autoload` flag is not used anymore and will be removed in the next future releases. Use `all()` instead.
+     */
     final public function loadAllAutoload()
     {
         return $this->getTable()->where('autoload', true)->order('sorting');

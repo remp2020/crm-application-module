@@ -88,6 +88,34 @@ class ApplicationConfigTest extends DatabaseTestCase
         $this->assertEquals($siteUrlDefaultValue, $this->applicationConfig->get($siteUrlKey)); // old config value is in cache
     }
 
+    public function testGetCacheExpirationNonZeroButForcedRefresh(): void
+    {
+        $siteUrlDefaultValue = Core::env('CRM_HOST');
+        $siteUrlKey = 'site_url';
+
+        // confirm that correctly seeded config value is in DB
+        $siteTitleConfig = $this->configsRepository->findBy('name', $siteUrlKey);
+        $this->assertEquals($siteUrlDefaultValue, $siteTitleConfig->value);
+
+        // confirm that same config value is in cache
+        $this->assertEquals($siteUrlDefaultValue, $this->applicationConfig->get($siteUrlKey));
+
+        // ********************************************************************
+
+        // set setCacheExpiration to 120 seconds
+        $this->applicationConfig->setCacheExpiration(120);
+
+        // update URL
+        $newValue = 'http://testing-different-url.press';
+        $this->configsRepository->update($siteTitleConfig, ['value' => $newValue]);
+
+        // force to refresh config cache
+        $this->applicationConfig->refresh(force: true);
+
+        // test if change propagated into cache
+        $this->assertEquals($newValue, $this->applicationConfig->get($siteUrlKey)); // new config value is in cache
+    }
+
     // Verify that we are not touching cache storage when cache expiration is set to ZERO.
     // Since we are mocking cache storage, this test is separate from above tests of cache itself.
     public function testGetCacheExpirationZeroCheckCacheStorageWriteRead()
