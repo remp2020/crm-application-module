@@ -30,10 +30,10 @@ class WeekScale implements ScaleInterface
         $weeks = (int) $diff->format('%a') / 7 + 1;
         $result = [];
 
-        $result[$aggregation->key($startDate)] = $aggregation->key($startDate);
+        $result[$aggregation->key($startDate)] = "new Date({$startDate->format('Y,n-1,j')})";
         for ($i = 0; $i < $weeks; $i++) {
             $startDate = $aggregation->nextDate($startDate);
-            $result[$aggregation->key($startDate)] = $aggregation->key($startDate);
+            $result[$aggregation->key($startDate)] = "new Date({$startDate->format('Y,n-1,j')})";
         }
 
         return $result;

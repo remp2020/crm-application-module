@@ -30,10 +30,10 @@ class YearScale implements ScaleInterface
         $years = (int) $diff->format('%y') + 1;
         $result = [];
 
-        $result[$aggregation->key($startDate)] = $aggregation->key($startDate);
+        $result[$aggregation->key($startDate)] = "new Date({$startDate->format('Y,n-1,j')})";
         for ($i = 0; $i < $years; $i++) {
             $startDate = $aggregation->nextDate($startDate);
-            $result[$aggregation->key($startDate)] = $aggregation->key($startDate);
+            $result[$aggregation->key($startDate)] = "new Date({$startDate->format('Y,n-1,j')})";
         }
 
         return $result;

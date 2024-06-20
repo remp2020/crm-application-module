@@ -30,10 +30,10 @@ class MonthScale implements ScaleInterface
         $months = ((int) $diff->format('%y') * 12) + (int) $diff->format('%m') + 1;
         $result = [];
 
-        $result[$aggregation->key($startDate)] = $startDate->format('Y-m');
+        $result[$aggregation->key($startDate)] = "new Date({$startDate->format('Y,n-1,j')})";
         for ($i = 0; $i < $months; $i++) {
             $startDate = $aggregation->nextDate($startDate);
-            $result[$aggregation->key($startDate)] = $aggregation->key($startDate);
+            $result[$aggregation->key($startDate)] = "new Date({$startDate->format('Y,n-1,j')})";
         }
 
         return $result;
