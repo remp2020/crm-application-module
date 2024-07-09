@@ -2,8 +2,6 @@
 
 namespace Crm\ApplicationModule\Application\Managers;
 
-use Nette\Utils\Strings;
-
 class AssetsManager
 {
     private $assetsDir;
