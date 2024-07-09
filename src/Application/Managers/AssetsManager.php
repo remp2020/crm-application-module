@@ -26,8 +26,12 @@ class AssetsManager
      */
     public function copyAssets(string $source, string $destination)
     {
-        if (!Strings::startsWith(realpath($source), APP_ROOT)) {
-            throw new \Exception('source path is not under APP_ROOT path (' . APP_ROOT . '): ' . $source);
+        if (!str_starts_with(realpath($source), APP_ROOT)) {
+            if (realpath($source) === false) {
+                throw new \Exception('registered assets source path does not exist: ' . $source);
+            }
+
+            throw new \Exception('assets source path is not under APP_ROOT path (' . APP_ROOT . '): ' . $source);
         }
 
         $destinationPath = $this->assetsDir . '/' . $destination;
