@@ -163,6 +163,7 @@ class CountriesSeeder implements ISeeder
             "PH" => "Philippines",
             "PL" => "Poland",
             "PT" => "Portugal",
+            "PR" => "Puerto Rico",
             "QA" => "Qatar",
             "RO" => "Romania",
             "RU" => "Russia",
