@@ -85,6 +85,7 @@ class CountriesSeeder implements ISeeder
             "GE" => "Georgia",
             "DE" => "Germany",
             "GH" => "Ghana",
+            "GI" => "Gibraltar",
             "GR" => "Greece",
             "GD" => "Grenada",
             "GT" => "Guatemala",
