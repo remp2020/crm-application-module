@@ -154,6 +154,7 @@ class CountriesSeeder implements ISeeder
             "KP" => "North Korea",
             "NO" => "Norway",
             "OM" => "Oman",
+            "PF" => "French Polynesia",
             "PK" => "Pakistan",
             "PW" => "Palau",
             "PS" => "Palestinian Territories",
