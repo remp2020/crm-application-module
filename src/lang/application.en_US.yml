@@ -45,7 +45,9 @@ config:
     admin_logo:
         name: Admin logo
         description: 'HTML displaying logo in header (e.g. <code>&lt;a href=&quot;/&quot;&gt;&lt;img height=&quot;50px&quot; style=&quot;float:left; padding: 0.3em; background: #e7e7e7;&quot; src=&quot;/layouts/admin/images/logo.svg&quot; alt=&quot;logo&quot;&gt;&lt;/a&gt;</code>)'
-
+    localized_countries:
+        name: Display countries based on user's language
+        description: 'By default, countries will be displayed in their own language'
 integrations:
     config:
         category: Integrations

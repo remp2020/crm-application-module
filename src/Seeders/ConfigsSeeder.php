@@ -184,6 +184,17 @@ class ConfigsSeeder implements ISeeder
             500
         );
 
+        $this->addConfig(
+            $output,
+            $category,
+            'localized_countries',
+            ApplicationConfig::TYPE_BOOLEAN,
+            'application.config.localized_countries.name',
+            'application.config.localized_countries.description',
+            false,
+            510
+        );
+
         // empty categories cleanup
         $emptyCategories = $this->configCategoriesRepository->getTable()
             ->where(':configs.id IS NULL');

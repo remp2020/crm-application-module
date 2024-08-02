@@ -45,6 +45,9 @@ config:
     admin_logo:
         name: Admin logo
         description: 'HTML zobrazujúce logo v hlavičke (napr. <code>&lt;a href=&quot;/&quot;&gt;&lt;img height=&quot;50px&quot; style=&quot;float:left; padding: 0.3em; background: #e7e7e7;&quot; src=&quot;/layouts/admin/images/logo.svg&quot; alt=&quot;logo&quot;&gt;&lt;/a&gt;</code>)'
+    localized_countries:
+        name: Zobraziť krajiny v jazyku používateľa
+        description: 'Predvolene sa krajiny zobrazia vo vlastnom jazyku'
 
 integrations:
     config:

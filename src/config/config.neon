@@ -168,3 +168,5 @@ services:
 	- Crm\ApplicationModule\Components\Graphs\SmallBarGraph\SmallBarGraphControlFactoryInterface
 	- Crm\ApplicationModule\Components\Graphs\InlineBarGraph\InlineBarGraphControlFactoryInterface
 	- Crm\ApplicationModule\Components\Graphs\GoogleSankeyGraphGroup\GoogleSankeyGraphGroupControlFactoryInterface
+
+	- Crm\ApplicationModule\Forms\Controls\CountriesSelectItemsBuilder

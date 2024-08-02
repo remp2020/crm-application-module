@@ -39,6 +39,9 @@ config:
     site_url:
         description: Basis-URL des CRM (z.B. https://crm.press)
         name: Basis-URL der Webseite
+    localized_countries:
+        name: 'Länder basierend auf der Sprache des Benutzers anzeigen'
+        description: 'Standardmäßig werden Länder in ihrer eigenen Sprache angezeigt'
 integrations:
     config:
         category: Integrationen
