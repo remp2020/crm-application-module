@@ -17,10 +17,10 @@ class RequestTest extends TestCase
     public static function emptySeriesDataProvider()
     {
         return [
-            ['url' => 'example.com', 'example.com'],
-            ['url' => 'foo.example.com', '.example.com'],
-            ['url' => 'foo.bar.example.com:8080', '.example.com'],
-            ['url' => 'invalid_host', 'invalid_host'],
+            ['host' => 'example.com', 'domain' => 'example.com'],
+            ['host' => 'foo.example.com', 'domain' => '.example.com'],
+            ['host' => 'foo.bar.example.com:8080', 'domain' => '.example.com'],
+            ['host' => 'invalid_host', 'domain' => 'invalid_host'],
         ];
     }
 
