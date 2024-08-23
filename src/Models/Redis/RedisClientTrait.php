@@ -4,6 +4,10 @@ namespace Crm\ApplicationModule\Models\Redis;
 
 use Predis\Client;
 
+/**
+ * @property Client $redis
+ * @property RedisClientFactory $redisClientFactory
+ */
 trait RedisClientTrait
 {
     /** @var RedisClientFactory */
