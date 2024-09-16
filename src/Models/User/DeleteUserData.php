@@ -25,7 +25,7 @@ class DeleteUserData
         try {
             $canBeDeleted =  $this->userDataRegistrator->canBeDeleted($userId);
         } catch (\Exception $e) {
-            Debugger::log($e->getMessage(), ILogger::EXCEPTION);
+            Debugger::log($e, ILogger::EXCEPTION);
             $canBeDeleted = [false, [$this->translator->translate('application.user.delete_user_data.internal_error')]];
         }
 
