@@ -4,9 +4,9 @@ namespace Crm\ApplicationModule\Models\DataProvider;
 
 class DataProviderManager
 {
-    private $providers = [];
+    private array $providers = [];
 
-    public function registerDataProvider($path, DataProviderInterface $provider, $priority = 100)
+    public function registerDataProvider($path, DataProviderInterface $provider, $priority = 100): void
     {
         if (isset($this->providers[$path][$priority])) {
             do {
@@ -18,11 +18,11 @@ class DataProviderManager
 
     /**
      * @param string $path
-     * @param string $validateInterface name of the interface the providers should implement. DataProviderException will be thrown if not
+     * @param string|null $validateInterface name of the interface the providers should implement. DataProviderException will be thrown if not
      * @return DataProviderInterface[]
      * @throws DataProviderException
      */
-    public function getProviders(string $path, ?string $validateInterface = null)
+    public function getProviders(string $path, ?string $validateInterface = null): array
     {
         if (isset($this->providers[$path])) {
             $result = $this->providers[$path];
