@@ -2,7 +2,6 @@
 
 namespace Crm\ApplicationModule\Components\FrontendMenu;
 
-use Crm\ApplicationModule\Models\Config\ApplicationConfig;
 use Crm\ApplicationModule\Models\DataProvider\DataProviderManager;
 use Crm\ApplicationModule\Models\DataProvider\FrontendMenuDataProviderInterface;
 use Crm\ApplicationModule\Models\Menu\MenuContainerInterface;
@@ -17,31 +16,28 @@ use Nette\Application\UI\Control;
  */
 class FrontendMenu extends Control
 {
-    private $templateName = 'frontend_menu.latte';
+    private string $filePath = __DIR__ . DIRECTORY_SEPARATOR . 'frontend_menu.latte';
 
-    /** @var MenuContainerInterface */
-    private $menuContainer;
-
-    public $applicationConfig;
-
-    private $dataProviderManager;
+    protected MenuContainerInterface $menuContainer;
 
     public function __construct(
-        ApplicationConfig $applicationConfig,
-        DataProviderManager $dataProviderManager
+        private readonly DataProviderManager $dataProviderManager
     ) {
-        $this->applicationConfig  = $applicationConfig;
-        $this->dataProviderManager = $dataProviderManager;
     }
 
-    public function setMenuContainer(MenuContainerInterface $menuContainer)
+    public function setMenuContainer(MenuContainerInterface $menuContainer): void
     {
         $this->menuContainer = $menuContainer;
     }
 
     public function setTemplate(string $templateFile): void
     {
-        $this->templateName = $templateFile;
+        $this->filePath = __DIR__ . DIRECTORY_SEPARATOR . $templateFile;
+    }
+
+    public function setTemplatePath(string $templatePath): void
+    {
+        $this->filePath = $templatePath;
     }
 
     public function render()
@@ -53,7 +49,7 @@ class FrontendMenu extends Control
         }
 
         $this->template->menuItems = $this->menuContainer->getMenuItems();
-        $this->template->setFile(__DIR__ . '/' . $this->templateName);
+        $this->template->setFile($this->filePath);
         $this->template->render();
     }
 }
