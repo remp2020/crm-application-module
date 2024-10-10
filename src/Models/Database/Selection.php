@@ -2,12 +2,16 @@
 
 namespace Crm\ApplicationModule\Models\Database;
 
+use Nette;
+
 class Selection extends \Nette\Database\Table\Selection
 {
     use DateFieldsProcessorTrait;
 
     /** @var ReplicaManager|null */
     private $replicaManager;
+
+    private $enforcePrimaryDatabase = false;
 
     public function createSelectionInstance(string $table = null): self
     {
@@ -42,7 +46,7 @@ class Selection extends \Nette\Database\Table\Selection
     public function update(iterable $data): int
     {
         if ($this->replicaManager) {
-            $this->explorer = $this->replicaManager->getDatabase(false);
+            $this->enforcePrimaryDatabase = true;
         }
         return parent::update($data);
     }
@@ -50,7 +54,7 @@ class Selection extends \Nette\Database\Table\Selection
     public function delete(): int
     {
         if ($this->replicaManager) {
-            $this->explorer = $this->replicaManager->getDatabase(false);
+            $this->enforcePrimaryDatabase = true;
         }
         return parent::delete();
     }
@@ -58,8 +62,17 @@ class Selection extends \Nette\Database\Table\Selection
     public function insert(iterable $data): ActiveRow|array|int|bool
     {
         if ($this->replicaManager) {
-            $this->explorer = $this->replicaManager->getDatabase(false);
+            $this->enforcePrimaryDatabase = true;
         }
         return parent::insert($data);
+    }
+
+    public function query(string $query): Nette\Database\ResultSet
+    {
+        if ($this->enforcePrimaryDatabase) {
+            $explorer = $this->replicaManager->getDatabase(false);
+            $explorer->query($query, ...$this->sqlBuilder->getParameters());
+        }
+        return parent::query($query);
     }
 }
