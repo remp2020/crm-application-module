@@ -30,6 +30,9 @@ abstract class BaseLazyWidget extends Control implements WidgetInterface
         return strtolower(implode(' ', $pieces));
     }
 
+    /***
+     * Used to identify component for signals
+     */
     public function identifier()
     {
         // name of the extending class (with namespace), character '\' replaced by '_'
