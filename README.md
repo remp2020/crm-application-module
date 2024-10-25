@@ -66,7 +66,7 @@ database:
 
 # configure repositories to use replicaConfig (otherwise all queries would go to the primary database)
 decorator:
-	Crm\ApplicationModule\Repository:
+	Crm\ApplicationModule\Models\Database\Repository:
 		setup:
 			- setReplicaConfig(@replicaConfig) # this enables the support for reading from replicas
 
