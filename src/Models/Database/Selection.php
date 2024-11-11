@@ -71,7 +71,7 @@ class Selection extends \Nette\Database\Table\Selection
     {
         if ($this->enforcePrimaryDatabase) {
             $explorer = $this->replicaManager->getDatabase(false);
-            $explorer->query($query, ...$this->sqlBuilder->getParameters());
+            return $explorer->query($query, ...$this->sqlBuilder->getParameters());
         }
         return parent::query($query);
     }
