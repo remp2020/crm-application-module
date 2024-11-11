@@ -35,7 +35,7 @@
     "phpoffice/phpspreadsheet": "^1.2",
     "robmorgan/phinx": "~0.12",
     "kdyby/autowired": "^2.1",
-    "twig/twig": "^2.4",
+    "twig/twig": "^3.14",
     "league/event": "~2.1",
     "tomaj/nette-bootstrap-form": "^2.0",
     "vlucas/phpdotenv": "^5.3",
