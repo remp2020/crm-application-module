@@ -53,7 +53,7 @@ class Repository
 
     public function find($id): ?ActiveRow
     {
-        /** @var ActiveRow $result */
+        /** @var ?ActiveRow $result */
         $result = $this->getTable()->where(['id' => $id])->fetch();
         return $result;
     }
