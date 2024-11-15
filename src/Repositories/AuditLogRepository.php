@@ -22,7 +22,6 @@ class AuditLogRepository extends Repository
     public function __construct(Explorer $database, protected UserStorage $userStorage)
     {
         parent::__construct($database);
-        $this->database = $database;
     }
 
     final public function add($operation, $tableName, $signature, $data = [])

@@ -27,7 +27,8 @@ trait ReplicaTrait
             $this->replicaManager = new ReplicaManager(
                 $this->database,
                 $this->tableName,
-                $this->replicaConfig
+                $this->replicaConfig,
+                $this->getTransaction(),
             );
         }
         return $this->replicaManager;

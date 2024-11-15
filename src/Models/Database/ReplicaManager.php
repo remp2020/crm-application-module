@@ -2,27 +2,22 @@
 
 namespace Crm\ApplicationModule\Models\Database;
 
+use Crm\ApplicationModule\Database\DatabaseTransaction;
 use Nette\Database\Explorer;
 
 class ReplicaManager
 {
-    private $primaryDatabase;
-
-    private $tableName;
-
-    /** @var ReplicaConfig|null */
-    private $replicaConfig;
-
     private $writeFlag = false;
 
     /** @var Explorer|null */
     private $selectedDatabase;
 
-    public function __construct(Explorer $primaryDatabase, string $tableName, ?ReplicaConfig $replicaConfig)
-    {
-        $this->primaryDatabase = $primaryDatabase;
-        $this->tableName = $tableName;
-        $this->replicaConfig = $replicaConfig;
+    public function __construct(
+        private readonly Explorer $primaryDatabase,
+        private readonly string $tableName,
+        private readonly ?ReplicaConfig $replicaConfig,
+        private readonly DatabaseTransaction $databaseTransaction,
+    ) {
     }
 
     public function setWriteFlag()
@@ -34,6 +29,10 @@ class ReplicaManager
     public function getDatabase($allowReplica): Explorer
     {
         if (!$allowReplica) {
+            $this->setWriteFlag();
+        }
+
+        if ($this->databaseTransaction->isInTransaction()) {
             $this->setWriteFlag();
         }
 

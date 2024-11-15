@@ -2,6 +2,7 @@
 
 namespace Crm\ApplicationModule\Tests;
 
+use Crm\ApplicationModule\Database\DatabaseTransaction;
 use Crm\ApplicationModule\Models\Database\ReplicaConfig;
 use Crm\ApplicationModule\Models\Database\ReplicaManager;
 use Nette\Database\Connection;
@@ -12,7 +13,7 @@ use PHPUnit\Framework\TestCase;
 class ReplicaManagerTest extends TestCase
 {
     #[DataProvider('replicaTraitDataProvider')]
-    public function testReplicaTrait(string $table, array $dsns, array $allowedTables, bool $mightReturnReplica)
+    public function testReplicaTrait(string $table, array $dsns, array $allowedTables, bool $isInTransaction, bool $mightReturnReplica)
     {
         $replicaConfig = new ReplicaConfig();
         foreach ($dsns as $dsn) {
@@ -21,10 +22,12 @@ class ReplicaManagerTest extends TestCase
         foreach ($allowedTables as $allowedTable) {
             $replicaConfig->addTable($allowedTable);
         }
+
         $replicaManager = new ReplicaManager(
             $this->mockDatabase('primary'),
             $table,
-            $replicaConfig
+            $replicaConfig,
+            $this->mockDatabaseTransaction($isInTransaction)
         );
 
         // test "read" and verify we receive one of the allowed connections
@@ -48,34 +51,72 @@ class ReplicaManagerTest extends TestCase
     public static function replicaTraitDataProvider()
     {
         return [
-            'NoReplica_TableNotAllowed_ShouldReturnPrimary' => [
+            'NoTransaction_NoReplica_TableNotAllowed_ShouldReturnPrimary' => [
                 'table' => 'foo',
                 'dsns' => [],
                 'allowedTables' => [],
+                'isInTransaction' => false,
                 'mightReturnReplica' => false,
             ],
-            'MultiReplica_TableNotAllowed_ShouldReturnPrimary' => [
+            'NoTransaction_MultiReplica_TableNotAllowed_ShouldReturnPrimary' => [
                 'table' => 'foo',
                 'dsns' => [
                     'secondary',
                     'tertiary',
                 ],
                 'allowedTables' => ['bar', 'baz'],
+                'isInTransaction' => false,
                 'mightReturnReplica' => false,
             ],
-            'MultiReplica_TableAllowed_CouldReturnReplica' => [
+            'NoTransaction_MultiReplica_TableAllowed_CouldReturnReplica' => [
                 'table' => 'foo',
                 'dsns' => [
                     'secondary',
                     'tertiary',
                 ],
                 'allowedTables' => ['foo', 'baz'],
+                'isInTransaction' => false,
                 'mightReturnReplica' => true,
             ],
-            'MultiReplica_TableAllowed_ShouldReturnPrimary' => [
+            'NoTransaction_NoReplica_TableAllowed_ShouldReturnPrimary' => [
                 'table' => 'foo',
                 'dsns' => [],
                 'allowedTables' => ['foo', 'baz'],
+                'isInTransaction' => false,
+                'mightReturnReplica' => false,
+            ],
+            'Transaction_NoReplica_TableNotAllowed_ShouldReturnPrimary' => [
+                'table' => 'foo',
+                'dsns' => [],
+                'allowedTables' => [],
+                'isInTransaction' => true,
+                'mightReturnReplica' => false,
+            ],
+            'Transaction_MultiReplica_TableNotAllowed_ShouldReturnPrimary' => [
+                'table' => 'foo',
+                'dsns' => [
+                    'secondary',
+                    'tertiary',
+                ],
+                'allowedTables' => ['bar', 'baz'],
+                'isInTransaction' => true,
+                'mightReturnReplica' => false,
+            ],
+            'Transaction_MultiReplica_TableAllowed_ShouldReturnPrimary' => [
+                'table' => 'foo',
+                'dsns' => [
+                    'secondary',
+                    'tertiary',
+                ],
+                'allowedTables' => ['foo', 'baz'],
+                'isInTransaction' => true,
+                'mightReturnReplica' => false,
+            ],
+            'Transaction_NoReplica_TableAllowed_ShouldReturnPrimary' => [
+                'table' => 'foo',
+                'dsns' => [],
+                'allowedTables' => ['foo', 'baz'],
+                'isInTransaction' => true,
                 'mightReturnReplica' => false,
             ],
         ];
@@ -90,5 +131,16 @@ class ReplicaManagerTest extends TestCase
         $database->shouldReceive('getConnection')
             ->andReturn($connection);
         return $database;
+    }
+
+    public function mockDatabaseTransaction(bool $isInTransaction): DatabaseTransaction
+    {
+        $databaseTransaction = $this->createMock(DatabaseTransaction::class);
+        $databaseTransaction
+            ->expects($this->any())
+            ->method('isInTransaction')
+            ->willReturn($isInTransaction);
+
+        return $databaseTransaction;
     }
 }

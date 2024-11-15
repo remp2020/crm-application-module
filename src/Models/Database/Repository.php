@@ -14,9 +14,7 @@ class Repository
     use DateFieldsProcessorTrait;
     use SlugColumnTrait;
     use ReplicaTrait;
-
-    /** @var Explorer */
-    protected $database;
+    use DatabaseTransactionTrait;
 
     /** @var AuditLogRepository */
     protected $auditLogRepository;
@@ -31,10 +29,9 @@ class Repository
     protected $auditLogExcluded = [];
 
     public function __construct(
-        Explorer $database,
+        protected readonly Explorer $database,
         Storage $cacheStorage = null
     ) {
-        $this->database = $database;
         $this->cacheStorage = $cacheStorage;
     }
 

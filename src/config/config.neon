@@ -3,6 +3,7 @@ services:
 
 	environmentConfig: Crm\ApplicationModule\Application\EnvironmentConfig
 	replicaConfig: Crm\ApplicationModule\Models\Database\ReplicaConfig
+	databaseTransaction: Crm\ApplicationModule\Database\DatabaseTransaction
 
 	moduleManager:
 		factory: Crm\ApplicationModule\Application\Managers\ModuleManager
