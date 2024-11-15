@@ -3,12 +3,17 @@
 namespace Crm\ApplicationModule\Tests\Models\Config;
 
 use Crm\ApplicationModule\Application\Core;
+use Crm\ApplicationModule\Builder\ConfigBuilder;
 use Crm\ApplicationModule\Models\Config\ApplicationConfig;
 use Crm\ApplicationModule\Models\Config\LocalConfig;
+use Crm\ApplicationModule\Repositories\ConfigCategoriesRepository;
 use Crm\ApplicationModule\Repositories\ConfigsRepository;
 use Crm\ApplicationModule\Seeders\ConfigsSeeder;
 use Crm\ApplicationModule\Tests\DatabaseTestCase;
+use Mockery;
 use Nette\Caching\Storage;
+use Tracy\Debugger;
+use Tracy\ILogger;
 
 class ApplicationConfigTest extends DatabaseTestCase
 {
@@ -20,6 +25,7 @@ class ApplicationConfigTest extends DatabaseTestCase
     {
         return [
             ConfigsRepository::class,
+            ConfigCategoriesRepository::class,
         ];
     }
 
@@ -192,5 +198,72 @@ class ApplicationConfigTest extends DatabaseTestCase
         // this shouldn't internally call cache storage
         // (nor Storage->read(ApplicationConfig::CACHE_KEY) nor Storage->write(ApplicationConfig::CACHE_KEY))
         $this->assertNotNull($applicationConfig->get('site_title'));
+    }
+
+    public function testGetConfigNotPresent()
+    {
+        $localConfigMock = Mockery::mock(LocalConfig::class);
+        $localConfigMock->shouldReceive('exists')->with('site_url')->andReturn(false);
+        $localConfigMock->shouldReceive('exists')->with('og_image')->andReturn(false);
+        $localConfigMock->shouldReceive('exists')->with('og_image')->andReturn(false);
+        $localConfigMock->shouldReceive('exists')->with('admin_logo')->andReturn(true);
+        $localConfigMock->shouldReceive('value')->with('admin_logo')->andReturn('TEST admin logo');
+        $localConfigMock->shouldReceive('exists')->with('foo')->never();
+
+        $loggerMock = Mockery::mock(ILogger::class);
+        $loggerMock->shouldReceive('log')
+            ->with("Requested config 'foo' doesn't exist, returning 'null'.", ILogger::WARNING)
+            ->once()
+            ->getMock();
+
+        $cacheStorageMock = $this->createMock(Storage::class);
+
+        Debugger::setLogger($loggerMock);
+
+        $applicationConfig = new ApplicationConfig(
+            $this->configsRepository,
+            $localConfigMock,
+            $cacheStorageMock,
+        );
+
+        $this->assertNotNull($applicationConfig->get('site_url')); // set in DB with value
+        $this->assertNull($applicationConfig->get('og_image')); // set in DB, null without warning
+        $this->assertSame('TEST admin logo', $applicationConfig->get('admin_logo')); // set in DB, overwritten, not null without warning
+        $this->assertNull($applicationConfig->get('foo')); // not set in DB, overwritte, null with warning
+    }
+
+    public function testGetConfigSeededAfterCaching()
+    {
+        $cacheStorageObserver = $this->createMock(Storage::class);
+        $cacheStorageObserver->expects($this->once())
+            ->method('read')
+            ->with(ApplicationConfig::CACHE_KEY);
+        $cacheStorageObserver->expects($this->exactly(2))
+            ->method('write')
+            ->with(ApplicationConfig::CACHE_KEY);
+
+        $applicationConfig = new ApplicationConfig(
+            $this->configsRepository,
+            $this->inject(LocalConfig::class),
+            $cacheStorageObserver,
+        );
+        $applicationConfig->setCacheExpiration(120);
+
+        // read seeded value, causing cache to be populated
+        $this->assertNotNull($applicationConfig->get('site_url'));
+
+        // insert new config option and read it; the value that hasn't been cached yet
+        $configBuilder = $this->inject(ConfigBuilder::class);
+        $configCategoriesRepository = $this->getRepository(ConfigCategoriesRepository::class);
+
+        $configBuilder->createNew()
+            ->setName('foo')
+            ->setDisplayName('foo')
+            ->setValue('bar')
+            ->setConfigCategory($configCategoriesRepository->getTable()->fetch())
+            ->setType('string')
+            ->save();
+
+        $this->assertSame('bar', $applicationConfig->get('foo')); // set in DB, overwritten, not null without warning
     }
 }
