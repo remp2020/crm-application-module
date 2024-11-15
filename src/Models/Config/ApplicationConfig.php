@@ -47,7 +47,8 @@ class ApplicationConfig
             $this->refresh();
         }
 
-        $item = $this->items[$name] ?? null;
+        $item = $this->getItem($name);
+
         if ($item === null) {
             Debugger::log("Requested config '{$name}' doesn't exist, returning 'null'.", ILogger::WARNING);
             return null;
@@ -80,7 +81,7 @@ class ApplicationConfig
         }
 
         if ($isCacheEnabled || $force) {
-            $this->cacheStorage->write(self::CACHE_KEY, $this->items, [Cache::EXPIRE => $this->cacheExpiration]);
+            $this->cacheItems($this->items);
         }
 
         $this->lastConfigRefreshTimestamp = time();
@@ -118,5 +119,30 @@ class ApplicationConfig
         }
 
         return $value;
+    }
+
+    private function getItem(string $name): ?object
+    {
+        $item = $this->items[$name] ?? null;
+        $isInCache = $item !== null;
+        if ($isInCache) {
+            return $item;
+        }
+
+        $item = $this->formatItem($this->configsRepository->loadByName($name));
+        $isInDatabase = $item !== null;
+        if ($isInDatabase) {
+            $this->items[$name] = $item;
+            $this->cacheItems($this->items);
+
+            return $item;
+        }
+
+        return null;
+    }
+
+    private function cacheItems(array $items): void
+    {
+        $this->cacheStorage->write(self::CACHE_KEY, $items, [Cache::EXPIRE => $this->cacheExpiration]);
     }
 }
