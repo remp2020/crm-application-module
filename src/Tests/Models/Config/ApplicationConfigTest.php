@@ -218,6 +218,7 @@ class ApplicationConfigTest extends DatabaseTestCase
 
         $cacheStorageMock = $this->createMock(Storage::class);
 
+        $originalLogger = Debugger::getLogger();
         Debugger::setLogger($loggerMock);
 
         $applicationConfig = new ApplicationConfig(
@@ -230,6 +231,8 @@ class ApplicationConfigTest extends DatabaseTestCase
         $this->assertNull($applicationConfig->get('og_image')); // set in DB, null without warning
         $this->assertSame('TEST admin logo', $applicationConfig->get('admin_logo')); // set in DB, overwritten, not null without warning
         $this->assertNull($applicationConfig->get('foo')); // not set in DB, overwritte, null with warning
+
+        Debugger::setLogger($originalLogger);
     }
 
     public function testGetConfigSeededAfterCaching()
