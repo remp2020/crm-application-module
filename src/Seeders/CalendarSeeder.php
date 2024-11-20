@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Crm\ApplicationModule\Seeders;
 
 use Nette\Database\Explorer;
@@ -7,29 +9,44 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class CalendarSeeder implements ISeeder
 {
-    private $database;
-
-    public function __construct(Explorer $database)
-    {
-        $this->database = $database;
+    public function __construct(
+        private Explorer $database,
+    ) {
     }
 
     public function seed(OutputInterface $output)
     {
-        $lastID = $this->database->query('SELECT `id` FROM `calendar` ORDER BY `id` DESC LIMIT 1;')->fetch();
+        $lastRecord = $this->database->query('SELECT * FROM `calendar` ORDER BY `id` DESC LIMIT 1;')->fetch();
 
-        if (!$lastID) {
-            $calendarData = file_get_contents(dirname(__FILE__) . '/sql/calendar.sql');
-            if ($calendarData === false) {
-                $output->writeln("  <error>* unable to load file `/sql/calendar.sql` with calendar seed</error>");
-                throw new \Exception('Unable to load file `/sql/calendar.sql` with calendar seed');
-            }
-            $this->database->query($calendarData);
-            $output->writeln("  <comment>* calendar seeded with dates from `2014-10-01` to `2024-12-31`</comment>");
-        } elseif ($lastID->id !== 20241231) {
-            $output->writeln("  <error>* last entry of calendar differs from last entry of seeder's SQL</error>");
+        if ($lastRecord) {
+            $nextDate = (new \DateTime($lastRecord['date']))->modify('+1 day');
         } else {
-            $output->writeln("  * calendar already seeded, nothing to do");
+            $nextDate = new \DateTime('2014-01-01 00:00:00');
         }
+        $thresholdDate = new \DateTime('+7 years');
+
+        $dates = [];
+        while ($nextDate <= $thresholdDate) {
+            $dates[] = [
+                'id' => $nextDate->format('Ymd'),
+                'date' => $nextDate->format('Y-m-d'),
+                'year' => $nextDate->format('Y'),
+                'month' => $nextDate->format('n'),
+                'day' => $nextDate->format('d'),
+                'quarter' => match ($nextDate->format('n')) {
+                    '1','2','3' => '1',
+                    '4','5','6' => '2',
+                    '7','8','9' => '3',
+                    '10','11','12' => '4',
+                },
+                'week' => $nextDate->format('W'),
+            ];
+
+            $nextDate->modify('+1 day');
+        }
+
+        $this->database->query('INSERT INTO calendar ', $dates);
+
+        $output->writeln('  <comment>* calendar seeded with dates until ' . $thresholdDate->format('Y-m-d') . '</comment>');
     }
 }
