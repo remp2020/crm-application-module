@@ -148,7 +148,7 @@ services:
 	hermesDispatcher:
 		factory: Tomaj\Hermes\Dispatcher(@hermesDriver, @hermesLogger, @hermesShutdown)
 	hermesEmitter:
-		factory: Tomaj\Hermes\Emitter(@hermesDriver, @hermesLogger)
+		factory: Crm\ApplicationModule\Hermes\TransactionEmitter(@databaseTransaction, @hermesDriver, @hermesLogger)
 	redisTasksQueue: Crm\ApplicationModule\Hermes\RedisTasksQueue
 
 	- Crm\ApplicationModule\Hermes\HeartbeatMysql
