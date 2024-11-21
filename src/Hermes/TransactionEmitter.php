@@ -10,7 +10,7 @@ use Tomaj\Hermes\EmitterInterface;
 
 class TransactionEmitter extends Emitter
 {
-    private array $delayedMessages;
+    private array $delayedMessages = [];
 
     public function __construct(
         private readonly DatabaseTransaction $databaseTransaction,
