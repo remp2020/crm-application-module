@@ -19,7 +19,9 @@ class CalendarSeeder implements ISeeder
         $lastRecord = $this->database->query('SELECT * FROM `calendar` ORDER BY `id` DESC LIMIT 1;')->fetch();
 
         if ($lastRecord) {
-            $nextDate = (new \DateTime($lastRecord['date']))->modify('+1 day');
+            /** @var \DateTime $lastDate */
+            $lastDate = $lastRecord['date'];
+            $nextDate = $lastDate->modify('+1 day');
         } else {
             $nextDate = new \DateTime('2014-01-01 00:00:00');
         }
@@ -45,7 +47,9 @@ class CalendarSeeder implements ISeeder
             $nextDate->modify('+1 day');
         }
 
-        $this->database->query('INSERT INTO calendar ', $dates);
+        if (count($dates)) {
+            $this->database->query('INSERT INTO calendar ', $dates);
+        }
 
         $output->writeln('  <comment>* calendar seeded with dates until ' . $thresholdDate->format('Y-m-d') . '</comment>');
     }
