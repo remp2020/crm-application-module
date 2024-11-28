@@ -4,6 +4,7 @@ namespace Crm\ApplicationModule\DI;
 
 use Contributte\FormMultiplier\DI\MultiplierExtension;
 use Contributte\Translation\DI\TranslationProviderInterface;
+use Crm\ApplicationModule\Models\Database\Repository;
 use Nette\Application\IPresenterFactory;
 use Nette\DI\Compiler;
 use Nette\DI\CompilerExtension;
@@ -69,6 +70,11 @@ final class ApplicationModuleExtension extends CompilerExtension implements Tran
         // load presenters from extension to Nette
         $builder->getDefinition($builder->getByType(IPresenterFactory::class))
             ->addSetup('setMapping', [['Application' => 'Crm\ApplicationModule\Presenters\*Presenter']]);
+
+        // configure Repository's DatabaseTransaction decorator
+        foreach ($builder->findByType(Repository::class) as $def) {
+            $def->addSetup('setTransaction', [$builder->getDefinition('databaseTransaction')]);
+        }
     }
 
     /**
