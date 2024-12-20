@@ -73,6 +73,7 @@ services:
 	- Crm\ApplicationModule\Commands\AuditLogsCleanupCommand
 	- Crm\ApplicationModule\Commands\MigrateAuditLogsCommand
 	- Crm\ApplicationModule\Commands\BigintMigrationCleanupCommand
+	- Crm\ApplicationModule\Commands\ChangeConfigValueCommand
 
 	applicationConfig:
 		factory: Crm\ApplicationModule\Models\Config\ApplicationConfig

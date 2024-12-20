@@ -16,6 +16,7 @@ use Crm\ApplicationModule\Commands\AuditLogsCleanupCommand;
 use Crm\ApplicationModule\Commands\BigintMigrationCleanupCommand;
 use Crm\ApplicationModule\Commands\CacheCommand;
 use Crm\ApplicationModule\Commands\CalculateMeasurementsCommand;
+use Crm\ApplicationModule\Commands\ChangeConfigValueCommand;
 use Crm\ApplicationModule\Commands\CleanupCommand;
 use Crm\ApplicationModule\Commands\DatabaseSeedCommand;
 use Crm\ApplicationModule\Commands\GenerateKeyCommand;
@@ -57,6 +58,7 @@ class ApplicationModule extends CrmModule
         $commandsContainer->registerCommand($this->getInstance(AuditLogsCleanupCommand::class));
         $commandsContainer->registerCommand($this->getInstance(MigrateAuditLogsCommand::class));
         $commandsContainer->registerCommand($this->getInstance(BigintMigrationCleanupCommand::class));
+        $commandsContainer->registerCommand($this->getInstance(ChangeConfigValueCommand::class));
     }
 
     public function registerHermesHandlers(Dispatcher $dispatcher)
