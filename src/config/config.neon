@@ -24,6 +24,7 @@ services:
 			- addFilterLoader([@filterLoader, 'load'])
 			- addFunction('escapehtml', [Crm\ApplicationModule\LatteFunctions\EscapeHTML, 'escape'])
 
+	maskEmailHelper: Crm\ApplicationModule\Helpers\MaskEmailHelper
 	filterLoader:
 		factory: Crm\ApplicationModule\Helpers\FilterLoader
 		setup:
@@ -36,7 +37,7 @@ services:
 			- register('price', [Crm\ApplicationModule\Helpers\PriceHelper(), process])
 			- register('diffPrice', [Crm\ApplicationModule\Helpers\DiffPriceHelper(), process])
 			- register('json', [Crm\ApplicationModule\Helpers\JsonHelper(), process])
-			- register('maskEmail', [Crm\ApplicationModule\Helpers\MaskEmailHelper(), process])
+			- register('maskEmail', [@maskEmailHelper, process])
 
 	redisClientFactory: Crm\ApplicationModule\Models\Redis\RedisClientFactory(%redis.host%, %redis.port%, %redis.password%, %redis.database%, %redis_client_factory.prefix%)
 
