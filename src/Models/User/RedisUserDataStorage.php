@@ -63,4 +63,18 @@ class RedisUserDataStorage implements UserDataStorageInterface
     {
         return $this->redis()->hdel($this->userDataKey, $tokens);
     }
+
+    public function hscan(callable $callback)
+    {
+        $cursor = null;
+
+        do {
+            $response = $this->redis()->hscan($this->userDataKey, $cursor);
+            $cursor = $response[0];
+            $items = $response[1];
+            foreach ($items as $accessToken => $data) {
+                $callback($accessToken, $data);
+            }
+        } while ($cursor);
+    }
 }
