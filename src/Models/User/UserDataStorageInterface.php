@@ -15,4 +15,10 @@ interface UserDataStorageInterface
     public function remove($token);
 
     public function multiRemove(array $tokens);
+
+    /**
+     * iterateTokens iterates every matched token in the user_data storage and passes it to callback along with its
+     * user data as $callback($token, $userData).
+     */
+    public function iterateTokens(callable $callback);
 }
