@@ -40,4 +40,22 @@ class EnvironmentConfig
         }
         return $key;
     }
+
+    public function getInt(string $key): ?int
+    {
+        $val = $this->get($key);
+        if ($val === null) {
+            return $val;
+        }
+        return (int)$val;
+    }
+
+    public function getBool(string $key): ?bool
+    {
+        $value = $this->get($key);
+        if ($value === null) {
+            return null;
+        }
+        return filter_var($value, FILTER_VALIDATE_BOOLEAN);
+    }
 }
