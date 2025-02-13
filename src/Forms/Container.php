@@ -1,9 +1,8 @@
 <?php
 
-namespace Crm\ApplicationModule\UI;
+namespace Crm\ApplicationModule\Forms;
 
 use Contributte\FormMultiplier\Multiplier;
-use Crm\ApplicationModule\Forms\Container;
 use Nette\Forms\Controls\BaseControl;
 
 /**
@@ -11,7 +10,7 @@ use Nette\Forms\Controls\BaseControl;
  * @method BaseControl|Container getComponent(string $name, bool $throw = true)
  * @method BaseControl|Container offsetGet(string $name, bool $throw = true)
  */
-class Form extends \Nette\Application\UI\Form
+class Container extends \Nette\Forms\Container
 {
     /**
      * Copy of parent implementation, exists only to guarantee that CRM's instance is returned.
