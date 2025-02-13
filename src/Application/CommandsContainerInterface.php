@@ -9,7 +9,7 @@ interface CommandsContainerInterface
     /** @return boolean */
     public function registerCommand(Command $command);
 
-    /** @return array(Command) */
+    /** @return Command[] */
     public function getCommands();
 
     /** @return boolean */

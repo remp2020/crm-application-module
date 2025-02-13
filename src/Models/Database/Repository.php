@@ -72,6 +72,7 @@ class Repository
      * to audit log.
      *
      * @param \Nette\Database\Table\ActiveRow $row
+     * @param-out \Nette\Database\Table\ActiveRow $row
      * @param array $data values to update
      * @return bool
      *
@@ -114,10 +115,14 @@ class Repository
             $this->pushAuditLog(AuditLogRepository::OPERATION_UPDATE, $row->getSignature(), $data);
         }
 
-        $row = $this->getTable()->wherePrimary($row->getPrimary())->fetch();
-        if ($row instanceof OriginalDataAwareInterface) {
-            $row->setOriginalData($oldValues);
+        $updatedRow = $this->getTable()->wherePrimary($row->getPrimary())->fetch();
+        if ($updatedRow !== null) {
+            $row = $updatedRow;
+            if ($row instanceof OriginalDataAwareInterface) {
+                $row->setOriginalData($oldValues);
+            }
         }
+
         return true;
     }
 

@@ -15,7 +15,7 @@ class CommandsContainer implements CommandsContainerInterface
     }
 
     /**
-     * @return array(Command)
+     * @return Command[]
      */
     public function getCommands()
     {
