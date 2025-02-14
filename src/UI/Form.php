@@ -16,9 +16,9 @@ class Form extends \Nette\Application\UI\Form
     /**
      * Copy of parent implementation, exists only to guarantee that CRM's instance is returned.
      */
-    public function addContainer(string|int $name): self
+    public function addContainer(string|int $name): Container
     {
-        $control = new self;
+        $control = new Container();
         $control->currentGroup = $this->currentGroup;
         $this->currentGroup?->add($control);
         return $this[$name] = $control;
