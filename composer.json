@@ -43,7 +43,7 @@
     "monolog/monolog": "^1.23|^2.3|^3.5",
     "contributte/forms-multiplier": "^4.0",
     "composer/composer": "^2.0",
-    "malkusch/lock": "^2.1",
+    "malkusch/lock": "^3.0",
     "symfony/console": "^6.4",
     "symfony/yaml": "^6.4",
     "league/flysystem": "^3.0",
