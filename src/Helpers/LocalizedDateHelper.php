@@ -51,7 +51,7 @@ class LocalizedDateHelper
 
     public function process($date, bool $long = false, bool $includeTime = true)
     {
-        if (!$date instanceof \DateTime) {
+        if (!$date instanceof \DateTimeInterface) {
             $date = DateTime::from($date);
         }
 

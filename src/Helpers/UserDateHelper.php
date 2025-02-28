@@ -2,7 +2,7 @@
 
 namespace Crm\ApplicationModule\Helpers;
 
-use DateTime;
+use DateTimeInterface;
 use IntlDateFormatter;
 use Nette\Localization\Translator;
 
@@ -53,7 +53,7 @@ class UserDateHelper
 
     public function process($date, $long = false)
     {
-        if (!$date instanceof DateTime) {
+        if (!$date instanceof DateTimeInterface) {
             return (string) $date;
         }
 
