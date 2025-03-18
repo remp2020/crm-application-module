@@ -22,12 +22,23 @@ trait SlugColumnTrait
             if (!isset($data[$slug])) {
                 continue;
             }
-            $webalized = Strings::webalize($data[$slug], '_');
+            $webalized = $this->webalize($data[$slug]);
             if ($webalized !== $data[$slug]) {
                 throw new SlugColumnException(
                     "Provided string '{$data[$slug]}' is not URL friendly. Try to use '{$webalized}'."
                 );
             }
         }
+    }
+
+    /**
+     * Modifies the UTF-8 string to the form used in the URL, ie removes diacritics and replaces all characters
+     * except letters of the English alphabet and numbers with a hyphens.
+     *
+     * Allowed characters: _
+     */
+    public function webalize(string $string): string
+    {
+        return Strings::webalize($string, '_');
     }
 }
