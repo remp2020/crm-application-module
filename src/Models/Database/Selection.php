@@ -2,7 +2,7 @@
 
 namespace Crm\ApplicationModule\Models\Database;
 
-use Nette;
+use Nette\Database\ResultSet;
 
 class Selection extends \Nette\Database\Table\Selection
 {
@@ -67,7 +67,7 @@ class Selection extends \Nette\Database\Table\Selection
         return parent::insert($data);
     }
 
-    public function query(string $query): Nette\Database\ResultSet
+    public function query(string $query): ResultSet
     {
         if ($this->enforcePrimaryDatabase) {
             $explorer = $this->replicaManager->getDatabase(false);
