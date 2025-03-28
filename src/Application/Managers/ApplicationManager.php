@@ -17,7 +17,6 @@ use Crm\ApplicationModule\Models\Request;
 use Crm\ApplicationModule\Models\Scenario\TriggerManager;
 use Crm\ApplicationModule\Models\User\UserDataRegistrator;
 use Crm\ApplicationModule\Models\Widget\LazyWidgetManager;
-use Crm\ApplicationModule\Models\Widget\WidgetManager;
 use League\Event\Emitter;
 use Tomaj\Hermes\Dispatcher;
 
@@ -32,8 +31,6 @@ class ApplicationManager
     private $frontendMenu;
 
     private $emitter;
-
-    private $widgetManager;
 
     private $commandsContainer;
 
@@ -68,7 +65,6 @@ class ApplicationManager
     public function __construct(
         Emitter $emitter,
         ModuleManager $moduleManager,
-        WidgetManager $widgetManager,
         ApiRoutesContainer $apiRoutesContainer,
         AuthenticatorManager $authenticatorManager,
         CleanUpManager $cleanUpManager,
@@ -85,7 +81,6 @@ class ApplicationManager
         LazyWidgetManager $lazyWidgetManager,
         private TriggerManager $triggerManager,
     ) {
-        $this->widgetManager = $widgetManager;
         $this->emitter = $emitter;
         $this->commandsContainer = new CommandsContainer();
         $this->apiRoutesContainer = $apiRoutesContainer;
@@ -148,16 +143,6 @@ class ApplicationManager
         $this->frontendMenu = new MenuContainer();
         foreach ($this->moduleManager->getModules() as $module) {
             $module->registerFrontendMenuItems($this->frontendMenu);
-        }
-    }
-
-    /**
-     * @deprecated use registerLazyWidget() instead
-     */
-    public function registerWidgets()
-    {
-        foreach ($this->moduleManager->getModules() as $module) {
-            $module->registerWidgets($this->widgetManager);
         }
     }
 
@@ -288,7 +273,6 @@ class ApplicationManager
             $this->registerSeeders();
             $this->registerAssets();
         } elseif (!Request::isApi()) {
-            $this->registerWidgets();
             $this->registerLayouts();
             $this->registerLazyWidget();
         }

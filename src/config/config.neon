@@ -60,7 +60,6 @@ services:
 		factory: Crm\ApplicationModule\Router\RedirectValidator
 
 	- Crm\ApplicationModule\Models\Authenticator\AuthenticatorManager
-	- Crm\ApplicationModule\Models\Widget\WidgetManager
 	lazyWidgetManager: Crm\ApplicationModule\Models\Widget\LazyWidgetManager
 	- Crm\ApplicationModule\Models\DataProvider\DataProviderManager
 	- Crm\ApplicationModule\Builder\ConfigBuilder

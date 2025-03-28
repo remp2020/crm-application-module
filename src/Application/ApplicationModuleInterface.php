@@ -18,7 +18,6 @@ use Crm\ApplicationModule\Models\Menu\MenuContainerInterface;
 use Crm\ApplicationModule\Models\Scenario\TriggerManager;
 use Crm\ApplicationModule\Models\User\UserDataRegistrator;
 use Crm\ApplicationModule\Models\Widget\LazyWidgetManagerInterface;
-use Crm\ApplicationModule\Models\Widget\WidgetManagerInterface;
 use League\Event\Emitter;
 use Nette\Application\Routers\RouteList;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -33,9 +32,6 @@ interface ApplicationModuleInterface
     public function registerEventHandlers(Emitter $emitter);
 
     public function registerLazyEventHandlers(LazyEventEmitter $lazyEventEmitter);
-
-    /** @deprecated use registerLazyWidgets() instead */
-    public function registerWidgets(WidgetManagerInterface $widgetManager);
 
     public function registerLazyWidgets(LazyWidgetManagerInterface $lazyWidgetManager);
 

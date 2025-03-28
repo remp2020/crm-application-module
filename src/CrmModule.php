@@ -21,7 +21,6 @@ use Crm\ApplicationModule\Models\Menu\MenuContainerInterface;
 use Crm\ApplicationModule\Models\Scenario\TriggerManager;
 use Crm\ApplicationModule\Models\User\UserDataRegistrator;
 use Crm\ApplicationModule\Models\Widget\LazyWidgetManagerInterface;
-use Crm\ApplicationModule\Models\Widget\WidgetManagerInterface;
 use League\Event\Emitter;
 use Nette\Application\Routers\RouteList;
 use Nette\DI\Container;
@@ -62,14 +61,6 @@ abstract class CrmModule implements ApplicationModuleInterface
     }
 
     public function registerEventHandlers(Emitter $emitter)
-    {
-        // nothing
-    }
-
-    /**
-     * @deprecated use registerLazyWidgets() instead
-     */
-    public function registerWidgets(WidgetManagerInterface $widgetManager)
     {
         // nothing
     }
