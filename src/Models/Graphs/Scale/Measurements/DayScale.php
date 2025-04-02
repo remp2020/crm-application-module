@@ -39,11 +39,6 @@ class DayScale implements ScaleInterface
         return $result;
     }
 
-    public function getDatabaseData(Criteria $criteria, string $tag)
-    {
-        // TODO: Implement getDatabaseData() method.
-    }
-
     public function getDatabaseRangeData(Criteria $criteria)
     {
         // TODO: Implement getDatabaseRangeData() method.

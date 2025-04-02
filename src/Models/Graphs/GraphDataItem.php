@@ -57,15 +57,6 @@ class GraphDataItem
         return $this;
     }
 
-    public function getData(): array
-    {
-        $zeroKeys = $this->scale->getKeys($this->criteria->getStart(), $this->criteria->getEnd());
-
-        $dbData = $this->scale->getDatabaseData($this->criteria, $this->tag);
-
-        return $this->formatData($zeroKeys, $dbData);
-    }
-
     public function getSeriesData(): array
     {
         $zeroKeys = $this->scale->getKeys($this->criteria->getStart(), $this->criteria->getEnd());

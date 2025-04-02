@@ -63,36 +63,6 @@ GROUP BY time_series.time_key
         return $dbData;
     }
 
-    public function getDatabaseData(Criteria $criteria, $tag)
-    {
-        $dbData = [];
-
-        $res = $this->database->query("SELECT {$criteria->getValueField()} AS value,
-calendar.month AS month,
-calendar.year AS year,
-{$criteria->getTableName()}.id
-FROM {$criteria->getTableName()}
-INNER JOIN calendar ON date({$criteria->getTableName()}.{$criteria->getTimeField()}) = calendar.date
-    AND calendar.date >= '{$criteria->getStartDate()}'
-    AND calendar.date <= '{$criteria->getEndDate()}'
-    {$criteria->getJoin()}
-WHERE
-    {$criteria->getTableName()}.{$criteria->getTimeField()} >= '{$criteria->getStartDate('Y-m-d 00:00:00')}' 
-AND {$criteria->getTableName()}.{$criteria->getTimeField()} <= '{$criteria->getEndDate('Y-m-d 23:59:59')}'
-	{$criteria->getWhere()}
-GROUP BY calendar.year,calendar.month
-		")->fetchAll();
-
-        foreach ($res as $row) {
-            $value = 0;
-            if ($row->id != null) {
-                $value = $row['value'];
-            }
-            $dbData["{$row->year}-{$row->month}"] = $value;
-        }
-        return $dbData;
-    }
-
     public function getDatabaseSeriesData(Criteria $criteria)
     {
         $dbData = [];
