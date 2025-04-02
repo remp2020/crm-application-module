@@ -32,7 +32,7 @@
     "tracy/tracy": "^2.8",
     "odan/phinx-migrations-generator": "^6.1",
     "phpoffice/phpspreadsheet": "^4.0",
-    "robmorgan/phinx": "~0.15",
+    "robmorgan/phinx": "0.16.5",
     "kdyby/autowired": "^3.0",
     "twig/twig": "^3.14",
     "league/event": "~2.1",
