@@ -27,11 +27,29 @@ class CountriesSelectItemsBuilder
         return $this->sort($countries);
     }
 
+    public function getAllIsoPairs(): array
+    {
+        $countries = [];
+        foreach ($this->countriesRepository->all() as $country) {
+            $countries[$country->sorting ?: 0][$country->iso_code] = $this->translate($country);
+        }
+
+        return $this->sort($countries);
+    }
+
     public function getDefaultCountryPair(): array
     {
         $defaultCountry = $this->countriesRepository->defaultCountry();
         return [
             $defaultCountry->id => $this->translate($defaultCountry),
+        ];
+    }
+
+    public function getDefaultCountryIsoPair(): array
+    {
+        $defaultCountry = $this->countriesRepository->defaultCountry();
+        return [
+            $defaultCountry->iso_code => $this->translate($defaultCountry),
         ];
     }
 
