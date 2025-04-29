@@ -15,25 +15,29 @@ class SnippetRenderer
     ) {
     }
 
-    public function render($key)
+    public function render(string|array $key): ?string
     {
         $params = [];
         if (is_array($key)) {
             $params = array_diff_key($key, [0 => true]);
             $key = $key[0];
         }
-        // if locale was not set for snippet, use locale from translator
-        $params['locale'] = $params['locale'] ?? $this->translator->getLocale();
+
+        // If locale was not set for snippet, use locale from translator
+        $params['locale'] ??= $this->translator->getLocale();
 
         $snippet = $this->snippetsRepository->loadByIdentifier($key);
-        if ($snippet) {
-            $this->snippetsRepository->markUsed($snippet);
-            $loader = new ArrayLoader([
-                'snippet' => $snippet->html,
-            ]);
-            return (new Environment($loader))->render('snippet', $params);
+        if (!$snippet || !$snippet->is_active) {
+            return null;
         }
-        return false;
+
+        $this->snippetsRepository->markUsed($snippet);
+
+        $loader = new ArrayLoader([
+            'snippet' => $snippet->html,
+        ]);
+
+        return (new Environment($loader))->render('snippet', $params);
     }
 
     public function getKey($key)
@@ -41,6 +45,7 @@ class SnippetRenderer
         if (is_array($key)) {
             $key = $key[0];
         }
+
         return $key;
     }
 }

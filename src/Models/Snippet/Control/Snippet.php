@@ -7,19 +7,20 @@ use Nette\Application\UI\Control;
 
 class Snippet extends Control
 {
-    private $snippetRenderer;
+    private SnippetRenderer $snippetRenderer;
 
     public function __construct(SnippetRenderer $snippetRenderer)
     {
         $this->snippetRenderer = $snippetRenderer;
     }
 
-    public function render($key)
+    public function render(string|array $key): void
     {
         $template = $this->snippetRenderer->render($key);
-        if ($template === false) {
+        if ($template === null) {
             echo "<!-- not snippet for key '{$this->snippetRenderer->getKey($key)}' -->";
         }
+
         echo $template;
     }
 }
