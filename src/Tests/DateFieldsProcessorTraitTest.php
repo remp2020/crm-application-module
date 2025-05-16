@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Crm\ApplicationModule\Tests;
 
@@ -12,7 +13,13 @@ class DateFieldsProcessorTraitTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->dateFieldsProcessor = $this->getMockForTrait(DateFieldsProcessorTrait::class);
+        $this->dateFieldsProcessor = new DateFieldsProcessorTraitMock();
+
+        $usingTrait = array_key_exists(
+            DateFieldsProcessorTrait::class,
+            (new \ReflectionClass(DateFieldsProcessorTraitMock::class))->getTraits()
+        );
+        $this->assertTrue($usingTrait);
     }
 
     public function testDateRFC3339(): void
