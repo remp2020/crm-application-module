@@ -68,7 +68,7 @@ class UserDateHelper
         return IntlDateFormatter::formatObject(
             $date,
             $format,
-            $this->translator->getLocale()
+            $this->translator->getLocale(),
         );
     }
 }

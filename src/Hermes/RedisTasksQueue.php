@@ -56,7 +56,7 @@ class RedisTasksQueue
                 'LIMIT' => [
                     'OFFSET' => 0,
                     'COUNT' => 1,
-                ]
+                ],
             ]);
 
             if (!empty($task)) {

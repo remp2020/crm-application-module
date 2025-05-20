@@ -30,7 +30,7 @@ class Repository
 
     public function __construct(
         protected readonly Explorer $database,
-        Storage $cacheStorage = null
+        Storage $cacheStorage = null,
     ) {
         $this->cacheStorage = $cacheStorage;
     }
@@ -42,7 +42,7 @@ class Repository
             $database,
             $database->getConventions(),
             $this->tableName,
-            $this->cacheStorage
+            $this->cacheStorage,
         );
         $selection->setReplicaManager($this->getReplicaManager());
         return $selection;

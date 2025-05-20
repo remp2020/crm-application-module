@@ -13,7 +13,7 @@ class MeasurementGroupsRepository extends Repository
 
     final public function add(
         string $measurementId,
-        string $title
+        string $title,
     ): ActiveRow {
         $id = $this->insert([
             'title' => $title,

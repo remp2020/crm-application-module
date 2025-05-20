@@ -13,7 +13,7 @@ class LazyEventEmitter extends Emitter
     private array $listenersToRemove = [];
 
     public function __construct(
-        private Container $container
+        private Container $container,
     ) {
     }
 

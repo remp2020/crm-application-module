@@ -41,7 +41,7 @@ class ComposerScripts
 
         $versionsUtil = new Versions(
             $event->getComposer()->getConfig(),
-            Factory::createHttpDownloader($event->getIO(), $event->getComposer()->getConfig())
+            Factory::createHttpDownloader($event->getIO(), $event->getComposer()->getConfig()),
         );
         $latestVersion = $versionsUtil->getLatest()['version'];
 
@@ -49,7 +49,7 @@ class ComposerScripts
             $event->getIO()->write(sprintf(
                 'Your Composer version (%s) is too old, %s is required. Please run <comment>composer self-update</comment> first.',
                 $currentVersion,
-                $latestVersion
+                $latestVersion,
             ));
             exit(1);
         }

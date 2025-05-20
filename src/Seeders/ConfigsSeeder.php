@@ -22,7 +22,7 @@ class ConfigsSeeder implements ISeeder
     public function __construct(
         ConfigCategoriesRepository $configCategoriesRepository,
         ConfigsRepository $configsRepository,
-        ConfigBuilder $configBuilder
+        ConfigBuilder $configBuilder,
     ) {
         $this->configCategoriesRepository = $configCategoriesRepository;
         $this->configsRepository = $configsRepository;
@@ -48,7 +48,7 @@ class ConfigsSeeder implements ISeeder
             'application.config.site_title.name',
             'application.config.site_title.description',
             'CRM',
-            100
+            100,
         );
 
         $this->addConfig(
@@ -59,7 +59,7 @@ class ConfigsSeeder implements ISeeder
             'application.config.site_description.name',
             'application.config.site_description.description',
             null,
-            110
+            110,
         );
 
 
@@ -71,7 +71,7 @@ class ConfigsSeeder implements ISeeder
             'application.config.site_url.name',
             'application.config.site_url.description',
             Core::env('CRM_HOST'),
-            110
+            110,
         );
 
         $this->addConfig(
@@ -82,7 +82,7 @@ class ConfigsSeeder implements ISeeder
             'application.config.currency.name',
             'application.config.currency.description',
             'EUR',
-            130
+            130,
         );
 
         $this->addConfig(
@@ -93,7 +93,7 @@ class ConfigsSeeder implements ISeeder
             'application.config.cms_url.name',
             'application.config.cms_url.description',
             '/',
-            200
+            200,
         );
 
         $this->addConfig(
@@ -104,7 +104,7 @@ class ConfigsSeeder implements ISeeder
             'application.config.contact_email.name',
             'application.config.contact_email.description',
             'info@crm.press',
-            210
+            210,
         );
 
         $this->addConfig(
@@ -115,7 +115,7 @@ class ConfigsSeeder implements ISeeder
             'application.config.default_route.name',
             'application.config.default_route.description',
             'Subscriptions:Subscriptions:my',
-            260
+            260,
         );
 
         $this->addConfig(
@@ -126,7 +126,7 @@ class ConfigsSeeder implements ISeeder
             'application.config.home_route.name',
             'application.config.home_route.description',
             'Application:Default:default',
-            270
+            270,
         );
 
         $this->addConfig(
@@ -137,7 +137,7 @@ class ConfigsSeeder implements ISeeder
             'application.config.not_logged_in_route.name',
             'application.config.not_logged_in_route.description',
             ':Application:Default:Default',
-            280
+            280,
         );
 
         $this->addConfig(
@@ -148,7 +148,7 @@ class ConfigsSeeder implements ISeeder
             'application.config.layout_name.name',
             'application.config.layout_name.description',
             null,
-            300
+            300,
         );
 
         $this->addConfig(
@@ -159,7 +159,7 @@ class ConfigsSeeder implements ISeeder
             'application.config.og_image.name',
             'application.config.og_image.description',
             null,
-            310
+            310,
         );
 
         $this->addConfig(
@@ -170,7 +170,7 @@ class ConfigsSeeder implements ISeeder
             'application.config.header_block.name',
             'application.config.header_block.description',
             null,
-            500
+            500,
         );
 
         $this->addConfig(
@@ -181,7 +181,7 @@ class ConfigsSeeder implements ISeeder
             'application.config.admin_logo.name',
             'application.config.admin_logo.description',
             null,
-            500
+            500,
         );
 
         $this->addConfig(
@@ -192,7 +192,7 @@ class ConfigsSeeder implements ISeeder
             'application.config.localized_countries.name',
             'application.config.localized_countries.description',
             false,
-            510
+            510,
         );
 
         // empty categories cleanup

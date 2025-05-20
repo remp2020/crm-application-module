@@ -54,7 +54,7 @@ class RedisClientFactory
         return new Client([
             'scheme' => 'tcp',
             'host' => $this->host,
-            'port' => $this->port
+            'port' => $this->port,
         ], $options);
     }
 }

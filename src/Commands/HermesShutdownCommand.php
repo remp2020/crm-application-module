@@ -28,7 +28,7 @@ class HermesShutdownCommand extends Command
                 'assume-yes',
                 'y',
                 InputOption::VALUE_NONE,
-                'Assume YES for all questions (shutdown without user confirmation).'
+                'Assume YES for all questions (shutdown without user confirmation).',
             );
     }
 

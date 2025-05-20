@@ -29,7 +29,7 @@ class DateData
             $row->year ?? null,
             $row->month ?? null,
             $row->day ?? null,
-            $row->week ?? null
+            $row->week ?? null,
         );
     }
 

@@ -19,7 +19,7 @@ class TriggerManager implements HandlerInterface
 
     public function __construct(
         private readonly Dispatcher $hermesDispatcher,
-        private readonly JobDispatcher $jobDispatcher
+        private readonly JobDispatcher $jobDispatcher,
     ) {
     }
 
@@ -40,7 +40,7 @@ class TriggerManager implements HandlerInterface
 
         throw new Exception(sprintf(
             "Trigger handler with key '%s' doesn't exist.",
-            $key
+            $key,
         ));
     }
 
@@ -50,7 +50,7 @@ class TriggerManager implements HandlerInterface
             throw new Exception(sprintf(
                 'Trigger handler %s (%s) is already registered.',
                 $triggerHandler->getName(),
-                $triggerHandler->getKey()
+                $triggerHandler->getKey(),
             ));
         }
 
@@ -66,7 +66,7 @@ class TriggerManager implements HandlerInterface
         if (!array_key_exists($message->getType(), $this->triggerHandlers)) {
             throw new Exception(sprintf(
                 "Unknown handler for trigger handler type '%s'",
-                $message->getType()
+                $message->getType(),
             ));
         }
 
@@ -81,12 +81,12 @@ class TriggerManager implements HandlerInterface
             throw new Exception(sprintf(
                 'Error while handling a trigger handler %s: %s',
                 $triggerHandler->getName(),
-                $exception->getMessage()
+                $exception->getMessage(),
             ), previous: $exception);
         }
 
         $this->jobDispatcher->dispatch($triggerHandler->getKey(), $triggerData->userId, $triggerData->payload, [
-            JobsRepository::CONTEXT_HERMES_MESSAGE_TYPE => $triggerHandler->getEventType()
+            JobsRepository::CONTEXT_HERMES_MESSAGE_TYPE => $triggerHandler->getEventType(),
         ]);
         return true;
     }
@@ -97,7 +97,7 @@ class TriggerManager implements HandlerInterface
             if (!array_key_exists($outputParam, $triggerData->payload)) {
                 throw new Exception(sprintf(
                     "Output param '%s' is missing in trigger data payload.",
-                    $outputParam
+                    $outputParam,
                 ));
             }
         }
@@ -106,7 +106,7 @@ class TriggerManager implements HandlerInterface
             if (!in_array($outputParam, $triggerHandler->getOutputParams(), strict: true)) {
                 throw new Exception(sprintf(
                     "Payload contains an undefined param '%s'.",
-                    $outputParam
+                    $outputParam,
                 ));
             }
         }

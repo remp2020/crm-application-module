@@ -15,7 +15,7 @@ class CacheRepository extends Repository
     protected $tableName = 'cache';
 
     public function __construct(
-        Explorer $database
+        Explorer $database,
     ) {
         parent::__construct($database);
     }
@@ -75,7 +75,7 @@ class CacheRepository extends Repository
             $key,
             $value,
             $now,
-            $now
+            $now,
         );
     }
 }

@@ -19,7 +19,7 @@ class MeasurementValuesRepository extends Repository
     public function __construct(
         Explorer $database,
         MeasurementGroupValuesRepository $measurementGroupValuesRepository,
-        Storage $cacheStorage = null
+        Storage $cacheStorage = null,
     ) {
         parent::__construct($database, $cacheStorage);
         $this->measurementGroupValuesRepository = $measurementGroupValuesRepository;

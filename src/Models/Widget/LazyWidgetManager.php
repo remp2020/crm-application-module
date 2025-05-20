@@ -29,7 +29,7 @@ class LazyWidgetManager implements LazyWidgetManagerInterface
 
     public function __construct(
         Container $container,
-        Storage $storage
+        Storage $storage,
     ) {
         $this->container = $container;
         $this->cacheStorage = $storage;

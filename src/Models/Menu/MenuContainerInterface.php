@@ -18,7 +18,7 @@ interface MenuContainerInterface
     public function attachMenuItemToForeignModule(
         string $foreignMenuLink,
         MenuItem $internalMenuItem,
-        MenuItem $menuItem
+        MenuItem $menuItem,
     );
 
     public function removeMenuItemByLink(string $menuItemLink);

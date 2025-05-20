@@ -21,7 +21,7 @@ class RouterFactory
     public function __construct(
         ConfigsCache $configsCache,
         ApplicationConfig $applicationConfig,
-        ModuleManager $moduleManager
+        ModuleManager $moduleManager,
     ) {
         $this->configsCache = $configsCache;
         $this->applicationConfig = $applicationConfig;

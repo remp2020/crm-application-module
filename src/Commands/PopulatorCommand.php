@@ -45,7 +45,7 @@ class PopulatorCommand extends Command
                 'populator',
                 'p',
                 InputOption::VALUE_IS_ARRAY | InputOption::VALUE_REQUIRED,
-                'Filters populators with provided names; multiple options are allowed. (e.g. "-p Autologin -p Payments")'
+                'Filters populators with provided names; multiple options are allowed. (e.g. "-p Autologin -p Payments")',
             );
     }
 
@@ -72,7 +72,7 @@ class PopulatorCommand extends Command
 
         ProgressBar::setFormatDefinition(
             'custom',
-            "  * %populating%: %current%/%max% [%bar%] %percent:3s%% %elapsed:6s%/%estimated:-6s% %memory:6s%"
+            "  * %populating%: %current%/%max% [%bar%] %percent:3s%% %elapsed:6s%/%estimated:-6s% %memory:6s%",
         );
 
         $allowedPopulators = array_flip($input->getOption('populator'));

@@ -128,7 +128,7 @@ class CriteriaTest extends TestCase
             $aggregation,
             DateTime::from('1982-06-01'),
             DateTime::from($from),
-            DateTime::from($to)
+            DateTime::from($to),
         );
         $criteria->setNow(DateTime::from('1986-04-26 01:23:45'));
         $emptySeries = $criteria->getEmptySeries();

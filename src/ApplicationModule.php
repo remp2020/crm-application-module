@@ -71,14 +71,14 @@ class ApplicationModule extends CrmModule
         $apiRoutersContainer->attachRouter(new ApiRoute(
             new ApiIdentifier('1', 'events', 'list'),
             EventsListApiHandler::class,
-            BearerTokenAuthorization::class
+            BearerTokenAuthorization::class,
             // \Tomaj\NetteApi\Authorization\BearerTokenAuthorization::class
         ));
 
         $apiRoutersContainer->attachRouter(new ApiRoute(
             new ApiIdentifier('1', 'event-generators', 'list'),
             EventGeneratorsListApiHandler::class,
-            BearerTokenAuthorization::class
+            BearerTokenAuthorization::class,
         ));
     }
 

@@ -27,7 +27,7 @@ class RepositoryTest extends TestCase
         $data = [
             'id' => 123,
             'code' => 'lorem-ipsum',
-            'description' => 'Lorem ipsum'
+            'description' => 'Lorem ipsum',
         ];
 
         return [

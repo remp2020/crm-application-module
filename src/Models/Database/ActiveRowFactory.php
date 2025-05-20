@@ -21,7 +21,7 @@ class ActiveRowFactory
         $selection = new Selection(
             $this->explorer,
             $staticConventions,
-            'dummy'
+            'dummy',
         );
 
         return new ActiveRow($data, $selection);

@@ -40,8 +40,8 @@ class LocalizedDateHelperTest extends CrmTestCase
             $this->localizedDateHelper->process($date),
             [
                 '6/28/22, 10:52:15 AM',
-                '6/28/22, 10:52:15 AM'
-            ]
+                '6/28/22, 10:52:15 AM',
+            ],
         );
 
         // locale format set
@@ -62,8 +62,8 @@ class LocalizedDateHelperTest extends CrmTestCase
             $this->localizedDateHelper->process($date, true),
             [
                 'June 28, 2022 at 10:52:15 AM',
-                'June 28, 2022 at 10:52:15 AM'
-            ]
+                'June 28, 2022 at 10:52:15 AM',
+            ],
         );
 
         // locale format set

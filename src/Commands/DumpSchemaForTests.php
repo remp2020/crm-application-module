@@ -82,14 +82,14 @@ class DumpSchemaForTests extends AbstractCommand
             'path',
             null,
             InputOption::VALUE_REQUIRED,
-            'Specify the path in which to generate this migration'
+            'Specify the path in which to generate this migration',
         );
 
         $this->addOption(
             'name',
             null,
             InputOption::VALUE_REQUIRED,
-            'Specify the name of the migration for this migration'
+            'Specify the name of the migration for this migration',
         );
 
         $this->addOption('overwrite', null, InputOption::VALUE_NONE, 'Overwrite schema file');
@@ -180,7 +180,7 @@ class DumpSchemaForTests extends AbstractCommand
             $output->writeln('<info>using database</info> ' . $environmentOptions['name']);
         } else {
             $output->writeln(
-                '<error>Could not determine database name! Please specify a database name in your config file.</error>'
+                '<error>Could not determine database name! Please specify a database name in your config file.</error>',
             );
 
             return false;
@@ -229,7 +229,7 @@ class DumpSchemaForTests extends AbstractCommand
         array $settings,
         InputInterface $input,
         OutputInterface $output,
-        string $environment
+        string $environment,
     ): MigrationGenerator {
         $manager = $this->getManager();
 

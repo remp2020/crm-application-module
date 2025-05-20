@@ -41,7 +41,7 @@ trait ConfigsTrait
 
             if ($config->config_category_id !== $category->id) {
                 $this->configsRepository->update($config, [
-                    'config_category_id' => $category->id
+                    'config_category_id' => $category->id,
                 ]);
                 $output->writeln('    * category updated');
             }

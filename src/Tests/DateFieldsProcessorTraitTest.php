@@ -17,7 +17,7 @@ class DateFieldsProcessorTraitTest extends TestCase
 
         $usingTrait = array_key_exists(
             DateFieldsProcessorTrait::class,
-            (new \ReflectionClass(DateFieldsProcessorTraitMock::class))->getTraits()
+            (new \ReflectionClass(DateFieldsProcessorTraitMock::class))->getTraits(),
         );
         $this->assertTrue($usingTrait);
     }

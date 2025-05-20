@@ -13,7 +13,7 @@ class EventGeneratorsListApiHandler extends ApiHandler
     private $eventsStorage;
 
     public function __construct(
-        EventsStorage $eventsStorage
+        EventsStorage $eventsStorage,
     ) {
         parent::__construct();
         $this->eventsStorage = $eventsStorage;

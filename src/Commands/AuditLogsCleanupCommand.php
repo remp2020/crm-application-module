@@ -14,7 +14,7 @@ class AuditLogsCleanupCommand extends Command
     use DecoratedCommandTrait;
 
     public function __construct(
-        private AuditLogRepository $auditLogRepository
+        private AuditLogRepository $auditLogRepository,
     ) {
         parent::__construct();
     }
@@ -28,7 +28,7 @@ class AuditLogsCleanupCommand extends Command
                 null,
                 InputOption::VALUE_REQUIRED,
                 "Delete audit logs that have `deleted_at` older than number of days (default: 14)",
-                14
+                14,
             );
     }
 

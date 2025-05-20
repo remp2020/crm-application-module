@@ -19,7 +19,7 @@ class GenerateKeyCommand extends Command
                 'force',
                 null,
                 null,
-                'Force the operation to run when in production.'
+                'Force the operation to run when in production.',
             );
     }
 

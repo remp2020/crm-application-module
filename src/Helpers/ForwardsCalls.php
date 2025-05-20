@@ -71,7 +71,7 @@ trait ForwardsCalls
         throw new BadMethodCallException(sprintf(
             'Call to undefined method %s::%s()',
             static::class,
-            $method
+            $method,
         ));
     }
 }

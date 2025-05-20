@@ -19,7 +19,7 @@ class Selection extends \Nette\Database\Table\Selection
             $this->explorer,
             $this->conventions,
             $table ?: $this->name,
-            $this->cache ? $this->cache->getStorage() : null
+            $this->cache ? $this->cache->getStorage() : null,
         );
     }
 

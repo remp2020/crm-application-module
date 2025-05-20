@@ -21,7 +21,7 @@ class FrontendMenu extends Control
     protected MenuContainerInterface $menuContainer;
 
     public function __construct(
-        private readonly DataProviderManager $dataProviderManager
+        private readonly DataProviderManager $dataProviderManager,
     ) {
     }
 

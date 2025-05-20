@@ -17,7 +17,7 @@ class ScaleFactory
 
     public function __construct(
         \Crm\ApplicationModule\Models\Graphs\Scale\Mysql\RangeScaleFactory $mysqlScaleFactory,
-        MeasurementsScaleFactory $measurementsScaleFactory
+        MeasurementsScaleFactory $measurementsScaleFactory,
     ) {
         $this->mysqlScaleFactory = $mysqlScaleFactory;
         $this->measurementsScaleFactory = $measurementsScaleFactory;

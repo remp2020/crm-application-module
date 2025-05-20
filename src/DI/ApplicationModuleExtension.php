@@ -33,7 +33,7 @@ final class ApplicationModuleExtension extends CompilerExtension implements Tran
 
         // load services from config and register them to Nette\DI Container
         $this->compiler->loadDefinitionsFromConfig(
-            $this->loadFromFile(__DIR__.'/../config/config.neon')['services']
+            $this->loadFromFile(__DIR__.'/../config/config.neon')['services'],
         );
 
         if (count($this->config->redis_client_factory->replication->sentinels)) {
@@ -58,9 +58,9 @@ final class ApplicationModuleExtension extends CompilerExtension implements Tran
                 'prefix' => Expect::string()->dynamic(),
                 'replication' => Expect::structure([
                     'service' => Expect::string()->dynamic(),
-                    'sentinels' => Expect::arrayOf($sentinelConfig)->dynamic()
-                ])
-            ])
+                    'sentinels' => Expect::arrayOf($sentinelConfig)->dynamic(),
+                ]),
+            ]),
         ]);
     }
 

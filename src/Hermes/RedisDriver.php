@@ -73,7 +73,7 @@ class RedisDriver implements DriverInterface
                 if (!$result) {
                     $this->tasksRepository->add(
                         $hermesMessage,
-                        HermesTasksRepository::STATE_ERROR
+                        HermesTasksRepository::STATE_ERROR,
                     );
                 }
             } else {

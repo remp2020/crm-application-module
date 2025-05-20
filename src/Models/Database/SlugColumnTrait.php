@@ -25,7 +25,7 @@ trait SlugColumnTrait
             $webalized = $this->webalize($data[$slug]);
             if ($webalized !== $data[$slug]) {
                 throw new SlugColumnException(
-                    "Provided string '{$data[$slug]}' is not URL friendly. Try to use '{$webalized}'."
+                    "Provided string '{$data[$slug]}' is not URL friendly. Try to use '{$webalized}'.",
                 );
             }
         }

@@ -35,7 +35,7 @@ class Month extends Aggregation
             $date->format('Y'),
             $date->format('m'),
             null,
-            null
+            null,
         );
     }
 

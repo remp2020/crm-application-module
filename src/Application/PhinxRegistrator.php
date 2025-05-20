@@ -30,7 +30,7 @@ class PhinxRegistrator
      */
     public function __construct(
         Application $application,
-        ModuleManager $moduleManager
+        ModuleManager $moduleManager,
     ) {
         // Configure module folders with migrations
         $modulesMigrations = [

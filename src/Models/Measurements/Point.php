@@ -19,7 +19,7 @@ class Point
         Aggregation $aggregation,
         float $value,
         DateTime $date,
-        ?string $groupingKey = null
+        ?string $groupingKey = null,
     ) {
         $this->aggregation = $aggregation;
         $this->value = $value;

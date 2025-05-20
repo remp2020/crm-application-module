@@ -34,7 +34,7 @@ class Year extends Aggregation
             $date->format('Y'),
             null,
             null,
-            null
+            null,
         );
     }
 

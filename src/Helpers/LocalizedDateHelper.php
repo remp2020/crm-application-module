@@ -9,11 +9,11 @@ use Nette\Utils\DateTime;
 class LocalizedDateHelper
 {
     private array $longFormat = [
-        null => [IntlDateFormatter::LONG, IntlDateFormatter::MEDIUM]
+        null => [IntlDateFormatter::LONG, IntlDateFormatter::MEDIUM],
     ];
 
     private array $shortFormat = [
-        null => [IntlDateFormatter::SHORT, IntlDateFormatter::MEDIUM]
+        null => [IntlDateFormatter::SHORT, IntlDateFormatter::MEDIUM],
     ];
 
     public function __construct(private Translator $translator)
@@ -65,7 +65,7 @@ class LocalizedDateHelper
         return IntlDateFormatter::formatObject(
             $date,
             $format,
-            $locale
+            $locale,
         );
     }
 }

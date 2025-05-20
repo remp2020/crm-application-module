@@ -19,7 +19,7 @@ class SingleStatWidget extends BaseLazyWidget
 
     public function __construct(
         Translator $translator,
-        LazyWidgetManager $lazyWidgetManager
+        LazyWidgetManager $lazyWidgetManager,
     ) {
         parent::__construct($lazyWidgetManager);
 

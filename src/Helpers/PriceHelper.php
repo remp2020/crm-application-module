@@ -8,7 +8,7 @@ use Nette\Utils\Html;
 class PriceHelper
 {
     public function __construct(
-        private ApplicationConfig $applicationConfig
+        private ApplicationConfig $applicationConfig,
     ) {
     }
 
@@ -16,7 +16,7 @@ class PriceHelper
         $value,
         ?string $currency = null,
         int $precision = 2,
-        bool $withoutCurrencySymbol = false
+        bool $withoutCurrencySymbol = false,
     ): ?string {
         if (!$currency) {
             $currency = (string) $this->applicationConfig->get('currency');

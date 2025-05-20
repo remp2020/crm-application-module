@@ -96,7 +96,7 @@ class MigrateAuditLogsCommand extends Command
         $this->fixTableDifferences(
             $auditLogRepositoryTableName,
             $auditLogRepositoryV2TableName,
-            $migrationStartTime
+            $migrationStartTime,
         );
 
         $output->writeln('');
@@ -129,7 +129,7 @@ class MigrateAuditLogsCommand extends Command
         $this->fixTableDifferences(
             $auditLogRepositoryTableName . '_old',
             $auditLogRepositoryTableName,
-            $migrationStartTime
+            $migrationStartTime,
         );
 
         $this->database->query("
@@ -148,7 +148,7 @@ class MigrateAuditLogsCommand extends Command
     public function fixTableDifferences(
         string $fromTable,
         string $toTable,
-        DateTime $updatedAfter
+        DateTime $updatedAfter,
     ) {
         $this->database->query("
             UPDATE {$toTable} al_to

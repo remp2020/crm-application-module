@@ -18,7 +18,7 @@ class BeforeEvent
     public function __construct(
         int $id,
         int $userId,
-        array $parameters
+        array $parameters,
     ) {
         $this->id = $id;
         $this->userId = $userId;

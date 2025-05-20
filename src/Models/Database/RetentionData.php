@@ -40,7 +40,7 @@ trait RetentionData
     {
         if (!$this->retentionForever) {
             return $this->getTable()->where([
-                $this->getRetentionRemovingField() . ' < ?' => DateTime::from($this->retentionThreshold)
+                $this->getRetentionRemovingField() . ' < ?' => DateTime::from($this->retentionThreshold),
             ])->delete();
         }
 

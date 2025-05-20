@@ -7,7 +7,7 @@ class DownloadUserData
     private $userDataRegistrator;
 
     public function __construct(
-        UserDataRegistrator $userDataRegistrator
+        UserDataRegistrator $userDataRegistrator,
     ) {
         $this->userDataRegistrator = $userDataRegistrator;
     }

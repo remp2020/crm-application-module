@@ -32,7 +32,7 @@ class ApplicationConfigTest extends DatabaseTestCase
     public function requiredSeeders(): array
     {
         return [
-            ConfigsSeeder::class
+            ConfigsSeeder::class,
         ];
     }
 

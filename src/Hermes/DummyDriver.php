@@ -76,7 +76,7 @@ class DummyDriver implements DriverInterface
                     $m->getId(),
                     $m->getCreated(),
                     $m->getExecuteAt() - $this->oneLoopDurationSeconds, // Decrease execute_at time to simulate time pass
-                    $m->getRetries()
+                    $m->getRetries(),
                 );
                 continue;
             }

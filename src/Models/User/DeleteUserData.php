@@ -14,7 +14,7 @@ class DeleteUserData
 
     public function __construct(
         UserDataRegistrator $userDataRegistrator,
-        Translator $translator
+        Translator $translator,
     ) {
         $this->userDataRegistrator = $userDataRegistrator;
         $this->translator = $translator;

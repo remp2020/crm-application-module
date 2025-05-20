@@ -32,7 +32,7 @@ class MenuContainer implements MenuContainerInterface
                 $menuItemName = $item->name() . '(' . $item->link() . ')';
                 Debugger::log(
                     'Menu position is taken. Menu item ' . $menuItemName . ' moved from position [' . $item->position() . '] to [' . $position . '].',
-                    Debugger::INFO
+                    Debugger::INFO,
                 );
             }
 
@@ -65,12 +65,12 @@ class MenuContainer implements MenuContainerInterface
     public function attachMenuItemToForeignModule(
         string $foreignMenuLink,
         MenuItem $internalMenuItem,
-        MenuItem $menuItem
+        MenuItem $menuItem,
     ) {
         $this->foreignMenuItems[] = [
             'foreignMenuLink' => $foreignMenuLink,
             'internalMenuItem' => $internalMenuItem,
-            'menuItem' => $menuItem
+            'menuItem' => $menuItem,
         ];
     }
 

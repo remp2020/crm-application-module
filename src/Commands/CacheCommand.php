@@ -13,7 +13,7 @@ class CacheCommand extends Command
     private $moduleManager;
 
     public function __construct(
-        ModuleManager $moduleManager
+        ModuleManager $moduleManager,
     ) {
         parent::__construct();
         $this->moduleManager = $moduleManager;
@@ -27,7 +27,7 @@ class CacheCommand extends Command
                 'tags',
                 null,
                 InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY,
-                'Tag specifies which group of cache values should be reset.'
+                'Tag specifies which group of cache values should be reset.',
             );
     }
 

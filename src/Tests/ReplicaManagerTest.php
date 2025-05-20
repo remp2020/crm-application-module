@@ -27,7 +27,7 @@ class ReplicaManagerTest extends TestCase
             $this->mockDatabase('primary'),
             $table,
             $replicaConfig,
-            $this->mockDatabaseTransaction($isInTransaction)
+            $this->mockDatabaseTransaction($isInTransaction),
         );
 
         // test "read" and verify we receive one of the allowed connections

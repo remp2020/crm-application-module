@@ -13,7 +13,7 @@ class InstallAssetsCommand extends Command
     private $assetsManager;
 
     public function __construct(
-        AssetsManager $assetsManager
+        AssetsManager $assetsManager,
     ) {
         parent::__construct();
         $this->assetsManager = $assetsManager;

@@ -13,7 +13,7 @@ class BigintMigrationCleanupCommand extends Command
     use DecoratedCommandTrait;
 
     public function __construct(
-        private Explorer $database
+        private Explorer $database,
     ) {
         parent::__construct();
     }
@@ -25,7 +25,7 @@ class BigintMigrationCleanupCommand extends Command
             ->addArgument(
                 'table',
                 InputArgument::REQUIRED,
-                "Name of migrated table."
+                "Name of migrated table.",
             );
     }
 

@@ -72,14 +72,14 @@ class LazyEventEmitterTest extends CrmTestCase
         return [
             'noListeners' => [
                 'eventListeners' => [
-                    AbstractEvent::class => []
+                    AbstractEvent::class => [],
                 ],
                 'expectedForEvent' => [
                     AbstractEvent::class => [
                         'count' => 0,
-                        'sortedListeners' => []
-                    ]
-                ]
+                        'sortedListeners' => [],
+                    ],
+                ],
             ],
             'stringListener' => [
                 'eventListeners' => [
@@ -87,15 +87,15 @@ class LazyEventEmitterTest extends CrmTestCase
                         [
                             'listener' => TestListenerA::class,
                             'instance' => false,
-                        ]
-                    ]
+                        ],
+                    ],
                 ],
                 'expectedForEvent' => [
                     AbstractEvent::class => [
                         'count' => 1,
-                        'sortedListeners' => [TestListenerA::class]
-                    ]
-                ]
+                        'sortedListeners' => [TestListenerA::class],
+                    ],
+                ],
             ],
             'classListener' => [
                 'eventListeners' => [
@@ -103,15 +103,15 @@ class LazyEventEmitterTest extends CrmTestCase
                         [
                             'listener' => TestListenerA::class,
                             'instance' => true,
-                        ]
-                    ]
+                        ],
+                    ],
                 ],
                 'expectedForEvent' => [
                     AbstractEvent::class => [
                         'count' => 1,
-                        'sortedListeners' => [TestListenerA::class]
-                    ]
-                ]
+                        'sortedListeners' => [TestListenerA::class],
+                    ],
+                ],
             ],
             'listenersPriority' => [
                 'eventListeners' => [
@@ -119,21 +119,21 @@ class LazyEventEmitterTest extends CrmTestCase
                         [
                             'listener' => TestListenerA::class,
                             'instance' => true,
-                            'priority' => LazyEventEmitter::P_LOW
+                            'priority' => LazyEventEmitter::P_LOW,
                         ],
                         [
                             'listener' => TestListenerB::class,
                             'instance' => false,
-                            'priority' => LazyEventEmitter::P_HIGH
-                        ]
-                    ]
+                            'priority' => LazyEventEmitter::P_HIGH,
+                        ],
+                    ],
                 ],
                 'expectedForEvent' => [
                     AbstractEvent::class => [
                         'count' => 2,
-                        'sortedListeners' => [TestListenerB::class, TestListenerA::class]
-                    ]
-                ]
+                        'sortedListeners' => [TestListenerB::class, TestListenerA::class],
+                    ],
+                ],
             ],
             'multipleEventsListeners' => [
                 'eventListeners' => [
@@ -141,31 +141,31 @@ class LazyEventEmitterTest extends CrmTestCase
                         [
                             'listener' => TestListenerA::class,
                             'instance' => true,
-                            'priority' => LazyEventEmitter::P_LOW
+                            'priority' => LazyEventEmitter::P_LOW,
                         ],
                     ],
                     TestEvent::class => [
                         [
                             'listener' => TestListenerB::class,
                             'instance' => true,
-                            'priority' => LazyEventEmitter::P_HIGH
+                            'priority' => LazyEventEmitter::P_HIGH,
                         ],
                         [
                             'listener' => TestListenerA::class,
                             'instance' => false,
                         ],
-                    ]
+                    ],
                 ],
                 'expectedForEvent' => [
                     AbstractEvent::class => [
                         'count' => 1,
-                        'sortedListeners' => [TestListenerA::class]
+                        'sortedListeners' => [TestListenerA::class],
                     ],
                     TestEvent::class => [
                         'count' => 2,
-                        'sortedListeners' => [TestListenerB::class, TestListenerA::class]
-                    ]
-                ]
+                        'sortedListeners' => [TestListenerB::class, TestListenerA::class],
+                    ],
+                ],
             ],
         ];
     }
@@ -248,22 +248,22 @@ class LazyEventEmitterTest extends CrmTestCase
         return [
             'noListeners' => [
                 'eventListeners' => [
-                    AbstractEvent::class => []
+                    AbstractEvent::class => [],
                 ],
                 'removeListeners' => [
                     AbstractEvent::class => [
                         [
                             'listener' => TestListenerA::class,
                             'instance' => false,
-                        ]
-                    ]
+                        ],
+                    ],
                 ],
                 'expectedForEvent' => [
                     AbstractEvent::class => [
                         'count' => 0,
-                        'sortedListeners' => []
-                    ]
-                ]
+                        'sortedListeners' => [],
+                    ],
+                ],
             ],
             'stringListener' => [
                 'eventListeners' => [
@@ -271,39 +271,39 @@ class LazyEventEmitterTest extends CrmTestCase
                         [
                             'listener' => TestListenerA::class,
                             'instance' => false,
-                        ]
+                        ],
                     ],
                     TestEvent::class => [
                         [
                             'listener' => TestListenerB::class,
                             'instance' => false,
-                        ]
-                    ]
+                        ],
+                    ],
                 ],
                 'removeListeners' => [
                     AbstractEvent::class => [
                         [
                             'listener' => TestListenerA::class,
                             'instance' => false,
-                        ]
+                        ],
                     ],
                     TestEvent::class => [
                         [
                             'listener' => TestListenerB::class,
                             'instance' => true,
-                        ]
-                    ]
+                        ],
+                    ],
                 ],
                 'expectedForEvent' => [
                     AbstractEvent::class => [
                         'count' => 0,
-                        'sortedListeners' => []
+                        'sortedListeners' => [],
                     ],
                     TestEvent::class => [
                         'count' => 0,
-                        'sortedListeners' => []
-                    ]
-                ]
+                        'sortedListeners' => [],
+                    ],
+                ],
             ],
             'classListener' => [
                 'eventListeners' => [
@@ -311,39 +311,39 @@ class LazyEventEmitterTest extends CrmTestCase
                         [
                             'listener' => TestListenerA::class,
                             'instance' => true,
-                        ]
+                        ],
                     ],
                     TestEvent::class => [
                         [
                             'listener' => TestListenerB::class,
                             'instance' => true,
-                        ]
-                    ]
+                        ],
+                    ],
                 ],
                 'removeListeners' => [
                     AbstractEvent::class => [
                         [
                             'listener' => TestListenerA::class,
                             'instance' => false,
-                        ]
+                        ],
                     ],
                     TestEvent::class => [
                         [
                             'listener' => TestListenerB::class,
                             'instance' => true,
-                        ]
-                    ]
+                        ],
+                    ],
                 ],
                 'expectedForEvent' => [
                     AbstractEvent::class => [
                         'count' => 0,
-                        'sortedListeners' => []
+                        'sortedListeners' => [],
                     ],
                     TestEvent::class => [
                         'count' => 0,
-                        'sortedListeners' => []
-                    ]
-                ]
+                        'sortedListeners' => [],
+                    ],
+                ],
             ],
             'multipleListeners' => [
                 'eventListeners' => [
@@ -355,7 +355,7 @@ class LazyEventEmitterTest extends CrmTestCase
                         [
                             'listener' => TestListenerB::class,
                             'instance' => false,
-                        ]
+                        ],
                     ],
                     TestEvent::class => [
                         [
@@ -365,27 +365,27 @@ class LazyEventEmitterTest extends CrmTestCase
                         [
                             'listener' => TestListenerB::class,
                             'instance' => false,
-                        ]
-                    ]
+                        ],
+                    ],
                 ],
                 'removeListeners' => [
                     AbstractEvent::class => [
                         [
                             'listener' => TestListenerA::class,
                             'instance' => false,
-                        ]
+                        ],
                     ],
                 ],
                 'expectedForEvent' => [
                     AbstractEvent::class => [
                         'count' => 1,
-                        'sortedListeners' => [TestListenerB::class]
+                        'sortedListeners' => [TestListenerB::class],
                     ],
                     TestEvent::class => [
                         'count' => 2,
-                        'sortedListeners' => [TestListenerA::class, TestListenerB::class]
-                    ]
-                ]
+                        'sortedListeners' => [TestListenerA::class, TestListenerB::class],
+                    ],
+                ],
             ],
         ];
     }

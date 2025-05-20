@@ -31,7 +31,7 @@ class CalculateMeasurementsCommand extends Command
         MeasurementValuesRepository $measurementValuesRepository,
         MeasurementsRepository $measurementsRepository,
         ConfigsRepository $configsRepository,
-        UserDateHelper $userDateHelper
+        UserDateHelper $userDateHelper,
     ) {
         parent::__construct();
         $this->measurementStorage = $measurementStorage;
@@ -98,7 +98,7 @@ class CalculateMeasurementsCommand extends Command
         $output->writeln(sprintf(
             "Regenerating measurement data from <info>%s</info> to <info>%s</info>.",
             $this->userDateHelper->process($startDay),
-            $this->userDateHelper->process($endDay)
+            $this->userDateHelper->process($endDay),
         ));
 
         foreach ($measurements as $measurement) {

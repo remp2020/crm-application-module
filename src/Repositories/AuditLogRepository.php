@@ -43,7 +43,7 @@ class AuditLogRepository extends Repository
     {
         return $this->getTable()->where([
             'table_name' => $tableName,
-            'signature' => $signature
+            'signature' => $signature,
         ]);
     }
 }

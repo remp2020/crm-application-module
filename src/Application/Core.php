@@ -71,7 +71,7 @@ class Core
 
         new PhinxRegistrator(
             $application,
-            $this->container->getByType(ModuleManager::class)
+            $this->container->getByType(ModuleManager::class),
         );
 
         try {
@@ -135,7 +135,7 @@ class Core
             $key . '=' . $value,
             FileSystem::read(self::getEnvFilePath()),
             -1,
-            $count
+            $count,
         );
 
         if ($count === 0) {

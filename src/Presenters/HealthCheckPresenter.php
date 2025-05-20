@@ -16,7 +16,7 @@ class HealthCheckPresenter extends FrontendPresenter
 
     public function __construct(
         ConfigsRepository $configsRepository,
-        UserDataStorageInterface $userDataStorage
+        UserDataStorageInterface $userDataStorage,
     ) {
         parent::__construct();
         $this->configsRepository = $configsRepository;

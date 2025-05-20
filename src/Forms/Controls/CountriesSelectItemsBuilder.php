@@ -13,7 +13,7 @@ class CountriesSelectItemsBuilder
     public function __construct(
         private readonly Translator $translator,
         private readonly CountriesRepository $countriesRepository,
-        private readonly ApplicationConfig $applicationConfig
+        private readonly ApplicationConfig $applicationConfig,
     ) {
     }
 

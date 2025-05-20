@@ -22,11 +22,11 @@ class ModuleManager
         $moduleNamespace = substr(
             $className,
             0,
-            strrpos(get_class($applicationModule), '\\')
+            strrpos(get_class($applicationModule), '\\'),
         );
         if (!Strings::endsWith($moduleNamespace, 'Module')) {
             throw new ApplicationException(
-                "CRM module name has to belong to namespace with naming pattern '*Module', used namespace '{$moduleNamespace}'"
+                "CRM module name has to belong to namespace with naming pattern '*Module', used namespace '{$moduleNamespace}'",
             );
         }
         if (isset($this->modules[$order])) {

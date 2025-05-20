@@ -17,7 +17,7 @@ class RangeScaleFactory
         DayScale $dayScale,
         WeekScale $weekScale,
         MonthScale $monthScale,
-        YearScale $yearScale
+        YearScale $yearScale,
     ) {
         $this->dayScale = $dayScale;
         $this->weekScale = $weekScale;

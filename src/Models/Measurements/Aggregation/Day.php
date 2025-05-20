@@ -12,7 +12,7 @@ class Day extends Aggregation
         return [
             "EXTRACT(YEAR FROM {$dateField}) AS year",
             "EXTRACT(MONTH FROM {$dateField}) AS month",
-            "EXTRACT(DAY FROM {$dateField}) AS day"
+            "EXTRACT(DAY FROM {$dateField}) AS day",
         ];
     }
 
@@ -36,7 +36,7 @@ class Day extends Aggregation
             $date->format('Y'),
             $date->format('m'),
             $date->format('d'),
-            null
+            null,
         );
     }
 

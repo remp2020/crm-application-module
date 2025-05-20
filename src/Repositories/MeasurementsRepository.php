@@ -15,7 +15,7 @@ class MeasurementsRepository extends Repository
     final public function add(
         string $code,
         string $title,
-        string $description
+        string $description,
     ): ActiveRow {
         return $this->insert([
             'code' => $code,

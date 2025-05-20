@@ -7,7 +7,7 @@ class TriggerData
 {
     public function __construct(
         public readonly int $userId,
-        public readonly array $payload
+        public readonly array $payload,
     ) {
     }
 }

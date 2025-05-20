@@ -35,7 +35,7 @@ class Week extends Aggregation
             $date->format('o'),
             null,
             null,
-            $date->format('W')
+            $date->format('W'),
         );
     }
 

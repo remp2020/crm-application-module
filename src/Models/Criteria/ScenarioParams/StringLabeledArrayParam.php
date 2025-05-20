@@ -27,7 +27,7 @@ class StringLabeledArrayParam implements ScenarioCriteriaParamInterface
         private string $label,
         array $options,
         private string $operator = 'or',
-        private bool $freeSolo = false
+        private bool $freeSolo = false,
     ) {
         $this->options = array_map(function ($value) use ($options) {
             if (is_array($options[$value])) {

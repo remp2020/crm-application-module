@@ -47,7 +47,7 @@ class TimeframeParam implements ScenarioCriteriaParamInterface
         string $unitsLabel = 'Units',
         array $operators = ['=', '>', '<', '>=', '<='],
         array $units = ['days', 'months', 'years'],
-        array $amountInputAttributes = ['min' => 0]
+        array $amountInputAttributes = ['min' => 0],
     ) {
         $this->key = $key;
         $this->label = $label;

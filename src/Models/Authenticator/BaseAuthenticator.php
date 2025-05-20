@@ -25,7 +25,7 @@ abstract class BaseAuthenticator implements AuthenticatorInterface
     public function __construct(
         Emitter $emitter,
         \Tomaj\Hermes\Emitter $hermesEmitter,
-        Request $request
+        Request $request,
     ) {
         $this->emitter = $emitter;
         $this->hermesEmitter = $hermesEmitter;
@@ -81,7 +81,7 @@ abstract class BaseAuthenticator implements AuthenticatorInterface
             $source,
             $status,
             $message,
-            $date
+            $date,
         ));
         $this->hermesEmitter->emit(new HermesMessage(
             'login-attempt',
@@ -91,7 +91,7 @@ abstract class BaseAuthenticator implements AuthenticatorInterface
                 'date' => $date->getTimestamp(),
                 'browser_id' => $this->request->getCookie('browser_id'),
                 'user_id' => $user ? $user->id : null,
-            ]
+            ],
         ), HermesMessage::PRIORITY_DEFAULT);
     }
 }
