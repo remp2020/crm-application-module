@@ -24,6 +24,7 @@ use Nette\Bridges\ApplicationLatte\Template;
 use Nette\DI\Attributes\Inject;
 use Nette\DI\Container;
 use Nette\Security\AuthenticationException;
+use Symfony\Component\Translation\Exception\InvalidArgumentException;
 
 /**
  * @property-read Template $template
@@ -85,8 +86,21 @@ abstract class BasePresenter extends Presenter
     protected function beforeRender()
     {
         if ($this->locale) {
-            $this->translator->setLocale($this->locale);
+            try {
+                $this->translator->setLocale($this->locale);
+            } catch (InvalidArgumentException $e) {
+                // reset locale, invalid locale could come through bots
+                $this->locale = null;
+
+                // get rid of locale in query params, so it's not picked up by param resolver later
+                $args = $this->getHttpRequest()->getQuery();
+                if (isset($args['locale'])) {
+                    unset($args['locale']);
+                    $this->redirect('this', $args);
+                }
+            }
         }
+
         $this->template->locale = $this->translator->getLocale();
         $this->template->language = Locale::getPrimaryLanguage($this->translator->getLocale());
 
