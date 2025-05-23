@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Crm\ApplicationModule\Models\Widget;
@@ -9,34 +10,44 @@ use Nette\DI\Container;
 
 class LazyWidgetManager implements LazyWidgetManagerInterface
 {
+    /** @var string */
     private const CACHE_KEY = 'lazy_widget_identifiers';
 
+    /** @var int */
+    private const CACHE_TTL = 86_400;
+
     /**
-     * @var array $widgets - key is path and value is an array of widget class names
-     *  or an instances of WidgetInterface
+     * Key is path (placeholder) where widget is displayed, value is array where
+     * int key is priority and value is widget class name or WidgetInterface instance.
+     *
+     * @var array<string,array<int,string|WidgetInterface>>
      */
     protected array $widgets = [];
 
+    /** @var array<string,array<string,string>> */
     protected array $overrideWidgets = [];
 
+    /** @var array<string,array<string,bool>> */
+    protected array $removeWidgets = [];
+
+    /** @var array<string,array<int,string>> */
     protected array $widgetFactories = [];
 
+    /** @var array<string,WidgetInterface> */
     protected array $alreadyInitialized = [];
 
-    private Container $container;
-
-    private Storage $cacheStorage;
-
     public function __construct(
-        Container $container,
-        Storage $storage,
+        private readonly Container $container,
+        private readonly Storage $cacheStorage,
     ) {
-        $this->container = $container;
-        $this->cacheStorage = $storage;
     }
 
-    public function registerWidget(string $path, string $widgetClassName, int $priority = 100, bool $overwrite = false): void
-    {
+    public function registerWidget(
+        string $path,
+        string $widgetClassName,
+        int $priority = 100,
+        bool $overwrite = false,
+    ): void {
         if ($this->isPriorityAlreadyUsed($path, $priority) && !$overwrite) {
             do {
                 $priority++;
@@ -45,8 +56,12 @@ class LazyWidgetManager implements LazyWidgetManagerInterface
         $this->widgets[$path][$priority] = $widgetClassName;
     }
 
-    public function registerWidgetWithInstance(string $path, WidgetInterface $widget, int $priority = 100, bool $overwrite = false): void
-    {
+    public function registerWidgetWithInstance(
+        string $path,
+        WidgetInterface $widget,
+        int $priority = 100,
+        bool $overwrite = false,
+    ): void {
         if ($this->isPriorityAlreadyUsed($path, $priority) && !$overwrite) {
             do {
                 $priority++;
@@ -56,8 +71,12 @@ class LazyWidgetManager implements LazyWidgetManagerInterface
         $this->alreadyInitialized[$widget->identifier()] = $widget;
     }
 
-    public function registerWidgetFactory($path, string $widgetFactoryClassName, $priority = 100, $overwrite = false): void
-    {
+    public function registerWidgetFactory(
+        $path,
+        string $widgetFactoryClassName,
+        $priority = 100,
+        $overwrite = false,
+    ): void {
         if ($this->isPriorityAlreadyUsed($path, $priority) && !$overwrite) {
             do {
                 $priority++;
@@ -80,16 +99,10 @@ class LazyWidgetManager implements LazyWidgetManagerInterface
         foreach ($this->overrideWidgets as $path => $overrideWidget) {
             if (isset($this->widgets[$path])) {
                 foreach ($this->widgets[$path] as $priority => $registeredWidget) {
-                    if (is_string($registeredWidget)) {
-                        if (array_key_exists($registeredWidget, $this->overrideWidgets[$path])) {
-                            $this->widgets[$path][$priority] = $this->overrideWidgets[$path][$registeredWidget];
-                            unset($this->overrideWidgets[$path][$registeredWidget]);
-                        }
-                    } else {
-                        if (array_key_exists(get_class($registeredWidget), $this->overrideWidgets[$path])) {
-                            $this->widgets[$path][$priority] = $this->overrideWidgets[$path][get_class($registeredWidget)];
-                            unset($this->overrideWidgets[$path][get_class($registeredWidget)]);
-                        }
+                    $class = is_string($registeredWidget) ? $registeredWidget : $registeredWidget::class;
+                    if (array_key_exists($class, $this->overrideWidgets[$path])) {
+                        $this->widgets[$path][$priority] = $this->overrideWidgets[$path][$class];
+                        unset($this->overrideWidgets[$path][$class]);
                     }
                 }
             }
@@ -98,8 +111,26 @@ class LazyWidgetManager implements LazyWidgetManagerInterface
         $this->overrideWidgets = [];
     }
 
+    private function removeWidgets(): void
+    {
+        foreach ($this->removeWidgets as $path => $removals) {
+            if (!isset($this->widgets[$path])) {
+                continue;
+            }
+            foreach ($this->widgets[$path] as $priority => $registeredWidget) {
+                $class = is_string($registeredWidget) ? $registeredWidget : $registeredWidget::class;
+                if (isset($removals[$class])) {
+                    unset($this->widgets[$path][$priority]);
+                }
+            }
+        }
+
+        $this->removeWidgets = [];
+    }
+
     public function getWidgets(string $path): array
     {
+        $this->removeWidgets();
         $this->overrideWidgets();
 
         if (isset($this->widgets[$path])) {
@@ -142,8 +173,9 @@ class LazyWidgetManager implements LazyWidgetManagerInterface
         return [];
     }
 
-    public function getWidgetByIdentifier(string $identifier): WidgetInterface|null
+    public function getWidgetByIdentifier(string $identifier): ?WidgetInterface
     {
+        $this->removeWidgets();
         $this->overrideWidgets();
 
         if (isset($this->alreadyInitialized[$identifier])) {
@@ -173,7 +205,7 @@ class LazyWidgetManager implements LazyWidgetManagerInterface
             }
         }
 
-        $this->cacheStorage->write(self::CACHE_KEY, $cacheData, [Cache::EXPIRE => 86400]);
+        $this->cacheStorage->write(self::CACHE_KEY, $cacheData, [Cache::Expire => self::CACHE_TTL]);
 
         return $this->alreadyInitialized[$identifier] ?? null;
     }
@@ -184,16 +216,12 @@ class LazyWidgetManager implements LazyWidgetManagerInterface
             isset($this->widgetFactories[$path][$priority]);
     }
 
-    public function removeWidget(string $path, $widgetClassName): void
+    public function removeWidget(string $path, string $widgetClassName): void
     {
-        if (!isset($this->widgets[$path])) {
-            return;
+        if (!array_key_exists($path, $this->removeWidgets)) {
+            $this->removeWidgets[$path] = [];
         }
-        foreach ($this->widgets[$path] as $priority => $widget) {
-            if ($widget === $widgetClassName || (is_object($widget) && get_class($widget) === $widgetClassName)) {
-                unset($this->widgets[$path][$priority]);
-                break;
-            }
-        }
+
+        $this->removeWidgets[$path][$widgetClassName] = true;
     }
 }
