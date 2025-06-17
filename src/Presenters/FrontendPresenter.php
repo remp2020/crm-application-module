@@ -51,18 +51,8 @@ class FrontendPresenter extends BasePresenter
         $this->template->path = $this->request->getUrl()->path;
         $this->template->user = $this->getUser();
         $this->template->headerCode = $this->applicationConfig->get('header_block');
-        $this->template->jsDomain = $this->getJavascriptDomain();
         $this->template->cmsUrl = $this->applicationConfig->get('cms_url');
         $this->template->siteUrl = $this->applicationConfig->get('site_url');
-    }
-
-    protected function getJavascriptDomain()
-    {
-        $parts = explode('.', $this->request->getUrl()->getHost());
-        if (count($parts) > 2) {
-            return $parts[count($parts) - 2] . '.' . $parts[count($parts) - 1];
-        }
-        return implode('.', $parts);
     }
 
     protected function beforeRender()
