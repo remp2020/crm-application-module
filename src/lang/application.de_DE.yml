@@ -53,3 +53,14 @@ frontend:
         warning: Warnung!
         success: Erfolg!
         danger: Fehler!
+
+components:
+    audit_log_history_widget:
+        heading: Historie der Änderungen
+        operation:
+            create: erstellt
+            update: aktualisiert
+            delete: gelöscht
+        view_all: Vollständigen Verlauf anzeigen
+        user: durch den Benutzer
+        system: durch das System

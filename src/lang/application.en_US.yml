@@ -55,3 +55,14 @@ integrations:
 user:
     delete_user_data:
         internal_error: "Due to an error we were not able to verify if the account can be deleted."
+
+components:
+    audit_log_history_widget:
+        heading: History log
+        operation:
+            create: created
+            update: updated
+            delete: deleted
+        view_all: View full history
+        user: by user
+        system: by system

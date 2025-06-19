@@ -667,6 +667,66 @@ Widget provides wrapper for simple table with single statistic - each provided b
 ![alt text](docs/simple_widget.png "Simple widget")
 </details>
 
+##### [AuditLogHistoryWidget](src/Components/AuditLogHistoryWidget/AuditLogHistoryWidget.php)
+
+This widget provides ability to show changes from audit log in formatted way as component in any entity administration.
+
+To use this widget you need 2 things:
+
+1. register this widget in your module:
+
+```php
+$widgetManager->registerWidget(
+    'admin.payments.show.left',
+    AuditLogHistoryWidget::class,
+);
+```
+
+2. create and register data provider which initializes and returns array of customized [AuditLogHistoryDataProviderItem](src/Models/DataProvider/AuditLogHistoryDataProviderItem.php) instances:
+
+```php
+class PaymentAuditLogHistoryDataProvider implements AuditLogHistoryDataProviderInterface
+{
+    ...
+    public function provide(string $tableName, string $signature): array
+    {
+        // provide data only if its for your table
+        if ($tableName !== 'payments') {
+            return [];
+        }
+
+        // fetch audit log history items
+        $paymentHistory = $this->auditLogRepository->getByTableAndSignature($tableName, $signature)
+            ->order('created_at DESC, id DESC')
+            ->fetchAll();
+
+        $results = [];
+        foreach ($paymentHistory as $item) {
+            $auditLogHistoryDataProviderItem = new AuditLogHistoryDataProviderItem(
+                $item->created_at,
+                $item->operation,
+                $item->user,
+            );
+
+            // set color of change indicator in widget (timeline) 
+            $auditLogHistoryDataProviderItem->setChangeIndicator(AuditLogHistoryItemChangeIndicatorEnum::Warning)
+
+            // set customized change message
+            $auditLogHistoryDataProviderItem->addMessage(
+                'your_module.translation.key',
+                [
+                    'translation_param_1' => 'Test 1',
+                    'translation_param_2' => 'Test 2',
+                ]
+            );
+        }
+
+        return $results;
+    }
+    ...
+}
+```
+
 ## Database tables migration
 
 Because of need of changing primary keys (int -> bigint), in tables that contain lots of data (or have risk of overflowing primary key if its int), we had to create migration process. Since some tables are very exposed and cannot be locked for more than a couple of seconds, we decided to create new tables, migrate the data manually and keep the old and new table in sync while migrating.

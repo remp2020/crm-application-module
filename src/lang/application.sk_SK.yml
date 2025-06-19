@@ -56,3 +56,14 @@ integrations:
 user:
     delete_user_data:
         internal_error: "Nastala chyba a nepodarilo sa overiť, či konto môže byť zmazané."
+
+components:
+    audit_log_history_widget:
+        heading: História zmien
+        operation:
+            create: vytvorené
+            update: upravené
+            delete: zmazané
+        view_all: Zobraziť celú históriu
+        user: používateľom
+        system: systémom

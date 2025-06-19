@@ -46,4 +46,12 @@ class AuditLogRepository extends Repository
             'signature' => $signature,
         ]);
     }
+
+    final public function getByTableAndSignatures(string $tableName, array $signatures): Selection
+    {
+        return $this->getTable()->where([
+            'table_name' => $tableName,
+            'signature IN (?)' => array_map('strval', $signatures),
+        ]);
+    }
 }

@@ -162,6 +162,9 @@ services:
 	measurementManager:
 		factory: Crm\ApplicationModule\Models\Measurements\MeasurementManager
 
+	# widgets
+	- Crm\ApplicationModule\Components\AuditLogHistoryWidget\AuditLogHistoryWidget
+
 	# components factories
 	- Crm\ApplicationModule\Components\Graphs\GoogleBarGraph\GoogleBarGraphControlFactoryInterface
 	- Crm\ApplicationModule\Components\Graphs\GoogleBarGraphGroup\GoogleBarGraphGroupControlFactoryInterface

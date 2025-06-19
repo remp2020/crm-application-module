@@ -54,3 +54,14 @@ user:
 integrations:
     config:
         category: Integrációk
+
+components:
+    audit_log_history_widget:
+        heading: Előzmények
+        operation:
+            create: létrehozva
+            update: módosítva
+            delete: törölve
+        view_all: Minden előzmény megtekintése
+        user: felhasználó által
+        system: rendszer által
