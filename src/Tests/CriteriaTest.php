@@ -5,7 +5,7 @@ namespace Crm\ApplicationModule\Tests;
 use Crm\ApplicationModule\Models\Measurements\Aggregation\Month;
 use Crm\ApplicationModule\Models\Measurements\Aggregation\Year;
 use Crm\ApplicationModule\Models\Measurements\Criteria;
-use Nette\Utils\DateTime;
+use DateTime;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
@@ -126,11 +126,11 @@ class CriteriaTest extends TestCase
     {
         $criteria = new Criteria(
             $aggregation,
-            DateTime::from('1982-06-01'),
-            DateTime::from($from),
-            DateTime::from($to),
+            new DateTime('1982-06-01'),
+            new DateTime($from),
+            new DateTime($to),
         );
-        $criteria->setNow(DateTime::from('1986-04-26 01:23:45'));
+        $criteria->setNow(new DateTime('1986-04-26 01:23:45'));
         $emptySeries = $criteria->getEmptySeries();
         $this->assertEquals(
             $expectedResult,
