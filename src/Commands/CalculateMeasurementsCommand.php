@@ -12,7 +12,7 @@ use Crm\ApplicationModule\Models\Measurements\MeasurementManager;
 use Crm\ApplicationModule\Repositories\ConfigsRepository;
 use Crm\ApplicationModule\Repositories\MeasurementValuesRepository;
 use Crm\ApplicationModule\Repositories\MeasurementsRepository;
-use Nette\Utils\DateTime;
+use DateTime;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -72,15 +72,15 @@ class CalculateMeasurementsCommand extends Command
         }
 
         if ($input->getOption('from')) {
-            $startDay = DateTime::from($input->getOption('from'));
+            $startDay = new DateTime($input->getOption('from'));
         } elseif ($input->getOption('daily')) {
-            $startDay = DateTime::from('first day of january this year');
+            $startDay = new DateTime('first day of january this year');
         } else {
             $startDay = $epoch;
         }
 
         if ($input->getOption('to')) {
-            $endDay = DateTime::from($input->getOption('to'));
+            $endDay = new DateTime($input->getOption('to'));
         } else {
             $endDay = new DateTime();
         }
