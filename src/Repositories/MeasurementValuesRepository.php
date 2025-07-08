@@ -5,10 +5,10 @@ namespace Crm\ApplicationModule\Repositories;
 use Crm\ApplicationModule\Models\Database\ActiveRow;
 use Crm\ApplicationModule\Models\Database\Repository;
 use Crm\ApplicationModule\Models\Measurements\PointAggregate;
+use DateTime;
 use Nette\Caching\Storage;
 use Nette\Database\Explorer;
 use Nette\Database\Table\Selection;
-use Nette\Utils\DateTime;
 
 class MeasurementValuesRepository extends Repository
 {
