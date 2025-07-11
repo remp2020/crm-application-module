@@ -128,11 +128,16 @@ services:
 	- Crm\ApplicationModule\Seeders\SnippetsSeeder
 	accessManager: Crm\ApplicationModule\Models\Access\AccessManager
 
+	hermesConfig:
+		factory: Crm\ApplicationModule\Models\Config\HermesConfig
+		setup:
+			- addRedactedFields(['password', 'token', 'responseBody'])
+
 	hermesLogRedact: Crm\ApplicationModule\Hermes\LogRedact
 	hermesLogger:
 		factory: Monolog\Logger('hermes-logger')
 		setup:
-			- pushProcessor(@hermesLogRedact::add(['password', 'token', 'responseBody']))
+			- pushProcessor(@hermesLogRedact::add(@hermesConfig::getRedactedFields()))
 			- pushHandler(Monolog\Handler\StreamHandler("%appDir%/../log/hermes-log.txt"))
 
 	# shutdowm hermes and mail worker through hermes_shutdown key in redis
