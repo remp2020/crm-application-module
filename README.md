@@ -140,6 +140,128 @@ userActionsLogRepository:
 
 ## Components
 
+#### [AjaxDataPaginator](https://github.com/remp2020/crm-application-module/blob/master/src/Components/AjaxDataPaginator/AjaxDataPaginator.php)
+
+Reusable AJAX pagination system for widgets and listing components.
+
+<details>
+<summary>Basic usage example</summary>
+
+```php
+use Crm\ApplicationModule\Components\AjaxDataPaginator\PaginatedComponent;
+use Crm\ApplicationModule\Components\AjaxDataPaginator\PaginatesDataTrait;
+
+class UserSubscriptionsListing extends BaseLazyWidget implements DetailWidgetInterface, PaginatedComponent
+{
+    use PaginatesDataTrait;
+
+    public function render(int $id): void
+    {
+        $totalSubscriptions = $this->subscriptionsRepository
+            ->userSubscriptions($id)
+            ->count();
+
+        $paginator = $this->getAjaxPaginator(
+            snippetName: 'subscriptionsTable',
+            itemCount: $totalSubscriptions,
+        );
+
+        $subscriptions = $this->subscriptionsRepository
+            ->userSubscriptions($id)
+            ->limit($paginator->getLimit(), $paginator->getOffset());
+
+        $this->template->subscriptions = $subscriptions;
+        $this->template->paginator = $paginator;
+        $this->template->render();
+    }
+}
+```
+
+```latte
+{snippet subscriptionsTable}
+    <table class="table">
+        <tr n:foreach="$subscriptions as $subscription">
+            <td>{$subscription->subscription_type->name}</td>
+        </tr>
+    </table>
+    {$paginator->render()}
+{/snippet}
+```
+
+</details>
+
+<details>
+<summary>Multiple paginators example</summary>
+
+Each paginator requires a unique `snippetName`.
+
+```php
+use Crm\ApplicationModule\Components\AjaxDataPaginator\PaginatedComponent;
+use Crm\ApplicationModule\Components\AjaxDataPaginator\PaginatesDataTrait;
+
+class UserPaymentsListing extends BaseLazyWidget implements DetailWidgetInterface, PaginatedComponent
+{
+    use PaginatesDataTrait;
+
+    public function render($id): void
+    {
+        $totalPayments = $this->paymentsRepository
+            ->userPayments($id)
+            ->count();
+
+        $paymentsTablePaginator = $this->getAjaxPaginator(
+            snippetName: 'paymentsTable',
+            itemCount: $totalPayments,
+        );
+
+        $payments = $this->paymentsRepository
+            ->userPayments($id)
+            ->limit($paymentsTablePaginator->getLimit(), $paymentsTablePaginator->getOffset());
+
+        $totalRecurrentPayments = $this->recurrentPaymentsRepository
+            ->userRecurrentPayments($id)
+            ->count();
+
+        $recurrentTablePaginator = $this->getAjaxPaginator(
+            snippetName: 'recurrentTable',
+            itemCount: $totalRecurrentPayments,
+        );
+
+        $recurrentPayments = $this->recurrentPaymentsRepository
+            ->userRecurrentPayments($id)
+            ->limit($recurrentTablePaginator->getLimit(), $recurrentTablePaginator->getOffset());
+
+        $this->template->payments = $payments;
+        $this->template->recurrentPayments = $recurrentPayments;
+        $this->template->paymentsTablePaginator = $paymentsTablePaginator;
+        $this->template->recurrentTablePaginator = $recurrentTablePaginator;
+        $this->template->render();
+    }
+}
+```
+
+```latte
+{snippet paymentsTable}
+    <table class="table">
+        <tr n:foreach="$payments as $payment">
+            <td>{$payment->variable_symbol}</td>
+        </tr>
+    </table>
+    {$paymentsTablePaginator->render()}
+{/snippet}
+
+{snippet recurrentTable}
+    <table class="table">
+        <tr n:foreach="$recurrentPayments as $recurrent">
+            <td>{$recurrent->cid}</td>
+        </tr>
+    </table>
+    {$recurrentTablePaginator->render()}
+{/snippet}
+```
+
+</details>
+
 #### [FrontendMenu](https://github.com/remp2020/crm-application-module/blob/d35256140dba71e7839955da7a5205b3241f1923/src/components/FrontendMenu/FrontendMenu.php)
 
 User-facing frontend menu expected to be used in your application layout.

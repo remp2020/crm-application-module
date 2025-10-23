@@ -1,0 +1,169 @@
+{snippet paginationControls}
+    {if $renderAssets}
+        <style>
+            .pagination-wrapper {
+                --loader-size: 20px;
+                --loader-color: #3498db;
+                --loader-bg: #f3f3f3;
+                --disabled-opacity: 0.6;
+                --focus-bg: #eee;
+                --focus-border: #ddd;
+            }
+
+            .pagination-wrapper.ajax-loading {
+                position: relative;
+                opacity: var(--disabled-opacity);
+            }
+
+            .pagination-wrapper.ajax-loading a.ajax {
+                pointer-events: none;
+                cursor: not-allowed;
+            }
+
+            .pagination-wrapper.ajax-loading a.active-loading {
+                background-color: var(--focus-bg) !important;
+                border-color: var(--focus-border) !important;
+            }
+
+            .pagination-loader {
+                display: none;
+                position: absolute;
+                inset: 50% auto auto 50%;
+                transform: translate(-50%, -50%);
+                width: var(--loader-size);
+                height: var(--loader-size);
+                border: 2px solid var(--loader-bg);
+                border-top-color: var(--loader-color);
+                border-radius: 50%;
+                animation: pagination-spin 1s linear infinite;
+                z-index: 10;
+            }
+
+            @keyframes pagination-spin {
+                to {
+                    transform: translate(-50%, -50%) rotate(360deg);
+                }
+            }
+        </style>
+
+        <script>
+            (() => {
+                'use strict';
+
+                const handlePaginationClick = (event) => {
+                    const link = event.target.closest('a.ajax');
+                    if (!link) {
+                        return;
+                    }
+
+                    const wrapper = link.closest('.pagination-wrapper');
+                    if (!wrapper) {
+                        return;
+                    }
+
+                    if (wrapper.classList.contains('ajax-loading')) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                        return false;
+                    }
+
+                    const ajaxLinks = wrapper.querySelectorAll('a.ajax');
+                    wrapper.dataset.activeLinkIndex = String(Array.from(ajaxLinks).indexOf(link));
+
+                    wrapper.classList.add('ajax-loading');
+                    ajaxLinks.forEach(el => el.classList.add('disabled'));
+                    link.classList.add('active-loading');
+
+                    const loader = wrapper.querySelector('.pagination-loader');
+                    if (loader) {
+                        loader.style.display = 'inline-block';
+                    }
+                };
+
+                const cleanupLoading = () => {
+                    document.querySelectorAll('.pagination-wrapper.ajax-loading').forEach(wrapper => {
+                        wrapper.classList.remove('ajax-loading');
+                        wrapper.querySelectorAll('a.ajax').forEach(link => {
+                            link.classList.remove('disabled', 'active-loading');
+                        });
+
+                        const loader = wrapper.querySelector('.pagination-loader');
+                        if (loader) {
+                            loader.style.display = 'none';
+                        }
+
+                        const activeLinkIndex = wrapper.dataset.activeLinkIndex;
+                        if (activeLinkIndex !== undefined) {
+                            const links = wrapper.querySelectorAll('a.ajax');
+                            const activeLink = links[activeLinkIndex];
+                            if (activeLink) {
+                                activeLink.focus();
+                            }
+                            delete wrapper.dataset.activeLinkIndex;
+                        }
+                    });
+                };
+
+                if (!window.paginationHandlerInit) {
+                    window.paginationHandlerInit = true;
+                    document.addEventListener('click', handlePaginationClick, { capture: true });
+
+                    window.$.nette.ext('paginationLoading', {
+                        success: cleanupLoading,
+                        error: cleanupLoading
+                    });
+                }
+            })();
+        </script>
+    {/if}
+    <div class="text-center pagination-wrapper">
+        <nav>
+            <ul class="pagination">
+                <li n:class="!$hasPreviousPage ? disabled">
+                    <a n:tag-if="$hasPreviousPage" href="{$getLinkCallback(1)}" class="ajax">
+                        <span>&laquo;</span>
+                    </a>
+                </li>
+
+                <li n:class="!$hasPreviousPage ? disabled">
+                    <a n:tag-if="$hasPreviousPage" href="{$getLinkCallback($page - 1)}" class="ajax">
+                        <span>&lsaquo;</span>
+                    </a>
+                </li>
+
+                {if $startPage > 1}
+                    <li><a href="{$getLinkCallback(1)}" class="ajax">1</a></li>
+                    <li n:if="$startPage > 2" class="disabled"><span>...</span></li>
+                {/if}
+
+                {for $i = $startPage; $i <= $endPage; $i++}
+                    <li n:class="$i == $page ? active">
+                        {if $i == $page}
+                            <span>{$i}</span>
+                        {else}
+                            <a href="{$getLinkCallback($i)}" class="ajax">{$i}</a>
+                        {/if}
+                    </li>
+                {/for}
+
+                {if $endPage < $pageCount}
+                    <li n:if="$endPage < $pageCount - 1" class="disabled"><span>...</span></li>
+                    <li><a href="{$getLinkCallback($pageCount)}" class="ajax">{$pageCount}</a></li>
+                {/if}
+
+                <li n:class="!$hasNextPage ? disabled">
+                    <a n:tag-if="$hasNextPage" href="{$getLinkCallback($page + 1)}" class="ajax">
+                        <span>&rsaquo;</span>
+                    </a>
+                </li>
+
+                <li n:class="!$hasNextPage ? disabled">
+                    <a n:tag-if="$hasNextPage" href="{$getLinkCallback($pageCount)}" class="ajax">
+                        <span>&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+            <div class="pagination-loader"></div>
+        </nav>
+    </div>
+{/snippet}
