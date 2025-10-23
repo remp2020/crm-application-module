@@ -17,7 +17,7 @@
 
         var chart = new google.visualization.ColumnChart(document.getElementById('graph_' + {$graphId}));
 
-        var options = {
+        var baseOptions = {
             height: 50,
             width: 100,
             chartArea: {'width': '100%', 'height': '100%'},
@@ -45,6 +45,9 @@
             },
             backgroundColor: { fill:'transparent' }
         };
+
+        // Apply dark mode if active
+        var options = window.crmAdmin.getGoogleChartsOptions(baseOptions);
 
         chart.draw(data, options);
     }

@@ -25,8 +25,11 @@
 
                         data.addRows({$rows|noescape});
 
-                        var options = {
+                        var baseOptions = {
                         };
+
+                        // Apply dark mode if active
+                        var options = window.crmAdmin.getGoogleChartsOptions(baseOptions);
 
                         var chart = new google.visualization.Sankey(document.getElementById('graph_' + {$graphId}));
                         chart.draw(data, options);

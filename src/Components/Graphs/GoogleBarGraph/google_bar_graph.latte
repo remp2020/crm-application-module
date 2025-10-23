@@ -41,7 +41,7 @@
             }
         }
 
-        var options = {
+        var baseOptions = {
             chartArea: { width: '90%', height: '70%'},
             fontSize: ['11'],
             lineWidth: 3,
@@ -60,6 +60,9 @@
             isStacked: true
             {/if}
         };
+
+        // Apply dark mode if active
+        var options = window.crmAdmin.getGoogleChartsOptions(baseOptions);
 
         google.visualization.events.addListener(chart, 'select', function () {
             var sel = chart.getSelection();
