@@ -190,6 +190,10 @@ class Core
         $configurator->addConfig(APP_ROOT . 'app/config/config.neon');
         $configurator->addConfig(APP_ROOT . 'app/config/config.' . $this->environment . '.neon');
 
+        if (self::env('APP_ENV')) {
+            $configurator->addConfig(APP_ROOT . 'app/config/config.' . self::env('APP_ENV') . '.local.neon');
+        }
+
         $this->container = $configurator->createContainer();
     }
 
