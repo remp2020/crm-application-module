@@ -48,6 +48,8 @@ date:
     months: Měsíce
     years: Roky
 
+    months_quantified: '{1}měsíc|[2,4]měsíce|[5,Inf]měsíců'
+
 last:
     month: Poslední měsíc
     months: '%count%M'

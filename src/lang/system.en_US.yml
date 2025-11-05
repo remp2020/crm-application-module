@@ -48,6 +48,8 @@ date:
     months: Months
     years: Years
 
+    months_quantified: '{1}month|[2,Inf]months'
+
 last:
     month: Last month
     months: Last %count%M

@@ -48,6 +48,8 @@ date:
     months: Mesiace
     years: Roky
 
+    months_quantified: '{1}mesiac|[2,4]mesiace|[5,Inf]mesiacov'
+
 last:
     month: Posledný mesiac
     months: "%count%M"
