@@ -158,7 +158,7 @@ services:
 	redisTasksQueue: Crm\ApplicationModule\Hermes\RedisTasksQueue
 
 	- Crm\ApplicationModule\Hermes\HeartbeatMysql
-	- Crm\ApplicationModule\Models\Request
+	applicationRequest: Crm\ApplicationModule\Models\Request
 
 	- Crm\ApplicationModule\Repositories\MeasurementValuesRepository
 	- Crm\ApplicationModule\Repositories\MeasurementsRepository
