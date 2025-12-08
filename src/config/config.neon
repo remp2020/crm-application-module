@@ -21,23 +21,19 @@ services:
 	# Latte filters
 	nette.latteFactory:
 		setup:
-			- addFilterLoader([@filterLoader, 'load'])
+			- addFilter('localizedDate', [@localizedDateHelper, process])
+			- addFilter('price', [Crm\ApplicationModule\Helpers\PriceHelper(), process])
+			- addFilter('activeLabel', [Crm\ApplicationModule\Helpers\ActiveLabelHelper(), process])
+			- addFilter('diff', [Crm\ApplicationModule\Helpers\DiffHelper(), process])
+			- addFilter('helpIcon', [Crm\ApplicationModule\Helpers\HelpIconHelper(), process])
+			- addFilter('userDate', [@userDateHelper, process])
+			- addFilter('yesNo', [Crm\ApplicationModule\Helpers\YesNoHelper(), process])
+			- addFilter('diffPrice', [Crm\ApplicationModule\Helpers\DiffPriceHelper(), process])
+			- addFilter('json', [Crm\ApplicationModule\Helpers\JsonHelper(), process])
+			- addFilter('maskEmail', [@maskEmailHelper, process])
 			- addFunction('escapehtml', [Crm\ApplicationModule\LatteFunctions\EscapeHTML, 'escape'])
 
 	maskEmailHelper: Crm\ApplicationModule\Helpers\MaskEmailHelper
-	filterLoader:
-		factory: Crm\ApplicationModule\Helpers\FilterLoader
-		setup:
-			- register('activeLabel', [Crm\ApplicationModule\Helpers\ActiveLabelHelper(), process])
-			- register('diff', [Crm\ApplicationModule\Helpers\DiffHelper(), process])
-			- register('helpIcon', [Crm\ApplicationModule\Helpers\HelpIconHelper(), process])
-			- register('userDate', [@userDateHelper, process])
-			- register('localizedDate', [@localizedDateHelper, process])
-			- register('yesNo', [Crm\ApplicationModule\Helpers\YesNoHelper(), process])
-			- register('price', [Crm\ApplicationModule\Helpers\PriceHelper(), process])
-			- register('diffPrice', [Crm\ApplicationModule\Helpers\DiffPriceHelper(), process])
-			- register('json', [Crm\ApplicationModule\Helpers\JsonHelper(), process])
-			- register('maskEmail', [@maskEmailHelper, process])
 
 	redisClientFactory: Crm\ApplicationModule\Models\Redis\RedisClientFactory(%redis.host%, %redis.port%, %redis.password%, %redis.database%, %redis_client_factory.prefix%)
 
