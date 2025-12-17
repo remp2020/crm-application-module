@@ -62,7 +62,6 @@ abstract class BaseLazyWidget extends Control implements WidgetInterface
             }
             $parameters = $reflection->getParameters();
 
-
             $args = [];
             if (($first = reset($parameters)) && !$first->getType()) {
                 $args[] = $name;

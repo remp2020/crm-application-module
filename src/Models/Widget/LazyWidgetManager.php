@@ -10,6 +10,8 @@ use Nette\DI\Container;
 
 class LazyWidgetManager implements LazyWidgetManagerInterface
 {
+    public array $onWidgetAnchor = [];
+
     /** @var string */
     private const CACHE_KEY = 'lazy_widget_identifiers';
 
@@ -139,6 +141,11 @@ class LazyWidgetManager implements LazyWidgetManagerInterface
                 if (is_string($widget)) {
                     /** @var WidgetInterface $widgetInstance */
                     $widgetInstance = $this->container->getByType($widget);
+
+                    if ($widgetInstance instanceof \Nette\Application\UI\Component) {
+                        $widgetInstance->onAnchor = $this->onWidgetAnchor;
+                    }
+
                     $this->alreadyInitialized[$widgetInstance->identifier()] = $widgetInstance;
 
                     $result[$sorting] = $widgetInstance;
