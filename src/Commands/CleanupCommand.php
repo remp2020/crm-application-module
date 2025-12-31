@@ -29,7 +29,7 @@ class CleanupCommand extends Command
             ->setDescription('Cleanup old data');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->cleanUpManager->execAll($this->container);
         return Command::SUCCESS;

@@ -32,7 +32,7 @@ class HermesShutdownCommand extends Command
             );
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $output->writeln('<comment>Preparing to shutdown all workers which integrate Hermes shutdown procedure.</comment>');
 

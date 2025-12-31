@@ -23,7 +23,7 @@ class HermesWorkerCommand extends Command
             ->setDescription('Hermes offline worker');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->dispatcher->handle();
         return Command::SUCCESS;

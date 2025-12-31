@@ -32,7 +32,7 @@ class AuditLogsCleanupCommand extends Command
             );
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $days = $input->getOption('days');
 

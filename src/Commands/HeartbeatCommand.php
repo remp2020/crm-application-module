@@ -25,7 +25,7 @@ class HeartbeatCommand extends Command
         ;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->emitter->emit(new HermesMessage('heartbeat', ['executed' => time()]));
         return Command::SUCCESS;

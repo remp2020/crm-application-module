@@ -25,7 +25,7 @@ class InstallAssetsCommand extends Command
             ->setDescription('Installs assets registered by modules');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         foreach ($this->assetsManager->getCopyIntents() as $copyIntent) {
             [$sourceDirectory, $destinationDirectory] = $copyIntent;
