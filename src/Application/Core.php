@@ -77,10 +77,7 @@ class Core
         try {
             /** @var ApplicationManager $applicationManager */
             $applicationManager = $this->container->getByType(ApplicationManager::class);
-            $commands = $applicationManager->getCommands();
-            foreach ($commands as $command) {
-                $application->add($command);
-            }
+            $application->addCommands($applicationManager->getCommands());
         } catch (DriverException $driverException) {
             echo "INFO: Looks like the new fresh install.\n";
         } catch (InvalidArgumentException $invalidArgument) {

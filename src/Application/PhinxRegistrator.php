@@ -49,7 +49,7 @@ class PhinxRegistrator
             if (is_callable([$command, 'setConfig'])) {
                 $command->setConfig($config);
             }
-            $application->add($command);
+            $application->addCommand($command);
         }
 
         // Register schema dump command. Command uses separate folder to dump migration into.
@@ -57,7 +57,7 @@ class PhinxRegistrator
         $dumpSchema->setName('phinx:dump-schema-for-tests');
         $dumpSchema->setDescription('Dumps whole DB schema into single phinx migration file for tests');
         $dumpSchema->setConfig(self::buildTestConfig());
-        $application->add($dumpSchema);
+        $application->addCommand($dumpSchema);
     }
 
     public static function buildConfig($migrationPaths): Config
