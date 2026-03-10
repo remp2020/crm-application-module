@@ -54,17 +54,6 @@ class FrontendPresenter extends BasePresenter
         $this->template->headerCode = $this->applicationConfig->get('header_block');
         $this->template->cmsUrl = $this->applicationConfig->get('cms_url');
         $this->template->siteUrl = $this->applicationConfig->get('site_url');
-    }
-
-    protected function beforeRender()
-    {
-        parent::beforeRender();
-
-        /** @var FrontendRequestEvent $event */
-        $event = $this->emitter->emit(new FrontendRequestEvent());
-        foreach ($event->getFlashMessages() as $flashMessage) {
-            $this->flashMessage($flashMessage['message'], $flashMessage['type']);
-        }
 
         // TODO: move this functionality to mail-related module (to a handler of FrontendRequestEvent)
         $mailAutologinToken = $this->params['login_t'] ?? $this->params['token'] ?? null;
@@ -86,6 +75,12 @@ class FrontendPresenter extends BasePresenter
                 $params['autologin'] = 'done';
                 $this->redirect($this->action, $params);
             }
+        }
+
+        /** @var FrontendRequestEvent $event */
+        $event = $this->emitter->emit(new FrontendRequestEvent());
+        foreach ($event->getFlashMessages() as $flashMessage) {
+            $this->flashMessage($flashMessage['message'], $flashMessage['type']);
         }
     }
 
