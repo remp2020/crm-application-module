@@ -1,4 +1,6 @@
 services:
+	security.user: Crm\ApplicationModule\Models\Authenticator\CrmUser
+	security.authenticator: Crm\ApplicationModule\Models\Authenticator\NetteAuthenticatorBridge
 	emitter: Crm\ApplicationModule\Models\Event\LazyEventEmitter
 
 	environmentConfig: Crm\ApplicationModule\Application\EnvironmentConfig

@@ -4,6 +4,7 @@ namespace Crm\ApplicationModule\Presenters;
 
 use Crm\ApplicationModule\Components\FrontendMenu\FrontendMenu;
 use Crm\ApplicationModule\Events\FrontendRequestEvent;
+use Crm\ApplicationModule\Models\Authenticator\LoginCredentials;
 use Crm\SubscriptionsModule\Repositories\SubscriptionsRepository;
 use Crm\UsersModule\Models\Auth\AutoLogin\AutoLogin;
 use Crm\UsersModule\Repositories\UsersRepository;
@@ -70,7 +71,7 @@ class FrontendPresenter extends BasePresenter
         if ($mailAutologinToken && $this->getParameter('autologin') !== 'done' && !$this->getUser()->isLoggedIn()) {
             $redirect = false;
             try {
-                $this->getUser()->login(['mailToken' => $mailAutologinToken]);
+                $this->getUser()->login(new LoginCredentials(['mailToken' => $mailAutologinToken]));
                 // Do not refresh POST/PUT requests (otherwise data will get lost)
                 if (!in_array($this->request->getMethod(), ['POST', 'PUT'], true)) {
                     $redirect = true;
