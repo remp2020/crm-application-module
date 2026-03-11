@@ -32,29 +32,6 @@ class Request
         return $_SERVER['HTTP_USER_AGENT'] ?? '';
     }
 
-    /**
-     * @deprecated Use Request::getCookieDomain to resolve correct domain for cookie. This method never actually
-     * returned app's domain, but only attempted to figure cookie domain automatically; not always successfully.
-     */
-    public static function getDomain()
-    {
-        $host = $_SERVER['HTTP_HOST'] ?? '';
-
-        // remove port from host
-        if (($index = strrpos($host, ':')) !== false) {
-            $host = substr($host, 0, $index);
-        }
-
-        // remove subdomain from host
-        if (($index = strrpos($host, '.')) !== false) {
-            if (($index = strrpos($host, '.', $index - strlen($host) - 1)) !== false) {
-                $host = substr($host, $index);
-            }
-        }
-
-        return $host;
-    }
-
     public function getCookieDomain(): string
     {
         if (isset($this->cookieDomain)) {
