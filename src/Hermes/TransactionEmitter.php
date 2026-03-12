@@ -15,7 +15,7 @@ class TransactionEmitter extends Emitter
     public function __construct(
         private readonly DatabaseTransaction $databaseTransaction,
         DriverInterface $driver,
-        LoggerInterface $logger = null,
+        ?LoggerInterface $logger = null,
     ) {
         parent::__construct($driver, $logger);
 

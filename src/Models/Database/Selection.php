@@ -13,7 +13,7 @@ class Selection extends \Nette\Database\Table\Selection
 
     private $enforcePrimaryDatabase = false;
 
-    public function createSelectionInstance(string $table = null): self
+    public function createSelectionInstance(?string $table = null): self
     {
         return new self(
             $this->explorer,

@@ -30,7 +30,7 @@ class Repository
 
     public function __construct(
         protected readonly Explorer $database,
-        Storage $cacheStorage = null,
+        ?Storage $cacheStorage = null,
     ) {
         $this->cacheStorage = $cacheStorage;
     }

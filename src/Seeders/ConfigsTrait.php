@@ -14,7 +14,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 trait ConfigsTrait
 {
-    private function addConfig(OutputInterface $output, $category, $name, $type, $displayName, $description, $defaultValue, $sorting, array $options = null)
+    private function addConfig(OutputInterface $output, $category, $name, $type, $displayName, $description, $defaultValue, $sorting, ?array $options = null)
     {
         $config = $this->configsRepository->loadByName($name);
         if (!$config) {

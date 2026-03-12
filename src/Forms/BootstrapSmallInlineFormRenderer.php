@@ -66,7 +66,7 @@ class BootstrapSmallInlineFormRenderer extends DefaultFormRenderer
      * @param string $mode 'begin', 'errors', 'ownerrors', 'body', 'end' or empty to render all
      * @return string
      */
-    public function render(Form $form, string $mode = null): string
+    public function render(Form $form, ?string $mode = null): string
     {
         $form->getElementPrototype()->appendAttribute('class', 'form-inline');
 

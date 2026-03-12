@@ -8,7 +8,7 @@ class MountManagerConfig
 {
     private array $filesystems = [];
 
-    public function mountFilesystem(string $key, FilesystemOperator $filesystemOperator, string $group = null)
+    public function mountFilesystem(string $key, FilesystemOperator $filesystemOperator, ?string $group = null)
     {
         $this->filesystems[$key] = [
             'filesystem' => $filesystemOperator,

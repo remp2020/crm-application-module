@@ -29,7 +29,7 @@ class CacheRepository extends Repository
      *
      * @return mixed|ActiveRow
      */
-    final public function loadAndUpdate($key, callable $getValue, DateTime $notOlderThan = null, $forceUpdate = false)
+    final public function loadAndUpdate($key, callable $getValue, ?DateTime $notOlderThan = null, $forceUpdate = false)
     {
         if (!$forceUpdate) {
             $stat = $this->load($key, $notOlderThan);
@@ -46,7 +46,7 @@ class CacheRepository extends Repository
         return $value;
     }
 
-    final public function load($key, DateTime $notOlderThan = null)
+    final public function load($key, ?DateTime $notOlderThan = null)
     {
         $q = $this->getTable()
             ->where('key', $key);

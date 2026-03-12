@@ -201,7 +201,7 @@ class Core
         $database->query("SET NAMES utf8mb4");
     }
 
-    public static function env(string $key, string $default = null): ?string
+    public static function env(string $key, ?string $default = null): ?string
     {
         return $_ENV[$key] ?? $default;
     }

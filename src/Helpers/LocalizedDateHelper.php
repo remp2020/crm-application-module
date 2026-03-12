@@ -25,7 +25,7 @@ class LocalizedDateHelper
      *
      * @param array|string $format
      */
-    public function setShortFormat($format, string $locale = null)
+    public function setShortFormat($format, ?string $locale = null)
     {
         $this->shortFormat[$locale] = $format;
     }
@@ -35,12 +35,12 @@ class LocalizedDateHelper
      *
      * @param array|string $format
      */
-    public function setLongFormat($format, string $locale = null)
+    public function setLongFormat($format, ?string $locale = null)
     {
         $this->longFormat[$locale] = $format;
     }
 
-    public function getFormat(bool $long = false, string $locale = null)
+    public function getFormat(bool $long = false, ?string $locale = null)
     {
         if ($long) {
             return $this->longFormat[$locale] ?? $this->longFormat[null];

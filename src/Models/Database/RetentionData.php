@@ -17,7 +17,7 @@ trait RetentionData
         return $this->retentionRemovingField;
     }
 
-    public function setRetentionThreshold(string $threshold, string $removingField = null): void
+    public function setRetentionThreshold(string $threshold, ?string $removingField = null): void
     {
         $this->retentionThreshold = $threshold;
 
