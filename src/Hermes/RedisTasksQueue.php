@@ -74,7 +74,7 @@ class RedisTasksQueue
     {
         $result = [];
         foreach ($this->queues as $priority => $name) {
-            $data = $this->redis()->zrange($name, 0, $limit, ['withscores' => true]);
+            $data = $this->redis()->zrange($name, 0, $limit, ['WITHSCORES' => true]);
             foreach ($data as $r => $processedTime) {
                 $message = Json::decode($r);
                 $message->priority = $priority;
@@ -102,6 +102,6 @@ class RedisTasksQueue
 
     public function getTypeCounts()
     {
-        return $this->redis()->zrange(static::STATS_KEY, 0, -1, ['withscores' => true]);
+        return $this->redis()->zrange(static::STATS_KEY, 0, -1, ['WITHSCORES' => true]);
     }
 }

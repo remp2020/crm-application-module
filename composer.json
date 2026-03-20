@@ -39,7 +39,7 @@
     "tomaj/nette-bootstrap-form": "^2.1",
     "vlucas/phpdotenv": "^5.3",
     "tomaj/hermes": "^4.0",
-    "predis/predis": "^1.0",
+    "predis/predis": "^3.0",
     "monolog/monolog": "^1.23|^2.3|^3.5",
     "contributte/forms-multiplier": "^4.0",
     "composer/composer": "^2.0",

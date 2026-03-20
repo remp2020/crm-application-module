@@ -47,11 +47,12 @@ class RedisUserDataStorage implements UserDataStorageInterface
         if (count($tokens) == 0) {
             return false;
         }
-        $newData = [];
+        $args = [];
         foreach ($tokens as $token) {
-            $newData[$token] = $data;
+            $args[] = $token;
+            $args[] = $data;
         }
-        return $this->redis()->hmset($this->userDataKey, $newData);
+        return $this->redis()->hset($this->userDataKey, ...$args);
     }
 
     public function remove($token)
@@ -66,7 +67,7 @@ class RedisUserDataStorage implements UserDataStorageInterface
 
     public function iterateTokens(callable $callback)
     {
-        $cursor = null;
+        $cursor = 0;
 
         do {
             $response = $this->redis()->hscan($this->userDataKey, $cursor);
