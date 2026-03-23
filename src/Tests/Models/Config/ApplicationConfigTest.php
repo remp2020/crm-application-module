@@ -216,7 +216,7 @@ class ApplicationConfigTest extends DatabaseTestCase
             ->once()
             ->getMock();
 
-        $cacheStorageMock = $this->createMock(Storage::class);
+        $cacheStorageMock = $this->createStub(Storage::class);
 
         $originalLogger = Debugger::getLogger();
         Debugger::setLogger($loggerMock);

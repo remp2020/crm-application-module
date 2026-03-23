@@ -23,11 +23,11 @@ class TriggerManagerTest extends TestCase
             ->method('registerHandler')
             ->with('event_type', $this->isInstanceOf(TriggerManager::class));
 
-        $jobDispatcher = $this->createMock(JobDispatcher::class);
+        $jobDispatcher = $this->createStub(JobDispatcher::class);
 
         $triggerManager = new TriggerManager($hermesDispatcher, $jobDispatcher);
 
-        $triggerHandler = $this->createMock(TriggerHandlerInterface::class);
+        $triggerHandler = $this->createStub(TriggerHandlerInterface::class);
         $triggerHandler->method('getEventType')->willReturn('event_type');
         $triggerHandler->method('getKey')->willReturn('key');
 
@@ -45,12 +45,12 @@ class TriggerManagerTest extends TestCase
         $this->expectException(Exception::class);
         $this->expectExceptionMessage("Trigger handler Test (test) is already registered.");
 
-        $hermesDispatcher = $this->createMock(Dispatcher::class);
-        $jobDispatcher = $this->createMock(JobDispatcher::class);
+        $hermesDispatcher = $this->createStub(Dispatcher::class);
+        $jobDispatcher = $this->createStub(JobDispatcher::class);
 
         $triggerManager = new TriggerManager($hermesDispatcher, $jobDispatcher);
 
-        $triggerHandler = $this->createMock(TriggerHandlerInterface::class);
+        $triggerHandler = $this->createStub(TriggerHandlerInterface::class);
         $triggerHandler->method('getName')->willReturn('Test');
         $triggerHandler->method('getKey')->willReturn('test');
 
@@ -62,7 +62,7 @@ class TriggerManagerTest extends TestCase
 
     public function testHandleHermesEvent(): void
     {
-        $hermesDispatcher = $this->createMock(Dispatcher::class);
+        $hermesDispatcher = $this->createStub(Dispatcher::class);
 
         $jobDispatcher = $this->createMock(JobDispatcher::class);
         $jobDispatcher->expects($this->once())
@@ -82,7 +82,7 @@ class TriggerManagerTest extends TestCase
 
         $triggerManager->registerTriggerHandler($triggerHandler);
 
-        $message = $this->createMock(MessageInterface::class);
+        $message = $this->createStub(MessageInterface::class);
         $message->method('getType')->willReturn('test_event');
         $message->method('getPayload')->willReturn(['some_payload']);
 
@@ -91,7 +91,7 @@ class TriggerManagerTest extends TestCase
 
     public function testHandleHermesEventWithThrownSkipTriggerException(): void
     {
-        $hermesDispatcher = $this->createMock(Dispatcher::class);
+        $hermesDispatcher = $this->createStub(Dispatcher::class);
 
         $jobDispatcher = $this->createMock(JobDispatcher::class);
         $jobDispatcher->expects($this->never())->method('dispatch');
@@ -108,7 +108,7 @@ class TriggerManagerTest extends TestCase
 
         $triggerManager->registerTriggerHandler($triggerHandler);
 
-        $message = $this->createMock(MessageInterface::class);
+        $message = $this->createStub(MessageInterface::class);
         $message->method('getType')->willReturn('test_event');
         $message->method('getPayload')->willReturn(['some_payload']);
 
@@ -120,7 +120,7 @@ class TriggerManagerTest extends TestCase
         $this->expectException(Exception::class);
         $this->expectExceptionMessage("Error while handling a trigger handler Test: some error");
 
-        $hermesDispatcher = $this->createMock(Dispatcher::class);
+        $hermesDispatcher = $this->createStub(Dispatcher::class);
 
         $jobDispatcher = $this->createMock(JobDispatcher::class);
         $jobDispatcher->expects($this->never())->method('dispatch');
@@ -138,7 +138,7 @@ class TriggerManagerTest extends TestCase
 
         $triggerManager->registerTriggerHandler($triggerHandler);
 
-        $message = $this->createMock(MessageInterface::class);
+        $message = $this->createStub(MessageInterface::class);
         $message->method('getType')->willReturn('test_event');
         $message->method('getPayload')->willReturn(['some_payload']);
 
@@ -150,7 +150,7 @@ class TriggerManagerTest extends TestCase
         $this->expectException(Exception::class);
         $this->expectExceptionMessage("Error while handling a trigger handler Test: Output param 'another_id' is missing in trigger data payload.");
 
-        $hermesDispatcher = $this->createMock(Dispatcher::class);
+        $hermesDispatcher = $this->createStub(Dispatcher::class);
 
         $jobDispatcher = $this->createMock(JobDispatcher::class);
         $jobDispatcher->expects($this->never())->method('dispatch');
@@ -168,7 +168,7 @@ class TriggerManagerTest extends TestCase
 
         $triggerManager->registerTriggerHandler($triggerHandler);
 
-        $message = $this->createMock(MessageInterface::class);
+        $message = $this->createStub(MessageInterface::class);
         $message->method('getType')->willReturn('test_event');
         $message->method('getPayload')->willReturn(['some_payload']);
 
@@ -180,7 +180,7 @@ class TriggerManagerTest extends TestCase
         $this->expectException(Exception::class);
         $this->expectExceptionMessage("Error while handling a trigger handler Test: Payload contains an undefined param 'another_id'.");
 
-        $hermesDispatcher = $this->createMock(Dispatcher::class);
+        $hermesDispatcher = $this->createStub(Dispatcher::class);
 
         $jobDispatcher = $this->createMock(JobDispatcher::class);
         $jobDispatcher->expects($this->never())->method('dispatch');
@@ -198,7 +198,7 @@ class TriggerManagerTest extends TestCase
 
         $triggerManager->registerTriggerHandler($triggerHandler);
 
-        $message = $this->createMock(MessageInterface::class);
+        $message = $this->createStub(MessageInterface::class);
         $message->method('getType')->willReturn('test_event');
         $message->method('getPayload')->willReturn(['some_payload']);
 
@@ -210,12 +210,12 @@ class TriggerManagerTest extends TestCase
         $this->expectException(Exception::class);
         $this->expectExceptionMessage("Unknown handler for trigger handler type 'unknown_event'");
 
-        $hermesDispatcher = $this->createMock(Dispatcher::class);
-        $jobDispatcher = $this->createMock(JobDispatcher::class);
+        $hermesDispatcher = $this->createStub(Dispatcher::class);
+        $jobDispatcher = $this->createStub(JobDispatcher::class);
 
         $triggerManager = new TriggerManager($hermesDispatcher, $jobDispatcher);
 
-        $message = $this->createMock(MessageInterface::class);
+        $message = $this->createStub(MessageInterface::class);
         $message->method('getType')->willReturn('unknown_event');
 
         $triggerManager->handle($message);
@@ -223,12 +223,12 @@ class TriggerManagerTest extends TestCase
 
     public function testEventByKey(): void
     {
-        $hermesDispatcher = $this->createMock(Dispatcher::class);
-        $jobDispatcher = $this->createMock(JobDispatcher::class);
+        $hermesDispatcher = $this->createStub(Dispatcher::class);
+        $jobDispatcher = $this->createStub(JobDispatcher::class);
 
         $triggerManager = new TriggerManager($hermesDispatcher, $jobDispatcher);
 
-        $triggerHandler = $this->createMock(TriggerHandlerInterface::class);
+        $triggerHandler = $this->createStub(TriggerHandlerInterface::class);
         $triggerHandler->method('getKey')->willReturn('test');
         $triggerHandler->method('getEventType')->willReturn('test_event');
 
@@ -242,8 +242,8 @@ class TriggerManagerTest extends TestCase
         $this->expectException(Exception::class);
         $this->expectExceptionMessage("Trigger handler with key 'unknown' doesn't exist.");
 
-        $hermesDispatcher = $this->createMock(Dispatcher::class);
-        $jobDispatcher = $this->createMock(JobDispatcher::class);
+        $hermesDispatcher = $this->createStub(Dispatcher::class);
+        $jobDispatcher = $this->createStub(JobDispatcher::class);
 
         $triggerManager = new TriggerManager($hermesDispatcher, $jobDispatcher);
         $triggerManager->getTriggerHandlerByKey('unknown');

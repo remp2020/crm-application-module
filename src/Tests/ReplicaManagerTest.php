@@ -135,9 +135,8 @@ class ReplicaManagerTest extends TestCase
 
     public function mockDatabaseTransaction(bool $isInTransaction): DatabaseTransaction
     {
-        $databaseTransaction = $this->createMock(DatabaseTransaction::class);
+        $databaseTransaction = $this->createStub(DatabaseTransaction::class);
         $databaseTransaction
-            ->expects($this->any())
             ->method('isInTransaction')
             ->willReturn($isInTransaction);
 
