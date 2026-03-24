@@ -28,14 +28,6 @@ class ConfigsRepository extends Repository
         return $this->getTable()->order('sorting');
     }
 
-    /**
-     * @deprecated `autoload` flag is not used anymore and will be removed in the next future releases. Use `all()` instead.
-     */
-    final public function loadAllAutoload()
-    {
-        return $this->getTable()->where('autoload', true)->order('sorting');
-    }
-
     final public function loadByName($name)
     {
         return $this->getTable()->where('name', $name)->fetch();

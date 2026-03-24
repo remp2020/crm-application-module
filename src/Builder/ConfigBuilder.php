@@ -104,19 +104,6 @@ class ConfigBuilder extends Builder
     }
 
     /**
-     * Set autoload
-     *
-     * If true, config is autoloaded to cache.
-     *
-     * @param $autoload
-     * @return $this
-     */
-    public function setAutoload($autoload)
-    {
-        return $this->set('autoload', $autoload);
-    }
-
-    /**
      * Set config value options
      *
      * @throws JsonException

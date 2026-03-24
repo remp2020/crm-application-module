@@ -24,7 +24,6 @@ trait ConfigsTrait
                 ->setDescription($description)
                 ->setValue($defaultValue)
                 ->setType($type)
-                ->setAutoload(true)
                 ->setConfigCategory($category)
                 ->setSorting($sorting)
                 ->setOptions($options)
