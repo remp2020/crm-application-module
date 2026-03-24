@@ -4,6 +4,7 @@ namespace Crm\ApplicationModule\Repositories;
 
 use Crm\ApplicationModule\Models\Database\Repository;
 use Nette\Database\Table\ActiveRow;
+use Nette\Database\UniqueConstraintViolationException;
 use Nette\Utils\DateTime;
 
 class SnippetsRepository extends Repository
@@ -17,16 +18,20 @@ class SnippetsRepository extends Repository
 
     final public function add($identifier, $title, $html, $sorting = 100, $isActive = true, $hasDefaultValue = false)
     {
-        return $this->insert([
-            'title' => $title,
-            'identifier' => $identifier,
-            'sorting' => $sorting,
-            'html' => $html,
-            'is_active' => $isActive,
-            'has_default_value' => $hasDefaultValue,
-            'created_at' => new DateTime(),
-            'updated_at' => new DateTime(),
-        ]);
+        try {
+            return $this->insert([
+                'title' => $title,
+                'identifier' => $identifier,
+                'sorting' => $sorting,
+                'html' => $html,
+                'is_active' => $isActive,
+                'has_default_value' => $hasDefaultValue,
+                'created_at' => new DateTime(),
+                'updated_at' => new DateTime(),
+            ]);
+        } catch (UniqueConstraintViolationException) {
+            throw new SnippetAlreadyExistsException("Snippet with same identifier already exists: [{$identifier}].");
+        }
     }
 
     final public function update(ActiveRow &$row, $data)
@@ -35,20 +40,17 @@ class SnippetsRepository extends Repository
         if (!isset($data['has_default_value'])) {
             $data['has_default_value'] = false;
         }
-        return parent::update($row, $data);
+
+        try {
+            return parent::update($row, $data);
+        } catch (UniqueConstraintViolationException) {
+            throw new SnippetAlreadyExistsException("Snippet with same identifier already exists: [{$data['identifier']}].");
+        }
     }
 
     final public function exists($identifier)
     {
         return $this->getTable()->where(['identifier' => $identifier])->count('*') > 0;
-    }
-
-    /**
-     * @deprecated Use `loadByIdentifier` instead
-     */
-    final public function loadAllByIdentifier($identifier)
-    {
-        return $this->getTable()->where('identifier', $identifier)->fetchAll();
     }
 
     final public function loadByIdentifier($identifier): ?ActiveRow
