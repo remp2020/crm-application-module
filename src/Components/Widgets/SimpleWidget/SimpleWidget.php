@@ -27,7 +27,7 @@ class SimpleWidget extends BaseLazyWidget
     {
         $widgets = $this->widgetManager->getWidgets($path);
         foreach ($widgets as $sorting => $widget) {
-            if (!$this->getComponent($widget->identifier())) {
+            if (!$this->getComponent(name: $widget->identifier(), throw: false)) {
                 $this->addComponent($widget, $widget->identifier());
             }
         }

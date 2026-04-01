@@ -8,7 +8,7 @@ use Nette\Forms\Controls\BaseControl;
 
 /**
  * @method Multiplier addMultiplier(string $name, callable $factory, int $copyNumber, int $maxCopies)
- * @method BaseControl|Container getComponent(string $name, bool $throw = true)
+ * @method BaseControl|Container|null getComponent(string $name, bool $throw = true)
  * @method BaseControl|Container offsetGet(string $name, bool $throw = true)
  */
 class Form extends \Nette\Application\UI\Form
