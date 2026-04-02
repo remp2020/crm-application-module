@@ -119,7 +119,7 @@ class AjaxDataPaginator extends Control
         // Get current page from parent's state.
         // The 'pages' property is provided by PaginatesDataTrait.
         if ($parent && property_exists($parent, 'pages')) {
-            $currentPage = $parent->pages[$this->snippetName] ?? 1;
+            $currentPage = (int) ($parent->pages[$this->snippetName] ?? 1);
         }
 
         // Set page and read it back to get the validated value.

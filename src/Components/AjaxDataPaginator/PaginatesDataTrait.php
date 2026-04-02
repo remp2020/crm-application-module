@@ -122,7 +122,7 @@ trait PaginatesDataTrait
         );
 
         // Set initial page if stored
-        $page = $this->pages[$snippetName] ?? 1;
+        $page = (int) ($this->pages[$snippetName] ?? 1);
         $paginator->setPage($page);
 
         $this->addComponent($paginator, $componentName);
