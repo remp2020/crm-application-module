@@ -59,7 +59,7 @@ class Selection extends \Nette\Database\Table\Selection
         return parent::delete();
     }
 
-    public function insert(iterable $data): ActiveRow|array|int|bool
+    public function insert(iterable $data): ActiveRow|array|int
     {
         if ($this->replicaManager) {
             $this->enforcePrimaryDatabase = true;
