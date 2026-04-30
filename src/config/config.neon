@@ -129,7 +129,7 @@ services:
 	hermesConfig:
 		factory: Crm\ApplicationModule\Models\Config\HermesConfig
 		setup:
-			- addRedactedFields(['password', 'token', 'responseBody'])
+			- addRedactedFields(['password', 'token'])
 
 	hermesLogRedact: Crm\ApplicationModule\Hermes\LogRedact
 	hermesLogger:
