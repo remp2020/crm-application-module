@@ -91,6 +91,7 @@ class CountriesSeeder implements ISeeder
             "GP" => "Guadeloupe",
             "GR" => "Greece",
             "GD" => "Grenada",
+            "GF" => "French Guiana",
             "GT" => "Guatemala",
             "GL" => "Greenland",
             "GN" => "Guinea",
