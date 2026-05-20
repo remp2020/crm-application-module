@@ -22,9 +22,9 @@ class LoginCredentials implements IIdentity
         return $this->credentials;
     }
 
-    public function getId(): mixed
+    public function getId(): string|int
     {
-        return null;
+        throw new \Exception('Call to LoginCredentials::getId() is not implemented.');
     }
 
     public function getRoles(): array
