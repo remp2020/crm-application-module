@@ -57,3 +57,7 @@ fields:
     updated: Szerkesztve
     created: Létrehozva
 pcs: db
+
+default: Alapértelmezett
+enabled: Bekapcsolva
+disabled: Kikapcsolva

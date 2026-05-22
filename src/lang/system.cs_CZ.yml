@@ -62,3 +62,7 @@ fields:
     created: Vytvořené
 
 more_actions: Další akce
+
+default: Výchozí
+enabled: Zapnutý
+disabled: Vypnutý

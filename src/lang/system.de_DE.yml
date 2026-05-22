@@ -47,3 +47,7 @@ fields:
     updated: Geändert
     created: Erstellt
 filter: Filter
+
+default: Standard
+enabled: Aktiviert
+disabled: Deaktiviert

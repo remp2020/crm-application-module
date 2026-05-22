@@ -1,1 +1,3 @@
-{}
+default: Privzeto
+enabled: Vklopljeno
+disabled: Izklopljeno

@@ -62,3 +62,7 @@ fields:
     created: Vytvorené
 
 more_actions: Ďalšie akcie
+
+default: Predvolený
+enabled: Zapnutý
+disabled: Vypnutý

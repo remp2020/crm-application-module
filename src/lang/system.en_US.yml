@@ -62,3 +62,7 @@ fields:
     created: Created
 
 more_actions: More actions
+
+default: Default
+enabled: Enabled
+disabled: Disabled
