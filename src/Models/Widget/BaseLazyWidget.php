@@ -72,7 +72,7 @@ abstract class BaseLazyWidget extends Control implements WidgetInterface
             };
             $args = Resolver::autowireArguments($reflection, $args, $getter);
             $component = call_user_func_array([$this, $method], $args);
-            if (!$component instanceof IComponent && !isset($this->components[$name])) {
+            if (!$component instanceof IComponent && !isset($this->getComponents()[$name])) {
                 throw new UnexpectedValueException("Method $reflection did not return or create the desired component");
             }
 
@@ -81,7 +81,7 @@ abstract class BaseLazyWidget extends Control implements WidgetInterface
 
         $widget = $this->widgetManager->getWidgetByIdentifier($name);
         if ($widget) {
-            if (!isset($this->components[$widget->identifier()])) {
+            if (!isset($this->getComponents()[$widget->identifier()])) {
                 $this->addComponent($widget, $widget->identifier());
             }
             return $widget;
