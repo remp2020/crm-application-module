@@ -30,7 +30,6 @@
     "nette/utils": "^4.0",
     "latte/latte": "^3.0",
     "tracy/tracy": "^2.8",
-    "odan/phinx-migrations-generator": "^6.1",
     "phpoffice/phpspreadsheet": "^5.0",
     "robmorgan/phinx": "0.16.5",
     "kdyby/autowired": "^3.0",

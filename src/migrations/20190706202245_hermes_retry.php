@@ -12,24 +12,30 @@ class HermesRetry extends AbstractMigration
             ->update();
 
         $sql = <<<SQL
-CREATE TABLE `hermes_tasks` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `message_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `retry` int(11) DEFAULT NULL,
-  `created_at` datetime NOT NULL,
-  `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `payload` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `processed_at` datetime NOT NULL,
-  `state` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `execute_at` datetime DEFAULT NULL,
+            CREATE TABLE `hermes_tasks` (
+              `id` int(11) NOT NULL AUTO_INCREMENT,
+              `message_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+              `retry` int(11) DEFAULT NULL,
+              `created_at` datetime NOT NULL,
+              `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+              `payload` text COLLATE utf8mb4_unicode_ci NOT NULL,
+              `processed_at` datetime NOT NULL,
+              `state` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+              `execute_at` datetime DEFAULT NULL,
 
-  PRIMARY KEY (`id`),
-  KEY `execute_at` (`processed_at`),
-  KEY `created_at` (`created_at`),
-  KEY `state` (`state`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-SQL;
+              PRIMARY KEY (`id`),
+              KEY `execute_at` (`processed_at`),
+              KEY `created_at` (`created_at`),
+              KEY `state` (`state`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+            SQL;
 
         $this->execute($sql);
+
+        // an empty archive has nothing to preserve
+        $count = (int)$this->fetchRow('SELECT COUNT(*) as count FROM hermes_tasks_old')['count'];
+        if ($count === 0) {
+            $this->table('hermes_tasks_old')->drop()->update();
+        }
     }
 }

@@ -15,8 +15,10 @@ use Symfony\Component\Console\Application;
 
 class PhinxRegistrator
 {
+    public const string TEST_MIGRATIONS_PATH = APP_ROOT . 'tests/migrations';
+
     /** @var array Define phinx commands with aliases */
-    private $commands = [
+    private array $commands = [
         Init::class => 'phinx:init',
         Create::class => 'phinx:create',
         Migrate::class => 'phinx:migrate',
@@ -25,9 +27,6 @@ class PhinxRegistrator
         Test::class => 'phinx:test',
     ];
 
-    /**
-     * @param Application $application
-     */
     public function __construct(
         Application $application,
         ModuleManager $moduleManager,
@@ -52,15 +51,12 @@ class PhinxRegistrator
             $application->addCommand($command);
         }
 
-        // Register schema dump command. Command uses separate folder to dump migration into.
         $dumpSchema = new DumpSchemaForTests();
-        $dumpSchema->setName('phinx:dump-schema-for-tests');
-        $dumpSchema->setDescription('Dumps whole DB schema into single phinx migration file for tests');
-        $dumpSchema->setConfig(self::buildTestConfig());
+        $dumpSchema->setConfig($config);
         $application->addCommand($dumpSchema);
     }
 
-    public static function buildConfig($migrationPaths): Config
+    public static function buildConfig(array $migrationPaths): Config
     {
         $env = Core::env('CRM_ENV');
 
@@ -78,36 +74,16 @@ class PhinxRegistrator
         ];
 
         $configData['environments'][$env] = self::buildDbConfig();
+
         return new Config($configData, __FILE__);
     }
 
     public static function buildTestConfig(): Config
     {
-        $env = Core::env('CRM_ENV');
-
-        $configData = [
-            'feature_flags' => [
-                'unsigned_primary_keys' => false,
-            ],
-            'paths' => [
-                'migrations' => APP_ROOT . 'tests/migrations',
-            ],
-            'environments' => [
-                'default_migration_table' => 'phinxlog',
-                'default_environment' => $env,
-            ],
-
-            // configuration of odan/phinx-migrations-generator; not interfering with default phinx options
-            'schema_file' => APP_ROOT . 'tests/migrations/schema.php',
-            'foreign_keys' => true,
-            'mark_generated_migration' => false,
-        ];
-
-        $configData['environments'][$env] = self::buildDbConfig();
-        return new Config($configData, __FILE__);
+        return self::buildConfig([self::TEST_MIGRATIONS_PATH]);
     }
 
-    public static function buildDbConfig()
+    public static function buildDbConfig(): array
     {
         return [
             'adapter' => Core::env('CRM_DB_ADAPTER'),
