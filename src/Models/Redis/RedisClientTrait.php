@@ -10,8 +10,7 @@ use Predis\Client;
  */
 trait RedisClientTrait
 {
-    /** @var RedisClientFactory */
-    protected $redisClientFactory;
+    protected RedisClientFactory $redisClientFactory;
 
     /** @var Client */
     private $redis;
@@ -32,7 +31,7 @@ trait RedisClientTrait
 
     protected function redis(): Client
     {
-        if (!($this->redisClientFactory instanceof RedisClientFactory)) {
+        if (!isset($this->redisClientFactory)) {
             throw new RedisClientTraitException('In order to use `RedisClientTrait`, you need to initialize `RedisClientFactory $redisClientFactory` in your service');
         }
 
