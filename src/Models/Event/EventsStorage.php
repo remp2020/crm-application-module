@@ -14,9 +14,10 @@ class EventsStorage
      * @param string $code
      * @param string $event String representation of class which extends League\Event\AbstractEvent
      * @param bool $isPublic Defines if event is visible outside of CRM (API calls)
+     * @param string|null $name Human-readable label shown in the admin UI; defaults to a title-cased version of $code
      * @throws \Exception
      */
-    public function register(string $code, string $event, bool $isPublic = false): void
+    public function register(string $code, string $event, bool $isPublic = false, ?string $name = null): void
     {
         if (!is_subclass_of($event, 'League\Event\AbstractEvent', true)) {
             throw new \Exception("Event [{$event}] must extend class League\Event\AbstractEvent.");
@@ -24,7 +25,7 @@ class EventsStorage
 
         $def = [
             'code' => $code,
-            'name' => ucfirst(str_replace('_', ' ', $code)),
+            'name' => $name ?? ucfirst(str_replace('_', ' ', $code)),
             'class' => $event,
             'is_public' => $isPublic,
         ];
