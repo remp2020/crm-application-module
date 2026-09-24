@@ -134,9 +134,9 @@ class GoogleBarGraphGroup extends BaseGraphControl
         $this->template->series = $this->series;
         $this->template->height = $this->height;
         $this->template->range = $this->getParameter('range');
-        $this->template->groupBy = $this->getParameter('groupBy', 'day');
-        $this->template->from = $this->getParameter('from', $this->from);
-        $this->template->to = $this->getParameter('to', $this->to);
+        $this->template->groupBy = $this->getParameter('groupBy') ?? 'day';
+        $this->template->from = $this->getParameter('from') ?? $this->from;
+        $this->template->to = $this->getParameter('to') ?? $this->to;
         $this->template->asyncLoad = $asyncLoad;
 
         $this->template->setFile(__DIR__ . '/' . $this->view . '.latte');
