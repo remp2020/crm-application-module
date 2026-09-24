@@ -73,7 +73,7 @@ class FrontendPresenter extends BasePresenter
             if ($redirect) {
                 $params = $this->params;
                 $params['autologin'] = 'done';
-                $this->redirect($this->action, $params);
+                $this->redirect($this->getAction(), $params);
             }
         }
 

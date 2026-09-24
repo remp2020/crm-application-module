@@ -143,8 +143,8 @@ abstract class BasePresenter extends Presenter
 
     public function formatLayoutTemplateFiles(): array
     {
-        if ($this->layout) {
-            return [$this->layoutManager->getLayout($this->layout)];
+        if ($this->getLayout()) {
+            return [$this->layoutManager->getLayout($this->getLayout())];
         }
 
         return parent::formatLayoutTemplateFiles();
@@ -164,8 +164,8 @@ abstract class BasePresenter extends Presenter
     private function reloadSessionUser()
     {
         // reload user in session if flagged for reload
-        if (!$this->isAjax() && $this->session->getSection('auth')->get(self::SESSION_RELOAD_USER)) {
-            $this->session->getSection('auth')->remove(self::SESSION_RELOAD_USER);
+        if (!$this->isAjax() && $this->getSession()->getSection('auth')->get(self::SESSION_RELOAD_USER)) {
+            $this->getSession()->getSection('auth')->remove(self::SESSION_RELOAD_USER);
             $currentUser = $this->container->getByType(UsersRepository::class)?->find($this->getUser()->id);
             if ($currentUser) {
                 $userIdentity = $this->container->getByType(UserAuthenticator::class)?->getIdentity($currentUser);
