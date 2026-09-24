@@ -54,8 +54,8 @@ trait PaginatesDataTrait
         }
         
         // For non-AJAX requests, redirect to prevent form resubmission
-        if (!$this->presenter->isAjax()) {
-            $this->presenter->redirect('this');
+        if (!$this->getPresenter()->isAjax()) {
+            $this->getPresenter()->redirect('this');
         }
 
         // Store entityId for rendering
@@ -74,7 +74,7 @@ trait PaginatesDataTrait
         $this->snippetMode = false;
 
         // Send the rendered snippets to the browser
-        $this->presenter->sendPayload();
+        $this->getPresenter()->sendPayload();
     }
     
     /**
