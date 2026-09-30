@@ -44,6 +44,18 @@ class TriggerManager implements HandlerInterface
         ));
     }
 
+    public function getSensitiveParams(): array
+    {
+        $params = [];
+        foreach ($this->triggerHandlers as $triggerHandler) {
+            if ($triggerHandler instanceof SensitiveTriggerParamsInterface) {
+                array_push($params, ...$triggerHandler->getSensitiveParams());
+            }
+        }
+
+        return array_values(array_unique($params));
+    }
+
     public function registerTriggerHandler(TriggerHandlerInterface $triggerHandler): void
     {
         if (array_key_exists($triggerHandler->getEventType(), $this->triggerHandlers)) {
