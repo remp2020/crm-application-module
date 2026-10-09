@@ -46,12 +46,9 @@ trait PaginatesDataTrait
     ): void {
         $page = max(1, $page);
         $this->pages[$snippetName] = $page;
-        $paginatorName = 'paginator_' . $snippetName;
-        
+
         // Update the specific paginator
-        if (isset($this[$paginatorName])) {
-            $this[$paginatorName]->setPage($page);
-        }
+        $this->getPaginatorComponent($snippetName)?->setPage($page);
         
         // For non-AJAX requests, redirect to prevent form resubmission
         if (!$this->getPresenter()->isAjax()) {
@@ -108,10 +105,9 @@ trait PaginatesDataTrait
         int $itemsPerPage = 12,
         int $pagesToShow = 5,
     ): AjaxDataPaginator {
-        $componentName = 'paginator_' . $snippetName;
-
-        if (isset($this[$componentName])) {
-            return $this[$componentName];
+        $paginator = $this->getPaginatorComponent($snippetName);
+        if ($paginator !== null) {
+            return $paginator;
         }
 
         $paginator = new AjaxDataPaginator(
@@ -125,8 +121,14 @@ trait PaginatesDataTrait
         $page = (int) ($this->pages[$snippetName] ?? 1);
         $paginator->setPage($page);
 
-        $this->addComponent($paginator, $componentName);
+        $this->addComponent($paginator, 'paginator_' . $snippetName);
 
-        return $this[$componentName];
+        return $paginator;
+    }
+
+    private function getPaginatorComponent(string $snippetName): ?AjaxDataPaginator
+    {
+        $component = $this->getComponent('paginator_' . $snippetName, false);
+        return $component instanceof AjaxDataPaginator ? $component : null;
     }
 }
