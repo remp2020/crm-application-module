@@ -3,7 +3,7 @@
 namespace Crm\ApplicationModule;
 
 use Crm\ApiModule\Models\Api\ApiRoutersContainerInterface;
-use Crm\ApiModule\Models\Authorization\BearerTokenAuthorization;
+use Crm\ApiModule\Models\Authorization\AdminLoggedOrBearerTokenAuthorization;
 use Crm\ApiModule\Models\Router\ApiIdentifier;
 use Crm\ApiModule\Models\Router\ApiRoute;
 use Crm\ApplicationModule\Api\EventGeneratorsListApiHandler;
@@ -71,14 +71,14 @@ class ApplicationModule extends CrmModule
         $apiRoutersContainer->attachRouter(new ApiRoute(
             new ApiIdentifier('1', 'events', 'list'),
             EventsListApiHandler::class,
-            BearerTokenAuthorization::class,
+            AdminLoggedOrBearerTokenAuthorization::class,
             // \Tomaj\NetteApi\Authorization\BearerTokenAuthorization::class
         ));
 
         $apiRoutersContainer->attachRouter(new ApiRoute(
             new ApiIdentifier('1', 'event-generators', 'list'),
             EventGeneratorsListApiHandler::class,
-            BearerTokenAuthorization::class,
+            AdminLoggedOrBearerTokenAuthorization::class,
         ));
     }
 
